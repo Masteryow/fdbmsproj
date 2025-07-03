@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,43 +20,154 @@ Partial Class Form1
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.btnLogin = New System.Windows.Forms.Button()
+        Me.btnCreate = New System.Windows.Forms.Button()
+        Me.txtUsername = New System.Windows.Forms.TextBox()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.txtPassword = New System.Windows.Forms.TextBox()
+        Me.lblUsername = New System.Windows.Forms.Label()
+        Me.lblPassword = New System.Windows.Forms.Label()
+        Me.lblForgotPass = New System.Windows.Forms.Label()
+        Me.lblNotMem = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'Button1
+        'btnLogin
         '
-        Me.Button1.Location = New System.Drawing.Point(378, 178)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 0
-        Me.Button1.Text = "lol"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnLogin.Location = New System.Drawing.Point(82, 280)
+        Me.btnLogin.Name = "btnLogin"
+        Me.btnLogin.Size = New System.Drawing.Size(230, 34)
+        Me.btnLogin.TabIndex = 0
+        Me.btnLogin.Text = "Login"
+        Me.btnLogin.UseVisualStyleBackColor = True
         '
-        'Button2
+        'btnCreate
         '
-        Me.Button2.Location = New System.Drawing.Point(442, 275)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 1
-        Me.Button2.Text = "Button2"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.btnCreate.Location = New System.Drawing.Point(125, 382)
+        Me.btnCreate.Name = "btnCreate"
+        Me.btnCreate.Size = New System.Drawing.Size(142, 34)
+        Me.btnCreate.TabIndex = 1
+        Me.btnCreate.Text = "Create account"
+        Me.btnCreate.UseVisualStyleBackColor = True
+        '
+        'txtUsername
+        '
+        Me.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtUsername.Location = New System.Drawing.Point(82, 139)
+        Me.txtUsername.Multiline = True
+        Me.txtUsername.Name = "txtUsername"
+        Me.txtUsername.Size = New System.Drawing.Size(233, 30)
+        Me.txtUsername.TabIndex = 2
+        '
+        'TextBox2
+        '
+        Me.TextBox2.ForeColor = System.Drawing.Color.White
+        Me.TextBox2.Location = New System.Drawing.Point(410, 171)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(0, 22)
+        Me.TextBox2.TabIndex = 3
+        '
+        'txtPassword
+        '
+        Me.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtPassword.Location = New System.Drawing.Point(82, 212)
+        Me.txtPassword.Multiline = True
+        Me.txtPassword.Name = "txtPassword"
+        Me.txtPassword.Size = New System.Drawing.Size(233, 30)
+        Me.txtPassword.TabIndex = 4
+        '
+        'lblUsername
+        '
+        Me.lblUsername.AutoSize = True
+        Me.lblUsername.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.lblUsername.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUsername.ForeColor = System.Drawing.Color.DarkSlateGray
+        Me.lblUsername.Location = New System.Drawing.Point(78, 114)
+        Me.lblUsername.Name = "lblUsername"
+        Me.lblUsername.Size = New System.Drawing.Size(87, 22)
+        Me.lblUsername.TabIndex = 5
+        Me.lblUsername.Text = "Username"
+        '
+        'lblPassword
+        '
+        Me.lblPassword.AutoSize = True
+        Me.lblPassword.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.lblPassword.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPassword.ForeColor = System.Drawing.Color.DarkSlateGray
+        Me.lblPassword.Location = New System.Drawing.Point(78, 187)
+        Me.lblPassword.Name = "lblPassword"
+        Me.lblPassword.Size = New System.Drawing.Size(82, 22)
+        Me.lblPassword.TabIndex = 6
+        Me.lblPassword.Text = "Password"
+        '
+        'lblForgotPass
+        '
+        Me.lblForgotPass.AutoSize = True
+        Me.lblForgotPass.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.lblForgotPass.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblForgotPass.ForeColor = System.Drawing.Color.DarkSlateGray
+        Me.lblForgotPass.Location = New System.Drawing.Point(195, 245)
+        Me.lblForgotPass.Name = "lblForgotPass"
+        Me.lblForgotPass.Size = New System.Drawing.Size(117, 18)
+        Me.lblForgotPass.TabIndex = 7
+        Me.lblForgotPass.Text = "Forgot Password?"
+        '
+        'lblNotMem
+        '
+        Me.lblNotMem.AutoSize = True
+        Me.lblNotMem.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.lblNotMem.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblNotMem.ForeColor = System.Drawing.Color.Gray
+        Me.lblNotMem.Location = New System.Drawing.Point(145, 361)
+        Me.lblNotMem.Name = "lblNotMem"
+        Me.lblNotMem.Size = New System.Drawing.Size(104, 18)
+        Me.lblNotMem.TabIndex = 8
+        Me.lblNotMem.Text = "Not a member?"
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Panel1.Controls.Add(Me.lblUsername)
+        Me.Panel1.Controls.Add(Me.lblPassword)
+        Me.Panel1.Controls.Add(Me.lblForgotPass)
+        Me.Panel1.Controls.Add(Me.txtUsername)
+        Me.Panel1.Controls.Add(Me.lblNotMem)
+        Me.Panel1.Controls.Add(Me.txtPassword)
+        Me.Panel1.Controls.Add(Me.btnCreate)
+        Me.Panel1.Controls.Add(Me.btnLogin)
+        Me.Panel1.Location = New System.Drawing.Point(377, 1)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(399, 453)
+        Me.Panel1.TabIndex = 9
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.BackColor = System.Drawing.Color.White
+        Me.ClientSize = New System.Drawing.Size(775, 450)
+        Me.Controls.Add(Me.TextBox2)
+        Me.Controls.Add(Me.Panel1)
         Me.Name = "Form1"
         Me.Text = "s"
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
+    Friend WithEvents btnLogin As Button
+    Friend WithEvents btnCreate As Button
+    Friend WithEvents txtUsername As TextBox
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents txtPassword As TextBox
+    Friend WithEvents lblUsername As Label
+    Friend WithEvents lblPassword As Label
+    Friend WithEvents lblForgotPass As Label
+    Friend WithEvents lblNotMem As Label
+    Friend WithEvents Panel1 As Panel
 End Class
