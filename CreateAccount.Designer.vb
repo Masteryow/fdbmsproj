@@ -23,8 +23,8 @@ Partial Class CreateAccount
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.lblAddress = New System.Windows.Forms.Label()
+        Me.txtAddress = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.btnClear = New System.Windows.Forms.Button()
         Me.btnSubmit = New System.Windows.Forms.Button()
@@ -42,8 +42,8 @@ Partial Class CreateAccount
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Panel2.Controls.Add(Me.Label1)
-        Me.Panel2.Controls.Add(Me.TextBox1)
+        Me.Panel2.Controls.Add(Me.lblAddress)
+        Me.Panel2.Controls.Add(Me.txtAddress)
         Me.Panel2.Controls.Add(Me.Label9)
         Me.Panel2.Controls.Add(Me.btnClear)
         Me.Panel2.Controls.Add(Me.btnSubmit)
@@ -60,26 +60,27 @@ Partial Class CreateAccount
         Me.Panel2.Size = New System.Drawing.Size(399, 453)
         Me.Panel2.TabIndex = 11
         '
-        'Label1
+        'lblAddress
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Label1.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.DarkSlateGray
-        Me.Label1.Location = New System.Drawing.Point(30, 189)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(70, 22)
-        Me.Label1.TabIndex = 21
-        Me.Label1.Text = "Address"
+        Me.lblAddress.AutoSize = True
+        Me.lblAddress.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.lblAddress.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAddress.ForeColor = System.Drawing.Color.DarkSlateGray
+        Me.lblAddress.Location = New System.Drawing.Point(30, 189)
+        Me.lblAddress.Name = "lblAddress"
+        Me.lblAddress.Size = New System.Drawing.Size(70, 22)
+        Me.lblAddress.TabIndex = 21
+        Me.lblAddress.Text = "Address"
         '
-        'TextBox1
+        'txtAddress
         '
-        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox1.Location = New System.Drawing.Point(135, 181)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(233, 30)
-        Me.TextBox1.TabIndex = 20
+        Me.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtAddress.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAddress.Location = New System.Drawing.Point(135, 181)
+        Me.txtAddress.Multiline = True
+        Me.txtAddress.Name = "txtAddress"
+        Me.txtAddress.Size = New System.Drawing.Size(233, 30)
+        Me.txtAddress.TabIndex = 3
         '
         'Label9
         '
@@ -87,7 +88,7 @@ Partial Class CreateAccount
         Me.Label9.BackColor = System.Drawing.Color.WhiteSmoke
         Me.Label9.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.ForeColor = System.Drawing.Color.DarkSlateGray
-        Me.Label9.Location = New System.Drawing.Point(38, 30)
+        Me.Label9.Location = New System.Drawing.Point(30, 29)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(151, 22)
         Me.Label9.TabIndex = 19
@@ -98,7 +99,7 @@ Partial Class CreateAccount
         Me.btnClear.Location = New System.Drawing.Point(202, 353)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(113, 34)
-        Me.btnClear.TabIndex = 18
+        Me.btnClear.TabIndex = 7
         Me.btnClear.Text = "Clear"
         Me.btnClear.UseVisualStyleBackColor = True
         '
@@ -107,7 +108,7 @@ Partial Class CreateAccount
         Me.btnSubmit.Location = New System.Drawing.Point(76, 353)
         Me.btnSubmit.Name = "btnSubmit"
         Me.btnSubmit.Size = New System.Drawing.Size(113, 34)
-        Me.btnSubmit.TabIndex = 11
+        Me.btnSubmit.TabIndex = 6
         Me.btnSubmit.Text = "Submit"
         Me.btnSubmit.UseVisualStyleBackColor = True
         '
@@ -126,11 +127,12 @@ Partial Class CreateAccount
         'txtContact
         '
         Me.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtContact.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtContact.Location = New System.Drawing.Point(135, 291)
         Me.txtContact.Multiline = True
         Me.txtContact.Name = "txtContact"
         Me.txtContact.Size = New System.Drawing.Size(233, 30)
-        Me.txtContact.TabIndex = 16
+        Me.txtContact.TabIndex = 5
         '
         'Label7
         '
@@ -147,11 +149,12 @@ Partial Class CreateAccount
         'txtEmail
         '
         Me.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtEmail.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtEmail.Location = New System.Drawing.Point(135, 236)
         Me.txtEmail.Multiline = True
         Me.txtEmail.Name = "txtEmail"
         Me.txtEmail.Size = New System.Drawing.Size(233, 30)
-        Me.txtEmail.TabIndex = 14
+        Me.txtEmail.TabIndex = 4
         '
         'lblLast
         '
@@ -180,20 +183,22 @@ Partial Class CreateAccount
         'txtLastName
         '
         Me.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtLastName.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtLastName.Location = New System.Drawing.Point(135, 131)
         Me.txtLastName.Multiline = True
         Me.txtLastName.Name = "txtLastName"
         Me.txtLastName.Size = New System.Drawing.Size(233, 30)
-        Me.txtLastName.TabIndex = 12
+        Me.txtLastName.TabIndex = 2
         '
         'txtFirstName
         '
         Me.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtFirstName.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtFirstName.Location = New System.Drawing.Point(135, 76)
         Me.txtFirstName.Multiline = True
         Me.txtFirstName.Name = "txtFirstName"
         Me.txtFirstName.Size = New System.Drawing.Size(233, 30)
-        Me.txtFirstName.TabIndex = 11
+        Me.txtFirstName.TabIndex = 1
         '
         'CreateAccount
         '
@@ -222,6 +227,6 @@ Partial Class CreateAccount
     Friend WithEvents lblName As Label
     Friend WithEvents txtLastName As TextBox
     Friend WithEvents txtFirstName As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents lblAddress As Label
+    Friend WithEvents txtAddress As TextBox
 End Class
