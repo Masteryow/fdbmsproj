@@ -7,7 +7,8 @@ Public Class Form1
     End Sub
 
     Private Sub btn_create(sender As Object, e As EventArgs) Handles btnCreate.Click
-
+        CreateAccount.Show()
+        Me.Close()
 
 
 
@@ -17,5 +18,16 @@ Public Class Form1
     Private Sub btnClear_Click(sender As Object, e As EventArgs)
 
 
+    End Sub
+
+    Private Sub lblForgotPass_MouseHover(sender As Object, e As EventArgs) Handles lblForgotPass.MouseHover
+        lblForgotPass.ForeColor = Color.DarkBlue
+        lblForgotPass.Font = New Font(lblForgotPass.Font, lblForgotPass.Font.Style Or FontStyle.Bold)
+    End Sub
+
+    Private Sub lblForgotPass_MouseLeave(sender As Object, e As EventArgs) Handles lblForgotPass.MouseLeave
+        lblForgotPass.ForeColor = Color.DarkSlateGray
+
+        lblForgotPass.Font = New Font(lblForgotPass.Font, FontStyle.Underline)
     End Sub
 End Class

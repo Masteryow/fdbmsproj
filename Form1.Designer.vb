@@ -107,7 +107,7 @@ Partial Class Form1
         '
         Me.lblForgotPass.AutoSize = True
         Me.lblForgotPass.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.lblForgotPass.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblForgotPass.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblForgotPass.ForeColor = System.Drawing.Color.DarkSlateGray
         Me.lblForgotPass.Location = New System.Drawing.Point(195, 245)
         Me.lblForgotPass.Name = "lblForgotPass"

@@ -1,4 +1,5 @@
-﻿Imports System.Drawing.Text
+﻿Imports System.Diagnostics.Eventing.Reader
+Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.Remoting.Channels
@@ -10,16 +11,19 @@ Public Class CreateAccount
 
     Private txtBox As New TextBox() 'for username input
     Private txtBox1 As New TextBox() 'for password input
+    Private txtPassConfirm As New TextBox() 'for password verification
     Private label1 As New Label() 'for username
     Private label2 As New Label() 'for password
     Private label3 As New Label() 'for first restriction
     Private label4 As New Label() 'for second restriction
     Private label5 As New Label 'for third restriction
     Private label6 As New Label 'for fourth restriction
+    Private label7 As New Label 'for password verification
     Private btnTrigger As New Button()
     Private storeTxtBox As New List(Of TextBox)
-
-    Private Sub Label8_Click(sender As Object, e As EventArgs) Handles Label8.Click
+    Private storePass As New List(Of Char) 'for password verification
+    Private initialPass As String = ""
+    Private Sub Label8_Click(sender As Object, e As EventArgs) Handles lblContact.Click
 
     End Sub
 
@@ -28,6 +32,7 @@ Public Class CreateAccount
 
         Try
 
+            'for checking if contact textbox is not empty but filled with invalid values
 
             If Not IsNumeric(txtContact.Text) And txtContact.Text <> "Please fill all the fields." _
                 And Not String.IsNullOrEmpty(txtContact.Text) Then
@@ -42,6 +47,7 @@ Public Class CreateAccount
            Or String.IsNullOrEmpty(txtAddress.Text) Or String.IsNullOrEmpty(txtEmail.Text) Or
            String.IsNullOrEmpty(txtContact.Text) Or Not IsNumeric(txtContact.Text) Then
 
+                'for making the textboxes red if they are empty or not filled properly
 
                 For Each txt As Control In Panel2.Controls
                     If TypeOf txt Is TextBox Then
@@ -50,8 +56,6 @@ Public Class CreateAccount
                             convertedTxt.ForeColor = Color.Red
                             convertedTxt.Text = "Please fill all the fields."
                             storeTxtBox.Add(convertedTxt)
-
-
                         End If
                     End If
                 Next
@@ -60,6 +64,8 @@ Public Class CreateAccount
 
                 Await Task.Delay(1000)
 
+                'for clearing invalid input of contact textbox
+
                 If Not IsNumeric(txtContact.Text) Then
 
                     txtContact.ForeColor = Color.Black
@@ -67,6 +73,9 @@ Public Class CreateAccount
 
 
                 End If
+
+                'for clearing the textboxes if they are filled with "Please fill all the fields." (empty) text
+
                 For Each txt1 As TextBox In storeTxtBox
 
                     If txt1.Text = "Please fill all the fields." Then
@@ -79,22 +88,20 @@ Public Class CreateAccount
 
                 Next
 
-
-
             Else
                 'for making username and password creation visible upon submitting infos
 
-
                 txtBox.Visible = True
                 txtBox1.Visible = True
-                    label1.Visible = True
-                    label2.Visible = True
-                    label3.Visible = True
-                    label4.Visible = True
-                    label5.Visible = True
-                    label6.Visible = True
-                    btnTrigger.Visible = True
+                label1.Visible = True
+                label2.Visible = True
+                label3.Visible = True
+                label4.Visible = True
+                label5.Visible = True
+                label6.Visible = True
+                btnTrigger.Visible = True
                 btnSubmit.Enabled = False
+                txtBox1.Enabled = False
             End If
 
 
@@ -113,15 +120,16 @@ Public Class CreateAccount
 
     Private Sub CreateAccount_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        txtBox.Visible = False
-        txtBox1.Visible = False
-        label1.Visible = False
-        label2.Visible = False
-        label3.Visible = False
-        label4.Visible = False
-        label5.Visible = False
-        label6.Visible = False
-        btnTrigger.Visible = False
+        'true for a while (debugging mode)
+        txtBox.Visible = True
+        txtBox1.Visible = True
+        label1.Visible = True
+        label2.Visible = True
+        label3.Visible = True
+        label4.Visible = True
+        label5.Visible = True
+        label6.Visible = True
+        btnTrigger.Visible = True
 
         txtBox.Multiline = True
         txtBox.Size = New Size(233, 33)
@@ -129,7 +137,7 @@ Public Class CreateAccount
         txtBox.Name = "txtUsername"
         txtBox.BorderStyle = BorderStyle.FixedSingle
         txtBox.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Regular)
-
+        AddHandler txtBox.TextChanged, AddressOf txtUserAndPassword_TextChanged
         Me.Controls.Add(txtBox)
 
 
@@ -158,7 +166,7 @@ Public Class CreateAccount
         txtBox1.Name = "txtPassword"
         txtBox1.BorderStyle = BorderStyle.FixedSingle
         txtBox1.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Regular)
-        AddHandler txtBox1.TextChanged, AddressOf txtPassword_TextChanged
+        AddHandler txtBox1.TextChanged, AddressOf txtUserAndPassword_TextChanged
         Me.Controls.Add(txtBox1)
 
         label3.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
@@ -199,104 +207,217 @@ Public Class CreateAccount
 
     Dim verifiedCount As Integer = 0
 
-    Private Sub txtPassword_TextChanged(sender As Object, e As EventArgs)
+    Private Sub txtUserAndPassword_TextChanged(sender As Object, e As EventArgs)
 
+        If String.IsNullOrEmpty(txtBox.Text) Then
 
-        Dim txtbox1 As TextBox = DirectCast(sender, TextBox)
-        If Len(txtbox1.Text) >= 8 Then
-            label3.ForeColor = Color.DarkGreen
-            label3.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
-            verifiedCount += 1
+            txtBox1.Enabled = False
+
 
         Else
-            label3.ForeColor = Color.DarkSlateGray
-            label3.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
-        End If
-        Dim password As String = txtbox1.Text
+
+            txtBox1.Enabled = True
+            label3.Visible = True
+            label4.Visible = True
+            label5.Visible = True
+            label6.Visible = True
 
 
-        Dim hasUpper As Boolean = False
-        Dim hasLower As Boolean = False
-        Dim hasDigit As Boolean = False
+            Dim strPassword As String = txtBox1.Text
+            If Len(strPassword) >= 8 Then
+                label3.ForeColor = Color.DarkGreen
+                label3.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
+                verifiedCount += 1
 
-        For Each ch As Char In txtbox1.Text
-            If Char.IsUpper(ch) Then
-                hasUpper = True
+            Else
+                label3.ForeColor = Color.DarkSlateGray
+                label3.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
+            End If
+            Dim password As String = strPassword
+
+
+            Dim hasUpper As Boolean = False
+            Dim hasLower As Boolean = False
+            Dim hasDigit As Boolean = False
+
+            For Each ch As Char In strPassword
+                If Char.IsUpper(ch) Then
+                    hasUpper = True
+
+                End If
+
+                If Char.IsLower(ch) Then
+                    hasLower = True
+                End If
+            Next
+
+
+            If hasUpper And hasLower = True Then
+                label4.ForeColor = Color.DarkGreen
+                label4.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
+                verifiedCount += 1
+            Else
+                label4.ForeColor = Color.DarkSlateGray
+                label4.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
+            End If
+
+
+
+
+            For Each int As Char In strPassword
+                If Char.IsDigit(int) Then
+
+                    hasDigit = True
+
+                End If
+
+            Next
+
+
+
+            If hasDigit = True Then
+                label5.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
+                label5.ForeColor = Color.DarkGreen
+            Else
+                label5.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
+                label5.ForeColor = Color.DarkSlateGray
+            End If
+
+
+            Dim hasSpecial As Boolean = Regex.IsMatch(password, "[^a-zA-Z0-9\s]")
+
+            If hasSpecial Then
+                label6.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
+                label6.ForeColor = Color.DarkGreen
+            Else
+                label6.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
+                label6.ForeColor = Color.DarkSlateGray
+            End If
+
+
+
+
+            'possible to remove this logic since it will be textbox to textbox comparison
+            If strPassword.Length > initialPass.Length Then
+
+                storePass.Add(strPassword.Last())
+
+            ElseIf strPassword.Length < initialPass.Length AndAlso storePass.Count > 0 Then
+
+                Dim removedIndex As Integer = -1
+                Dim minLength As Integer = Math.Min(strPassword.Length, initialPass.Length)
+
+                For i As Integer = 0 To minLength - 1
+                    If strPassword(i) <> initialPass(i) Then
+                        removedIndex = i
+                        Exit For
+                    End If
+                Next
+
+                If removedIndex = -1 Then
+                    removedIndex = initialPass.Length - 1
+                End If
+
+                If removedIndex >= 0 AndAlso removedIndex < storePass.Count Then
+                    storePass.RemoveAt(removedIndex)
+
+                End If
 
             End If
 
-            If Char.IsLower(ch) Then
-                hasLower = True
+            initialPass = strPassword
+            txtPassConfirm.Visible = False
+
+
+            'for password verification section
+
+            If Not String.IsNullOrEmpty(txtBox.Text) AndAlso hasUpper = True AndAlso hasLower = True AndAlso Len(strPassword) > 8 AndAlso
+               hasDigit = True AndAlso hasSpecial = True Then
+
+
+                label3.Visible = False
+                label4.Visible = False
+                label5.Visible = False
+                label6.Visible = False
+
+                label7.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Bold)
+                label7.ForeColor = Color.DarkSlateGray
+                label7.Location = New Point(510, 230)
+                label7.Text = "Password Verification"
+                label7.Size = New Size(200, 22)
+                label7.Name = "lbl7"
+                Me.Controls.Add(label7)
+
+                txtPassConfirm.Multiline = True
+                txtPassConfirm.Size = New Size(233, 33)
+                txtPassConfirm.Location = New Point(487, 260)
+                txtPassConfirm.Name = "txtPconfirmation"
+                txtPassConfirm.BorderStyle = BorderStyle.FixedSingle
+                txtPassConfirm.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Regular)
+                txtPassConfirm.Visible = True
+
+                Me.Controls.Add(txtPassConfirm)
+
+
+                btnTrigger.Visible = True
+                btnTrigger.Text = "Submit"
+                btnTrigger.Size = New Size(113, 34)
+                btnTrigger.Location = New Point(555, 330)
+                btnTrigger.BackColor = Color.WhiteSmoke
+                btnTrigger.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Regular)
+
+                AddHandler btnTrigger.Click, AddressOf btnTrigger_click
+
+                Me.Controls.Add(btnTrigger)
+
+
+
+
+            Else
+
+                btnTrigger.Visible = False
             End If
-        Next
 
-
-        If hasUpper And hasLower = True Then
-            label4.ForeColor = Color.DarkGreen
-            label4.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
-            verifiedCount += 1
-        Else
-            label4.ForeColor = Color.DarkSlateGray
-            label4.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         End If
 
-
-
-
-        For Each int As Char In txtbox1.Text
-            If Char.IsDigit(int) Then
-
-                hasDigit = True
-
-            End If
-
-        Next
-
-
-
-        If hasDigit = True Then
-            label5.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
-            label5.ForeColor = Color.DarkGreen
-        Else
-            label5.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
-            label5.ForeColor = Color.DarkSlateGray
-        End If
-
-
-
-
-        Dim hasSpecial As Boolean = Regex.IsMatch(password, "[^a-zA-Z0-9\s]")
-
-        If hasSpecial Then
-            label6.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
-            label6.ForeColor = Color.DarkGreen
-        Else
-            label6.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
-            label6.ForeColor = Color.DarkSlateGray
-        End If
-
-
-        If hasUpper = True And hasLower = True And Len(txtbox1.Text) > 8 And
-           hasDigit = True And hasSpecial = True Then
-
-
-
-            btnTrigger.Visible = True
-            btnTrigger.Text = "Submit"
-            btnTrigger.Size = New Size(113, 34)
-            btnTrigger.Location = New Point(540, 330)
-            btnTrigger.BackColor = Color.WhiteSmoke
-            btnTrigger.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
-
-
-
-            Me.Controls.Add(btnTrigger)
-        Else
-
-            btnTrigger.Visible = False
-        End If
     End Sub
 
+    Private Async Sub btnTrigger_click(sender As Object, e As EventArgs)
+
+        'possible to add restriction about fields cannot be empty
+
+        If Not String.IsNullOrEmpty(txtPassConfirm.Text) AndAlso Not txtPassConfirm.Text <> txtBox1.Text andalso Not _
+            string.IsNullOrEmpty(txtBox.Text) andalso not String.IsNullOrEmpty(txtBox1.Text) Then
+
+            MessageBox.Show("Account successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Exit Sub
+        ElseIf String.IsNullOrEmpty(txtPassConfirm.Text) Then
+
+            txtPassConfirm.ForeColor = Color.Red
+            txtPassConfirm.Text = "Please Enter Valid Values"
+
+            Await Task.Delay(1000)
+            txtPassConfirm.Clear()
+            txtPassConfirm.ForeColor = Color.Black
+
+        ElseIf txtPassConfirm.Text <> txtBox1.Text Then
+
+            txtPassConfirm.ForeColor = Color.Red
+            txtPassConfirm.Text = "Passwords Do Not Match"
+
+            Await Task.Delay(1000)
+            txtPassConfirm.Clear()
+            txtPassConfirm.ForeColor = Color.Black
+
+        Else
+
+
+        End If
+
+
+
+    End Sub
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
 
         txtFirstName.Clear()
@@ -319,5 +440,9 @@ Public Class CreateAccount
         btnSubmit.Enabled = True
     End Sub
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Form1.Show()
+        Me.Close()
 
+    End Sub
 End Class
