@@ -23,12 +23,17 @@ Public Class CreateAccount
     Private storeTxtBox As New List(Of TextBox)
     Private storePass As New List(Of Char) 'for password verification
     Private initialPass As String = ""
+    Dim strAnimation As String = "Register!, Be One, Of Us!, Skylink!"
+    Dim eachWord As String() = strAnimation.Split(","c)
+    Dim currentIndex As Integer = 0
+    Dim isShowing As Boolean = False
+    Private userEmpty = False
+
     Private Sub Label8_Click(sender As Object, e As EventArgs) Handles lblContact.Click
 
     End Sub
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
-
 
         Try
 
@@ -91,6 +96,10 @@ Public Class CreateAccount
             Else
                 'for making username and password creation visible upon submitting infos
 
+                Timer1.Stop()
+                Me.BackColor = Color.WhiteSmoke
+                Label8.Visible = False 'for text animation
+
                 txtBox.Visible = True
                 txtBox1.Visible = True
                 label1.Visible = True
@@ -102,6 +111,8 @@ Public Class CreateAccount
                 btnTrigger.Visible = True
                 btnSubmit.Enabled = False
                 txtBox1.Enabled = False
+
+
             End If
 
 
@@ -119,17 +130,18 @@ Public Class CreateAccount
     End Sub
 
     Private Sub CreateAccount_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Timer1.Interval = 500
+        Timer1.Start()
         'true for a while (debugging mode)
-        txtBox.Visible = True
-        txtBox1.Visible = True
-        label1.Visible = True
-        label2.Visible = True
-        label3.Visible = True
-        label4.Visible = True
-        label5.Visible = True
-        label6.Visible = True
-        btnTrigger.Visible = True
+        txtBox.Visible = False
+        txtBox1.Visible = False
+        label1.Visible = False
+        label2.Visible = False
+        label3.Visible = False
+        label4.Visible = False
+        label5.Visible = False
+        label6.Visible = False
+        btnTrigger.Visible = False
 
         txtBox.Multiline = True
         txtBox.Size = New Size(233, 33)
@@ -203,6 +215,8 @@ Public Class CreateAccount
         label6.Name = "lbl6"
         Me.Controls.Add(label6)
 
+
+
     End Sub
 
     Dim verifiedCount As Integer = 0
@@ -213,7 +227,9 @@ Public Class CreateAccount
 
             txtBox1.Enabled = False
 
-
+            txtPassConfirm.Visible = False
+            btnTrigger.Visible = False
+            label7.Visible = False
         Else
 
             txtBox1.Enabled = True
@@ -221,7 +237,7 @@ Public Class CreateAccount
             label4.Visible = True
             label5.Visible = True
             label6.Visible = True
-
+            label7.Visible = True
 
             Dim strPassword As String = txtBox1.Text
             If Len(strPassword) >= 8 Then
@@ -371,11 +387,18 @@ Public Class CreateAccount
                 Me.Controls.Add(btnTrigger)
 
 
-
+                If String.IsNullOrEmpty(txtBox.Text) Then
+                    userEmpty = True
+                End If
 
             Else
 
                 btnTrigger.Visible = False
+
+                If userEmpty = True Then
+
+                End If
+
             End If
 
         End If
@@ -386,13 +409,9 @@ Public Class CreateAccount
 
         'possible to add restriction about fields cannot be empty
 
-        If Not String.IsNullOrEmpty(txtPassConfirm.Text) AndAlso Not txtPassConfirm.Text <> txtBox1.Text andalso Not _
-            string.IsNullOrEmpty(txtBox.Text) andalso not String.IsNullOrEmpty(txtBox1.Text) Then
 
-            MessageBox.Show("Account successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-            Exit Sub
-        ElseIf String.IsNullOrEmpty(txtPassConfirm.Text) Then
+        If String.IsNullOrEmpty(txtPassConfirm.Text) Then
 
             txtPassConfirm.ForeColor = Color.Red
             txtPassConfirm.Text = "Please Enter Valid Values"
@@ -411,6 +430,7 @@ Public Class CreateAccount
             txtPassConfirm.ForeColor = Color.Black
 
         Else
+            MessageBox.Show("Account successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
 
         End If
@@ -436,13 +456,66 @@ Public Class CreateAccount
         label4.Visible = False
         label5.Visible = False
         label6.Visible = False
+        label7.Visible = False
+        txtPassConfirm.Visible = False
         btnTrigger.Visible = False
         btnSubmit.Enabled = True
+
+        Timer1.Start()
+        Label8.Visible = True
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Form1.Show()
         Me.Close()
 
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If isShowing Then
+
+
+
+            Label8.Text = eachWord(currentIndex).Trim()
+
+            If Label8.Text = "Register!" Then
+
+                Me.BackColor = Color.WhiteSmoke
+                Label8.ForeColor = Color.Black
+            ElseIf Label8.Text = "Be One" Then
+
+                Me.BackColor = Color.Black
+                Label8.ForeColor = Color.WhiteSmoke
+
+            ElseIf Label8.Text = "Of Us!" Then
+                Label8.ForeColor = Color.Black
+                Me.BackColor = Color.WhiteSmoke
+
+
+            ElseIf Label8.Text = "Skylink!" Then
+
+                Me.BackColor = Color.Black
+
+                Label8.ForeColor = Color.WhiteSmoke
+
+
+            End If
+            isShowing = False
+
+
+
+
+        Else
+            Label8.Text = ""
+            currentIndex += 1
+
+
+            If currentIndex >= eachWord.Length Then
+                currentIndex = 0
+            End If
+
+            isShowing = True
+
+        End If
     End Sub
 End Class

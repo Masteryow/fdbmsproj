@@ -9,7 +9,7 @@ Public Class Form1
     Dim isShowing As Boolean = False
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Timer1.Interval = 1000
+        Timer1.Interval = 500
         Timer1.Start()
 
         ' Create a new TextBox
@@ -44,8 +44,11 @@ Public Class Form1
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
 
         If isShowing Then
+
+
+
             Label1.Text = eachWord(currentIndex).Trim()
-            isShowing = False
+
             If Label1.Text = "Fast" Then
 
                 Me.BackColor = Color.WhiteSmoke
@@ -55,12 +58,12 @@ Public Class Form1
                 Me.BackColor = Color.Black
                 Label1.ForeColor = Color.WhiteSmoke
 
-            ElseIf Label1.text = "Secure" Then
+            ElseIf Label1.Text = "Secure" Then
                 Label1.ForeColor = Color.Black
                 Me.BackColor = Color.WhiteSmoke
 
 
-            ElseIf Label1.text = "Connected" Then
+            ElseIf Label1.Text = "Connected" Then
 
                 Me.BackColor = Color.Black
 
@@ -70,12 +73,13 @@ Public Class Form1
                 Label1.ForeColor = Color.Black
                 Me.BackColor = Color.WhiteSmoke
             End If
+            isShowing = False
 
 
 
 
         Else
-                Label1.Text = ""
+            Label1.Text = ""
             currentIndex += 1
 
 

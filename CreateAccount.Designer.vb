@@ -22,7 +22,10 @@ Partial Class CreateAccount
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.lblAddress = New System.Windows.Forms.Label()
         Me.txtAddress = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -36,8 +39,8 @@ Partial Class CreateAccount
         Me.lblName = New System.Windows.Forms.Label()
         Me.txtLastName = New System.Windows.Forms.TextBox()
         Me.txtFirstName = New System.Windows.Forms.TextBox()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -63,6 +66,27 @@ Partial Class CreateAccount
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(399, 453)
         Me.Panel2.TabIndex = 11
+        '
+        'Button1
+        '
+        Me.Button1.FlatAppearance.BorderSize = 0
+        Me.Button1.Location = New System.Drawing.Point(31, 11)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(33, 35)
+        Me.Button1.TabIndex = 23
+        Me.Button1.Text = "<"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Label10.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.ForeColor = System.Drawing.Color.DarkSlateGray
+        Me.Label10.Location = New System.Drawing.Point(30, 8)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(0, 22)
+        Me.Label10.TabIndex = 22
         '
         'lblAddress
         '
@@ -204,26 +228,18 @@ Partial Class CreateAccount
         Me.txtFirstName.Size = New System.Drawing.Size(233, 30)
         Me.txtFirstName.TabIndex = 1
         '
-        'Label10
+        'Label8
         '
-        Me.Label10.AutoSize = True
-        Me.Label10.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Label10.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.ForeColor = System.Drawing.Color.DarkSlateGray
-        Me.Label10.Location = New System.Drawing.Point(30, 8)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(0, 22)
-        Me.Label10.TabIndex = 22
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Perpetua Titling MT", 19.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(524, 195)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(178, 41)
+        Me.Label8.TabIndex = 12
+        Me.Label8.Text = "Register!"
         '
-        'Button1
+        'Timer1
         '
-        Me.Button1.FlatAppearance.BorderSize = 0
-        Me.Button1.Location = New System.Drawing.Point(31, 11)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(33, 35)
-        Me.Button1.TabIndex = 23
-        Me.Button1.Text = "<"
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'CreateAccount
         '
@@ -231,12 +247,14 @@ Partial Class CreateAccount
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Panel2)
         Me.Name = "CreateAccount"
         Me.Text = "CreateAccount"
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -256,4 +274,6 @@ Partial Class CreateAccount
     Friend WithEvents txtAddress As TextBox
     Friend WithEvents Label10 As Label
     Friend WithEvents Button1 As Button
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Timer1 As Timer
 End Class
