@@ -385,7 +385,9 @@ Public Class CreateAccount
                 btnTrigger.BackColor = Color.WhiteSmoke
                 btnTrigger.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Regular)
 
+                RemoveHandler btnTrigger.Click, AddressOf btnTrigger_click
                 AddHandler btnTrigger.Click, AddressOf btnTrigger_click
+
 
                 Me.Controls.Add(btnTrigger)
 
@@ -414,26 +416,32 @@ Public Class CreateAccount
 
         If String.IsNullOrEmpty(txtPassConfirm.Text) Then
 
-                txtPassConfirm.ForeColor = Color.Red
-                txtPassConfirm.Text = "Please Enter Valid Values"
+            txtPassConfirm.ForeColor = Color.Red
+            txtPassConfirm.Text = "Please Enter Valid Values"
+
+            Await Task.Delay(1000)
+            txtPassConfirm.Clear()
+            txtPassConfirm.ForeColor = Color.Black
+            Exit Sub
+        End If
+
+        If txtPassConfirm.Text <> txtBox1.Text Then
+
+            txtPassConfirm.ForeColor = Color.Red
+            txtPassConfirm.PasswordChar = ""
+            txtPassConfirm.Text = "Passwords Do Not Match"
 
                 Await Task.Delay(1000)
                 txtPassConfirm.Clear()
-                txtPassConfirm.ForeColor = Color.Black
+            txtPassConfirm.ForeColor = Color.Black
 
-            ElseIf txtPassConfirm.Text <> txtBox1.Text Then
-
-                txtPassConfirm.ForeColor = Color.Red
-                txtPassConfirm.Text = "Passwords Do Not Match"
-
-                Await Task.Delay(1000)
-                txtPassConfirm.Clear()
-                txtPassConfirm.ForeColor = Color.Black
-
-            Else
+            Exit Sub
+        End If
 
 
-                Using con As New MySqlConnection(strCon)
+
+
+            Using con As New MySqlConnection(strCon)
 
                     con.Open()
 
@@ -441,12 +449,12 @@ Public Class CreateAccount
                     checkCmd.Parameters.AddWithValue("@username", txtBox.Text)
 
                     Dim exists As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
-                    If exists > 0 Then
-                        MessageBox.Show("Username already exists. Please choose a different username.", "Duplicate Username", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                        Exit Sub
-                    End If
+                If exists = 1 Then
+                    MessageBox.Show("Username already exists. Please choose a different username.", "Duplicate Username", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Exit Sub
+                End If
 
-                    Dim cmd As New MySqlCommand("INSERT INTO users (username, password, firstName, lastName,
+                Dim cmd As New MySqlCommand("INSERT INTO users (username, password, firstName, lastName,
                                              email, phoneNumber, address) VALUES (@username, @password,
                                              @firstName, @lastName, @email, @phoneNumber, @address)", con)
 
@@ -462,11 +470,11 @@ Public Class CreateAccount
 
                 End Using
 
-                MessageBox.Show("Account successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Form1.Show()
+            MessageBox.Show("Account successfully created!")
+            Form1.Show()
                 Me.Close()
 
-            End If
+
 
 
 

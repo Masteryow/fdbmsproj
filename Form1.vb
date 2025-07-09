@@ -127,5 +127,27 @@ Public Class Form1
 
     Private Sub lblForgotPass_Click(sender As Object, e As EventArgs) Handles lblForgotPass.Click
 
+        Using con As New MySqlConnection(strCon)
+
+            con.Open()
+
+            Dim getUser As New MySqlCommand("SELECT COUNT(*) FROM users WHERE username = @username", con)
+
+            getUser.Parameters.AddWithValue("@username", txtUsername.Text)
+
+            getUser.ExecuteNonQuery()
+
+            Dim isFound As Integer = CInt(getUser.ExecuteScalar())
+
+            If isFound = 1 Then
+
+                ForgotPassword.Show()
+                Me.Close()
+
+
+            Else
+                MsgBox("Invalid Credentials")
+            End If
+        End Using
     End Sub
 End Class
