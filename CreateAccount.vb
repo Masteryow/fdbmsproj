@@ -5,10 +5,11 @@ Imports System.Reflection
 Imports System.Runtime.Remoting.Channels
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports MySql.Data.MySqlClient
 
 Public Class CreateAccount
 
-
+    Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
     Private txtBox As New TextBox() 'for username input
     Private txtBox1 As New TextBox() 'for password input
     Private txtPassConfirm As New TextBox() 'for password verification
@@ -430,6 +431,26 @@ Public Class CreateAccount
             txtPassConfirm.ForeColor = Color.Black
 
         Else
+
+            Using con As New MySqlConnection(strCon)
+
+                con.Open()
+                Dim cmd As New MySqlCommand("INSERT INTO users (username, password, firstName, lastName,
+                                             email, phoneNumber, address) VALUES (@username, @password,
+                                             @firstName, @lastName, @email, @phoneNumber, @address)", con)
+
+                cmd.Parameters.AddWithValue("@username", txtBox.Text)
+                cmd.Parameters.AddWithValue("@password", txtBox1.Text)
+                cmd.Parameters.AddWithValue("@firstName", txtFirstName.Text)
+                cmd.Parameters.AddWithValue("@lastName", txtLastName.Text)
+                cmd.Parameters.AddWithValue("@email", txtEmail.Text)
+                cmd.Parameters.AddWithValue("@phoneNumber", CInt(txtContact.Text))
+                cmd.Parameters.AddWithValue("@address", txtAddress.Text)
+
+                cmd.ExecuteNonQuery()
+
+            End Using
+
             MessageBox.Show("Account successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Form1.Show()
             Me.Close()

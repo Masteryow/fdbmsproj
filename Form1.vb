@@ -1,5 +1,6 @@
 ﻿Imports System.Diagnostics.Tracing
 Imports System.Drawing.Drawing2D
+Imports MySql.Data.MySqlClient
 
 Public Class Form1
 
@@ -7,7 +8,8 @@ Public Class Form1
     Dim eachWord As String() = strAnimation.Split(","c)
     Dim currentIndex As Integer = 0
     Dim isShowing As Boolean = False
-
+    Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
+    Dim con As New MySqlConnection(strCon)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Timer1.Interval = 500
         Timer1.Start()
@@ -93,6 +95,33 @@ Public Class Form1
     End Sub
 
     Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+
+    Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
+
+        con.Open()
+
+        Dim getCredentials As New MySqlCommand("SELECT COUNT(*) FROM users WHERE username =
+                                                @username AND password = @password ", con)
+
+        getCredentials.Parameters.AddWithValue("@username", txtUsername.Text)
+        getCredentials.Parameters.AddWithValue("@password", txtPassword.Text)
+
+        Dim isFound As Integer = Convert.ToInt32(getCredentials.ExecuteScalar())
+
+        con.Close()
+
+        If isFound = 1 Then
+
+            MsgBox("Login Successful")
+        Else
+
+            MsgBox("User Not Found")
+
+            Return
+        End If
+
 
     End Sub
 End Class
