@@ -134,6 +134,12 @@
     <Compile Include="CreateAccount.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ForgotPassword.Designer.vb">
+      <DependentUpon>ForgotPassword.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPassword.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +167,9 @@
   <ItemGroup>
     <EmbeddedResource Include="CreateAccount.resx">
       <DependentUpon>CreateAccount.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ForgotPassword.resx">
+      <DependentUpon>ForgotPassword.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>

@@ -63,7 +63,7 @@ Partial Class CreateAccount
         Me.Panel2.Controls.Add(Me.txtLastName)
         Me.Panel2.Controls.Add(Me.txtFirstName)
         Me.Panel2.Location = New System.Drawing.Point(0, 1)
-        Me.Panel2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(299, 368)
         Me.Panel2.TabIndex = 11
@@ -72,7 +72,7 @@ Partial Class CreateAccount
         '
         Me.Button1.FlatAppearance.BorderSize = 0
         Me.Button1.Location = New System.Drawing.Point(23, 9)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(25, 28)
         Me.Button1.TabIndex = 23
@@ -109,7 +109,7 @@ Partial Class CreateAccount
         Me.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtAddress.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtAddress.Location = New System.Drawing.Point(101, 169)
-        Me.txtAddress.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtAddress.Margin = New System.Windows.Forms.Padding(2)
         Me.txtAddress.Multiline = True
         Me.txtAddress.Name = "txtAddress"
         Me.txtAddress.Size = New System.Drawing.Size(175, 25)
@@ -131,7 +131,7 @@ Partial Class CreateAccount
         'btnClear
         '
         Me.btnClear.Location = New System.Drawing.Point(152, 309)
-        Me.btnClear.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(85, 28)
         Me.btnClear.TabIndex = 7
@@ -141,7 +141,7 @@ Partial Class CreateAccount
         'btnSubmit
         '
         Me.btnSubmit.Location = New System.Drawing.Point(57, 309)
-        Me.btnSubmit.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnSubmit.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSubmit.Name = "btnSubmit"
         Me.btnSubmit.Size = New System.Drawing.Size(85, 28)
         Me.btnSubmit.TabIndex = 6
@@ -166,7 +166,8 @@ Partial Class CreateAccount
         Me.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtContact.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtContact.Location = New System.Drawing.Point(101, 258)
-        Me.txtContact.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtContact.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtContact.MaxLength = 11
         Me.txtContact.Multiline = True
         Me.txtContact.Name = "txtContact"
         Me.txtContact.Size = New System.Drawing.Size(175, 25)
@@ -190,7 +191,7 @@ Partial Class CreateAccount
         Me.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtEmail.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtEmail.Location = New System.Drawing.Point(101, 214)
-        Me.txtEmail.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtEmail.Margin = New System.Windows.Forms.Padding(2)
         Me.txtEmail.Multiline = True
         Me.txtEmail.Name = "txtEmail"
         Me.txtEmail.Size = New System.Drawing.Size(175, 25)
@@ -227,7 +228,7 @@ Partial Class CreateAccount
         Me.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtLastName.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtLastName.Location = New System.Drawing.Point(101, 128)
-        Me.txtLastName.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtLastName.Margin = New System.Windows.Forms.Padding(2)
         Me.txtLastName.Multiline = True
         Me.txtLastName.Name = "txtLastName"
         Me.txtLastName.Size = New System.Drawing.Size(175, 25)
@@ -238,7 +239,7 @@ Partial Class CreateAccount
         Me.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtFirstName.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtFirstName.Location = New System.Drawing.Point(101, 84)
-        Me.txtFirstName.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtFirstName.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFirstName.Multiline = True
         Me.txtFirstName.Name = "txtFirstName"
         Me.txtFirstName.Size = New System.Drawing.Size(175, 25)
@@ -266,7 +267,7 @@ Partial Class CreateAccount
         Me.ClientSize = New System.Drawing.Size(600, 366)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Panel2)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "CreateAccount"
         Me.Text = "CreateAccount"
         Me.Panel2.ResumeLayout(False)

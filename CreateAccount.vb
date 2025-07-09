@@ -179,6 +179,7 @@ Public Class CreateAccount
         txtBox1.Name = "txtPassword"
         txtBox1.BorderStyle = BorderStyle.FixedSingle
         txtBox1.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Regular)
+        txtBox1.PasswordChar = "*"
         AddHandler txtBox1.TextChanged, AddressOf txtUserAndPassword_TextChanged
         Me.Controls.Add(txtBox1)
 
@@ -348,7 +349,7 @@ Public Class CreateAccount
 
             'for password verification section
 
-            If Not String.IsNullOrEmpty(txtBox.Text) AndAlso hasUpper = True AndAlso hasLower = True AndAlso Len(strPassword) > 8 AndAlso
+            If Not String.IsNullOrEmpty(txtBox.Text) AndAlso hasUpper = True AndAlso hasLower = True AndAlso Len(strPassword) >= 8 AndAlso
                hasDigit = True AndAlso hasSpecial = True Then
 
 
@@ -371,6 +372,7 @@ Public Class CreateAccount
                 txtPassConfirm.Name = "txtPconfirmation"
                 txtPassConfirm.BorderStyle = BorderStyle.FixedSingle
                 txtPassConfirm.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Regular)
+                txtPassConfirm.PasswordChar = "*"
                 txtPassConfirm.Visible = True
 
                 Me.Controls.Add(txtPassConfirm)
@@ -410,52 +412,64 @@ Public Class CreateAccount
 
         'possible to add restriction about fields cannot be empty
 
-
-
         If String.IsNullOrEmpty(txtPassConfirm.Text) Then
 
-            txtPassConfirm.ForeColor = Color.Red
-            txtPassConfirm.Text = "Please Enter Valid Values"
+                txtPassConfirm.ForeColor = Color.Red
+                txtPassConfirm.Text = "Please Enter Valid Values"
 
-            Await Task.Delay(1000)
-            txtPassConfirm.Clear()
-            txtPassConfirm.ForeColor = Color.Black
+                Await Task.Delay(1000)
+                txtPassConfirm.Clear()
+                txtPassConfirm.ForeColor = Color.Black
 
-        ElseIf txtPassConfirm.Text <> txtBox1.Text Then
+            ElseIf txtPassConfirm.Text <> txtBox1.Text Then
 
-            txtPassConfirm.ForeColor = Color.Red
-            txtPassConfirm.Text = "Passwords Do Not Match"
+                txtPassConfirm.ForeColor = Color.Red
+                txtPassConfirm.Text = "Passwords Do Not Match"
 
-            Await Task.Delay(1000)
-            txtPassConfirm.Clear()
-            txtPassConfirm.ForeColor = Color.Black
+                Await Task.Delay(1000)
+                txtPassConfirm.Clear()
+                txtPassConfirm.ForeColor = Color.Black
 
-        Else
+            Else
 
-            Using con As New MySqlConnection(strCon)
 
-                con.Open()
-                Dim cmd As New MySqlCommand("INSERT INTO users (username, password, firstName, lastName,
+                Using con As New MySqlConnection(strCon)
+
+                    con.Open()
+
+                    Dim checkCmd As New MySqlCommand("SELECT COUNT(*) FROM users WHERE username = @username", con)
+                    checkCmd.Parameters.AddWithValue("@username", txtBox.Text)
+
+                    Dim exists As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
+                    If exists > 0 Then
+                        MessageBox.Show("Username already exists. Please choose a different username.", "Duplicate Username", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Exit Sub
+                    End If
+
+                    Dim cmd As New MySqlCommand("INSERT INTO users (username, password, firstName, lastName,
                                              email, phoneNumber, address) VALUES (@username, @password,
                                              @firstName, @lastName, @email, @phoneNumber, @address)", con)
 
-                cmd.Parameters.AddWithValue("@username", txtBox.Text)
-                cmd.Parameters.AddWithValue("@password", txtBox1.Text)
-                cmd.Parameters.AddWithValue("@firstName", txtFirstName.Text)
-                cmd.Parameters.AddWithValue("@lastName", txtLastName.Text)
-                cmd.Parameters.AddWithValue("@email", txtEmail.Text)
-                cmd.Parameters.AddWithValue("@phoneNumber", CInt(txtContact.Text))
-                cmd.Parameters.AddWithValue("@address", txtAddress.Text)
+                    cmd.Parameters.AddWithValue("@username", txtBox.Text)
+                    cmd.Parameters.AddWithValue("@password", txtBox1.Text)
+                    cmd.Parameters.AddWithValue("@firstName", txtFirstName.Text)
+                    cmd.Parameters.AddWithValue("@lastName", txtLastName.Text)
+                    cmd.Parameters.AddWithValue("@email", txtEmail.Text)
+                    cmd.Parameters.AddWithValue("@phoneNumber", CInt(txtContact.Text))
+                    cmd.Parameters.AddWithValue("@address", txtAddress.Text)
 
-                cmd.ExecuteNonQuery()
+                    cmd.ExecuteNonQuery()
 
-            End Using
+                End Using
 
-            MessageBox.Show("Account successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Form1.Show()
-            Me.Close()
+                MessageBox.Show("Account successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Form1.Show()
+                Me.Close()
 
-        End If
+            End If
+
+
+
 
 
 

@@ -124,4 +124,8 @@ Public Class Form1
 
 
     End Sub
+
+    Private Sub lblForgotPass_Click(sender As Object, e As EventArgs) Handles lblForgotPass.Click
+
+    End Sub
 End Class
