@@ -431,7 +431,8 @@ Public Class CreateAccount
 
         Else
             MessageBox.Show("Account successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
+            Form1.Show()
+            Me.Close()
 
         End If
 
@@ -518,4 +519,6 @@ Public Class CreateAccount
 
         End If
     End Sub
+
+
 End Class
