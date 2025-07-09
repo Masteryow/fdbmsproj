@@ -36,11 +36,12 @@ Public Class CreateAccount
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
 
-        Try
 
-            'for checking if contact textbox is not empty but filled with invalid values
 
-            If Not IsNumeric(txtContact.Text) And txtContact.Text <> "Please fill all the fields." _
+        'for checking if contact textbox is not empty but filled with invalid values
+
+
+        If Not IsNumeric(txtContact.Text) And txtContact.Text <> "Please fill all the fields." _
                 And Not String.IsNullOrEmpty(txtContact.Text) Then
 
                 txtContact.ForeColor = Color.Red
@@ -49,9 +50,14 @@ Public Class CreateAccount
             End If
 
 
+
+
+
+
+
             If String.IsNullOrEmpty(txtFirstName.Text) Or String.IsNullOrEmpty(txtLastName.Text) _
-           Or String.IsNullOrEmpty(txtAddress.Text) Or String.IsNullOrEmpty(txtEmail.Text) Or
-           String.IsNullOrEmpty(txtContact.Text) Or Not IsNumeric(txtContact.Text) Then
+            Or String.IsNullOrEmpty(txtAddress.Text) Or String.IsNullOrEmpty(txtEmail.Text) Or
+            String.IsNullOrEmpty(txtContact.Text) Or Not IsNumeric(txtContact.Text) Then
 
                 'for making the textboxes red if they are empty or not filled properly
 
@@ -95,35 +101,78 @@ Public Class CreateAccount
                 Next
 
             Else
-                'for making username and password creation visible upon submitting infos
+            'for making username and password creation visible upon submitting infos
+            Try
 
-                Timer1.Stop()
-                Me.BackColor = Color.WhiteSmoke
-                Label8.Visible = False 'for text animation
+                Using con As New MySqlConnection(strCon)
 
-                txtBox.Visible = True
-                txtBox1.Visible = True
-                label1.Visible = True
-                label2.Visible = True
-                label3.Visible = True
-                label4.Visible = True
-                label5.Visible = True
-                label6.Visible = True
-                btnTrigger.Visible = True
-                btnSubmit.Enabled = False
-                txtBox1.Enabled = False
+                    con.Open()
 
+                    Dim getEmail As New MySqlCommand("SELECT COUNT(*) FROM users where email = @email", con)
 
-            End If
+                    getEmail.Parameters.AddWithValue("@email", txtEmail.Text)
+
+                    Dim emailFound As Integer = CInt(getEmail.ExecuteScalar())
+
+                    Dim getContact As New MySqlCommand("SELECT COUNT(*) FROM users where phoneNumber = @contact", con)
+
+                    getContact.Parameters.AddWithValue("@contact", txtContact.Text)
+
+                    Dim contactFound As Integer = CInt(getContact.ExecuteScalar())
 
 
+                    If emailFound = 1 Or contactFound = 1 Then
+
+                        MessageBox.Show("Email or Contact already exists!", "Duplicate Entry", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+
+                    Else
 
 
 
-        Catch ex As Exception
+                        Timer1.Stop()
+                        Me.BackColor = Color.WhiteSmoke
+                        Label8.Visible = False 'for text animation
 
-            MsgBox("An Error Has Occured!")
-        End Try
+                        txtBox.Visible = True
+                        txtBox1.Visible = True
+                        label1.Visible = True
+                        label2.Visible = True
+                        label3.Visible = True
+                        label4.Visible = True
+                        label5.Visible = True
+                        label6.Visible = True
+                        btnTrigger.Visible = True
+                        btnSubmit.Enabled = False
+                        txtBox1.Enabled = False
+
+
+
+
+
+                    End If
+
+
+
+
+                End Using
+
+
+            Catch ex As MySqlException
+                MessageBox.Show("ERROR: " & ex.Message, "Debug Info", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End Try
+
+
+
+
+
+        End If
+
+
+
+
+
 
 
 
@@ -431,8 +480,8 @@ Public Class CreateAccount
             txtPassConfirm.PasswordChar = ""
             txtPassConfirm.Text = "Passwords Do Not Match"
 
-                Await Task.Delay(1000)
-                txtPassConfirm.Clear()
+            Await Task.Delay(1000)
+            txtPassConfirm.Clear()
             txtPassConfirm.ForeColor = Color.Black
 
             Exit Sub
@@ -441,44 +490,38 @@ Public Class CreateAccount
 
 
 
-            Using con As New MySqlConnection(strCon)
+        Using con As New MySqlConnection(strCon)
 
-                    con.Open()
+            con.Open()
 
-                    Dim checkCmd As New MySqlCommand("SELECT COUNT(*) FROM users WHERE username = @username", con)
-                    checkCmd.Parameters.AddWithValue("@username", txtBox.Text)
+            Dim checkCmd As New MySqlCommand("SELECT COUNT(*) FROM users WHERE username = @username", con)
+            checkCmd.Parameters.AddWithValue("@username", txtBox.Text)
 
-                    Dim exists As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
-                If exists = 1 Then
-                    MessageBox.Show("Username already exists. Please choose a different username.", "Duplicate Username", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                    Exit Sub
-                End If
+            Dim exists As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
+            If exists = 1 Then
+                MessageBox.Show("Username already exists. Please choose a different username.", "Duplicate Username", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
 
-                Dim cmd As New MySqlCommand("INSERT INTO users (username, password, firstName, lastName,
+            Dim cmd As New MySqlCommand("INSERT INTO users (username, password, firstName, lastName,
                                              email, phoneNumber, address) VALUES (@username, @password,
                                              @firstName, @lastName, @email, @phoneNumber, @address)", con)
 
-                    cmd.Parameters.AddWithValue("@username", txtBox.Text)
-                    cmd.Parameters.AddWithValue("@password", txtBox1.Text)
-                    cmd.Parameters.AddWithValue("@firstName", txtFirstName.Text)
-                    cmd.Parameters.AddWithValue("@lastName", txtLastName.Text)
-                    cmd.Parameters.AddWithValue("@email", txtEmail.Text)
-                    cmd.Parameters.AddWithValue("@phoneNumber", CInt(txtContact.Text))
-                    cmd.Parameters.AddWithValue("@address", txtAddress.Text)
+            cmd.Parameters.AddWithValue("@username", txtBox.Text)
+            cmd.Parameters.AddWithValue("@password", txtBox1.Text)
+            cmd.Parameters.AddWithValue("@firstName", txtFirstName.Text)
+            cmd.Parameters.AddWithValue("@lastName", txtLastName.Text)
+            cmd.Parameters.AddWithValue("@email", txtEmail.Text)
+            cmd.Parameters.AddWithValue("@phoneNumber", CInt(txtContact.Text))
+            cmd.Parameters.AddWithValue("@address", txtAddress.Text)
 
-                    cmd.ExecuteNonQuery()
+            cmd.ExecuteNonQuery()
 
-                End Using
+        End Using
 
-            MessageBox.Show("Account successfully created!")
-            Form1.Show()
-                Me.Close()
-
-
-
-
-
-
+        MessageBox.Show("Account successfully created!")
+        Form1.Show()
+        Me.Close()
 
 
     End Sub

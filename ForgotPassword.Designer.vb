@@ -22,31 +22,56 @@ Partial Class ForgotPassword
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.txtNewPass = New System.Windows.Forms.TextBox()
+        Me.txtNewPassConfirm = New System.Windows.Forms.TextBox()
+        Me.userInput = New System.Windows.Forms.TextBox()
+        Me.btnPassUpdate = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
-        'TextBox1
+        'txtNewPass
         '
-        Me.TextBox1.Location = New System.Drawing.Point(165, 99)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox1.TabIndex = 0
+        Me.txtNewPass.Location = New System.Drawing.Point(309, 205)
+        Me.txtNewPass.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.txtNewPass.Name = "txtNewPass"
+        Me.txtNewPass.Size = New System.Drawing.Size(178, 22)
+        Me.txtNewPass.TabIndex = 0
         '
-        'TextBox2
+        'txtNewPassConfirm
         '
-        Me.TextBox2.Location = New System.Drawing.Point(165, 143)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox2.TabIndex = 1
+        Me.txtNewPassConfirm.Location = New System.Drawing.Point(309, 286)
+        Me.txtNewPassConfirm.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.txtNewPassConfirm.Name = "txtNewPassConfirm"
+        Me.txtNewPassConfirm.Size = New System.Drawing.Size(178, 22)
+        Me.txtNewPassConfirm.TabIndex = 1
+        '
+        'userInput
+        '
+        Me.userInput.Location = New System.Drawing.Point(309, 135)
+        Me.userInput.Name = "userInput"
+        Me.userInput.ReadOnly = True
+        Me.userInput.Size = New System.Drawing.Size(178, 22)
+        Me.userInput.TabIndex = 2
+        '
+        'btnPassUpdate
+        '
+        Me.btnPassUpdate.Location = New System.Drawing.Point(360, 353)
+        Me.btnPassUpdate.Name = "btnPassUpdate"
+        Me.btnPassUpdate.Size = New System.Drawing.Size(75, 23)
+        Me.btnPassUpdate.TabIndex = 3
+        Me.btnPassUpdate.Text = "Update"
+        Me.btnPassUpdate.UseVisualStyleBackColor = True
+        Me.btnPassUpdate.Visible = False
         '
         'ForgotPassword
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(600, 366)
-        Me.Controls.Add(Me.TextBox2)
-        Me.Controls.Add(Me.TextBox1)
+        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.btnPassUpdate)
+        Me.Controls.Add(Me.userInput)
+        Me.Controls.Add(Me.txtNewPassConfirm)
+        Me.Controls.Add(Me.txtNewPass)
+        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "ForgotPassword"
         Me.Text = "ForgotPassword"
         Me.ResumeLayout(False)
@@ -54,6 +79,8 @@ Partial Class ForgotPassword
 
     End Sub
 
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents txtNewPass As TextBox
+    Friend WithEvents txtNewPassConfirm As TextBox
+    Friend WithEvents userInput As TextBox
+    Friend WithEvents btnPassUpdate As Button
 End Class

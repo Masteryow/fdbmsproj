@@ -1,4 +1,5 @@
-﻿Imports System.Diagnostics.Tracing
+﻿Imports System.Diagnostics.Eventing
+Imports System.Diagnostics.Tracing
 Imports System.Drawing.Drawing2D
 Imports MySql.Data.MySqlClient
 
@@ -10,6 +11,8 @@ Public Class Form1
     Dim isShowing As Boolean = False
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
     Dim con As New MySqlConnection(strCon)
+    Public Property passUser As String
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Timer1.Interval = 500
         Timer1.Start()
@@ -100,30 +103,34 @@ Public Class Form1
 
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
 
+
         con.Open()
 
-        Dim getCredentials As New MySqlCommand("SELECT COUNT(*) FROM users WHERE username =
-                                                @username AND password = @password ", con)
-
+        Dim getCredentials As New MySqlCommand("SELECT user_id, username FROM users WHERE username = @username AND password = @password", con)
         getCredentials.Parameters.AddWithValue("@username", txtUsername.Text)
-        getCredentials.Parameters.AddWithValue("@password", txtPassword.Text)
+            getCredentials.Parameters.AddWithValue("@password", txtPassword.Text)
 
-        Dim isFound As Integer = Convert.ToInt32(getCredentials.ExecuteScalar())
+            Dim reader As MySqlDataReader = getCredentials.ExecuteReader()
 
-        con.Close()
-
-        If isFound = 1 Then
+        If reader.Read() Then
+                Dim userId As Integer = reader.GetInt32("user_id")
+            Dim userName As String = reader("username").ToString
+            Session.UserId = userId
+            Session.UserName = userName
 
             MsgBox("Login Successful")
-        Else
+                Main.Show()
+                Me.Close()
+            Else
+            MsgBox("Invalid username or password.")
 
-            MsgBox("User Not Found")
-
-            Return
         End If
 
-
+            reader.Close()
+        con.Close()
     End Sub
+
+
 
     Private Sub lblForgotPass_Click(sender As Object, e As EventArgs) Handles lblForgotPass.Click
 
@@ -136,6 +143,8 @@ Public Class Form1
             getUser.Parameters.AddWithValue("@username", txtUsername.Text)
 
             getUser.ExecuteNonQuery()
+
+            passUser = txtUsername.Text
 
             Dim isFound As Integer = CInt(getUser.ExecuteScalar())
 
