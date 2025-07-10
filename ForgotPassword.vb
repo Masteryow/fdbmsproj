@@ -13,9 +13,9 @@ Public Class ForgotPassword
     Private verifiedCount As Integer = 0
     Private Sub ForgotPassword_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        receiveUser = Form1.passUser
+        receiveUser = Session.UserName
 
-        userInput.Text = receiveUser
+        userInput.Text = "Kelly"
         txtNewPassConfirm.Visible = False
 
     End Sub
