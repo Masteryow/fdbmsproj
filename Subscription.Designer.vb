@@ -29,19 +29,15 @@ Partial Class Subscription
         Me.ProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnSub1 = New System.Windows.Forms.Button()
-        Me.btnSub2 = New System.Windows.Forms.Button()
-        Me.btnSub3 = New System.Windows.Forms.Button()
-        Me.btnSub4 = New System.Windows.Forms.Button()
-        Me.btnSub5 = New System.Windows.Forms.Button()
-        Me.btnSub6 = New System.Windows.Forms.Button()
-        Me.btnSub7 = New System.Windows.Forms.Button()
-        Me.btnSub8 = New System.Windows.Forms.Button()
-        Me.btnSub9 = New System.Windows.Forms.Button()
-        Me.btnSub10 = New System.Windows.Forms.Button()
-        Me.btnSub11 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.pbxPlan = New System.Windows.Forms.PictureBox()
+        Me.btnSubscribe = New System.Windows.Forms.Button()
+        Me.btnAddons = New System.Windows.Forms.Button()
+        Me.txtSpecs = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
+        CType(Me.pbxPlan, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -52,7 +48,7 @@ Partial Class Subscription
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(800, 28)
+        Me.MenuStrip1.Size = New System.Drawing.Size(800, 30)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -90,137 +86,89 @@ Partial Class Subscription
         'HomeToolStripMenuItem1
         '
         Me.HomeToolStripMenuItem1.Name = "HomeToolStripMenuItem1"
-        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(64, 24)
+        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(64, 26)
         Me.HomeToolStripMenuItem1.Text = "Home"
         '
-        'btnSub1
+        'Button1
         '
-        Me.btnSub1.Location = New System.Drawing.Point(54, 187)
-        Me.btnSub1.Name = "btnSub1"
-        Me.btnSub1.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub1.TabIndex = 2
-        Me.btnSub1.Text = "Button1"
-        Me.btnSub1.UseVisualStyleBackColor = True
+        Me.Button1.Location = New System.Drawing.Point(33, 179)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 14
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
-        'btnSub2
+        'Button2
         '
-        Me.btnSub2.Location = New System.Drawing.Point(175, 187)
-        Me.btnSub2.Name = "btnSub2"
-        Me.btnSub2.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub2.TabIndex = 3
-        Me.btnSub2.Text = "Button2"
-        Me.btnSub2.UseVisualStyleBackColor = True
-        '
-        'btnSub3
-        '
-        Me.btnSub3.Location = New System.Drawing.Point(291, 187)
-        Me.btnSub3.Name = "btnSub3"
-        Me.btnSub3.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub3.TabIndex = 4
-        Me.btnSub3.Text = "Button3"
-        Me.btnSub3.UseVisualStyleBackColor = True
-        '
-        'btnSub4
-        '
-        Me.btnSub4.Location = New System.Drawing.Point(411, 187)
-        Me.btnSub4.Name = "btnSub4"
-        Me.btnSub4.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub4.TabIndex = 5
-        Me.btnSub4.Text = "Button4"
-        Me.btnSub4.UseVisualStyleBackColor = True
-        '
-        'btnSub5
-        '
-        Me.btnSub5.Location = New System.Drawing.Point(530, 187)
-        Me.btnSub5.Name = "btnSub5"
-        Me.btnSub5.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub5.TabIndex = 6
-        Me.btnSub5.Text = "Button5"
-        Me.btnSub5.UseVisualStyleBackColor = True
-        '
-        'btnSub6
-        '
-        Me.btnSub6.Location = New System.Drawing.Point(646, 187)
-        Me.btnSub6.Name = "btnSub6"
-        Me.btnSub6.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub6.TabIndex = 7
-        Me.btnSub6.Text = "Button6"
-        Me.btnSub6.UseVisualStyleBackColor = True
-        '
-        'btnSub7
-        '
-        Me.btnSub7.Location = New System.Drawing.Point(116, 337)
-        Me.btnSub7.Name = "btnSub7"
-        Me.btnSub7.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub7.TabIndex = 8
-        Me.btnSub7.Text = "Button7"
-        Me.btnSub7.UseVisualStyleBackColor = True
-        '
-        'btnSub8
-        '
-        Me.btnSub8.Location = New System.Drawing.Point(227, 337)
-        Me.btnSub8.Name = "btnSub8"
-        Me.btnSub8.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub8.TabIndex = 9
-        Me.btnSub8.Text = "Button8"
-        Me.btnSub8.UseVisualStyleBackColor = True
-        '
-        'btnSub9
-        '
-        Me.btnSub9.Location = New System.Drawing.Point(346, 337)
-        Me.btnSub9.Name = "btnSub9"
-        Me.btnSub9.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub9.TabIndex = 10
-        Me.btnSub9.Text = "Button9"
-        Me.btnSub9.UseVisualStyleBackColor = True
-        '
-        'btnSub10
-        '
-        Me.btnSub10.Location = New System.Drawing.Point(465, 337)
-        Me.btnSub10.Name = "btnSub10"
-        Me.btnSub10.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub10.TabIndex = 11
-        Me.btnSub10.Text = "Button10"
-        Me.btnSub10.UseVisualStyleBackColor = True
-        '
-        'btnSub11
-        '
-        Me.btnSub11.Location = New System.Drawing.Point(586, 337)
-        Me.btnSub11.Name = "btnSub11"
-        Me.btnSub11.Size = New System.Drawing.Size(75, 23)
-        Me.btnSub11.TabIndex = 12
-        Me.btnSub11.Text = "Button11"
-        Me.btnSub11.UseVisualStyleBackColor = True
+        Me.Button2.Location = New System.Drawing.Point(389, 179)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 15
+        Me.Button2.Text = "Button2"
+        Me.Button2.UseVisualStyleBackColor = True
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(89, 51)
+        Me.TextBox1.Location = New System.Drawing.Point(168, 417)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(185, 22)
-        Me.TextBox1.TabIndex = 13
+        Me.TextBox1.Size = New System.Drawing.Size(100, 22)
+        Me.TextBox1.TabIndex = 17
+        '
+        'pbxPlan
+        '
+        Me.pbxPlan.Location = New System.Drawing.Point(114, 88)
+        Me.pbxPlan.Name = "pbxPlan"
+        Me.pbxPlan.Size = New System.Drawing.Size(269, 209)
+        Me.pbxPlan.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pbxPlan.TabIndex = 18
+        Me.pbxPlan.TabStop = False
+        '
+        'btnSubscribe
+        '
+        Me.btnSubscribe.Location = New System.Drawing.Point(114, 318)
+        Me.btnSubscribe.Name = "btnSubscribe"
+        Me.btnSubscribe.Size = New System.Drawing.Size(269, 36)
+        Me.btnSubscribe.TabIndex = 19
+        Me.btnSubscribe.Text = "Button3"
+        Me.btnSubscribe.UseVisualStyleBackColor = True
+        '
+        'btnAddons
+        '
+        Me.btnAddons.Location = New System.Drawing.Point(114, 375)
+        Me.btnAddons.Name = "btnAddons"
+        Me.btnAddons.Size = New System.Drawing.Size(269, 36)
+        Me.btnAddons.TabIndex = 20
+        Me.btnAddons.Text = "Button4"
+        Me.btnAddons.UseVisualStyleBackColor = True
+        '
+        'txtSpecs
+        '
+        Me.txtSpecs.Font = New System.Drawing.Font("Times New Roman", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSpecs.Location = New System.Drawing.Point(479, 121)
+        Me.txtSpecs.Multiline = True
+        Me.txtSpecs.Name = "txtSpecs"
+        Me.txtSpecs.ReadOnly = True
+        Me.txtSpecs.Size = New System.Drawing.Size(293, 139)
+        Me.txtSpecs.TabIndex = 21
         '
         'Subscription
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.txtSpecs)
+        Me.Controls.Add(Me.btnAddons)
+        Me.Controls.Add(Me.btnSubscribe)
+        Me.Controls.Add(Me.pbxPlan)
         Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.btnSub11)
-        Me.Controls.Add(Me.btnSub10)
-        Me.Controls.Add(Me.btnSub9)
-        Me.Controls.Add(Me.btnSub8)
-        Me.Controls.Add(Me.btnSub7)
-        Me.Controls.Add(Me.btnSub6)
-        Me.Controls.Add(Me.btnSub5)
-        Me.Controls.Add(Me.btnSub4)
-        Me.Controls.Add(Me.btnSub3)
-        Me.Controls.Add(Me.btnSub2)
-        Me.Controls.Add(Me.btnSub1)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Name = "Subscription"
         Me.Text = "Subscription"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
+        CType(Me.pbxPlan, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -233,16 +181,11 @@ Partial Class Subscription
     Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HomeToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents btnSub1 As Button
-    Friend WithEvents btnSub2 As Button
-    Friend WithEvents btnSub3 As Button
-    Friend WithEvents btnSub4 As Button
-    Friend WithEvents btnSub5 As Button
-    Friend WithEvents btnSub6 As Button
-    Friend WithEvents btnSub7 As Button
-    Friend WithEvents btnSub8 As Button
-    Friend WithEvents btnSub9 As Button
-    Friend WithEvents btnSub10 As Button
-    Friend WithEvents btnSub11 As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents pbxPlan As PictureBox
+    Friend WithEvents btnSubscribe As Button
+    Friend WithEvents btnAddons As Button
+    Friend WithEvents txtSpecs As TextBox
 End Class

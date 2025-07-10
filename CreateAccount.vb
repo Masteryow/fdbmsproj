@@ -44,18 +44,18 @@ Public Class CreateAccount
         If Not IsNumeric(txtContact.Text) And txtContact.Text <> "Please fill all the fields." _
                 And Not String.IsNullOrEmpty(txtContact.Text) Then
 
-                txtContact.ForeColor = Color.Red
-                txtContact.Text = "Please Enter a Valid Number"
+            txtContact.ForeColor = Color.Red
+            txtContact.Text = "Please Enter a Valid Number"
 
-            End If
+        ElseIf txtContact.Text.Length < 11 Then
 
-
-
-
-
+            txtContact.ForeColor = Color.Red
+            txtContact.Text = "Contact must be 11-digit"
 
 
-            If String.IsNullOrEmpty(txtFirstName.Text) Or String.IsNullOrEmpty(txtLastName.Text) _
+        End If
+
+        If String.IsNullOrEmpty(txtFirstName.Text) Or String.IsNullOrEmpty(txtLastName.Text) _
             Or String.IsNullOrEmpty(txtAddress.Text) Or String.IsNullOrEmpty(txtEmail.Text) Or
             String.IsNullOrEmpty(txtContact.Text) Or Not IsNumeric(txtContact.Text) Then
 
@@ -128,8 +128,6 @@ Public Class CreateAccount
 
                     Else
 
-
-
                         Timer1.Stop()
                         Me.BackColor = Color.WhiteSmoke
                         Label8.Visible = False 'for text animation
@@ -146,14 +144,7 @@ Public Class CreateAccount
                         btnSubmit.Enabled = False
                         txtBox1.Enabled = False
 
-
-
-
-
                     End If
-
-
-
 
                 End Using
 
@@ -192,7 +183,8 @@ Public Class CreateAccount
         label5.Visible = False
         label6.Visible = False
         btnTrigger.Visible = False
-
+        txtPassConfirm.PasswordChar = "*"
+        txtBox1.PasswordChar = "*"
         txtBox.Multiline = True
         txtBox.Size = New Size(233, 33)
         txtBox.Location = New Point(487, 100)
@@ -481,6 +473,7 @@ Public Class CreateAccount
             txtPassConfirm.Text = "Passwords Do Not Match"
 
             Await Task.Delay(1000)
+            txtPassConfirm.PasswordChar = "*"
             txtPassConfirm.Clear()
             txtPassConfirm.ForeColor = Color.Black
 
@@ -512,7 +505,7 @@ Public Class CreateAccount
             cmd.Parameters.AddWithValue("@firstName", txtFirstName.Text)
             cmd.Parameters.AddWithValue("@lastName", txtLastName.Text)
             cmd.Parameters.AddWithValue("@email", txtEmail.Text)
-            cmd.Parameters.AddWithValue("@phoneNumber", CInt(txtContact.Text))
+            cmd.Parameters.AddWithValue("@phoneNumber", txtContact.Text)
             cmd.Parameters.AddWithValue("@address", txtAddress.Text)
 
             cmd.ExecuteNonQuery()

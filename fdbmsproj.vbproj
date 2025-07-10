@@ -220,5 +220,38 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vigan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\church3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\philippiness.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\anticorrupt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\volunteer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\casagua.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rizal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shrineemilio.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\church1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fortsantiago.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\flag.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

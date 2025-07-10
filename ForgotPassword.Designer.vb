@@ -30,8 +30,8 @@ Partial Class ForgotPassword
         '
         'txtNewPass
         '
-        Me.txtNewPass.Location = New System.Drawing.Point(309, 205)
-        Me.txtNewPass.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.txtNewPass.Location = New System.Drawing.Point(309, 217)
+        Me.txtNewPass.Margin = New System.Windows.Forms.Padding(4)
         Me.txtNewPass.Name = "txtNewPass"
         Me.txtNewPass.Size = New System.Drawing.Size(178, 22)
         Me.txtNewPass.TabIndex = 0
@@ -39,7 +39,7 @@ Partial Class ForgotPassword
         'txtNewPassConfirm
         '
         Me.txtNewPassConfirm.Location = New System.Drawing.Point(309, 286)
-        Me.txtNewPassConfirm.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.txtNewPassConfirm.Margin = New System.Windows.Forms.Padding(4)
         Me.txtNewPassConfirm.Name = "txtNewPassConfirm"
         Me.txtNewPassConfirm.Size = New System.Drawing.Size(178, 22)
         Me.txtNewPassConfirm.TabIndex = 1
@@ -54,7 +54,7 @@ Partial Class ForgotPassword
         '
         'btnPassUpdate
         '
-        Me.btnPassUpdate.Location = New System.Drawing.Point(360, 353)
+        Me.btnPassUpdate.Location = New System.Drawing.Point(357, 351)
         Me.btnPassUpdate.Name = "btnPassUpdate"
         Me.btnPassUpdate.Size = New System.Drawing.Size(75, 23)
         Me.btnPassUpdate.TabIndex = 3
@@ -71,7 +71,7 @@ Partial Class ForgotPassword
         Me.Controls.Add(Me.userInput)
         Me.Controls.Add(Me.txtNewPassConfirm)
         Me.Controls.Add(Me.txtNewPass)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "ForgotPassword"
         Me.Text = "ForgotPassword"
         Me.ResumeLayout(False)

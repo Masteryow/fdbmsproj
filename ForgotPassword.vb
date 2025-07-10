@@ -135,10 +135,6 @@ Public Class ForgotPassword
             End If
 
 
-
-
-
-
         If Not String.IsNullOrEmpty(txtNewPass.Text) AndAlso hasUpper = True AndAlso hasLower = True AndAlso Len(strPassword) >= 8 AndAlso
                hasDigit = True AndAlso hasSpecial = True Then
 
@@ -155,22 +151,29 @@ Public Class ForgotPassword
 
     Private Sub btnPassUpdate_Click(sender As Object, e As EventArgs) Handles btnPassUpdate.Click
 
-        Using con As New MySqlConnection(strCon)
+        If txtNewPass.Text <> txtNewPassConfirm.Text Then
 
-            con.Open()
+            MsgBox("Password does not match, please try again", MsgBoxStyle.Critical, "Error!")
 
-            Dim cmd As New MySqlCommand("UPDATE users SET password = @password WHERE username = @username", con)
+        Else
+            Using con As New MySqlConnection(strCon)
 
-            cmd.Parameters.AddWithValue("@password", txtNewPass.Text)
-            cmd.Parameters.AddWithValue("@username", userInput.Text)
+                con.Open()
 
-            cmd.ExecuteNonQuery()
+                Dim cmd As New MySqlCommand("UPDATE users SET password = @password WHERE username = @username", con)
+
+                cmd.Parameters.AddWithValue("@password", txtNewPass.Text)
+                cmd.Parameters.AddWithValue("@username", userInput.Text)
+
+                cmd.ExecuteNonQuery()
 
 
-            MsgBox("Updated Successfully!")
+                MsgBox("Updated Successfully!")
 
-            Form1.Show()
-            Me.Close()
-        End Using
+                Form1.Show()
+                Me.Close()
+            End Using
+        End If
+
     End Sub
 End Class
