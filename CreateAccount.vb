@@ -185,12 +185,12 @@ Public Class CreateAccount
         btnTrigger.Visible = False
         txtPassConfirm.PasswordChar = "*"
         txtBox1.PasswordChar = "*"
-        txtBox.Multiline = True
+        txtBox.Multiline = False
         txtBox.Size = New Size(233, 33)
         txtBox.Location = New Point(487, 100)
         txtBox.Name = "txtUsername"
         txtBox.BorderStyle = BorderStyle.FixedSingle
-        txtBox.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Regular)
+        txtBox.Font = New Font("Microsoft Sans Serif", 12, FontStyle.Regular)
         AddHandler txtBox.TextChanged, AddressOf txtUserAndPassword_TextChanged
         Me.Controls.Add(txtBox)
 
@@ -214,12 +214,12 @@ Public Class CreateAccount
         Me.Controls.Add(label2)
 
 
-        txtBox1.Multiline = True
+        txtBox1.Multiline = False
         txtBox1.Size = New Size(233, 33)
         txtBox1.Location = New Point(487, 180)
         txtBox1.Name = "txtPassword"
         txtBox1.BorderStyle = BorderStyle.FixedSingle
-        txtBox1.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Regular)
+        txtBox1.Font = New Font("Microsoft Sans Serif", 12, FontStyle.Regular)
         txtBox1.PasswordChar = "*"
         AddHandler txtBox1.TextChanged, AddressOf txtUserAndPassword_TextChanged
         Me.Controls.Add(txtBox1)
@@ -407,12 +407,12 @@ Public Class CreateAccount
                 label7.Name = "lbl7"
                 Me.Controls.Add(label7)
 
-                txtPassConfirm.Multiline = True
+                txtPassConfirm.Multiline = False
                 txtPassConfirm.Size = New Size(233, 33)
                 txtPassConfirm.Location = New Point(487, 260)
                 txtPassConfirm.Name = "txtPconfirmation"
                 txtPassConfirm.BorderStyle = BorderStyle.FixedSingle
-                txtPassConfirm.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Regular)
+                txtPassConfirm.Font = New Font("Microsoft Sans Serif", 12, FontStyle.Regular)
                 txtPassConfirm.PasswordChar = "*"
                 txtPassConfirm.Visible = True
 
@@ -458,9 +458,11 @@ Public Class CreateAccount
         If String.IsNullOrEmpty(txtPassConfirm.Text) Then
 
             txtPassConfirm.ForeColor = Color.Red
+            txtPassConfirm.PasswordChar = ""
             txtPassConfirm.Text = "Please Enter Valid Values"
 
             Await Task.Delay(1000)
+            txtPassConfirm.PasswordChar = "*"
             txtPassConfirm.Clear()
             txtPassConfirm.ForeColor = Color.Black
             Exit Sub

@@ -61,9 +61,9 @@ Partial Class Form1
         'txtUsername
         '
         Me.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtUsername.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUsername.Location = New System.Drawing.Point(83, 139)
         Me.txtUsername.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.txtUsername.Multiline = True
         Me.txtUsername.Name = "txtUsername"
         Me.txtUsername.Size = New System.Drawing.Size(233, 30)
         Me.txtUsername.TabIndex = 2
@@ -80,9 +80,9 @@ Partial Class Form1
         'txtPassword
         '
         Me.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtPassword.Location = New System.Drawing.Point(83, 212)
+        Me.txtPassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPassword.Location = New System.Drawing.Point(83, 208)
         Me.txtPassword.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.txtPassword.Multiline = True
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPassword.Size = New System.Drawing.Size(233, 30)
@@ -106,7 +106,7 @@ Partial Class Form1
         Me.lblPassword.BackColor = System.Drawing.Color.WhiteSmoke
         Me.lblPassword.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPassword.ForeColor = System.Drawing.Color.DarkSlateGray
-        Me.lblPassword.Location = New System.Drawing.Point(77, 187)
+        Me.lblPassword.Location = New System.Drawing.Point(77, 183)
         Me.lblPassword.Name = "lblPassword"
         Me.lblPassword.Size = New System.Drawing.Size(82, 22)
         Me.lblPassword.TabIndex = 6

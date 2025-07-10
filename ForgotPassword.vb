@@ -5,7 +5,7 @@ Public Class ForgotPassword
 
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
     Dim connect As New MySqlConnection(strCon)
-    Dim receiveUser As String
+    Dim receiveUser As String = ""
     Private label3 As New Label
     Private label4 As New Label
     Private label5 As New Label
@@ -15,9 +15,11 @@ Public Class ForgotPassword
 
         receiveUser = Session.UserName
 
-        userInput.Text = "Kelly"
+        userInput.Text = receiveUser
         txtNewPassConfirm.Visible = False
-
+        Label7.Visible = False
+        txtNewPass.PasswordChar = "*"
+        txtNewPassConfirm.PasswordChar = "*"
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles txtNewPass.TextChanged
@@ -29,7 +31,7 @@ Public Class ForgotPassword
         label6.Visible = True
         label3.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label3.ForeColor = Color.DarkSlateGray
-        label3.Location = New Point(490, 230)
+        label3.Location = New Point(290, 300)
         label3.Text = "• Must be at least 8 characters"
         label3.Size = New Size(500, 22)
         label3.Name = "lbl3"
@@ -37,7 +39,7 @@ Public Class ForgotPassword
 
         label4.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label4.ForeColor = Color.DarkSlateGray
-        label4.Location = New Point(490, 250)
+        label4.Location = New Point(290, 320)
         label4.Text = "• Use both uppercase and lowercase 
                          letters"
         label4.Size = New Size(500, 15)
@@ -46,7 +48,7 @@ Public Class ForgotPassword
 
         label5.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label5.ForeColor = Color.DarkSlateGray
-        label5.Location = New Point(490, 270)
+        label5.Location = New Point(290, 340)
         label5.Text = "• Include at least one number"
         label5.Size = New Size(500, 15)
         label5.Name = "lbl5"
@@ -55,7 +57,7 @@ Public Class ForgotPassword
 
         label6.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label6.ForeColor = Color.DarkSlateGray
-        label6.Location = New Point(490, 290)
+        label6.Location = New Point(290, 360)
         label6.Text = "• Add at least one special character"
         label6.Size = New Size(500, 15)
         label6.Name = "lbl6"
@@ -142,6 +144,8 @@ Public Class ForgotPassword
             label4.Visible = False
             label5.Visible = False
             label6.Visible = False
+            Label7.Visible = True
+
             txtNewPassConfirm.Visible = True
             btnPassUpdate.Visible = True
         End If

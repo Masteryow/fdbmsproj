@@ -105,10 +105,9 @@ Partial Class CreateAccount
         'txtAddress
         '
         Me.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtAddress.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAddress.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtAddress.Location = New System.Drawing.Point(135, 208)
         Me.txtAddress.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.txtAddress.Multiline = True
         Me.txtAddress.Name = "txtAddress"
         Me.txtAddress.Size = New System.Drawing.Size(233, 30)
         Me.txtAddress.TabIndex = 3
@@ -160,11 +159,10 @@ Partial Class CreateAccount
         'txtContact
         '
         Me.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtContact.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtContact.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtContact.Location = New System.Drawing.Point(135, 318)
         Me.txtContact.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtContact.MaxLength = 11
-        Me.txtContact.Multiline = True
         Me.txtContact.Name = "txtContact"
         Me.txtContact.Size = New System.Drawing.Size(233, 30)
         Me.txtContact.TabIndex = 5
@@ -184,10 +182,9 @@ Partial Class CreateAccount
         'txtEmail
         '
         Me.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtEmail.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtEmail.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtEmail.Location = New System.Drawing.Point(135, 263)
         Me.txtEmail.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.txtEmail.Multiline = True
         Me.txtEmail.Name = "txtEmail"
         Me.txtEmail.Size = New System.Drawing.Size(233, 30)
         Me.txtEmail.TabIndex = 4
@@ -219,10 +216,9 @@ Partial Class CreateAccount
         'txtLastName
         '
         Me.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtLastName.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtLastName.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtLastName.Location = New System.Drawing.Point(135, 158)
         Me.txtLastName.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.txtLastName.Multiline = True
         Me.txtLastName.Name = "txtLastName"
         Me.txtLastName.Size = New System.Drawing.Size(233, 30)
         Me.txtLastName.TabIndex = 2
@@ -230,10 +226,9 @@ Partial Class CreateAccount
         'txtFirstName
         '
         Me.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtFirstName.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtFirstName.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtFirstName.Location = New System.Drawing.Point(135, 103)
         Me.txtFirstName.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.txtFirstName.Multiline = True
         Me.txtFirstName.Name = "txtFirstName"
         Me.txtFirstName.Size = New System.Drawing.Size(233, 30)
         Me.txtFirstName.TabIndex = 1

@@ -34,7 +34,6 @@ Partial Class Subscription
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.pbxPlan = New System.Windows.Forms.PictureBox()
         Me.btnSubscribe = New System.Windows.Forms.Button()
-        Me.btnAddons = New System.Windows.Forms.Button()
         Me.txtSpecs = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.pbxPlan, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -48,15 +47,16 @@ Partial Class Subscription
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(800, 30)
+        Me.MenuStrip1.Size = New System.Drawing.Size(800, 28)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'HomeToolStripMenuItem
         '
         Me.HomeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
+        Me.HomeToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(84, 26)
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(84, 24)
         Me.HomeToolStripMenuItem.Text = "About Us"
         '
         'TicketsToolStripMenuItem
@@ -67,26 +67,30 @@ Partial Class Subscription
         '
         'SubscriptionToolStripMenuItem
         '
+        Me.SubscriptionToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
-        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(55, 26)
+        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(55, 24)
         Me.SubscriptionToolStripMenuItem.Text = "Help"
         '
         'ProductsToolStripMenuItem
         '
+        Me.ProductsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ProductsToolStripMenuItem.Name = "ProductsToolStripMenuItem"
-        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(80, 26)
+        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(80, 24)
         Me.ProductsToolStripMenuItem.Text = "Products"
         '
         'HelpToolStripMenuItem
         '
+        Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(105, 26)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(105, 24)
         Me.HelpToolStripMenuItem.Text = "Subscription"
         '
         'HomeToolStripMenuItem1
         '
+        Me.HomeToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HomeToolStripMenuItem1.Name = "HomeToolStripMenuItem1"
-        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(64, 26)
+        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(64, 24)
         Me.HomeToolStripMenuItem1.Text = "Home"
         '
         'Button1
@@ -109,14 +113,14 @@ Partial Class Subscription
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(168, 417)
+        Me.TextBox1.Location = New System.Drawing.Point(206, 417)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(100, 22)
         Me.TextBox1.TabIndex = 17
         '
         'pbxPlan
         '
-        Me.pbxPlan.Location = New System.Drawing.Point(114, 88)
+        Me.pbxPlan.Location = New System.Drawing.Point(114, 61)
         Me.pbxPlan.Name = "pbxPlan"
         Me.pbxPlan.Size = New System.Drawing.Size(269, 209)
         Me.pbxPlan.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -125,26 +129,20 @@ Partial Class Subscription
         '
         'btnSubscribe
         '
-        Me.btnSubscribe.Location = New System.Drawing.Point(114, 318)
+        Me.btnSubscribe.BackColor = System.Drawing.Color.White
+        Me.btnSubscribe.Font = New System.Drawing.Font("Century Gothic", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSubscribe.ForeColor = System.Drawing.Color.Black
+        Me.btnSubscribe.Location = New System.Drawing.Point(114, 306)
         Me.btnSubscribe.Name = "btnSubscribe"
-        Me.btnSubscribe.Size = New System.Drawing.Size(269, 36)
+        Me.btnSubscribe.Size = New System.Drawing.Size(269, 37)
         Me.btnSubscribe.TabIndex = 19
-        Me.btnSubscribe.Text = "Button3"
-        Me.btnSubscribe.UseVisualStyleBackColor = True
-        '
-        'btnAddons
-        '
-        Me.btnAddons.Location = New System.Drawing.Point(114, 375)
-        Me.btnAddons.Name = "btnAddons"
-        Me.btnAddons.Size = New System.Drawing.Size(269, 36)
-        Me.btnAddons.TabIndex = 20
-        Me.btnAddons.Text = "Button4"
-        Me.btnAddons.UseVisualStyleBackColor = True
+        Me.btnSubscribe.Text = "Subscribe"
+        Me.btnSubscribe.UseVisualStyleBackColor = False
         '
         'txtSpecs
         '
         Me.txtSpecs.Font = New System.Drawing.Font("Times New Roman", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSpecs.Location = New System.Drawing.Point(479, 121)
+        Me.txtSpecs.Location = New System.Drawing.Point(480, 77)
         Me.txtSpecs.Multiline = True
         Me.txtSpecs.Name = "txtSpecs"
         Me.txtSpecs.ReadOnly = True
@@ -155,9 +153,9 @@ Partial Class Subscription
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Controls.Add(Me.txtSpecs)
-        Me.Controls.Add(Me.btnAddons)
         Me.Controls.Add(Me.btnSubscribe)
         Me.Controls.Add(Me.pbxPlan)
         Me.Controls.Add(Me.TextBox1)
@@ -186,6 +184,5 @@ Partial Class Subscription
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents pbxPlan As PictureBox
     Friend WithEvents btnSubscribe As Button
-    Friend WithEvents btnAddons As Button
     Friend WithEvents txtSpecs As TextBox
 End Class

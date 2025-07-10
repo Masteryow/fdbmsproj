@@ -11,7 +11,7 @@ Public Class Form1
     Dim isShowing As Boolean = False
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
     Dim con As New MySqlConnection(strCon)
-    Public Property passUser As String
+
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Timer1.Interval = 500
@@ -144,7 +144,7 @@ Public Class Form1
 
             getUser.ExecuteNonQuery()
 
-            passUser = txtUsername.Text
+
 
             Dim isFound As Integer = CInt(getUser.ExecuteScalar())
 
@@ -158,5 +158,9 @@ Public Class Form1
                 MsgBox("Invalid Credentials")
             End If
         End Using
+    End Sub
+
+    Private Sub txtUsername_TextChanged(sender As Object, e As EventArgs) Handles txtUsername.TextChanged
+        Session.UserName = txtUsername.Text
     End Sub
 End Class
