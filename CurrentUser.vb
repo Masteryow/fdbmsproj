@@ -5,4 +5,13 @@
 
     Public Shared Property PlanId As Integer
 
+    Public Shared Property planImage As Image
+
+    Public Shared Property planName As String
+
+    Public Shared Property planType As String
+    Public Shared Property planPrice As Decimal
+
+
+
 End Class

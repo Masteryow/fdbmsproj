@@ -30,42 +30,42 @@ Public Class Subscription
         If currentID = 1 Then
 
             pbxPlan.Image = My.Resources.vigan1
-
+            Session.planImage = My.Resources.vigan1
         ElseIf currentID = 2 Then
 
 
             pbxPlan.Image = My.Resources.anticorrupt2
-
+            Session.planImage = My.Resources.anticorrupt2
         ElseIf currentID = 3 Then
 
             pbxPlan.Image = My.Resources.casagua3
-
+            Session.planImage = My.Resources.casagua3
         ElseIf currentID = 4 Then
             pbxPlan.Image = My.Resources.church4
-
+            Session.planImage = My.Resources.church4
         ElseIf currentID = 5 Then
 
             pbxPlan.Image = My.Resources.church5
-
+            Session.planImage = My.Resources.church5
         ElseIf currentID = 6 Then
             pbxPlan.Image = My.Resources.flag6
-
+            Session.planImage = My.Resources.flag6
         ElseIf currentID = 7 Then
 
             pbxPlan.Image = My.Resources.fortsantiago7
-
+            Session.planImage = My.Resources.fortsantiago7
         ElseIf currentID = 8 Then
 
             pbxPlan.Image = My.Resources.philippiness8
-
+            Session.planImage = My.Resources.philippiness8
         ElseIf currentID = 9 Then
 
             pbxPlan.Image = My.Resources.rizal9
-
+            Session.planImage = My.Resources.rizal9
         ElseIf currentID = 10 Then
 
             pbxPlan.Image = My.Resources.shrineemilio10
-
+            Session.planImage = My.Resources.shrineemilio10
         End If
 
         selection(currentID, False)
@@ -143,17 +143,23 @@ Public Class Subscription
 
                                 If statusValidator = "Active" Then
 
-                                    MsgBox($"Already Subscribed to: {planValidator}. New subscription can't be processed.")
+                                    MsgBox($"Already Subscribed to: {planValidator}. Multiple subscription can't be processed.")
                                     Exit Sub
                                 End If
                             End If
+
+
                         End Using
 
                         addons = MsgBox("Do you want an addons?", MsgBoxStyle.YesNo, "Addons")
 
                         If addons = DialogResult.Yes Then
 
-
+                            Session.planName = plan_name
+                            Session.planType = plan_type
+                            Session.planPrice = price
+                            Addon.Show()
+                            Me.Close()
 
 
                         Else
@@ -164,7 +170,7 @@ Public Class Subscription
                             insertCmd.Connection = con
                             insertCmd.Transaction = transaction
 
-                            Dim test As String = InputBox($"Please Enter Your Payment - To pay: {price.ToString("f2")} ", "Payment")
+                            Dim test As String = InputBox($"Please Enter Your Payment - To pay: {price.ToString("f2")}", "Payment")
                             Dim payment As Decimal = 0
                             If Decimal.TryParse(test, payment) Then
 
@@ -192,12 +198,6 @@ Public Class Subscription
                                     Else
                                         MsgBox($"Subscribed Successfully!")
                                     End If
-
-
-
-
-
-
 
                                 Else
 

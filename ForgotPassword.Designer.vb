@@ -36,38 +36,38 @@ Partial Class ForgotPassword
         'txtNewPass
         '
         Me.txtNewPass.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtNewPass.Location = New System.Drawing.Point(94, 254)
-        Me.txtNewPass.Margin = New System.Windows.Forms.Padding(4)
+        Me.txtNewPass.Location = New System.Drawing.Point(70, 206)
         Me.txtNewPass.Name = "txtNewPass"
-        Me.txtNewPass.Size = New System.Drawing.Size(612, 27)
+        Me.txtNewPass.Size = New System.Drawing.Size(460, 23)
         Me.txtNewPass.TabIndex = 0
         '
         'txtNewPassConfirm
         '
         Me.txtNewPassConfirm.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtNewPassConfirm.Location = New System.Drawing.Point(99, 343)
-        Me.txtNewPassConfirm.Margin = New System.Windows.Forms.Padding(4)
+        Me.txtNewPassConfirm.Location = New System.Drawing.Point(74, 279)
         Me.txtNewPassConfirm.Name = "txtNewPassConfirm"
-        Me.txtNewPassConfirm.Size = New System.Drawing.Size(607, 27)
+        Me.txtNewPassConfirm.Size = New System.Drawing.Size(456, 23)
         Me.txtNewPassConfirm.TabIndex = 1
         '
         'userInput
         '
         Me.userInput.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.userInput.Location = New System.Drawing.Point(94, 185)
+        Me.userInput.Location = New System.Drawing.Point(70, 150)
+        Me.userInput.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.userInput.Name = "userInput"
         Me.userInput.ReadOnly = True
-        Me.userInput.Size = New System.Drawing.Size(612, 27)
+        Me.userInput.Size = New System.Drawing.Size(460, 23)
         Me.userInput.TabIndex = 2
         '
         'btnPassUpdate
         '
         Me.btnPassUpdate.BackColor = System.Drawing.Color.Black
-        Me.btnPassUpdate.Font = New System.Drawing.Font("Roboto", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPassUpdate.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPassUpdate.ForeColor = System.Drawing.Color.Transparent
-        Me.btnPassUpdate.Location = New System.Drawing.Point(315, 387)
+        Me.btnPassUpdate.Location = New System.Drawing.Point(236, 314)
+        Me.btnPassUpdate.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnPassUpdate.Name = "btnPassUpdate"
-        Me.btnPassUpdate.Size = New System.Drawing.Size(167, 41)
+        Me.btnPassUpdate.Size = New System.Drawing.Size(125, 33)
         Me.btnPassUpdate.TabIndex = 3
         Me.btnPassUpdate.Text = "Update"
         Me.btnPassUpdate.UseVisualStyleBackColor = False
@@ -77,9 +77,10 @@ Partial Class ForgotPassword
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Segoe UI Semibold", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(314, 48)
+        Me.Label8.Location = New System.Drawing.Point(236, 39)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(173, 31)
+        Me.Label8.Size = New System.Drawing.Size(142, 25)
         Me.Label8.TabIndex = 7
         Me.Label8.Text = "Reset Password"
         '
@@ -87,9 +88,10 @@ Partial Class ForgotPassword
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(271, 104)
+        Me.Label9.Location = New System.Drawing.Point(203, 84)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(258, 20)
+        Me.Label9.Size = New System.Drawing.Size(207, 15)
         Me.Label9.TabIndex = 8
         Me.Label9.Text = "Enter and confirm your new password"
         '
@@ -97,9 +99,10 @@ Partial Class ForgotPassword
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(90, 162)
+        Me.Label1.Location = New System.Drawing.Point(68, 132)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(78, 20)
+        Me.Label1.Size = New System.Drawing.Size(60, 15)
         Me.Label1.TabIndex = 9
         Me.Label1.Text = "Username"
         '
@@ -107,9 +110,10 @@ Partial Class ForgotPassword
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(95, 230)
+        Me.Label10.Location = New System.Drawing.Point(71, 187)
+        Me.Label10.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(73, 20)
+        Me.Label10.Size = New System.Drawing.Size(57, 15)
         Me.Label10.TabIndex = 10
         Me.Label10.Text = "Password"
         '
@@ -117,17 +121,18 @@ Partial Class ForgotPassword
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(95, 309)
+        Me.Label7.Location = New System.Drawing.Point(71, 251)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(132, 20)
+        Me.Label7.Size = New System.Drawing.Size(103, 15)
         Me.Label7.TabIndex = 11
         Me.Label7.Text = "Confirm Password"
         '
         'ForgotPassword
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.Label1)
@@ -137,7 +142,6 @@ Partial Class ForgotPassword
         Me.Controls.Add(Me.userInput)
         Me.Controls.Add(Me.txtNewPassConfirm)
         Me.Controls.Add(Me.txtNewPass)
-        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "ForgotPassword"
         Me.Text = "ForgotPassword"
         Me.ResumeLayout(False)
