@@ -105,28 +105,44 @@ Public Class Form1
 
 
         con.Open()
-
-        Dim getCredentials As New MySqlCommand("SELECT user_id, username FROM users WHERE username = @username AND password = @password", con)
+        ' Modified query to also get the role
+        Dim getCredentials As New MySqlCommand("SELECT user_id, username, role FROM users WHERE username = @username AND password = @password", con)
         getCredentials.Parameters.AddWithValue("@username", txtUsername.Text)
-            getCredentials.Parameters.AddWithValue("@password", txtPassword.Text)
-
-            Dim reader As MySqlDataReader = getCredentials.ExecuteReader()
+        getCredentials.Parameters.AddWithValue("@password", txtPassword.Text)
+        Dim reader As MySqlDataReader = getCredentials.ExecuteReader()
 
         If reader.Read() Then
-                Dim userId As Integer = reader.GetInt32("user_id")
+            Dim userId As Integer = reader.GetInt32("user_id")
             Dim userName As String = reader("username").ToString
+            Dim userRole As String = reader("role").ToString
+
+            ' Store user information in session
             Session.UserId = userId
             Session.UserName = userName
+            Session.UserRole = userRole ' You might want to add this to your Session class
 
             MsgBox("Login Successful")
-                Main.Show()
-                Me.Close()
-            Else
-            MsgBox("Invalid username or password.")
 
+            ' Redirect based on role
+            Select Case userRole.ToLower()
+                Case "admin"
+                    MsgBox("Login Successful")
+                    admin.Show()
+                    Me.Close()
+                'Case "employee"
+                    ' employeeForm.Show()
+                Case "customer"
+                    MsgBox("Login Successful")
+                    Main.Show()
+                    Me.Close()
+            End Select
+
+            Me.Close()
+        Else
+            MsgBox("Invalid username or password.")
         End If
 
-            reader.Close()
+        reader.Close()
         con.Close()
     End Sub
 
