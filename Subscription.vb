@@ -158,6 +158,7 @@ Public Class Subscription
                             Session.planName = plan_name
                             Session.planType = plan_type
                             Session.planPrice = price
+                            Session.fromProduct = False
                             Addon.Show()
                             Me.Close()
 

@@ -22,6 +22,7 @@ Partial Class Addon
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Addon))
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -36,17 +37,11 @@ Partial Class Addon
         Me.btnBuyNow = New System.Windows.Forms.Button()
         Me.btnCart = New System.Windows.Forms.Button()
         Me.lblPrice1 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
+        Me.lblSpecific = New System.Windows.Forms.Label()
         Me.btnNext = New System.Windows.Forms.Button()
         Me.btnMinus1 = New System.Windows.Forms.Button()
         Me.btnAdd1 = New System.Windows.Forms.Button()
         Me.txtHardware1 = New System.Windows.Forms.TextBox()
-        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.pbxPlanImage = New System.Windows.Forms.PictureBox()
         Me.gbxProduct1 = New System.Windows.Forms.GroupBox()
         Me.gbxProduct2 = New System.Windows.Forms.GroupBox()
         Me.btnMinus2 = New System.Windows.Forms.Button()
@@ -71,30 +66,40 @@ Partial Class Addon
         Me.txtTotal = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnPrevious = New System.Windows.Forms.Button()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.pbxPlanImage = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxPlanImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbxProduct1.SuspendLayout()
         Me.gbxProduct2.SuspendLayout()
         Me.gbxProduct3.SuspendLayout()
         Me.gbxProduct5.SuspendLayout()
         Me.gbxProduct4.SuspendLayout()
+        CType(Me.pbxPlanImage, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MenuStrip1
         '
         Me.MenuStrip1.BackColor = System.Drawing.Color.Transparent
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.ProductsToolStripMenuItem, Me.HelpToolStripMenuItem, Me.HomeToolStripMenuItem1})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.HomeToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.ProductsToolStripMenuItem, Me.HelpToolStripMenuItem, Me.HomeToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(815, 30)
+        Me.MenuStrip1.Size = New System.Drawing.Size(815, 28)
         Me.MenuStrip1.TabIndex = 22
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -103,41 +108,41 @@ Partial Class Addon
         Me.HomeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
         Me.HomeToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(84, 26)
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(84, 24)
         Me.HomeToolStripMenuItem.Text = "About Us"
         '
         'TicketsToolStripMenuItem
         '
         Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
         Me.TicketsToolStripMenuItem.Text = "Tickets"
         '
         'SubscriptionToolStripMenuItem
         '
         Me.SubscriptionToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
-        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(55, 26)
+        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(55, 24)
         Me.SubscriptionToolStripMenuItem.Text = "Help"
         '
         'ProductsToolStripMenuItem
         '
         Me.ProductsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ProductsToolStripMenuItem.Name = "ProductsToolStripMenuItem"
-        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(80, 26)
+        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(80, 24)
         Me.ProductsToolStripMenuItem.Text = "Products"
         '
         'HelpToolStripMenuItem
         '
         Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(105, 26)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(105, 24)
         Me.HelpToolStripMenuItem.Text = "Subscription"
         '
         'HomeToolStripMenuItem1
         '
         Me.HomeToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HomeToolStripMenuItem1.Name = "HomeToolStripMenuItem1"
-        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(64, 26)
+        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(64, 24)
         Me.HomeToolStripMenuItem1.Text = "Home"
         '
         'TextBox1
@@ -209,17 +214,17 @@ Partial Class Addon
         Me.lblPrice1.TabIndex = 37
         Me.lblPrice1.Text = "Price: 7990.00" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
-        'Label9
+        'lblSpecific
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.ForeColor = System.Drawing.Color.White
-        Me.Label9.Location = New System.Drawing.Point(16, 146)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(110, 24)
-        Me.Label9.TabIndex = 42
-        Me.Label9.Text = "Hardware"
+        Me.lblSpecific.AutoSize = True
+        Me.lblSpecific.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSpecific.ForeColor = System.Drawing.Color.White
+        Me.lblSpecific.Location = New System.Drawing.Point(16, 146)
+        Me.lblSpecific.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblSpecific.Name = "lblSpecific"
+        Me.lblSpecific.Size = New System.Drawing.Size(110, 24)
+        Me.lblSpecific.TabIndex = 42
+        Me.lblSpecific.Text = "Hardware"
         '
         'btnNext
         '
@@ -265,61 +270,6 @@ Partial Class Addon
         Me.txtHardware1.Size = New System.Drawing.Size(45, 22)
         Me.txtHardware1.TabIndex = 46
         Me.txtHardware1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'PictureBox6
-        '
-        Me.PictureBox6.Location = New System.Drawing.Point(413, 265)
-        Me.PictureBox6.Margin = New System.Windows.Forms.Padding(4)
-        Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(133, 80)
-        Me.PictureBox6.TabIndex = 34
-        Me.PictureBox6.TabStop = False
-        '
-        'PictureBox5
-        '
-        Me.PictureBox5.Location = New System.Drawing.Point(413, 177)
-        Me.PictureBox5.Margin = New System.Windows.Forms.Padding(4)
-        Me.PictureBox5.Name = "PictureBox5"
-        Me.PictureBox5.Size = New System.Drawing.Size(133, 80)
-        Me.PictureBox5.TabIndex = 33
-        Me.PictureBox5.TabStop = False
-        '
-        'PictureBox4
-        '
-        Me.PictureBox4.Location = New System.Drawing.Point(16, 265)
-        Me.PictureBox4.Margin = New System.Windows.Forms.Padding(4)
-        Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(133, 80)
-        Me.PictureBox4.TabIndex = 32
-        Me.PictureBox4.TabStop = False
-        '
-        'PictureBox3
-        '
-        Me.PictureBox3.Location = New System.Drawing.Point(16, 352)
-        Me.PictureBox3.Margin = New System.Windows.Forms.Padding(4)
-        Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(133, 80)
-        Me.PictureBox3.TabIndex = 31
-        Me.PictureBox3.TabStop = False
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.Location = New System.Drawing.Point(16, 177)
-        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(4)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(133, 80)
-        Me.PictureBox2.TabIndex = 30
-        Me.PictureBox2.TabStop = False
-        '
-        'pbxPlanImage
-        '
-        Me.pbxPlanImage.Location = New System.Drawing.Point(16, 54)
-        Me.pbxPlanImage.Margin = New System.Windows.Forms.Padding(4)
-        Me.pbxPlanImage.Name = "pbxPlanImage"
-        Me.pbxPlanImage.Size = New System.Drawing.Size(125, 78)
-        Me.pbxPlanImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxPlanImage.TabIndex = 26
-        Me.pbxPlanImage.TabStop = False
         '
         'gbxProduct1
         '
@@ -616,12 +566,93 @@ Partial Class Addon
         Me.btnPrevious.Text = "Previous"
         Me.btnPrevious.UseVisualStyleBackColor = True
         '
+        'TextBox2
+        '
+        Me.TextBox2.Location = New System.Drawing.Point(154, 147)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(649, 22)
+        Me.TextBox2.TabIndex = 66
+        '
+        'pbxPlanImage
+        '
+        Me.pbxPlanImage.Location = New System.Drawing.Point(16, 54)
+        Me.pbxPlanImage.Margin = New System.Windows.Forms.Padding(4)
+        Me.pbxPlanImage.Name = "pbxPlanImage"
+        Me.pbxPlanImage.Size = New System.Drawing.Size(125, 78)
+        Me.pbxPlanImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxPlanImage.TabIndex = 26
+        Me.pbxPlanImage.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.Location = New System.Drawing.Point(16, 177)
+        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(4)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(133, 80)
+        Me.PictureBox2.TabIndex = 30
+        Me.PictureBox2.TabStop = False
+        '
+        'PictureBox3
+        '
+        Me.PictureBox3.Location = New System.Drawing.Point(16, 352)
+        Me.PictureBox3.Margin = New System.Windows.Forms.Padding(4)
+        Me.PictureBox3.Name = "PictureBox3"
+        Me.PictureBox3.Size = New System.Drawing.Size(133, 80)
+        Me.PictureBox3.TabIndex = 31
+        Me.PictureBox3.TabStop = False
+        '
+        'PictureBox4
+        '
+        Me.PictureBox4.Location = New System.Drawing.Point(16, 265)
+        Me.PictureBox4.Margin = New System.Windows.Forms.Padding(4)
+        Me.PictureBox4.Name = "PictureBox4"
+        Me.PictureBox4.Size = New System.Drawing.Size(133, 80)
+        Me.PictureBox4.TabIndex = 32
+        Me.PictureBox4.TabStop = False
+        '
+        'PictureBox5
+        '
+        Me.PictureBox5.Location = New System.Drawing.Point(413, 177)
+        Me.PictureBox5.Margin = New System.Windows.Forms.Padding(4)
+        Me.PictureBox5.Name = "PictureBox5"
+        Me.PictureBox5.Size = New System.Drawing.Size(133, 80)
+        Me.PictureBox5.TabIndex = 33
+        Me.PictureBox5.TabStop = False
+        '
+        'PictureBox6
+        '
+        Me.PictureBox6.Location = New System.Drawing.Point(413, 265)
+        Me.PictureBox6.Margin = New System.Windows.Forms.Padding(4)
+        Me.PictureBox6.Name = "PictureBox6"
+        Me.PictureBox6.Size = New System.Drawing.Size(133, 80)
+        Me.PictureBox6.TabIndex = 34
+        Me.PictureBox6.TabStop = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
+        Me.PictureBox1.Location = New System.Drawing.Point(154, 147)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(28, 24)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 67
+        Me.PictureBox1.TabStop = False
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.White
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(50, 24)
+        Me.ToolStripMenuItem1.Text = "Cart"
+        '
         'Addon
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(815, 450)
+        Me.Controls.Add(Me.PictureBox1)
+        Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.btnPrevious)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.txtTotal)
@@ -630,7 +661,7 @@ Partial Class Addon
         Me.Controls.Add(Me.gbxProduct3)
         Me.Controls.Add(Me.gbxProduct2)
         Me.Controls.Add(Me.btnNext)
-        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.lblSpecific)
         Me.Controls.Add(Me.btnCart)
         Me.Controls.Add(Me.btnBuyNow)
         Me.Controls.Add(Me.PictureBox6)
@@ -650,12 +681,6 @@ Partial Class Addon
         Me.Text = "Addon"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxPlanImage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbxProduct1.ResumeLayout(False)
         Me.gbxProduct1.PerformLayout()
         Me.gbxProduct2.ResumeLayout(False)
@@ -666,6 +691,13 @@ Partial Class Addon
         Me.gbxProduct5.PerformLayout()
         Me.gbxProduct4.ResumeLayout(False)
         Me.gbxProduct4.PerformLayout()
+        CType(Me.pbxPlanImage, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -679,19 +711,13 @@ Partial Class Addon
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HomeToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents pbxPlanImage As PictureBox
     Friend WithEvents lblName As Label
     Friend WithEvents lblType As Label
     Friend WithEvents lblPrice As Label
-    Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents PictureBox3 As PictureBox
-    Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents PictureBox5 As PictureBox
-    Friend WithEvents PictureBox6 As PictureBox
     Friend WithEvents btnBuyNow As Button
     Friend WithEvents btnCart As Button
     Friend WithEvents lblPrice1 As Label
-    Friend WithEvents Label9 As Label
+    Friend WithEvents lblSpecific As Label
     Friend WithEvents btnNext As Button
     Friend WithEvents btnMinus1 As Button
     Friend WithEvents btnAdd1 As Button
@@ -720,4 +746,13 @@ Partial Class Addon
     Friend WithEvents txtTotal As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents btnPrevious As Button
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents pbxPlanImage As PictureBox
+    Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents PictureBox3 As PictureBox
+    Friend WithEvents PictureBox4 As PictureBox
+    Friend WithEvents PictureBox5 As PictureBox
+    Friend WithEvents PictureBox6 As PictureBox
+    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
 End Class

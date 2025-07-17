@@ -12,6 +12,6 @@
     Public Shared Property planType As String
     Public Shared Property planPrice As Decimal
 
-
+    Public Shared Property fromProduct As Boolean
 
 End Class

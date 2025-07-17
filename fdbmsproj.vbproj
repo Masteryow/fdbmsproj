@@ -134,6 +134,12 @@
     <Compile Include="Addon.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Cart.Designer.vb">
+      <DependentUpon>Cart.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Cart.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CreateAccount.Designer.vb">
       <DependentUpon>CreateAccount.vb</DependentUpon>
     </Compile>
@@ -186,6 +192,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Addon.resx">
       <DependentUpon>Addon.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cart.resx">
+      <DependentUpon>Cart.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateAccount.resx">
       <DependentUpon>CreateAccount.vb</DependentUpon>
@@ -258,6 +267,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\gif.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search-icon-transparent-images-vector-23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search-icon-transparent-background-8.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

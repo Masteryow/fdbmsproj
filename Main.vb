@@ -7,7 +7,12 @@ Public Class Main
     Dim name1 As String = "Welcome To SkyLink, " & Session.UserName & "!"
     Dim increment As Integer = 0
     Public receivID As Integer
+
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
+        Session.fromProduct = True
+        Addon.Show()
+
+        Me.Close()
 
     End Sub
 
