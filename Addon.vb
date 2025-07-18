@@ -183,43 +183,43 @@
 
     Private Sub btnCart_Click_1(sender As Object, e As EventArgs) Handles btnCart.Click
 
+        Dim currentItems As New List(Of cartItem)
+
         For i = 0 To 4
-
-
             If txtValues(i) > 0 Then
-
                 Dim item As New cartItem()
-
                 item.ProductName = productNames(i)
                 item.Quantity = txtValues(i)
                 item.Price = prices(i)
-
-
-                cartItems.Add(item)
-
-
-
-
+                currentItems.Add(item)
             End If
-
         Next
 
-        Cart.LoadCart(cartItems)
+        If currentItems.Count > 0 Then
+
+            Dim cartForm As New Cart()
+            cartForm.LoadCart(currentItems)
 
 
+            For i = 0 To 4
+                txtValues(i) = 0
+                groupHardware(i).Text = txtValues(i).ToString()
+            Next
 
 
-        For i = 0 To 4
-            txtValues(i) = 0
-            groupHardware(i).Text = txtValues(i)
-        Next
+            For i = 0 To 4
+                pageQuantities(page - 1, i) = txtValues(i)
+            Next
 
 
-        MsgBox("Added to Cart Successfully!")
+            total = If(Session.fromProduct, 0, planPrice)
+            txtTotal.Text = "Php " & total.ToString("F2")
 
-        cartItems.Clear
+            MsgBox("Added to Cart Successfully!")
+        Else
+            MsgBox("No items selected to add to cart!")
+        End If
     End Sub
-
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
         Cart.Show()
         Me.Close()
