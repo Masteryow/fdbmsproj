@@ -1,4 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports System.Diagnostics.Eventing.Reader
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class Cart
@@ -13,6 +14,9 @@ Public Class Cart
         Public Property AddonId As Integer
         Public Property Category As String
     End Class
+
+    Dim total As Decimal
+    Dim itemTotal As Decimal
 
     ' In Cart.vb
     Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -29,25 +33,19 @@ Public Class Cart
         ' Load items from database for Session.UserId
         ' Update cart item list and total label
 
-        Dim total As Decimal = 0
-        Dim cartItems As New List(Of CartItem)
 
-        Using con As New MySqlConnection(DatabaseHelper.ConnectionString)
-            con.Open()
-            Dim query As String = "SELECT sc.addon_id, a.item_name, sc.quantity, a.price FROM shopping_cart sc JOIN addons a ON sc.addon_id = a.addon_id WHERE sc.customer_id = @customerId"
-            Using cmd As New MySqlCommand(query, con)
-                cmd.Parameters.AddWithValue("@customerId", Session.UserId)
-                Using reader As MySqlDataReader = cmd.ExecuteReader()
-                    While reader.Read()
-                        Dim itemTotal As Decimal = reader.GetInt32("quantity") * reader.GetDecimal("price")
-                        total += itemTotal
-                        ' Add to cartItems if needed for display
-                    End While
-                End Using
-            End Using
-        End Using
+        If Session.fromProduct = True Then
+            total = 0
 
-        TextBox1.Text = "Php " & total.ToString("F2")
+        Else
+
+            total = Session.planPrice
+
+        End If
+
+
+
+        txtTotal.Text = "Php " & total.ToString("F2")
         ' Update cart display controls here
     End Sub
 
@@ -136,21 +134,25 @@ Public Class Cart
         Next
 
         ' Display total in TextBox1
-        TextBox1.Text = "Php " & total.ToString("F2")
+        txtTotal.Text = "Php " & total.ToString("F2")
     End Sub
 
     Public Function GetCartTotal() As Decimal
-        Dim total As Decimal = 0
+
 
         If Not Session.fromProduct AndAlso Session.planPrice > 0 Then
-            total += Session.planPrice
+
+            Return total
+
+        Else
+
+            Return ItemTotal
+
+
         End If
 
-        For Each item In cartItems
-            total += (item.Price * item.Quantity)
-        Next
 
-        Return total
+
     End Function
 
     Private Sub RemoveSelectedItems()
@@ -278,7 +280,7 @@ Public Class Cart
         Dim total As Decimal = GetCartTotal()
         Dim message As String = $"Total amount: Php {total:F2}" & vbCrLf & "Enter payment amount:"
 
-        Dim paymentInput As String = InputBox(message, "Payment", total.ToString("F2"))
+        Dim paymentInput As String = InputBox(message, "Payment")
 
         ' Check if user cancelled or entered empty value
         If String.IsNullOrEmpty(paymentInput) Then
@@ -319,7 +321,7 @@ Public Class Cart
         ' Return to addon selection - keep transaction active
         Dim addonForm As New Addon()
         addonForm.Show()
-        Me.Hide()
+        Me.Close()
     End Sub
 
     Private Sub btnCancelOrder_Click(sender As Object, e As EventArgs) Handles btnCancelOrder.Click
@@ -341,5 +343,50 @@ Public Class Cart
         Me.Close()
     End Sub
 
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles txtTotal.TextChanged
 
+    End Sub
+
+    Private Sub CheckedListBox1_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckedListBox1.ItemCheck
+        Dim fullText As String = CheckedListBox1.Items(e.Index).ToString()
+        Dim itemChanging As String = fullText.Split("-"c)(0).Trim()
+
+
+        Dim cartItems As New List(Of CartItem)
+        Dim itemName As String = ""
+
+    
+                        Using con As New MySqlConnection(DatabaseHelper.ConnectionString)
+                            con.Open()
+
+
+                            Dim query As String = "SELECT sc.addon_id, a.item_name, sc.quantity, a.price FROM shopping_cart sc JOIN 
+                                    addons a ON sc.addon_id = a.addon_id WHERE sc.customer_id = @customerId AND item_name = @itemName"
+                            Using cmd As New MySqlCommand(query, con)
+                cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                cmd.Parameters.AddWithValue("@itemName", itemChanging)
+
+                Using reader As MySqlDataReader = cmd.ExecuteReader()
+                                    While reader.Read()
+
+
+                        itemTotal = reader.GetInt32("quantity") * reader.GetDecimal("price")
+
+                        If e.NewValue = CheckState.Checked Then
+
+                                                    total += itemTotal
+
+                                                ElseIf e.NewValue = CheckState.Unchecked Then
+                                                    total -= itemTotal
+                                                End If
+
+
+
+                    End While
+                                End Using
+                            End Using
+                        End Using
+                        txtTotal.Text = "Php " & total.ToString("F2")
+
+    End Sub
 End Class

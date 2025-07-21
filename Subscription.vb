@@ -244,5 +244,8 @@ Public Class Subscription
         End If
     End Sub
 
-
+    Private Sub btnCart_Click(sender As Object, e As EventArgs) Handles btnCart.Click
+        Cart.Show()
+        Me.Close()
+    End Sub
 End Class

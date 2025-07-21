@@ -31,7 +31,7 @@ Partial Class Cart
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txtTotal = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
         Me.btnRemoveSelected = New System.Windows.Forms.Button()
@@ -49,9 +49,9 @@ Partial Class Cart
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.HomeToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.ProductsToolStripMenuItem, Me.HelpToolStripMenuItem, Me.HomeToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
+        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(600, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(800, 28)
         Me.MenuStrip1.TabIndex = 23
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -59,7 +59,7 @@ Partial Class Cart
         '
         Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(41, 20)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(50, 24)
         Me.ToolStripMenuItem1.Text = "Cart"
         '
         'HomeToolStripMenuItem
@@ -67,41 +67,41 @@ Partial Class Cart
         Me.HomeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
         Me.HomeToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(68, 20)
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(84, 24)
         Me.HomeToolStripMenuItem.Text = "About Us"
         '
         'TicketsToolStripMenuItem
         '
         Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.TicketsToolStripMenuItem.Text = "Tickets"
         '
         'SubscriptionToolStripMenuItem
         '
         Me.SubscriptionToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
-        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
+        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(55, 24)
         Me.SubscriptionToolStripMenuItem.Text = "Help"
         '
         'ProductsToolStripMenuItem
         '
         Me.ProductsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ProductsToolStripMenuItem.Name = "ProductsToolStripMenuItem"
-        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(66, 20)
+        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(80, 24)
         Me.ProductsToolStripMenuItem.Text = "Products"
         '
         'HelpToolStripMenuItem
         '
         Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(85, 20)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(105, 24)
         Me.HelpToolStripMenuItem.Text = "Subscription"
         '
         'HomeToolStripMenuItem1
         '
         Me.HomeToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HomeToolStripMenuItem1.Name = "HomeToolStripMenuItem1"
-        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(52, 20)
+        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(64, 24)
         Me.HomeToolStripMenuItem1.Text = "Home"
         '
         'Label1
@@ -109,93 +109,96 @@ Partial Class Cart
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Tahoma", 22.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(25, 45)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label1.Location = New System.Drawing.Point(33, 55)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(78, 36)
+        Me.Label1.Size = New System.Drawing.Size(98, 45)
         Me.Label1.TabIndex = 24
         Me.Label1.Text = "Cart"
         '
-        'TextBox1
+        'txtTotal
         '
-        Me.TextBox1.Location = New System.Drawing.Point(422, 54)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(162, 20)
-        Me.TextBox1.TabIndex = 25
+        Me.txtTotal.Location = New System.Drawing.Point(563, 66)
+        Me.txtTotal.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.txtTotal.Name = "txtTotal"
+        Me.txtTotal.Size = New System.Drawing.Size(215, 22)
+        Me.txtTotal.TabIndex = 25
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(378, 55)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label2.Location = New System.Drawing.Point(504, 68)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(43, 17)
+        Me.Label2.Size = New System.Drawing.Size(53, 21)
         Me.Label2.TabIndex = 26
         Me.Label2.Text = "Total"
         '
         'CheckedListBox1
         '
         Me.CheckedListBox1.FormattingEnabled = True
-        Me.CheckedListBox1.Location = New System.Drawing.Point(31, 99)
-        Me.CheckedListBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.CheckedListBox1.Location = New System.Drawing.Point(41, 122)
+        Me.CheckedListBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(212, 229)
+        Me.CheckedListBox1.Size = New System.Drawing.Size(281, 276)
         Me.CheckedListBox1.TabIndex = 27
         '
         'btnRemoveSelected
         '
-        Me.btnRemoveSelected.Location = New System.Drawing.Point(289, 247)
+        Me.btnRemoveSelected.Location = New System.Drawing.Point(385, 304)
+        Me.btnRemoveSelected.Margin = New System.Windows.Forms.Padding(4)
         Me.btnRemoveSelected.Name = "btnRemoveSelected"
-        Me.btnRemoveSelected.Size = New System.Drawing.Size(75, 23)
+        Me.btnRemoveSelected.Size = New System.Drawing.Size(100, 28)
         Me.btnRemoveSelected.TabIndex = 28
         Me.btnRemoveSelected.Text = "remove selected"
         Me.btnRemoveSelected.UseVisualStyleBackColor = True
         '
         'btnClearCart
         '
-        Me.btnClearCart.Location = New System.Drawing.Point(381, 247)
+        Me.btnClearCart.Location = New System.Drawing.Point(508, 304)
+        Me.btnClearCart.Margin = New System.Windows.Forms.Padding(4)
         Me.btnClearCart.Name = "btnClearCart"
-        Me.btnClearCart.Size = New System.Drawing.Size(75, 23)
+        Me.btnClearCart.Size = New System.Drawing.Size(100, 28)
         Me.btnClearCart.TabIndex = 29
         Me.btnClearCart.Text = "Clear Cart"
         Me.btnClearCart.UseVisualStyleBackColor = True
         '
         'btnCheckout
         '
-        Me.btnCheckout.Location = New System.Drawing.Point(289, 291)
+        Me.btnCheckout.Location = New System.Drawing.Point(385, 358)
+        Me.btnCheckout.Margin = New System.Windows.Forms.Padding(4)
         Me.btnCheckout.Name = "btnCheckout"
-        Me.btnCheckout.Size = New System.Drawing.Size(75, 23)
+        Me.btnCheckout.Size = New System.Drawing.Size(100, 28)
         Me.btnCheckout.TabIndex = 31
         Me.btnCheckout.Text = "Checkout"
         Me.btnCheckout.UseVisualStyleBackColor = True
         '
         'btnContinueShopping
         '
-        Me.btnContinueShopping.Location = New System.Drawing.Point(381, 291)
+        Me.btnContinueShopping.Location = New System.Drawing.Point(508, 358)
+        Me.btnContinueShopping.Margin = New System.Windows.Forms.Padding(4)
         Me.btnContinueShopping.Name = "btnContinueShopping"
-        Me.btnContinueShopping.Size = New System.Drawing.Size(168, 23)
+        Me.btnContinueShopping.Size = New System.Drawing.Size(224, 28)
         Me.btnContinueShopping.TabIndex = 32
         Me.btnContinueShopping.Text = "Continue Shopping"
         Me.btnContinueShopping.UseVisualStyleBackColor = True
         '
         'btnCancelOrder
         '
-        Me.btnCancelOrder.Location = New System.Drawing.Point(381, 320)
+        Me.btnCancelOrder.Location = New System.Drawing.Point(508, 394)
+        Me.btnCancelOrder.Margin = New System.Windows.Forms.Padding(4)
         Me.btnCancelOrder.Name = "btnCancelOrder"
-        Me.btnCancelOrder.Size = New System.Drawing.Size(168, 23)
+        Me.btnCancelOrder.Size = New System.Drawing.Size(224, 28)
         Me.btnCancelOrder.TabIndex = 33
         Me.btnCancelOrder.Text = "Cancel Order"
         Me.btnCancelOrder.UseVisualStyleBackColor = True
         '
         'Cart
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(600, 366)
+        Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Controls.Add(Me.btnCancelOrder)
         Me.Controls.Add(Me.btnContinueShopping)
         Me.Controls.Add(Me.btnCheckout)
@@ -203,10 +206,10 @@ Partial Class Cart
         Me.Controls.Add(Me.btnRemoveSelected)
         Me.Controls.Add(Me.CheckedListBox1)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.txtTotal)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.MenuStrip1)
-        Me.Margin = New System.Windows.Forms.Padding(2)
+        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "Cart"
         Me.Text = "Cart"
         Me.MenuStrip1.ResumeLayout(False)
@@ -225,7 +228,7 @@ Partial Class Cart
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HomeToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents Label1 As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents txtTotal As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents CheckedListBox1 As CheckedListBox
     Friend WithEvents btnRemoveSelected As Button

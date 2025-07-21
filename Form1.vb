@@ -121,7 +121,7 @@ Public Class Form1
             Session.UserName = userName
             Session.UserRole = userRole ' You might want to add this to your Session class
 
-            MsgBox("Login Successful")
+
 
             ' Redirect based on role
             Select Case userRole.ToLower()

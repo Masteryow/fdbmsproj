@@ -57,4 +57,9 @@ Public Class Main
         Me.Close()
 
     End Sub
+
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        Cart.Show()
+        Me.Close()
+    End Sub
 End Class

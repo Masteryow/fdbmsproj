@@ -20,6 +20,7 @@ Public Class Addon
     Dim pageQuantities(2, 4) As Integer
     Dim cartItems As New List(Of cartItem)
     Dim addonIds() As Integer
+    Dim addedItemsTotal As Decimal = 0
 
     Public Class cartItem
         Public Property ProductName As String
@@ -133,7 +134,7 @@ Public Class Addon
             pbxPlanImage.Image = imageRcv
             lblName.Text = "Plan: " & planName
             lblType.Text = "Type: " & planType
-            lblPrice.Text = "Price: " & planPrice
+            lblPrice.Text = "Price: " & planPrice.ToString("F2")
         End If
 
         pageHandling()
@@ -145,6 +146,11 @@ Public Class Addon
 
         txtValues(index) += 1
         groupHardware(index).Text = txtValues(index).ToString()
+
+        addedItemsTotal += prices(index)
+        total += prices(index)
+        txtTotal.Text = "Php " & total.ToString("F2")
+        TextBox3.Text = addedItemsTotal
         ' Don't update total here - total should only show base plan price
     End Sub
 
@@ -162,6 +168,11 @@ Public Class Addon
 
         groupHardware(index).Text = txtValues(index).ToString
         ' Don't update total here - total should only show base plan price
+
+        total -= prices(index)
+        addedItemsTotal -= prices(index)
+        txtTotal.Text = "Php " & total.ToString("F2")
+        TextBox3.Text = addedItemsTotal
 
     End Sub
 
@@ -204,7 +215,7 @@ Public Class Addon
 
         Dim hasItems As Boolean = False
         Dim failedItems As New List(Of String)
-        Dim addedItemsTotal As Decimal = 0
+
 
         ' Check if user is logged in
         If Session.UserId <= 0 Then
@@ -219,8 +230,7 @@ Public Class Addon
 
                 ' Add to database cart
                 If AddToCartDatabase(Session.UserId, addonIds(i), txtValues(i)) Then
-                    ' Success - add to running total
-                    addedItemsTotal += txtValues(i) * prices(i)
+
                 Else
                     failedItems.Add(productNames(i))
                 End If
@@ -229,9 +239,6 @@ Public Class Addon
 
         If hasItems Then
             If failedItems.Count = 0 Then
-                ' Add the cost of added items to the running total
-                total += addedItemsTotal
-                txtTotal.Text = "Php " & total.ToString("F2")
 
                 ' Reset quantities across ALL pages, not just current page
                 For pageNum = 0 To 2
@@ -261,6 +268,7 @@ Public Class Addon
 
     Private Sub CartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles cartbutton.Click
 
+
         ' ADDED: Check transaction timeout before navigation
         Session.CheckTransactionTimeout()
 
@@ -275,6 +283,8 @@ Public Class Addon
         Cart.Show()
         Me.Close()
     End Sub
+
+
 End Class
 
 ' You'll also need a DatabaseHelper class like this:
