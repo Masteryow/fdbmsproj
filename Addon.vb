@@ -213,6 +213,10 @@ Public Class Addon
 
     Private Sub btnCart_Click_1(sender As Object, e As EventArgs) Handles btnCart.Click
 
+        For i = 0 To 4
+            pageQuantities(page - 1, i) = txtValues(i)
+        Next
+
         Dim hasItems As Boolean = False
         Dim failedItems As New List(Of String)
 
@@ -223,19 +227,33 @@ Public Class Addon
             Return
         End If
 
-        ' Add items to database cart and calculate total of added items
-        For i = 0 To 4
-            If txtValues(i) > 0 Then
-                hasItems = True
+        Dim currentPageBeforeProcessing As Integer = page
+        Dim successfullyAddedTotal As Decimal = 0
 
-                ' Add to database cart
-                If AddToCartDatabase(Session.UserId, addonIds(i), txtValues(i)) Then
+        ' Process all pages (1-3) and all items (0-4)
+        For currentPage = 1 To 3
+            ' Temporarily set the page and load its data using pageHandling
+            page = currentPage
+            pageHandling()
 
-                Else
-                    failedItems.Add(productNames(i))
+            ' Process each item on this page
+            For itemIndex = 0 To 4
+                Dim quantity = pageQuantities(currentPage - 1, itemIndex)
+                If quantity > 0 Then
+                    hasItems = True
+                    If AddToCartDatabase(Session.UserId, addonIds(itemIndex), quantity) Then
+                        successfullyAddedTotal += prices(itemIndex) * quantity
+                    Else
+                        failedItems.Add(productNames(itemIndex))
+                    End If
                 End If
-            End If
+            Next
         Next
+
+        ' Restore the original page
+        page = currentPageBeforeProcessing
+        pageHandling()
+
 
         If hasItems Then
             If failedItems.Count = 0 Then
