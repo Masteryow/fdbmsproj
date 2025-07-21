@@ -1,8 +1,8 @@
 ﻿Public Class Session
     ' Existing properties
-    Public Shared Property UserId As Integer = 8 'for debug, remove if final
-    Public Shared Property UserName As String = "Kelly" 'for debug, remove if final
-    Public Shared Property PlanId As Integer = 1 'for debug, remove if final
+    Public Shared Property UserId As Integer 'for debug, remove if final
+    Public Shared Property UserName As String 'for debug, remove if final
+    Public Shared Property PlanId As Integer  'for debug, remove if final
     Public Shared Property planImage As Image
     Public Shared Property planName As String
     Public Shared Property planType As String

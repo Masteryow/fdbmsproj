@@ -109,7 +109,7 @@ Public Class Addon
     Private Sub Addon_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Session.CheckTransactionTimeout()
 
-        If Not Session.IsTransactionActive Then
+        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False Then
             MessageBox.Show("Your session has expired. Please select a plan again.", "Session Expired", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Subscription.Show()
             Me.Close()
@@ -290,7 +290,7 @@ Public Class Addon
         ' ADDED: Check transaction timeout before navigation
         Session.CheckTransactionTimeout()
 
-        If Not Session.IsTransactionActive Then
+        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False Then
             MessageBox.Show("Your session has expired. Please select a plan again.", "Session Expired", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Subscription.Show()
             Me.Close()
@@ -302,7 +302,10 @@ Public Class Addon
         Me.Close()
     End Sub
 
-
+    Private Sub HelpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem.Click
+        Subscription.Show()
+        Me.Close()
+    End Sub
 End Class
 
 ' You'll also need a DatabaseHelper class like this:

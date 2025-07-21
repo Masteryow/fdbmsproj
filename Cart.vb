@@ -29,6 +29,13 @@ Public Class Cart
         btnDM.Visible = False
         btnClearCart.Visible = False
 
+        If Session.fromProduct = False Then
+            btnCancelOrder.Visible = True
+
+        Else
+
+            btnCancelOrder.Visible = False
+        End If
     End Sub
 
 
@@ -138,26 +145,14 @@ Public Class Cart
 
     Public Function GetCartTotal() As Decimal
 
-
-        If Not Session.fromProduct AndAlso Session.planPrice > 0 Then
-
-            Return total
-
-        Else
-
-            Return ItemTotal
-
-
-        End If
-
-
+        Return total
 
     End Function
 
     Private Sub RemoveSelectedItems()
         ' Check transaction validity before modifying cart
-        Session.CheckTransactionTimeout()
-        If Not Session.IsTransactionActive Then
+        Session.CheckTransactionTimeout ()
+        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False Then
             MessageBox.Show("Session expired. Please select a plan again.")
             ReturnToPlanSelection()
             Return
@@ -211,7 +206,7 @@ Public Class Cart
     Public Sub ClearCart()
         ' Check transaction validity before clearing cart
         Session.CheckTransactionTimeout()
-        If Not Session.IsTransactionActive Then
+        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False Then
             MessageBox.Show("Session expired. Please select a plan again.")
             ReturnToPlanSelection()
             Return
@@ -245,6 +240,9 @@ Public Class Cart
         If CheckedListBox1.Items.Count = 1 AndAlso Session.fromProduct = False Then
             MsgBox("There is nothing to delete")
             Return
+        ElseIf CheckedListBox1.Items.Count = 0 AndAlso Session.fromProduct = True Then
+            MsgBox("There is nothing to delete")
+            Return
         End If
 
         btnCheck.Visible = True
@@ -255,12 +253,20 @@ Public Class Cart
         btnDeletionMode.Enabled = False
         btnDM.Enabled = True
 
+        If Session.fromProduct = False Then
+            For i As Integer = 1 To CheckedListBox1.Items.Count - 1
+                CheckedListBox1.SetItemChecked(i, False)
+            Next
 
-        For i As Integer = 1 To CheckedListBox1.Items.Count - 1
-            CheckedListBox1.SetItemChecked(i, False)
-        Next
+            total = Session.planPrice
 
-        total = Session.planPrice
+        Else
+            For i As Integer = 0 To CheckedListBox1.Items.Count - 1
+                CheckedListBox1.SetItemChecked(i, False)
+            Next
+            total = 0
+        End If
+
         txtTotal.Text = "Php " & total.ToString("F2")
     End Sub
 
@@ -290,7 +296,7 @@ Public Class Cart
         End If
 
         Session.CheckTransactionTimeout()
-        If Not Session.IsTransactionActive Then
+        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False Then
             MessageBox.Show("Session expired. Please select a plan again.")
             ReturnToPlanSelection()
             Return
@@ -369,26 +375,29 @@ Public Class Cart
     Private Sub form_closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         ' Explicitly cancel the transaction
 
-        Try
-            Using con As New MySqlConnection(strCon)
-                con.Open()
-                Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"
-                Using cmd As New MySqlCommand(deleteQuery, con)
-                    cmd.Parameters.AddWithValue("@customerId", Session.UserId)
-                    cmd.ExecuteNonQuery()
+        If Session.fromProduct = False Then
+            Try
+                Using con As New MySqlConnection(strCon)
+                    con.Open()
+                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"
+                    Using cmd As New MySqlCommand(deleteQuery, con)
+                        cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                        cmd.ExecuteNonQuery()
+                    End Using
                 End Using
-            End Using
 
-            cartItems.Clear()
-            CheckedListBox1.Items.Clear()
-            DisplayPlanDetails() ' Re-add plan if applicable
-            UpdateTotal()
+                cartItems.Clear()
+                CheckedListBox1.Items.Clear()
+                DisplayPlanDetails() ' Re-add plan if applicable
+                UpdateTotal()
 
-            Session.EndTransaction(False)
+                Session.EndTransaction(False)
 
-        Catch ex As Exception
-            MessageBox.Show("Error clearing cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+            Catch ex As Exception
+                MessageBox.Show("Error clearing cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+        End If
 
 
     End Sub
@@ -455,7 +464,11 @@ Public Class Cart
                 Return
             End If
         End If
-        If CheckedListBox1.CheckedItems.Count = 1 And Session.fromProduct = False Then
+        If CheckedListBox1.CheckedItems.Count = 1 AndAlso Session.fromProduct = False Then
+            MessageBox.Show("Please select items to remove!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+
+        ElseIf CheckedListBox1.CheckedItems.Count = 0 AndAlso Session.fromProduct = True Then
             MessageBox.Show("Please select items to remove!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
@@ -474,5 +487,27 @@ Public Class Cart
         lblDeletionMode.Visible = False
         btnClearCart.Visible = False
         btnDeletionMode.Enabled = True
+
+        RemoveHandler CheckedListBox1.ItemCheck, AddressOf CheckedListBox1_ItemCheck
+
+        If Session.fromProduct = False Then
+            For i As Integer = 1 To CheckedListBox1.Items.Count - 1
+                CheckedListBox1.SetItemChecked(i, False)
+            Next
+
+
+        ElseIf Session.fromProduct = True Then
+
+            For i As Integer = 0 To CheckedListBox1.Items.Count - 1
+                CheckedListBox1.SetItemChecked(i, False)
+            Next
+
+        End If
+        AddHandler CheckedListBox1.ItemCheck, AddressOf CheckedListBox1_ItemCheck
+
+    End Sub
+
+    Private Sub CheckedListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox1.SelectedIndexChanged
+
     End Sub
 End Class
