@@ -332,8 +332,9 @@ Public Class Cart
                                    MessageBoxIcon.Question)
 
         If result = DialogResult.Yes Then
+            ClearCart()
             Session.EndTransaction(False)
-            ClearCart() ' Clear the database cart as well
+            ' Clear the database cart as well
             ReturnToPlanSelection()
         End If
     End Sub

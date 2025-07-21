@@ -242,7 +242,7 @@ Public Class Addon
                 If quantity > 0 Then
                     hasItems = True
                     If AddToCartDatabase(Session.UserId, addonIds(itemIndex), quantity) Then
-                        successfullyAddedTotal += prices(itemIndex) * quantity
+
                     Else
                         failedItems.Add(productNames(itemIndex))
                     End If
