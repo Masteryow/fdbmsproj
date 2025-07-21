@@ -46,9 +46,9 @@
 
     Public Shared Sub EndTransaction(completed As Boolean)
         If completed Then
-            Console.WriteLine($"Transaction Completed: {TransactionId}")
+            MsgBox($"Transaction Completed: {TransactionId}")
         Else
-            Console.WriteLine($"Transaction Cancelled: {TransactionId}")
+            MsgBox($"Transaction Cancelled: {TransactionId}")
         End If
 
         ' Clear transaction data
