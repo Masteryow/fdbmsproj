@@ -17,14 +17,18 @@ Public Class Cart
 
     Dim total As Decimal
     Dim itemTotal As Decimal
-
+    Dim deletionMode = False
     ' In Cart.vb
-    Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
         DisplayPlanDetails()             ' Show selected plan if exists
         LoadCartFromDatabase()          ' Load actual cart items from DB
         RefreshCartDisplay()            ' Display them in CheckedListBox
         UpdateTotal()
         RefreshCart() ' Show total including plan
+        btnCheck.Visible = False
+        btnDM.Visible = False
+        btnClearCart.Visible = False
+
     End Sub
 
 
@@ -127,11 +131,6 @@ Public Class Cart
         If Not Session.fromProduct AndAlso Session.planPrice > 0 Then
             total += Session.planPrice
         End If
-
-        ' Add cart items total
-        For Each item In cartItems
-            total += (item.Price * item.Quantity)
-        Next
 
         ' Display total in TextBox1
         txtTotal.Text = "Php " & total.ToString("F2")
@@ -240,17 +239,29 @@ Public Class Cart
     End Sub
 
     ' Button event handlers (add these buttons to your form if they don't exist)
-    Private Sub btnRemoveSelected_Click(sender As Object, e As EventArgs) Handles btnRemoveSelected.Click
-        If CheckedListBox1.CheckedItems.Count = 0 Then
-            MessageBox.Show("Please select items to remove!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    Private Sub btnRemoveSelected_Click(sender As Object, e As EventArgs) Handles btnDeletionMode.Click
+
+
+        If CheckedListBox1.Items.Count = 1 AndAlso Session.fromProduct = False Then
+            MsgBox("There is nothing to delete")
             Return
         End If
 
-        Dim result As DialogResult = MessageBox.Show("Are you sure you want to remove selected items?",
-                                                    "Confirm Removal", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-        If result = DialogResult.Yes Then
-            RemoveSelectedItems()
-        End If
+        btnCheck.Visible = True
+        btnDM.Visible = True
+        deletionMode = True
+        btnClearCart.Visible = True
+        lblDeletionMode.Visible = True
+        btnDeletionMode.Enabled = False
+        btnDM.Enabled = True
+
+
+        For i As Integer = 1 To CheckedListBox1.Items.Count - 1
+            CheckedListBox1.SetItemChecked(i, False)
+        Next
+
+        total = Session.planPrice
+        txtTotal.Text = "Php " & total.ToString("F2")
     End Sub
 
     Private Sub btnClearCart_Click(sender As Object, e As EventArgs) Handles btnClearCart.Click
@@ -258,13 +269,26 @@ Public Class Cart
                                                     "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
             ClearCart()
+            deletionMode = False
+            btnCheck.Visible = False
+            btnDM.Visible = False
+            lblDeletionMode.Visible = False
+            btnClearCart.Visible = False
+            btnDeletionMode.Enabled = True
         End If
     End Sub
 
 
 
     Private Sub btnCheckout_Click(sender As Object, e As EventArgs) Handles btnCheckout.Click
+
         ' Check transaction validity before checkout
+
+        If deletionMode = True Then
+            MsgBox("Please Exit Deletion Mode First!")
+            Return
+        End If
+
         Session.CheckTransactionTimeout()
         If Not Session.IsTransactionActive Then
             MessageBox.Show("Session expired. Please select a plan again.")
@@ -321,12 +345,12 @@ Public Class Cart
         ' Return to addon selection - keep transaction active
         Dim addonForm As New Addon()
         addonForm.Show()
-        Me.Close()
+        Me.Hide()
     End Sub
 
     Private Sub btnCancelOrder_Click(sender As Object, e As EventArgs) Handles btnCancelOrder.Click
         ' Explicitly cancel the transaction
-        Dim result = MessageBox.Show("Are you sure you want to cancel your order?",
+        Dim result As DialogResult = MessageBox.Show("Are you sure you want to cancel your order?",
                                    "Cancel Order",
                                    MessageBoxButtons.YesNo,
                                    MessageBoxIcon.Question)
@@ -339,6 +363,36 @@ Public Class Cart
         End If
     End Sub
 
+    ' Add this field to your form class
+    Private isProgrammaticClose As Boolean = False
+
+    Private Sub form_closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        ' Explicitly cancel the transaction
+
+        Try
+            Using con As New MySqlConnection(strCon)
+                con.Open()
+                Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"
+                Using cmd As New MySqlCommand(deleteQuery, con)
+                    cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                    cmd.ExecuteNonQuery()
+                End Using
+            End Using
+
+            cartItems.Clear()
+            CheckedListBox1.Items.Clear()
+            DisplayPlanDetails() ' Re-add plan if applicable
+            UpdateTotal()
+
+            Session.EndTransaction(False)
+
+        Catch ex As Exception
+            MessageBox.Show("Error clearing cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+
+    End Sub
+
     Private Sub ReturnToPlanSelection()
         Subscription.Show()
         Me.Close()
@@ -349,45 +403,76 @@ Public Class Cart
     End Sub
 
     Private Sub CheckedListBox1_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckedListBox1.ItemCheck
-        Dim fullText As String = CheckedListBox1.Items(e.Index).ToString()
-        Dim itemChanging As String = fullText.Split("-"c)(0).Trim()
+
+        If deletionMode = False Then
+            Dim fullText As String = CheckedListBox1.Items(e.Index).ToString()
+            Dim itemChanging As String = fullText.Split("-"c)(0).Trim()
 
 
-        Dim cartItems As New List(Of CartItem)
-        Dim itemName As String = ""
-
-    
-                        Using con As New MySqlConnection(DatabaseHelper.ConnectionString)
-                            con.Open()
+            Dim cartItems As New List(Of CartItem)
+            Dim itemName As String = ""
 
 
-                            Dim query As String = "SELECT sc.addon_id, a.item_name, sc.quantity, a.price FROM shopping_cart sc JOIN 
+            Using con As New MySqlConnection(DatabaseHelper.ConnectionString)
+                con.Open()
+
+
+                Dim query As String = "SELECT sc.addon_id, a.item_name, sc.quantity, a.price FROM shopping_cart sc JOIN 
                                     addons a ON sc.addon_id = a.addon_id WHERE sc.customer_id = @customerId AND item_name = @itemName"
-                            Using cmd As New MySqlCommand(query, con)
-                cmd.Parameters.AddWithValue("@customerId", Session.UserId)
-                cmd.Parameters.AddWithValue("@itemName", itemChanging)
+                Using cmd As New MySqlCommand(query, con)
+                    cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                    cmd.Parameters.AddWithValue("@itemName", itemChanging)
 
-                Using reader As MySqlDataReader = cmd.ExecuteReader()
-                                    While reader.Read()
-
-
-                        itemTotal = reader.GetInt32("quantity") * reader.GetDecimal("price")
-
-                        If e.NewValue = CheckState.Checked Then
-
-                                                    total += itemTotal
-
-                                                ElseIf e.NewValue = CheckState.Unchecked Then
-                                                    total -= itemTotal
-                                                End If
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        While reader.Read()
 
 
+                            itemTotal = reader.GetInt32("quantity") * reader.GetDecimal("price")
 
-                    End While
-                                End Using
-                            End Using
-                        End Using
-                        txtTotal.Text = "Php " & total.ToString("F2")
+                            If e.NewValue = CheckState.Checked Then
 
+                                total += itemTotal
+
+                            ElseIf e.NewValue = CheckState.Unchecked Then
+                                total -= itemTotal
+                            End If
+
+
+
+                        End While
+                    End Using
+                End Using
+            End Using
+            txtTotal.Text = "Php " & total.ToString("F2")
+        End If
+    End Sub
+
+    Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
+
+        If Session.fromProduct = False Then
+            If CheckedListBox1.SelectedIndex = 0 Then
+                MsgBox("Plan cannot be deleted")
+                Return
+            End If
+        End If
+        If CheckedListBox1.CheckedItems.Count = 1 And Session.fromProduct = False Then
+            MessageBox.Show("Please select items to remove!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
+        Dim result As DialogResult = MessageBox.Show("Are you sure you want to remove selected items?",
+                                                    "Confirm Removal", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If result = DialogResult.Yes Then
+            RemoveSelectedItems()
+        End If
+    End Sub
+
+    Private Sub btnDM_Click(sender As Object, e As EventArgs) Handles btnDM.Click
+        deletionMode = False
+        btnCheck.Visible = False
+        btnDM.Visible = False
+        lblDeletionMode.Visible = False
+        btnClearCart.Visible = False
+        btnDeletionMode.Enabled = True
     End Sub
 End Class

@@ -34,11 +34,14 @@ Partial Class Cart
         Me.txtTotal = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
-        Me.btnRemoveSelected = New System.Windows.Forms.Button()
+        Me.btnDeletionMode = New System.Windows.Forms.Button()
         Me.btnClearCart = New System.Windows.Forms.Button()
         Me.btnCheckout = New System.Windows.Forms.Button()
         Me.btnContinueShopping = New System.Windows.Forms.Button()
         Me.btnCancelOrder = New System.Windows.Forms.Button()
+        Me.lblDeletionMode = New System.Windows.Forms.Label()
+        Me.btnCheck = New System.Windows.Forms.Button()
+        Me.btnDM = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -143,15 +146,15 @@ Partial Class Cart
         Me.CheckedListBox1.Size = New System.Drawing.Size(281, 276)
         Me.CheckedListBox1.TabIndex = 27
         '
-        'btnRemoveSelected
+        'btnDeletionMode
         '
-        Me.btnRemoveSelected.Location = New System.Drawing.Point(385, 304)
-        Me.btnRemoveSelected.Margin = New System.Windows.Forms.Padding(4)
-        Me.btnRemoveSelected.Name = "btnRemoveSelected"
-        Me.btnRemoveSelected.Size = New System.Drawing.Size(100, 28)
-        Me.btnRemoveSelected.TabIndex = 28
-        Me.btnRemoveSelected.Text = "remove selected"
-        Me.btnRemoveSelected.UseVisualStyleBackColor = True
+        Me.btnDeletionMode.Location = New System.Drawing.Point(385, 304)
+        Me.btnDeletionMode.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnDeletionMode.Name = "btnDeletionMode"
+        Me.btnDeletionMode.Size = New System.Drawing.Size(100, 28)
+        Me.btnDeletionMode.TabIndex = 28
+        Me.btnDeletionMode.Text = "Deletion Mode"
+        Me.btnDeletionMode.UseVisualStyleBackColor = True
         '
         'btnClearCart
         '
@@ -193,17 +196,49 @@ Partial Class Cart
         Me.btnCancelOrder.Text = "Cancel Order"
         Me.btnCancelOrder.UseVisualStyleBackColor = True
         '
+        'lblDeletionMode
+        '
+        Me.lblDeletionMode.AutoSize = True
+        Me.lblDeletionMode.ForeColor = System.Drawing.Color.Red
+        Me.lblDeletionMode.Location = New System.Drawing.Point(41, 13)
+        Me.lblDeletionMode.Name = "lblDeletionMode"
+        Me.lblDeletionMode.Size = New System.Drawing.Size(95, 16)
+        Me.lblDeletionMode.TabIndex = 34
+        Me.lblDeletionMode.Text = "Deletion Mode"
+        Me.lblDeletionMode.Visible = False
+        '
+        'btnCheck
+        '
+        Me.btnCheck.Location = New System.Drawing.Point(142, 10)
+        Me.btnCheck.Name = "btnCheck"
+        Me.btnCheck.Size = New System.Drawing.Size(75, 23)
+        Me.btnCheck.TabIndex = 35
+        Me.btnCheck.Text = "Check"
+        Me.btnCheck.UseVisualStyleBackColor = True
+        '
+        'btnDM
+        '
+        Me.btnDM.Location = New System.Drawing.Point(223, 10)
+        Me.btnDM.Name = "btnDM"
+        Me.btnDM.Size = New System.Drawing.Size(75, 23)
+        Me.btnDM.TabIndex = 36
+        Me.btnDM.Text = "Exit DM"
+        Me.btnDM.UseVisualStyleBackColor = True
+        '
         'Cart
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.btnDM)
+        Me.Controls.Add(Me.btnCheck)
+        Me.Controls.Add(Me.lblDeletionMode)
         Me.Controls.Add(Me.btnCancelOrder)
         Me.Controls.Add(Me.btnContinueShopping)
         Me.Controls.Add(Me.btnCheckout)
         Me.Controls.Add(Me.btnClearCart)
-        Me.Controls.Add(Me.btnRemoveSelected)
+        Me.Controls.Add(Me.btnDeletionMode)
         Me.Controls.Add(Me.CheckedListBox1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.txtTotal)
@@ -231,9 +266,12 @@ Partial Class Cart
     Friend WithEvents txtTotal As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents CheckedListBox1 As CheckedListBox
-    Friend WithEvents btnRemoveSelected As Button
+    Friend WithEvents btnDeletionMode As Button
     Friend WithEvents btnClearCart As Button
     Friend WithEvents btnCheckout As Button
     Friend WithEvents btnContinueShopping As Button
     Friend WithEvents btnCancelOrder As Button
+    Friend WithEvents lblDeletionMode As Label
+    Friend WithEvents btnCheck As Button
+    Friend WithEvents btnDM As Button
 End Class
