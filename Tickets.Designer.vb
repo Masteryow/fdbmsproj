@@ -31,25 +31,31 @@ Partial Class Tickets
         Me.ProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.cbxIssueType = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txtDifficulty = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.txtPrice = New System.Windows.Forms.TextBox()
+        Me.btnConfirm = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Label6 = New System.Windows.Forms.Label()
+        Me.gbxTechnician = New System.Windows.Forms.GroupBox()
+        Me.txtStatus = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.cbxTechnician = New System.Windows.Forms.ComboBox()
+        Me.btnClear = New System.Windows.Forms.Button()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.txtExpertise = New System.Windows.Forms.TextBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.txtNote = New System.Windows.Forms.TextBox()
+        Me.txtTStatus = New System.Windows.Forms.TextBox()
+        Me.btnNewTicket = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
+        Me.gbxTechnician.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -59,8 +65,8 @@ Partial Class Tickets
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(22, 41)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(139, 41)
-        Me.Label1.TabIndex = 0
+        Me.Label1.Size = New System.Drawing.Size(135, 40)
+        Me.Label1.TabIndex = 1
         Me.Label1.Text = "Tickets"
         '
         'MenuStrip1
@@ -94,7 +100,7 @@ Partial Class Tickets
         'TicketsToolStripMenuItem
         '
         Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
+        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.TicketsToolStripMenuItem.Text = "Tickets"
         '
         'ToolStripMenuItem1
@@ -125,58 +131,64 @@ Partial Class Tickets
         Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(64, 24)
         Me.HomeToolStripMenuItem1.Text = "Home"
         '
-        'ComboBox1
+        'cbxIssueType
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(12, 39)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(336, 28)
-        Me.ComboBox1.TabIndex = 3
+        Me.cbxIssueType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.cbxIssueType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cbxIssueType.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxIssueType.FormattingEnabled = True
+        Me.cbxIssueType.Location = New System.Drawing.Point(98, 49)
+        Me.cbxIssueType.Name = "cbxIssueType"
+        Me.cbxIssueType.Size = New System.Drawing.Size(258, 29)
+        Me.cbxIssueType.TabIndex = 0
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(8, 146)
+        Me.Label3.Location = New System.Drawing.Point(17, 157)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(48, 20)
         Me.Label3.TabIndex = 4
         Me.Label3.Text = "Price"
         '
-        'TextBox1
+        'txtDifficulty
         '
-        Me.TextBox1.Location = New System.Drawing.Point(89, 96)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(259, 27)
-        Me.TextBox1.TabIndex = 5
+        Me.txtDifficulty.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDifficulty.Location = New System.Drawing.Point(98, 101)
+        Me.txtDifficulty.Name = "txtDifficulty"
+        Me.txtDifficulty.Size = New System.Drawing.Size(258, 28)
+        Me.txtDifficulty.TabIndex = 5
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.White
-        Me.Label4.Location = New System.Drawing.Point(8, 98)
+        Me.Label4.Location = New System.Drawing.Point(17, 103)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(75, 20)
         Me.Label4.TabIndex = 6
         Me.Label4.Text = "Difficulty"
         '
-        'TextBox2
+        'txtPrice
         '
-        Me.TextBox2.Location = New System.Drawing.Point(89, 146)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(259, 27)
-        Me.TextBox2.TabIndex = 7
+        Me.txtPrice.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPrice.Location = New System.Drawing.Point(98, 149)
+        Me.txtPrice.Name = "txtPrice"
+        Me.txtPrice.Size = New System.Drawing.Size(258, 28)
+        Me.txtPrice.TabIndex = 7
         '
-        'Button1
+        'btnConfirm
         '
-        Me.Button1.Location = New System.Drawing.Point(307, 353)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(182, 26)
-        Me.Button1.TabIndex = 8
-        Me.Button1.Text = "Confirm"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnConfirm.Enabled = False
+        Me.btnConfirm.Location = New System.Drawing.Point(203, 412)
+        Me.btnConfirm.Name = "btnConfirm"
+        Me.btnConfirm.Size = New System.Drawing.Size(182, 26)
+        Me.btnConfirm.TabIndex = 8
+        Me.btnConfirm.Text = "Confirm"
+        Me.btnConfirm.UseVisualStyleBackColor = True
         '
         'Label5
         '
@@ -190,100 +202,168 @@ Partial Class Tickets
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.ComboBox1)
+        Me.GroupBox1.Controls.Add(Me.txtNote)
+        Me.GroupBox1.Controls.Add(Me.Label10)
+        Me.GroupBox1.Controls.Add(Me.Label8)
+        Me.GroupBox1.Controls.Add(Me.cbxIssueType)
         Me.GroupBox1.Controls.Add(Me.Label4)
-        Me.GroupBox1.Controls.Add(Me.TextBox2)
-        Me.GroupBox1.Controls.Add(Me.TextBox1)
+        Me.GroupBox1.Controls.Add(Me.txtPrice)
+        Me.GroupBox1.Controls.Add(Me.txtDifficulty)
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.White
         Me.GroupBox1.Location = New System.Drawing.Point(29, 110)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(380, 210)
+        Me.GroupBox1.Size = New System.Drawing.Size(380, 282)
         Me.GroupBox1.TabIndex = 10
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Please select the type of issue"
         '
-        'GroupBox2
+        'gbxTechnician
         '
-        Me.GroupBox2.Controls.Add(Me.TextBox3)
-        Me.GroupBox2.Controls.Add(Me.Label7)
-        Me.GroupBox2.Controls.Add(Me.ComboBox3)
-        Me.GroupBox2.Controls.Add(Me.Label2)
-        Me.GroupBox2.Controls.Add(Me.ComboBox2)
-        Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox2.ForeColor = System.Drawing.Color.White
-        Me.GroupBox2.Location = New System.Drawing.Point(440, 110)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(333, 210)
-        Me.GroupBox2.TabIndex = 11
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Choose your technician"
+        Me.gbxTechnician.Controls.Add(Me.Label9)
+        Me.gbxTechnician.Controls.Add(Me.txtExpertise)
+        Me.gbxTechnician.Controls.Add(Me.txtStatus)
+        Me.gbxTechnician.Controls.Add(Me.Label7)
+        Me.gbxTechnician.Controls.Add(Me.Label2)
+        Me.gbxTechnician.Controls.Add(Me.cbxTechnician)
+        Me.gbxTechnician.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbxTechnician.ForeColor = System.Drawing.Color.White
+        Me.gbxTechnician.Location = New System.Drawing.Point(440, 110)
+        Me.gbxTechnician.Name = "gbxTechnician"
+        Me.gbxTechnician.Size = New System.Drawing.Size(333, 282)
+        Me.gbxTechnician.TabIndex = 11
+        Me.gbxTechnician.TabStop = False
+        Me.gbxTechnician.Text = "Choose your technician"
         '
-        'ComboBox2
+        'txtStatus
         '
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(12, 39)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(298, 28)
-        Me.ComboBox2.TabIndex = 8
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(8, 96)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(79, 20)
-        Me.Label2.TabIndex = 8
-        Me.Label2.Text = "Expertise"
-        '
-        'ComboBox3
-        '
-        Me.ComboBox3.FormattingEnabled = True
-        Me.ComboBox3.Location = New System.Drawing.Point(93, 88)
-        Me.ComboBox3.Name = "ComboBox3"
-        Me.ComboBox3.Size = New System.Drawing.Size(217, 28)
-        Me.ComboBox3.TabIndex = 9
-        '
-        'Button2
-        '
-        Me.Button2.Location = New System.Drawing.Point(307, 398)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(182, 26)
-        Me.Button2.TabIndex = 12
-        Me.Button2.Text = "Clear Selection"
-        Me.Button2.UseVisualStyleBackColor = True
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.ForeColor = System.Drawing.Color.White
-        Me.Label6.Location = New System.Drawing.Point(436, 58)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(112, 20)
-        Me.Label6.TabIndex = 8
-        Me.Label6.Text = "Ticket Status:"
+        Me.txtStatus.Location = New System.Drawing.Point(93, 240)
+        Me.txtStatus.Name = "txtStatus"
+        Me.txtStatus.ReadOnly = True
+        Me.txtStatus.Size = New System.Drawing.Size(217, 27)
+        Me.txtStatus.TabIndex = 8
         '
         'Label7
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.White
-        Me.Label7.Location = New System.Drawing.Point(8, 146)
+        Me.Label7.Location = New System.Drawing.Point(8, 247)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(62, 20)
+        Me.Label7.Size = New System.Drawing.Size(57, 20)
         Me.Label7.TabIndex = 10
-        Me.Label7.Text = "Status:"
+        Me.Label7.Text = "Status"
         '
-        'TextBox3
+        'Label2
         '
-        Me.TextBox3.Location = New System.Drawing.Point(93, 139)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(217, 27)
-        Me.TextBox3.TabIndex = 8
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(126, 112)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(79, 20)
+        Me.Label2.TabIndex = 8
+        Me.Label2.Text = "Expertise"
+        '
+        'cbxTechnician
+        '
+        Me.cbxTechnician.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.cbxTechnician.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cbxTechnician.FormattingEnabled = True
+        Me.cbxTechnician.Location = New System.Drawing.Point(12, 67)
+        Me.cbxTechnician.Name = "cbxTechnician"
+        Me.cbxTechnician.Size = New System.Drawing.Size(298, 28)
+        Me.cbxTechnician.TabIndex = 8
+        '
+        'btnClear
+        '
+        Me.btnClear.Location = New System.Drawing.Point(415, 412)
+        Me.btnClear.Name = "btnClear"
+        Me.btnClear.Size = New System.Drawing.Size(182, 26)
+        Me.btnClear.TabIndex = 12
+        Me.btnClear.Text = "Clear Selection"
+        Me.btnClear.UseVisualStyleBackColor = True
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.ForeColor = System.Drawing.Color.White
+        Me.Label6.Location = New System.Drawing.Point(511, 56)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(112, 20)
+        Me.Label6.TabIndex = 8
+        Me.Label6.Text = "Ticket Status:"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.ForeColor = System.Drawing.Color.White
+        Me.Label8.Location = New System.Drawing.Point(17, 58)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(45, 20)
+        Me.Label8.TabIndex = 8
+        Me.Label8.Text = "Type"
+        '
+        'txtExpertise
+        '
+        Me.txtExpertise.Location = New System.Drawing.Point(12, 135)
+        Me.txtExpertise.Multiline = True
+        Me.txtExpertise.Name = "txtExpertise"
+        Me.txtExpertise.ReadOnly = True
+        Me.txtExpertise.Size = New System.Drawing.Size(298, 81)
+        Me.txtExpertise.TabIndex = 11
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.ForeColor = System.Drawing.Color.White
+        Me.Label9.Location = New System.Drawing.Point(142, 39)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(53, 20)
+        Me.Label9.TabIndex = 9
+        Me.Label9.Text = "Name"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.ForeColor = System.Drawing.Color.White
+        Me.Label10.Location = New System.Drawing.Point(154, 181)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(44, 20)
+        Me.Label10.TabIndex = 9
+        Me.Label10.Text = "Note"
+        '
+        'txtNote
+        '
+        Me.txtNote.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtNote.Location = New System.Drawing.Point(21, 204)
+        Me.txtNote.Multiline = True
+        Me.txtNote.Name = "txtNote"
+        Me.txtNote.Size = New System.Drawing.Size(335, 63)
+        Me.txtNote.TabIndex = 10
+        '
+        'txtTStatus
+        '
+        Me.txtTStatus.Location = New System.Drawing.Point(629, 56)
+        Me.txtTStatus.Name = "txtTStatus"
+        Me.txtTStatus.ReadOnly = True
+        Me.txtTStatus.Size = New System.Drawing.Size(144, 22)
+        Me.txtTStatus.TabIndex = 13
+        '
+        'btnNewTicket
+        '
+        Me.btnNewTicket.Location = New System.Drawing.Point(629, 84)
+        Me.btnNewTicket.Name = "btnNewTicket"
+        Me.btnNewTicket.Size = New System.Drawing.Size(144, 23)
+        Me.btnNewTicket.TabIndex = 14
+        Me.btnNewTicket.Text = "Create new ticket"
+        Me.btnNewTicket.UseVisualStyleBackColor = True
+        Me.btnNewTicket.Visible = False
         '
         'Tickets
         '
@@ -291,11 +371,13 @@ Partial Class Tickets
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.btnNewTicket)
+        Me.Controls.Add(Me.txtTStatus)
         Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.btnClear)
+        Me.Controls.Add(Me.gbxTechnician)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnConfirm)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.GroupBox1)
@@ -305,8 +387,8 @@ Partial Class Tickets
         Me.MenuStrip1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
+        Me.gbxTechnician.ResumeLayout(False)
+        Me.gbxTechnician.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -321,20 +403,26 @@ Partial Class Tickets
     Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HomeToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents cbxIssueType As ComboBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents txtDifficulty As TextBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents txtPrice As TextBox
+    Friend WithEvents btnConfirm As Button
     Friend WithEvents Label5 As Label
     Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents GroupBox2 As GroupBox
-    Friend WithEvents ComboBox3 As ComboBox
+    Friend WithEvents gbxTechnician As GroupBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents ComboBox2 As ComboBox
-    Friend WithEvents Button2 As Button
+    Friend WithEvents cbxTechnician As ComboBox
+    Friend WithEvents btnClear As Button
     Friend WithEvents Label6 As Label
-    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents txtStatus As TextBox
     Friend WithEvents Label7 As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents txtExpertise As TextBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents txtNote As TextBox
+    Friend WithEvents Label10 As Label
+    Friend WithEvents txtTStatus As TextBox
+    Friend WithEvents btnNewTicket As Button
 End Class

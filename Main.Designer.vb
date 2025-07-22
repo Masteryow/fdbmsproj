@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Main
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,19 +20,19 @@ Partial Class Main
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SubscriptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.lblUser = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -45,7 +45,7 @@ Partial Class Main
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(815, 28)
+        Me.MenuStrip1.Size = New System.Drawing.Size(815, 30)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -61,6 +61,12 @@ Partial Class Main
         Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
         Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(55, 24)
         Me.SubscriptionToolStripMenuItem.Text = "Help"
+        '
+        'TicketsToolStripMenuItem
+        '
+        Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
+        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.TicketsToolStripMenuItem.Text = "Tickets"
         '
         'ToolStripMenuItem1
         '
@@ -97,12 +103,6 @@ Partial Class Main
         '
         'Timer1
         '
-        '
-        'TicketsToolStripMenuItem
-        '
-        Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
-        Me.TicketsToolStripMenuItem.Text = "Tickets"
         '
         'Main
         '

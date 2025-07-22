@@ -40,14 +40,10 @@ Public Class Main
 
         End If
 
-
-
-
-
-
     End Sub
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         Timer1.Interval = 100
         Timer1.Start()
     End Sub

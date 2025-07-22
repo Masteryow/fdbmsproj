@@ -106,7 +106,9 @@ Public Class Form1
 
         con.Open()
         ' Modified query to also get the role
-        Dim getCredentials As New MySqlCommand("SELECT user_id, username, role FROM users WHERE username = @username AND password = @password", con)
+        Dim getCredentials As New MySqlCommand("SELECT u.user_id, u.username, u.role, s.subscriber_id
+                                                FROM users u LEFT JOIN subscribers s ON u.user_id = s.customer_id
+                                                WHERE username = @username AND password = @password", con)
         getCredentials.Parameters.AddWithValue("@username", txtUsername.Text)
         getCredentials.Parameters.AddWithValue("@password", txtPassword.Text)
         Dim reader As MySqlDataReader = getCredentials.ExecuteReader()
@@ -115,12 +117,18 @@ Public Class Form1
             Dim userId As Integer = reader.GetInt32("user_id")
             Dim userName As String = reader("username").ToString
             Dim userRole As String = reader("role").ToString
+            Dim subscriber_id As Integer
 
+            If reader.IsDBNull(reader.GetOrdinal("subscriber_id")) Then
+                subscriber_id = -1
+            Else
+                subscriber_id = reader.GetInt32("subscriber_id")
+            End If
             ' Store user information in session
             Session.UserId = userId
             Session.UserName = userName
             Session.UserRole = userRole ' You might want to add this to your Session class
-
+            Session.SubscriberId = subscriber_id
 
 
             ' Redirect based on role
