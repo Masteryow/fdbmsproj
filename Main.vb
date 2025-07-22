@@ -62,4 +62,8 @@ Public Class Main
         Cart.Show()
         Me.Close()
     End Sub
+
+    Private Sub TicketsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketsToolStripMenuItem.Click
+
+    End Sub
 End Class

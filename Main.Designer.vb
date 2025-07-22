@@ -25,7 +25,6 @@ Partial Class Main
         Me.components = New System.ComponentModel.Container()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SubscriptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -33,6 +32,7 @@ Partial Class Main
         Me.HomeToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.lblUser = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -51,19 +51,13 @@ Partial Class Main
         '
         'HomeToolStripMenuItem
         '
-        Me.HomeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
         Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(84, 24)
         Me.HomeToolStripMenuItem.Text = "About Us"
         '
-        'TicketsToolStripMenuItem
-        '
-        Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
-        Me.TicketsToolStripMenuItem.Text = "Tickets"
-        '
         'SubscriptionToolStripMenuItem
         '
+        Me.SubscriptionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
         Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
         Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(55, 24)
         Me.SubscriptionToolStripMenuItem.Text = "Help"
@@ -104,6 +98,12 @@ Partial Class Main
         'Timer1
         '
         '
+        'TicketsToolStripMenuItem
+        '
+        Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
+        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
+        Me.TicketsToolStripMenuItem.Text = "Tickets"
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -127,9 +127,9 @@ Partial Class Main
     Friend WithEvents SubscriptionToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents TicketsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HomeToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents lblUser As Label
     Friend WithEvents Timer1 As Timer
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents TicketsToolStripMenuItem As ToolStripMenuItem
 End Class

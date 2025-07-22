@@ -173,51 +173,88 @@ Public Class Addon
         Dim conStr As String = "server=localhost; userid=root; database=fdbmsproject"
         Dim con As New MySqlConnection(conStr)
         Dim trans As MySqlTransaction = Nothing
-        Try
-            con.Open()
-            trans = con.BeginTransaction()
 
-            ' Process all selected items across all pages
-            For addonIndex As Integer = 0 To 14 ' 0-14 for addons 1-15
-                Dim quantity As Integer = selectedQuantities(addonIndex)
-                If quantity > 0 Then
-                    Dim actualAddonId As Integer = addonIndex + 1 ' addon_ids are 1-15
+        Dim decDPayment As Decimal = 0
 
-                    ' Get the addon price from database
-                    Dim priceQuery As String = "SELECT price FROM addons WHERE addon_id = @addonId"
-                    Dim priceCmd As New MySqlCommand(priceQuery, con, trans)
-                    priceCmd.Parameters.AddWithValue("@addonId", actualAddonId)
-                    Dim addonPrice As Decimal = Convert.ToDecimal(priceCmd.ExecuteScalar())
+        Dim strDPayment As String = InputBox("Please enter your money:", "Payment", "0.00")
 
-                    ' Insert addon purchase
-                    Dim insertAddonQuery As String = "
+        If Decimal.TryParse(strDPayment, decDPayment) Then
+
+            If decDPayment > total Then
+
+                Dim dChange As Decimal = decDPayment - total
+
+                MsgBox($"Thank your for purchasing! Here is your change: Php {dChange.ToString("f2")}")
+
+            ElseIf decDPayment = total Then
+
+                MsgBox($"Thank your for purchasing!")
+
+            ElseIf decDPayment < total Then
+
+                MsgBox("Insufficient money, please try again!")
+                success = False
+                Return success
+
+            End If
+            Try
+                con.Open()
+                trans = con.BeginTransaction()
+
+                ' Process all selected items across all pages
+                For addonIndex As Integer = 0 To 14 ' 0-14 for addons 1-15
+                    Dim quantity As Integer = selectedQuantities(addonIndex)
+                    If quantity > 0 Then
+                        Dim actualAddonId As Integer = addonIndex + 1 ' addon_ids are 1-15
+
+                        ' Get the addon price from database
+                        Dim priceQuery As String = "SELECT price FROM addons WHERE addon_id = @addonId"
+                        Dim priceCmd As New MySqlCommand(priceQuery, con, trans)
+                        priceCmd.Parameters.AddWithValue("@addonId", actualAddonId)
+                        Dim addonPrice As Decimal = Convert.ToDecimal(priceCmd.ExecuteScalar())
+
+                        ' Insert addon purchase
+                        Dim insertAddonQuery As String = "
                 INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) 
                 VALUES (@custId, @addonId, @qty, NOW())"
-                    Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
-                    addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
-                    addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
-                    addonCmd.Parameters.AddWithValue("@qty", quantity)
-                    addonCmd.ExecuteNonQuery()
+                        Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
+                        addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
+                        addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
+                        addonCmd.Parameters.AddWithValue("@qty", quantity)
+                        addonCmd.ExecuteNonQuery()
 
-                    Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}, Price={addonPrice}")
+                        Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}, Price={addonPrice}")
+                    End If
+                Next
+
+                trans.Commit()
+                success = True
+            Catch ex As Exception
+                MessageBox.Show("Error during addon purchase: " & ex.Message)
+                If trans IsNot Nothing Then
+                    Try
+                        trans.Rollback()
+                    Catch rollEx As Exception
+                        MessageBox.Show("Rollback failed: " & rollEx.Message)
+                    End Try
                 End If
-            Next
+            Finally
+                con.Close()
+            End Try
+            Return success
 
-            trans.Commit()
-            success = True
-        Catch ex As Exception
-            MessageBox.Show("Error during addon purchase: " & ex.Message)
-            If trans IsNot Nothing Then
-                Try
-                    trans.Rollback()
-                Catch rollEx As Exception
-                    MessageBox.Show("Rollback failed: " & rollEx.Message)
-                End Try
-            End If
-        Finally
-            con.Close()
-        End Try
-        Return success
+        Else
+
+
+            MsgBox("Please Enter A Valid Amount")
+            success = False
+            Return success
+
+        End If
+
+
+
+
     End Function
 
     Private Sub ClearAllQuantities()
@@ -342,88 +379,118 @@ Public Class Addon
                                                        MessageBoxButtons.YesNo,
                                                        MessageBoxIcon.Question)
 
+
         If confirmResult = DialogResult.Yes Then
             Dim purchaseSuccess As Boolean = False
 
             If Session.IsNewSubscription Then
                 ' This is a new subscription purchase (plan + addons)
                 purchaseSuccess = PurchaseSubscriptionWithAddons()
+
+
+
             ElseIf Session.fromProduct = True Then
                 ' Buying addons directly (from Products tab)
                 purchaseSuccess = PurchaseAddonsDirectly()
             End If
 
             If purchaseSuccess Then
-                MessageBox.Show("Purchase successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 ClearAllQuantities() ' Clear after successful purchase
-            Else
-                MessageBox.Show("Purchase failed. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End If
     End Sub
 
     Private Function PurchaseSubscriptionWithAddons() As Boolean
+
         Dim success As Boolean = False
         Dim conStr As String = "server=localhost; userid=root; database=fdbmsproject"
         Dim con As New MySqlConnection(conStr)
         Dim trans As MySqlTransaction = Nothing
 
-        Try
-            con.Open()
-            trans = con.BeginTransaction()
 
-            ' Insert into subscribers table
-            Dim insertSubQuery As String = "
+
+        Dim decPayment As Decimal = 0
+
+        Dim strPayment As String = InputBox("Please enter your money:", "Payment", "0.00")
+
+        If Decimal.TryParse(strPayment, decPayment) Then
+
+            If decPayment > total Then
+                Dim change As Decimal = decPayment - total
+
+                MsgBox($"Thank your for purchasing! Here is your change: Php {change.ToString("f2")}")
+            ElseIf decPayment = total Then
+                MsgBox($"Thank your for purchasing!")
+            ElseIf decPayment < total Then
+                MsgBox($"Insufficient money, please try again!")
+                success = False
+                Return success
+            End If
+            Try
+                con.Open()
+                trans = con.BeginTransaction()
+
+                ' Insert into subscribers table
+                Dim insertSubQuery As String = "
         INSERT INTO subscribers (customer_id, plan_id, subscription_date)
         VALUES (@customerId, @planId, NOW())"
-            Dim subCmd As New MySqlCommand(insertSubQuery, con, trans)
-            subCmd.Parameters.AddWithValue("@customerId", Session.UserId)
-            subCmd.Parameters.AddWithValue("@planId", Session.PlanId)
-            subCmd.ExecuteNonQuery()
+                Dim subCmd As New MySqlCommand(insertSubQuery, con, trans)
+                subCmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                subCmd.Parameters.AddWithValue("@planId", Session.PlanId)
+                subCmd.ExecuteNonQuery()
 
-            ' Now insert selected addons with purchase_date
-            For addonIndex As Integer = 0 To 14
-                Dim quantity As Integer = selectedQuantities(addonIndex)
-                If quantity > 0 Then
-                    Dim actualAddonId As Integer = addonIndex + 1
+                ' Now insert selected addons with purchase_date
+                For addonIndex As Integer = 0 To 14
+                    Dim quantity As Integer = selectedQuantities(addonIndex)
+                    If quantity > 0 Then
+                        Dim actualAddonId As Integer = addonIndex + 1
 
-                    ' Check if this addon is recurring to handle it properly
-                    Dim checkRecurringQuery As String = "SELECT is_recurring FROM addons WHERE addon_id = @addonId"
-                    Dim checkCmd As New MySqlCommand(checkRecurringQuery, con, trans)
-                    checkCmd.Parameters.AddWithValue("@addonId", actualAddonId)
-                    Dim isRecurring As Boolean = Convert.ToBoolean(checkCmd.ExecuteScalar())
+                        ' Check if this addon is recurring to handle it properly
+                        Dim checkRecurringQuery As String = "SELECT is_recurring FROM addons WHERE addon_id = @addonId"
+                        Dim checkCmd As New MySqlCommand(checkRecurringQuery, con, trans)
+                        checkCmd.Parameters.AddWithValue("@addonId", actualAddonId)
+                        Dim isRecurring As Boolean = Convert.ToBoolean(checkCmd.ExecuteScalar())
 
-                    ' Insert addon purchase with purchase_date
-                    Dim insertAddonQuery As String = "
+                        ' Insert addon purchase with purchase_date
+                        Dim insertAddonQuery As String = "
                 INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) 
                 VALUES (@custId, @addonId, @qty, NOW())"
-                    Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
-                    addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
-                    addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
-                    addonCmd.Parameters.AddWithValue("@qty", quantity)
-                    addonCmd.ExecuteNonQuery()
+                        Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
+                        addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
+                        addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
+                        addonCmd.Parameters.AddWithValue("@qty", quantity)
+                        addonCmd.ExecuteNonQuery()
 
-                    Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}, IsRecurring={isRecurring}")
+                        Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}, IsRecurring={isRecurring}")
+                    End If
+                Next
+
+                trans.Commit()
+                success = True
+
+            Catch ex As Exception
+                MessageBox.Show("Error during subscription purchase: " & ex.Message)
+                If trans IsNot Nothing Then
+                    Try
+                        trans.Rollback()
+                    Catch rollEx As Exception
+                        MessageBox.Show("Rollback failed: " & rollEx.Message)
+                    End Try
                 End If
-            Next
+            Finally
+                con.Close()
+            End Try
 
-            trans.Commit()
-            success = True
+            Return success
 
-        Catch ex As Exception
-            MessageBox.Show("Error during subscription purchase: " & ex.Message)
-            If trans IsNot Nothing Then
-                Try
-                    trans.Rollback()
-                Catch rollEx As Exception
-                    MessageBox.Show("Rollback failed: " & rollEx.Message)
-                End Try
-            End If
-        Finally
-            con.Close()
-        End Try
+        Else
 
-        Return success
+            MsgBox("Please Enter A Valid Amount")
+            success = False
+            Return success
+
+        End If
+
     End Function
 
 
