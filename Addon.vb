@@ -348,7 +348,7 @@ Public Class Addon
             If Session.IsNewSubscription Then
                 ' This is a new subscription purchase (plan + addons)
                 purchaseSuccess = PurchaseSubscriptionWithAddons()
-            ElseIf Session.fromProduct Then
+            ElseIf Session.fromProduct = True Then
                 ' Buying addons directly (from Products tab)
                 purchaseSuccess = PurchaseAddonsDirectly()
             End If
@@ -374,30 +374,36 @@ Public Class Addon
 
             ' Insert into subscribers table
             Dim insertSubQuery As String = "
-            INSERT INTO subscribers (customer_id, plan_id, subscription_date)
-            VALUES (@customerId, @planId, NOW())"
+        INSERT INTO subscribers (customer_id, plan_id, subscription_date)
+        VALUES (@customerId, @planId, NOW())"
             Dim subCmd As New MySqlCommand(insertSubQuery, con, trans)
             subCmd.Parameters.AddWithValue("@customerId", Session.UserId)
             subCmd.Parameters.AddWithValue("@planId", Session.PlanId)
             subCmd.ExecuteNonQuery()
 
-            ' Now insert selected addons (Triggers will calculate total_price, etc.)
+            ' Now insert selected addons with purchase_date
             For addonIndex As Integer = 0 To 14
                 Dim quantity As Integer = selectedQuantities(addonIndex)
                 If quantity > 0 Then
                     Dim actualAddonId As Integer = addonIndex + 1
 
-                    ' Insert addon purchase — TRIGGER handles total_price, expires_at, etc.
+                    ' Check if this addon is recurring to handle it properly
+                    Dim checkRecurringQuery As String = "SELECT is_recurring FROM addons WHERE addon_id = @addonId"
+                    Dim checkCmd As New MySqlCommand(checkRecurringQuery, con, trans)
+                    checkCmd.Parameters.AddWithValue("@addonId", actualAddonId)
+                    Dim isRecurring As Boolean = Convert.ToBoolean(checkCmd.ExecuteScalar())
+
+                    ' Insert addon purchase with purchase_date
                     Dim insertAddonQuery As String = "
-                    INSERT INTO customer_addons (customer_id, addon_id, quantity)
-                    VALUES (@custId, @addonId, @qty)"
+                INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) 
+                VALUES (@custId, @addonId, @qty, NOW())"
                     Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
                     addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
                     addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
                     addonCmd.Parameters.AddWithValue("@qty", quantity)
                     addonCmd.ExecuteNonQuery()
 
-                    Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}")
+                    Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}, IsRecurring={isRecurring}")
                 End If
             Next
 
@@ -419,7 +425,6 @@ Public Class Addon
 
         Return success
     End Function
-
 
 
     Private Sub btnNext_Click(sender As Object, e As EventArgs) Handles btnNext.Click
