@@ -192,7 +192,7 @@ Public Class Addon
                     ' Insert addon purchase
                     Dim insertAddonQuery As String = "
                 INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) 
-                VALUES (@custId, @addonId, @qty, @total, NOW())"
+                VALUES (@custId, @addonId, @qty, NOW())"
                     Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
                     addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
                     addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
@@ -255,6 +255,8 @@ Public Class Addon
 
         If Session.fromProduct Then
             pbxPlanImage.Visible = False
+            btnPrevious.Visible = False
+            btnNext.Visible = False
             Dim skylinkProduct As New Label()
             Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
             total = cartTotal
@@ -370,42 +372,32 @@ Public Class Addon
             con.Open()
             trans = con.BeginTransaction()
 
-            ' Insert subscription record
+            ' Insert into subscribers table
             Dim insertSubQuery As String = "
-        INSERT INTO subscribers (customer_id, plan_id, subscription_date)
-        VALUES (@customerId, @planId, NOW())"
+            INSERT INTO subscribers (customer_id, plan_id, subscription_date)
+            VALUES (@customerId, @planId, NOW())"
             Dim subCmd As New MySqlCommand(insertSubQuery, con, trans)
             subCmd.Parameters.AddWithValue("@customerId", Session.UserId)
             subCmd.Parameters.AddWithValue("@planId", Session.PlanId)
             subCmd.ExecuteNonQuery()
 
-            Dim subscriptionId As Integer = CInt(subCmd.LastInsertedId)
-
-            ' Process all selected addons
-            For addonIndex As Integer = 0 To 14 ' 0-14 for addons 1-15
+            ' Now insert selected addons (Triggers will calculate total_price, etc.)
+            For addonIndex As Integer = 0 To 14
                 Dim quantity As Integer = selectedQuantities(addonIndex)
                 If quantity > 0 Then
-                    Dim actualAddonId As Integer = addonIndex + 1 ' addon_ids are 1-15
+                    Dim actualAddonId As Integer = addonIndex + 1
 
-                    ' Get the addon price from database
-                    Dim priceQuery As String = "SELECT price FROM addons WHERE addon_id = @addonId"
-                    Dim priceCmd As New MySqlCommand(priceQuery, con, trans)
-                    priceCmd.Parameters.AddWithValue("@addonId", actualAddonId)
-                    Dim addonPrice As Decimal = Convert.ToDecimal(priceCmd.ExecuteScalar())
-
-                    ' Insert addon purchase
+                    ' Insert addon purchase — TRIGGER handles total_price, expires_at, etc.
                     Dim insertAddonQuery As String = "
-                    INSERT INTO customer_addons (customer_id, addon_id, quantity, total_price, purchase_date) 
-                    VALUES (@custId, @addonId, @qty, @total, NOW())"
-
+                    INSERT INTO customer_addons (customer_id, addon_id, quantity)
+                    VALUES (@custId, @addonId, @qty)"
                     Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
                     addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
                     addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
                     addonCmd.Parameters.AddWithValue("@qty", quantity)
-                    addonCmd.Parameters.AddWithValue("@total", addonPrice * quantity)
                     addonCmd.ExecuteNonQuery()
 
-                    Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}, Price={addonPrice}")
+                    Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}")
                 End If
             Next
 
@@ -427,6 +419,8 @@ Public Class Addon
 
         Return success
     End Function
+
+
 
     Private Sub btnNext_Click(sender As Object, e As EventArgs) Handles btnNext.Click
         SavePageQuantities()
