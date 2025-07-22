@@ -118,8 +118,12 @@ Public Class Subscription
                         Session.planType = plan_type
                         Session.planPrice = price
 
+                        Session.fromProduct = False
+                        Session.IsNewSubscription = True
+
                         ' Start new transaction when plan is selected
                         Session.StartTransaction()
+
 
                         addons = MsgBox("Do you want an addons?", MsgBoxStyle.YesNo, "Addons")
 
