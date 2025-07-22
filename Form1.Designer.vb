@@ -35,25 +35,26 @@ Partial Class Form1
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnLogin
         '
-        Me.btnLogin.Location = New System.Drawing.Point(62, 228)
-        Me.btnLogin.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnLogin.Location = New System.Drawing.Point(71, 281)
+        Me.btnLogin.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnLogin.Name = "btnLogin"
-        Me.btnLogin.Size = New System.Drawing.Size(172, 28)
+        Me.btnLogin.Size = New System.Drawing.Size(260, 34)
         Me.btnLogin.TabIndex = 0
         Me.btnLogin.Text = "Login"
         Me.btnLogin.UseVisualStyleBackColor = True
         '
         'btnCreate
         '
-        Me.btnCreate.Location = New System.Drawing.Point(94, 310)
-        Me.btnCreate.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnCreate.Location = New System.Drawing.Point(130, 382)
+        Me.btnCreate.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnCreate.Name = "btnCreate"
-        Me.btnCreate.Size = New System.Drawing.Size(106, 28)
+        Me.btnCreate.Size = New System.Drawing.Size(157, 34)
         Me.btnCreate.TabIndex = 1
         Me.btnCreate.Text = "Create account"
         Me.btnCreate.UseVisualStyleBackColor = True
@@ -62,30 +63,30 @@ Partial Class Form1
         '
         Me.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtUsername.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtUsername.Location = New System.Drawing.Point(62, 113)
-        Me.txtUsername.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtUsername.Location = New System.Drawing.Point(71, 139)
+        Me.txtUsername.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtUsername.Name = "txtUsername"
-        Me.txtUsername.Size = New System.Drawing.Size(175, 26)
+        Me.txtUsername.Size = New System.Drawing.Size(260, 30)
         Me.txtUsername.TabIndex = 2
         '
         'TextBox2
         '
         Me.TextBox2.ForeColor = System.Drawing.Color.White
-        Me.TextBox2.Location = New System.Drawing.Point(308, 139)
-        Me.TextBox2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.TextBox2.Location = New System.Drawing.Point(411, 171)
+        Me.TextBox2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(1, 20)
+        Me.TextBox2.Size = New System.Drawing.Size(0, 22)
         Me.TextBox2.TabIndex = 3
         '
         'txtPassword
         '
         Me.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtPassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPassword.Location = New System.Drawing.Point(62, 169)
-        Me.txtPassword.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtPassword.Location = New System.Drawing.Point(71, 208)
+        Me.txtPassword.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtPassword.Size = New System.Drawing.Size(175, 26)
+        Me.txtPassword.Size = New System.Drawing.Size(260, 30)
         Me.txtPassword.TabIndex = 4
         '
         'lblUsername
@@ -94,10 +95,9 @@ Partial Class Form1
         Me.lblUsername.BackColor = System.Drawing.Color.WhiteSmoke
         Me.lblUsername.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUsername.ForeColor = System.Drawing.Color.DarkSlateGray
-        Me.lblUsername.Location = New System.Drawing.Point(58, 93)
-        Me.lblUsername.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblUsername.Location = New System.Drawing.Point(67, 112)
         Me.lblUsername.Name = "lblUsername"
-        Me.lblUsername.Size = New System.Drawing.Size(72, 18)
+        Me.lblUsername.Size = New System.Drawing.Size(87, 22)
         Me.lblUsername.TabIndex = 5
         Me.lblUsername.Text = "Username"
         '
@@ -107,10 +107,9 @@ Partial Class Form1
         Me.lblPassword.BackColor = System.Drawing.Color.WhiteSmoke
         Me.lblPassword.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPassword.ForeColor = System.Drawing.Color.DarkSlateGray
-        Me.lblPassword.Location = New System.Drawing.Point(58, 149)
-        Me.lblPassword.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblPassword.Location = New System.Drawing.Point(72, 181)
         Me.lblPassword.Name = "lblPassword"
-        Me.lblPassword.Size = New System.Drawing.Size(67, 18)
+        Me.lblPassword.Size = New System.Drawing.Size(82, 22)
         Me.lblPassword.TabIndex = 6
         Me.lblPassword.Text = "Password"
         '
@@ -120,10 +119,9 @@ Partial Class Form1
         Me.lblForgotPass.BackColor = System.Drawing.Color.WhiteSmoke
         Me.lblForgotPass.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblForgotPass.ForeColor = System.Drawing.Color.DarkSlateGray
-        Me.lblForgotPass.Location = New System.Drawing.Point(146, 199)
-        Me.lblForgotPass.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblForgotPass.Location = New System.Drawing.Point(210, 245)
         Me.lblForgotPass.Name = "lblForgotPass"
-        Me.lblForgotPass.Size = New System.Drawing.Size(102, 14)
+        Me.lblForgotPass.Size = New System.Drawing.Size(117, 18)
         Me.lblForgotPass.TabIndex = 7
         Me.lblForgotPass.Text = "Forgot Password?"
         '
@@ -133,16 +131,16 @@ Partial Class Form1
         Me.lblNotMem.BackColor = System.Drawing.Color.WhiteSmoke
         Me.lblNotMem.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblNotMem.ForeColor = System.Drawing.Color.Gray
-        Me.lblNotMem.Location = New System.Drawing.Point(109, 293)
-        Me.lblNotMem.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblNotMem.Location = New System.Drawing.Point(160, 361)
         Me.lblNotMem.Name = "lblNotMem"
-        Me.lblNotMem.Size = New System.Drawing.Size(90, 14)
+        Me.lblNotMem.Size = New System.Drawing.Size(104, 18)
         Me.lblNotMem.TabIndex = 8
         Me.lblNotMem.Text = "Not a member?"
         '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Panel1.Controls.Add(Me.CheckBox1)
         Me.Panel1.Controls.Add(Me.lblUsername)
         Me.Panel1.Controls.Add(Me.lblPassword)
         Me.Panel1.Controls.Add(Me.lblForgotPass)
@@ -151,19 +149,18 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.txtPassword)
         Me.Panel1.Controls.Add(Me.btnCreate)
         Me.Panel1.Controls.Add(Me.btnLogin)
-        Me.Panel1.Location = New System.Drawing.Point(313, 0)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel1.Location = New System.Drawing.Point(417, 0)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(299, 368)
+        Me.Panel1.Size = New System.Drawing.Size(399, 453)
         Me.Panel1.TabIndex = 9
         '
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("Perpetua Titling MT", 19.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(46, 159)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label1.Location = New System.Drawing.Point(61, 196)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(196, 38)
+        Me.Label1.Size = New System.Drawing.Size(261, 47)
         Me.Label1.TabIndex = 10
         Me.Label1.Text = "FAST"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -171,16 +168,26 @@ Partial Class Form1
         'Timer1
         '
         '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(71, 245)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(122, 20)
+        Me.CheckBox1.TabIndex = 9
+        Me.CheckBox1.Text = "Remember Me!"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(611, 366)
+        Me.ClientSize = New System.Drawing.Size(815, 450)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.Panel1)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "Form1"
         Me.Text = "s"
         Me.Panel1.ResumeLayout(False)
@@ -202,4 +209,5 @@ Partial Class Form1
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents CheckBox1 As CheckBox
 End Class

@@ -369,13 +369,12 @@ Public Class Cart
 
             ' Insert each cart item into customer_addons
             For Each item In cartItems
-                Dim insertQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, total_price, purchase_date) " &
-                                           "VALUES (@customerId, @addonId, @quantity, @totalPrice, NOW())"
+                Dim insertQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) " &
+                                           "VALUES (@customerId, @addonId, @quantity, NOW())"
                 Using cmd As New MySqlCommand(insertQuery, con, trans)
                     cmd.Parameters.AddWithValue("@customerId", Session.UserId)
                     cmd.Parameters.AddWithValue("@addonId", item.AddonId)
                     cmd.Parameters.AddWithValue("@quantity", item.Quantity)
-                    cmd.Parameters.AddWithValue("@totalPrice", item.Price * item.Quantity)
                     cmd.ExecuteNonQuery()
                 End Using
             Next
