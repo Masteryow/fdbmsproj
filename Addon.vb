@@ -4,12 +4,12 @@ Imports Mysqlx.Crud
 Public Class Addon
     Private addOnData As New List(Of Dictionary(Of String, Object))
     Private navigatingAway As Boolean = False
-    Dim selectedQuantities(14) As Integer ' Holds quantity for all 15 addons
+    Dim selectedQuantities(14) As Integer ' Holds quantity for all 15 addons (0-14 indexed)
     Dim imageRcv As Image = Session.planImage
     Dim planName As String = Session.planName
     Dim planType As String = Session.planType
     Dim planPrice As Decimal = Session.planPrice
-    Dim txtValues(4) As Integer
+    Dim txtValues(4) As Integer ' Current page display values
     Dim groupHardware() As TextBox
     Dim prices() As Integer
     Dim totalPriceHardware As Decimal = 0
@@ -18,7 +18,6 @@ Public Class Addon
     Dim productGroup() As GroupBox
     Dim productNames() As String
     Dim priceGroup() As Label
-    Dim pageQuantities(2, 4) As Integer
     Dim cartItems As New List(Of cartItem)
     Dim addonIds() As Integer
     Dim addedItemsTotal As Decimal = 0
@@ -54,25 +53,78 @@ Public Class Addon
                         "Data Allowance +50GB", "Priority Support Upgrade"}
             prices = {500D, 1000D, 500D, 300D, 400D}
             addonIds = {11, 12, 13, 14, 15}
+        Else
+
         End If
 
-        ' Populate UI
+        ' Load saved quantities from selectedQuantities array into txtValues and display
         For i As Integer = 0 To 4
+            txtValues(i) = selectedQuantities(baseIndex + i)
             priceGroup(i).Text = "₱" & prices(i).ToString("N2")
             productGroup(i).Text = productNames(i)
-            groupHardware(i).Text = selectedQuantities(baseIndex + i).ToString()
+            groupHardware(i).Text = txtValues(i).ToString()
         Next
+
+        ' Recalculate total based on all selected items
+        RecalculateTotal()
     End Sub
 
     Private Sub SavePageQuantities()
+        ' Save current page quantities to the selectedQuantities array
         Dim baseIndex As Integer = (page - 1) * 5
         For i As Integer = 0 To 4
-            Dim val As Integer = 0
-            Integer.TryParse(groupHardware(i).Text, val)
-            selectedQuantities(baseIndex + i) = val
+            selectedQuantities(baseIndex + i) = txtValues(i)
         Next
     End Sub
 
+    Private Sub RecalculateTotal()
+        ' Calculate total from base plan price and all selected quantities
+        If Session.fromProduct Then
+            Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
+            total = cartTotal
+        Else
+            total = planPrice
+        End If
+
+        ' Add all addon quantities across all pages
+        addedItemsTotal = 0
+        For pageNum As Integer = 1 To 3
+            Dim baseIdx As Integer = (pageNum - 1) * 5
+            For itemIdx As Integer = 0 To 4
+                Dim quantity As Integer = selectedQuantities(baseIdx + itemIdx)
+                If quantity > 0 Then
+                    Dim itemPrice As Decimal = GetPriceForAddon(baseIdx + itemIdx + 1) ' addon IDs are 1-based
+                    addedItemsTotal += itemPrice * quantity
+                End If
+            Next
+        Next
+
+        total += addedItemsTotal
+        txtTotal.Text = "Php " & total.ToString("F2")
+        TextBox3.Text = "Php " & addedItemsTotal.ToString("F2")
+    End Sub
+
+    Private Function GetPriceForAddon(addonId As Integer) As Decimal
+        ' Get price based on addon ID (1-15)
+        Select Case addonId
+            Case 1 : Return 7990D  ' 5G Modem/Router
+            Case 2 : Return 2500D  ' WiFi Extender
+            Case 3 : Return 500D   ' Ethernet Cable
+            Case 4 : Return 1200D  ' External Antenna
+            Case 5 : Return 3500D  ' Backup Battery Pack
+            Case 6 : Return 1500D  ' Installation Service
+            Case 7 : Return 549D   ' Netflix Subscription
+            Case 8 : Return 800D   ' Landline Service
+            Case 9 : Return 2000D  ' Home Network Setup
+            Case 10 : Return 500D  ' Premium Tech Support
+            Case 11 : Return 500D  ' Speed Boost 100 Mbps
+            Case 12 : Return 1000D ' Speed Boost 200 Mbps
+            Case 13 : Return 500D  ' Data Allowance +100GB
+            Case 14 : Return 300D  ' Data Allowance +50GB
+            Case 15 : Return 400D  ' Priority Support Upgrade
+            Case Else : Return 0D
+        End Select
+    End Function
 
     Private Function GetCartTotal(customerId As Integer) As Decimal
         Dim total As Decimal = 0
@@ -120,37 +172,34 @@ Public Class Addon
         Dim success As Boolean = False
         Dim conStr As String = "server=localhost; userid=root; database=fdbmsproject"
         Dim con As New MySqlConnection(conStr)
-        Dim trans As MySqlTransaction = Nothing ' Declare outside Try to be accessible in Catch
-
+        Dim trans As MySqlTransaction = Nothing
         Try
             con.Open()
             trans = con.BeginTransaction()
 
-            ' Insert transaction record
-            Dim insertTxnQuery As String = "INSERT INTO addon_purchases (user_id, created_at, total_price)
-                                        VALUES (@userId, NOW(), @total)"
-            Dim txnCmd As New MySqlCommand(insertTxnQuery, con, trans)
-            txnCmd.Parameters.AddWithValue("@userId", Session.UserId)
-            txnCmd.Parameters.AddWithValue("@total", addedItemsTotal)
-            txnCmd.ExecuteNonQuery()
+            ' Process all selected items across all pages
+            For addonIndex As Integer = 0 To 14 ' 0-14 for addons 1-15
+                Dim quantity As Integer = selectedQuantities(addonIndex)
+                If quantity > 0 Then
+                    Dim actualAddonId As Integer = addonIndex + 1 ' addon_ids are 1-15
 
-            Dim purchaseId As Long = txnCmd.LastInsertedId
+                    ' Get the addon price from database
+                    Dim priceQuery As String = "SELECT price FROM addons WHERE addon_id = @addonId"
+                    Dim priceCmd As New MySqlCommand(priceQuery, con, trans)
+                    priceCmd.Parameters.AddWithValue("@addonId", actualAddonId)
+                    Dim addonPrice As Decimal = Convert.ToDecimal(priceCmd.ExecuteScalar())
 
-            ' Insert each selected addon
-            For i = 0 To 4
-                If txtValues(i) > 0 AndAlso i < addOnData.Count Then
-                    Dim addon = addOnData(i)
+                    ' Insert addon purchase
                     Dim insertAddonQuery As String = "
-                    INSERT INTO customer_addons (customer_id, addon_id, quantity, total_price, purchase_date)
-                    VALUES (@customerId, @addonId, @qty, @total, NOW())"
+                INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) 
+                VALUES (@custId, @addonId, @qty, @total, NOW())"
+                    Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
+                    addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
+                    addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
+                    addonCmd.Parameters.AddWithValue("@qty", quantity)
+                    addonCmd.ExecuteNonQuery()
 
-                    Using itemCmd As New MySqlCommand(insertAddonQuery, con, trans)
-                        itemCmd.Parameters.AddWithValue("@customerId", Session.UserId)
-                        itemCmd.Parameters.AddWithValue("@addonId", addon("addon_id"))
-                        itemCmd.Parameters.AddWithValue("@qty", txtValues(i))
-                        itemCmd.Parameters.AddWithValue("@total", addon("price") * txtValues(i))
-                        itemCmd.ExecuteNonQuery()
-                    End Using
+                    Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}, Price={addonPrice}")
                 End If
             Next
 
@@ -168,117 +217,13 @@ Public Class Addon
         Finally
             con.Close()
         End Try
-
         Return success
     End Function
 
-
-
-    Private Function CreateOrUpdateBillingRecord(connection As MySqlConnection, transaction As MySqlTransaction, subscriberId As Integer, totalAmount As Decimal) As Integer
-        Dim billingId As Integer = 0
-
-        ' Handle different cases:
-        ' 1. New subscriber (just selected plan + addons)
-        ' 2. Existing subscriber adding new addons
-        ' 3. Standalone product purchase
-
-        Dim currentMonthStart As Date = New Date(Date.Now.Year, Date.Now.Month, 1)
-        Dim dueDate As Date = Date.Now.AddDays(30)
-
-        If subscriberId > 0 Then
-            ' Check for existing billing record
-            Dim checkQuery As String = "SELECT billing_id FROM billing_records WHERE subscriber_id = @subscriberId AND billing_month = @billingMonth"
-            Using cmd As New MySqlCommand(checkQuery, connection, transaction)
-                cmd.Parameters.AddWithValue("@subscriberId", subscriberId)
-                cmd.Parameters.AddWithValue("@billingMonth", currentMonthStart)
-                Dim result = cmd.ExecuteScalar()
-                If result IsNot Nothing Then
-                    billingId = Convert.ToInt32(result)
-                    ' Update existing record
-                    Dim updateQuery As String = "UPDATE billing_records SET total_amount = total_amount + @amount WHERE billing_id = @billingId"
-                    Using updateCmd As New MySqlCommand(updateQuery, connection, transaction)
-                        updateCmd.Parameters.AddWithValue("@amount", totalAmount)
-                        updateCmd.Parameters.AddWithValue("@billingId", billingId)
-                        updateCmd.ExecuteNonQuery()
-                    End Using
-                    Return billingId
-                End If
-            End Using
-        End If
-
-        ' Create new billing record
-        Dim insertQuery As String = "INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date, status) " &
-                                   "VALUES (@subscriberId, @billingMonth, @totalAmount, @dueDate, 'Pending'); SELECT LAST_INSERT_ID();"
-
-        Using cmd As New MySqlCommand(insertQuery, connection, transaction)
-            cmd.Parameters.AddWithValue("@subscriberId", If(subscriberId > 0, subscriberId, DBNull.Value))
-            cmd.Parameters.AddWithValue("@billingMonth", currentMonthStart)
-            cmd.Parameters.AddWithValue("@totalAmount", totalAmount)
-            cmd.Parameters.AddWithValue("@dueDate", dueDate)
-            billingId = Convert.ToInt32(cmd.ExecuteScalar())
-        End Using
-
-        Return billingId
-    End Function
-
-    Private Function CreateStandaloneBillingRecord(connection As MySqlConnection, transaction As MySqlTransaction, addonTotal As Decimal) As Integer
-        ' For customers without active subscriptions, create a standalone billing record
-        Dim currentMonthStart As Date = New Date(Date.Now.Year, Date.Now.Month, 1)
-        Dim dueDate As Date = Date.Now.AddDays(30) ' 30 days from now
-
-        ' Create a temporary subscriber record or use a special subscriber_id for addon-only purchases
-        ' For simplicity, we'll use subscriber_id = 0 or create a special handling
-        Dim insertQuery As String = "INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date) VALUES (@subscriberId, @billingMonth, @totalAmount, @dueDate)"
-        Using cmd As New MySqlCommand(insertQuery, connection, transaction)
-            cmd.Parameters.AddWithValue("@subscriberId", DBNull.Value) ' This might need adjustment based on your business logic
-            cmd.Parameters.AddWithValue("@billingMonth", currentMonthStart)
-            cmd.Parameters.AddWithValue("@totalAmount", addonTotal)
-            cmd.Parameters.AddWithValue("@dueDate", dueDate)
-            cmd.ExecuteNonQuery()
-            Return cmd.LastInsertedId
-        End Using
-    End Function
-
-    Private Function GetActiveSubscriberId(connection As MySqlConnection, transaction As MySqlTransaction) As Integer
-        Dim query As String = "SELECT subscriber_id FROM subscribers WHERE customer_id = @customerId AND status = 'Active' LIMIT 1"
-        Using cmd As New MySqlCommand(query, connection, transaction)
-            cmd.Parameters.AddWithValue("@customerId", Session.UserId)
-            Dim result = cmd.ExecuteScalar()
-            If result IsNot Nothing Then
-                Return Convert.ToInt32(result)
-            End If
-        End Using
-        Return 0
-    End Function
-
-    Private Function GetCurrentPlanPrice(connection As MySqlConnection, transaction As MySqlTransaction, subscriberId As Integer) As Decimal
-        Dim query As String = "SELECT ip.price FROM subscribers s JOIN internet_plans ip ON s.plan_id = ip.plan_id WHERE s.subscriber_id = @subscriberId"
-        Using cmd As New MySqlCommand(query, connection, transaction)
-            cmd.Parameters.AddWithValue("@subscriberId", subscriberId)
-            Dim result = cmd.ExecuteScalar()
-            If result IsNot Nothing Then
-                Return Convert.ToDecimal(result)
-            End If
-        End Using
-        Return 0
-    End Function
-
-    Private Sub CreatePaymentRecord(connection As MySqlConnection, transaction As MySqlTransaction, billingId As Integer, amount As Decimal)
-        Dim insertQuery As String = "INSERT INTO payments (billing_id, amount, payment_date) VALUES (@billingId, @amount, @paymentDate)"
-        Using cmd As New MySqlCommand(insertQuery, connection, transaction)
-            cmd.Parameters.AddWithValue("@billingId", billingId)
-            cmd.Parameters.AddWithValue("@amount", amount)
-            cmd.Parameters.AddWithValue("@paymentDate", Date.Now.Date)
-            cmd.ExecuteNonQuery()
-        End Using
-    End Sub
-
     Private Sub ClearAllQuantities()
-        ' Reset quantities across ALL pages
-        For pageNum = 0 To 2
-            For itemIndex = 0 To 4
-                pageQuantities(pageNum, itemIndex) = 0
-            Next
+        ' Reset all quantities
+        For i As Integer = 0 To 14
+            selectedQuantities(i) = 0
         Next
 
         ' Reset current page display
@@ -338,53 +283,47 @@ Public Class Addon
         txtValues(index) += 1
         groupHardware(index).Text = txtValues(index).ToString()
 
-        addedItemsTotal += prices(index)
-        total += prices(index)
-        txtTotal.Text = "Php " & total.ToString("F2")
-        TextBox3.Text = addedItemsTotal
+        ' Update the selectedQuantities array immediately
+        Dim baseIndex As Integer = (page - 1) * 5
+        selectedQuantities(baseIndex + index) = txtValues(index)
+
+        ' Recalculate totals
+        RecalculateTotal()
     End Sub
 
     Private Sub btnMinus1_Click(sender As Object, e As EventArgs) Handles btnMinus1.Click, btnMinus2.Click, btnMinus3.Click, btnMinus4.Click, btnMinus5.Click
         Dim index As Integer = CInt(DirectCast(sender, Button).Tag)
 
-        txtValues(index) -= 1
-
-        If txtValues(index) < 0 Then
-            txtValues(index) = 0
+        If txtValues(index) <= 0 Then
             MessageBox.Show("Quantity cannot be less than 0", "Invalid Quantity", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
+        txtValues(index) -= 1
         groupHardware(index).Text = txtValues(index).ToString
 
-        total -= prices(index)
-        addedItemsTotal -= prices(index)
-        txtTotal.Text = "Php " & total.ToString("F2")
-        TextBox3.Text = addedItemsTotal
+        ' Update the selectedQuantities array immediately
+        Dim baseIndex As Integer = (page - 1) * 5
+        selectedQuantities(baseIndex + index) = txtValues(index)
+
+        ' Recalculate totals
+        RecalculateTotal()
     End Sub
 
     Private Sub btnBuyNow_Click(sender As Object, e As EventArgs) Handles btnBuyNow.Click
+        ' Save current page quantities first
+        SavePageQuantities()
+
         ' Check if user is logged in
         If Session.UserId <= 0 Then
             MessageBox.Show("Please log in to make a purchase!", "Login Required", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
-        ' Check if any items are selected
+        ' Check if any items are selected across all pages
         Dim hasSelectedItems As Boolean = False
-        For pageNum = 0 To 2
-            For itemIndex = 0 To 4
-                If pageQuantities(pageNum, itemIndex) > 0 Then
-                    hasSelectedItems = True
-                    Exit For
-                End If
-            Next
-            If hasSelectedItems Then Exit For
-        Next
-
-        ' Include current page items
-        For i = 0 To 4
-            If txtValues(i) > 0 Then
+        For i As Integer = 0 To 14
+            If selectedQuantities(i) > 0 Then
                 hasSelectedItems = True
                 Exit For
             End If
@@ -395,15 +334,8 @@ Public Class Addon
             Return
         End If
 
-        ' Compute total including plan if it's from subscription
-        Dim totalPurchaseAmount As Decimal = 0
-        If Session.IsNewSubscription Then
-            totalPurchaseAmount += Session.planPrice
-        End If
-        totalPurchaseAmount += addedItemsTotal ' Added items total computed from UI selection
-
         ' Confirm purchase
-        Dim confirmResult As DialogResult = MessageBox.Show($"Confirm purchase of items totaling Php {totalPurchaseAmount:F2}?",
+        Dim confirmResult As DialogResult = MessageBox.Show($"Confirm purchase of items totaling Php {total:F2}?",
                                                        "Confirm Purchase",
                                                        MessageBoxButtons.YesNo,
                                                        MessageBoxIcon.Question)
@@ -420,9 +352,8 @@ Public Class Addon
             End If
 
             If purchaseSuccess Then
-                ' Add user to subscribers table with status 'Pending' (if not already a subscriber)
-
                 MessageBox.Show("Purchase successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                ClearAllQuantities() ' Clear after successful purchase
             Else
                 MessageBox.Show("Purchase failed. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
@@ -450,46 +381,32 @@ Public Class Addon
 
             Dim subscriptionId As Integer = CInt(subCmd.LastInsertedId)
 
-            ' Process all pages for addons
-            For pageNum As Integer = 0 To 2 ' Pages 1-3 (0-based indexing)
-                For itemIndex As Integer = 0 To 4 ' 5 items per page
-                    Dim quantity As Integer = 0
+            ' Process all selected addons
+            For addonIndex As Integer = 0 To 14 ' 0-14 for addons 1-15
+                Dim quantity As Integer = selectedQuantities(addonIndex)
+                If quantity > 0 Then
+                    Dim actualAddonId As Integer = addonIndex + 1 ' addon_ids are 1-15
 
-                    ' Get quantity from the appropriate source
-                    If pageNum = page - 1 Then
-                        ' Current page - get from txtValues
-                        quantity = txtValues(itemIndex)
-                    Else
-                        ' Other pages - get from pageQuantities
-                        quantity = pageQuantities(pageNum, itemIndex)
-                    End If
+                    ' Get the addon price from database
+                    Dim priceQuery As String = "SELECT price FROM addons WHERE addon_id = @addonId"
+                    Dim priceCmd As New MySqlCommand(priceQuery, con, trans)
+                    priceCmd.Parameters.AddWithValue("@addonId", actualAddonId)
+                    Dim addonPrice As Decimal = Convert.ToDecimal(priceCmd.ExecuteScalar())
 
-                    If quantity > 0 Then
-                        ' Calculate the actual addon_id based on page and item position
-                        Dim actualAddonId As Integer = (pageNum * 5) + itemIndex + 1 ' addon_ids are 1-15
-
-                        ' Get the addon price from database
-                        Dim priceQuery As String = "SELECT price FROM addons WHERE addon_id = @addonId"
-                        Dim priceCmd As New MySqlCommand(priceQuery, con, trans)
-                        priceCmd.Parameters.AddWithValue("@addonId", actualAddonId)
-                        Dim addonPrice As Decimal = Convert.ToDecimal(priceCmd.ExecuteScalar())
-
-                        ' Insert addon purchase
-                        Dim insertAddonQuery As String = "
+                    ' Insert addon purchase
+                    Dim insertAddonQuery As String = "
                     INSERT INTO customer_addons (customer_id, addon_id, quantity, total_price, purchase_date) 
                     VALUES (@custId, @addonId, @qty, @total, NOW())"
 
-                        Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
-                        addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
-                        addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
-                        addonCmd.Parameters.AddWithValue("@qty", quantity)
-                        addonCmd.Parameters.AddWithValue("@total", addonPrice * quantity)
-                        addonCmd.ExecuteNonQuery()
+                    Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
+                    addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
+                    addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
+                    addonCmd.Parameters.AddWithValue("@qty", quantity)
+                    addonCmd.Parameters.AddWithValue("@total", addonPrice * quantity)
+                    addonCmd.ExecuteNonQuery()
 
-                        ' Debug output
-                        Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}, Price={addonPrice}")
-                    End If
-                Next
+                    Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}, Price={addonPrice}")
+                End If
             Next
 
             trans.Commit()
@@ -511,31 +428,31 @@ Public Class Addon
         Return success
     End Function
 
-
     Private Sub btnNext_Click(sender As Object, e As EventArgs) Handles btnNext.Click
         SavePageQuantities()
-        If page < 3 Then
-            page += 1
-            pageHandling()
+        page += 1
+        If page > 3 Then
+            page = 1
         End If
+        pageHandling()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As EventArgs) Handles btnPrevious.Click
         SavePageQuantities()
-        If page > 1 Then
-            page -= 1
-            pageHandling()
+        page -= 1
+        If page < 1 Then
+            page = 3
         End If
+        pageHandling()
     End Sub
 
-
     Private Sub btnCart_Click_1(sender As Object, e As EventArgs) Handles btnCart.Click
-        For i = 0 To 4
-            pageQuantities(page - 1, i) = txtValues(i)
-        Next
+        ' Save current page quantities first
+        SavePageQuantities()
 
         Dim hasItems As Boolean = False
         Dim failedItems As New List(Of String)
+        Dim successCount As Integer = 0
 
         ' Check if user is logged in
         If Session.UserId <= 0 Then
@@ -543,46 +460,27 @@ Public Class Addon
             Return
         End If
 
-        Dim currentPageBeforeProcessing As Integer = page
-        Dim successfullyAddedTotal As Decimal = 0
+        ' Process all selected items across all pages
+        For addonIndex As Integer = 0 To 14 ' 0-14 for addons 1-15
+            Dim quantity As Integer = selectedQuantities(addonIndex)
+            If quantity > 0 Then
+                hasItems = True
+                Dim actualAddonId As Integer = addonIndex + 1 ' addon_ids are 1-15
 
-        ' Process all pages (1-3) and all items (0-4)
-        For currentPage = 1 To 3
-            page = currentPage
-            pageHandling()
-
-            For itemIndex = 0 To 4
-                Dim quantity = pageQuantities(currentPage - 1, itemIndex)
-                If quantity > 0 Then
-                    hasItems = True
-                    If AddToCartDatabase(Session.UserId, addonIds(itemIndex), quantity) Then
-                    Else
-                        failedItems.Add(productNames(itemIndex))
-                    End If
+                If AddToCartDatabase(Session.UserId, actualAddonId, quantity) Then
+                    successCount += 1
+                Else
+                    ' Get product name for failed item
+                    Dim productName As String = GetProductNameByAddonId(actualAddonId)
+                    failedItems.Add(productName)
                 End If
-            Next
+            End If
         Next
-
-        ' Restore the original page
-        page = currentPageBeforeProcessing
-        pageHandling()
 
         If hasItems Then
             If failedItems.Count = 0 Then
-                ' Reset quantities across ALL pages
-                For pageNum = 0 To 2
-                    For itemIndex = 0 To 4
-                        pageQuantities(pageNum, itemIndex) = 0
-                    Next
-                Next
-
-                ' Reset current page display
-                For i = 0 To 4
-                    txtValues(i) = 0
-                    groupHardware(i).Text = txtValues(i).ToString()
-                Next
-
-                MessageBox.Show("Items added to cart successfully!" & vbCrLf & "Added Php " & addedItemsTotal.ToString("F2") & " to your total.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show($"All {successCount} items added to cart successfully!" & vbCrLf & "Added Php " & addedItemsTotal.ToString("F2") & " to your total.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                ClearAllQuantities() ' Clear after successful cart addition
             Else
                 MessageBox.Show("Some items failed to add to cart: " & String.Join(", ", failedItems),
                            "Partial Success", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -591,6 +489,27 @@ Public Class Addon
             MessageBox.Show("No items selected to add to cart!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
+
+    Private Function GetProductNameByAddonId(addonId As Integer) As String
+        Select Case addonId
+            Case 1 : Return "5G Modem/Router"
+            Case 2 : Return "WiFi Extender"
+            Case 3 : Return "Ethernet Cable (10m)"
+            Case 4 : Return "External Antenna"
+            Case 5 : Return "Backup Battery Pack"
+            Case 6 : Return "Installation Service"
+            Case 7 : Return "Netflix Subscription (Monthly)"
+            Case 8 : Return "Landline Service (Monthly)"
+            Case 9 : Return "Home Network Setup"
+            Case 10 : Return "Premium Tech Support"
+            Case 11 : Return "Speed Boost 100 Mbps"
+            Case 12 : Return "Speed Boost 200 Mbps"
+            Case 13 : Return "Data Allowance +100GB"
+            Case 14 : Return "Data Allowance +50GB"
+            Case 15 : Return "Priority Support Upgrade"
+            Case Else : Return "Unknown Product"
+        End Select
+    End Function
 
     Private Sub CartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles cartbutton.Click
         Session.CheckTransactionTimeout()
