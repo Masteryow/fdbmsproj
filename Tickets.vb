@@ -118,7 +118,7 @@ Public Class Tickets
 
                         End Using
 
-                        If status = "Closed" Then
+                        If status = "Resolved" Then
                             btnNewTicket.Visible = True
 
                         End If
@@ -128,17 +128,6 @@ Public Class Tickets
                     End If
 
                 End Using
-
-
-
-
-
-
-
-
-
-
-
 
 
                 Using issueType As New MySqlCommand("SELECT * FROM issue_types", conn)
@@ -211,10 +200,6 @@ Public Class Tickets
 
 
                 End Using
-
-
-
-
 
 
             End Using

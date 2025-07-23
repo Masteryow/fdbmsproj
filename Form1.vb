@@ -129,13 +129,35 @@ Public Class Form1
             Session.UserName = userName
             Session.UserRole = userRole ' You might want to add this to your Session class
             Session.SubscriberId = subscriber_id
-
+            reader.Close()
 
             ' Redirect based on role
             Select Case userRole.ToLower()
                 Case "admin"
                     MsgBox("Login Successful")
                     admin.Show()
+                    Me.Close()
+
+                Case "technician"
+
+                    Using getTechId As New MySqlCommand("SELECT t.technician_id, u.username FROM technicians t JOIN users u ON t.user_id = u.user_id WHERE u.user_id = @user_id", con)
+                        getTechId.Parameters.AddWithValue("@user_id", CInt(Session.UserId))
+
+                        Using fetchTechID As MySqlDataReader = getTechId.ExecuteReader
+
+                            While fetchTechID.Read
+
+                                Session.technicianID = fetchTechID.GetInt32("technician_id")
+
+                            End While
+                        End Using
+
+
+
+
+                    End Using
+                    MsgBox("Login Successful")
+                    TechnicianPanel.Show()
                     Me.Close()
                 'Case "employee"
                     ' employeeForm.Show()
@@ -150,7 +172,7 @@ Public Class Form1
             MsgBox("Invalid username or password.")
         End If
 
-        reader.Close()
+
         con.Close()
     End Sub
 

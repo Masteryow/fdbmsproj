@@ -4,7 +4,7 @@
     Public Shared Property UserName As String
     Public Shared Property PlanId As Integer
     Public Shared Property planImage As Image
-    Public Shared Property SubscriberId As Integer  'for debug, remove if final
+    Public Shared Property SubscriberId As Integer
     Public Shared Property IsNewSubscription As Boolean
 
     Public Shared Property planName As String
@@ -13,6 +13,7 @@
     Public Shared Property userRole As String
     Public Shared Property fromProduct As Boolean
 
+    Public Shared Property technicianID As Integer  'for debug, remove if final
     ' Transaction Management Properties
     Public Shared Property TransactionId As String
     Public Shared Property TransactionStartTime As DateTime
