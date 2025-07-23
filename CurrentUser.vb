@@ -1,6 +1,6 @@
 ﻿Public Class Session
     ' Existing properties
-    Public Shared Property UserId As Integer 'for debug, remove if final
+    Public Shared Property UserId As Integer  'for debug, remove if final
     Public Shared Property UserName As String
     Public Shared Property PlanId As Integer
     Public Shared Property planImage As Image
@@ -13,7 +13,7 @@
     Public Shared Property userRole As String
     Public Shared Property fromProduct As Boolean
 
-    Public Shared Property technicianID As Integer  'for debug, remove if final
+    Public Shared Property technicianID As Integer = 2 'for debug, remove if final
     ' Transaction Management Properties
     Public Shared Property TransactionId As String
     Public Shared Property TransactionStartTime As DateTime

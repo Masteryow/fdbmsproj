@@ -205,7 +205,7 @@ Partial Class TechnicianPanel
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Location = New System.Drawing.Point(0, 29)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(801, 56)
+        Me.Panel1.Size = New System.Drawing.Size(822, 56)
         Me.Panel1.TabIndex = 6
         '
         'TextBox6
@@ -265,7 +265,7 @@ Partial Class TechnicianPanel
         '
         Me.cbxStatus.Enabled = False
         Me.cbxStatus.FormattingEnabled = True
-        Me.cbxStatus.Items.AddRange(New Object() {"Assigned", "In Progress", "Completed"})
+        Me.cbxStatus.Items.AddRange(New Object() {"In Progress", "Completed"})
         Me.cbxStatus.Location = New System.Drawing.Point(69, 43)
         Me.cbxStatus.Name = "cbxStatus"
         Me.cbxStatus.Size = New System.Drawing.Size(142, 29)
@@ -286,7 +286,7 @@ Partial Class TechnicianPanel
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(815, 450)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Panel1)

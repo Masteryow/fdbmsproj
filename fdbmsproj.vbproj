@@ -200,6 +200,12 @@
     <Compile Include="Subscription.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Supervisor Panel.Designer.vb">
+      <DependentUpon>Supervisor Panel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supervisor Panel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TechnicianPanel.Designer.vb">
       <DependentUpon>TechnicianPanel.vb</DependentUpon>
     </Compile>
@@ -246,6 +252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subscription.resx">
       <DependentUpon>Subscription.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supervisor Panel.resx">
+      <DependentUpon>Supervisor Panel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TechnicianPanel.resx">
       <DependentUpon>TechnicianPanel.vb</DependentUpon>

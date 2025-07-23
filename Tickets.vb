@@ -15,9 +15,9 @@ Public Class Tickets
         txtDifficulty.Enabled = False
         txtPrice.Enabled = False
         txtNote.Enabled = False
-        cbxTechnician.Enabled = False
-        txtExpertise.Enabled = False
-        txtStatus.Enabled = False
+
+
+
         btnConfirm.Enabled = False
         btnClear.Enabled = False
         txtTStatus.Enabled = False
@@ -29,9 +29,6 @@ Public Class Tickets
         txtDifficulty.Enabled = True
         txtPrice.Enabled = True
         txtNote.Enabled = True
-        cbxTechnician.Enabled = True
-        txtExpertise.Enabled = True
-        txtStatus.Enabled = True
         btnConfirm.Enabled = True
         btnClear.Enabled = True
         txtTStatus.Enabled = True
@@ -44,17 +41,10 @@ Public Class Tickets
         cbxIssueType.Text = ""
         txtDifficulty.Clear()
         txtPrice.Clear()
-        cbxTechnician.SelectedIndex = -1
-        cbxTechnician.Text = ""
-        cbxTechnician.Enabled = False
-        txtExpertise.Clear()
-        txtStatus.Clear()
         btnConfirm.Enabled = False
         txtNote.Clear()
     End Sub
     Private Sub Tickets_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        cbxTechnician.Enabled = False
-
 
         Try
             Using conn As New MySqlConnection(con)
@@ -86,29 +76,20 @@ Public Class Tickets
                         disabled()
 
                         Using cmd2 As New MySqlCommand("SELECT it.issue_name, st.created_at, it.difficulty_level, it.base_salary,
-                                                                st.description, t.technician_id, CONCAT(u.firstName, ' ',
-                                                                u.lastName) AS fullName, t.skills, u.is_active 
-                                                                From issue_types it JOIN support_tickets st ON it.issue_type_id
-                                                                = st.issue_type_id JOIN ticket_technicians tt ON st.ticket_id = 
-                                                                tt.ticket_id JOIN technicians t ON tt.technician_id = t.technician_id
-                                                                JOIN users u ON t.user_id = u.user_id WHERE subscriber_id
-                                                                = @subscriber_id ORDER BY st.created_at DESC", conn)
+                                                                st.description FROM issue_types it JOIN support_tickets st ON it.issue_type_id
+                                                                = st.issue_type_id WHERE subscriber_id
+                                                                = @subscriber_id ORDER BY st.created_at DESC LIMIT 1", conn)
                             cmd2.Parameters.AddWithValue("@subscriber_id", Session.SubscriberId)
 
                             Using post As MySqlDataReader = cmd2.ExecuteReader()
 
                                 While post.Read
-                                    cbxIssueType.SelectedText = post.GetString("issue_name")
+                                    cbxIssueType.Text = post.GetString("issue_name")
                                     txtDifficulty.Text = post.GetString("difficulty_level")
                                     txtPrice.Text = "Php " & post.GetDecimal("base_salary")
                                     txtNote.Text = post.GetString("description")
-                                    cbxTechnician.SelectedText = post.GetString("fullName")
-                                    txtExpertise.Text = post.GetString("skills")
-                                    txtStatus.Text = post.GetBoolean("is_active")
 
-                                    If txtStatus.Text = "True" Then
-                                        txtStatus.Text = "Active"
-                                    End If
+
                                 End While
 
 
@@ -143,18 +124,7 @@ Public Class Tickets
                 End Using
 
 
-                Using technicians As New MySqlCommand("SELECT CONCAT(u.firstName,' ',u.lastName) AS fullName, u.role,
-                                                        u.is_active, t.skills FROM users u JOIN technicians t
-                                                        ON u.user_id = t.user_id", conn)
-                    Using getName As MySqlDataReader = technicians.ExecuteReader
 
-                        While getName.Read
-
-                            cbxTechnician.Items.Add(getName.GetString("fullName"))
-                        End While
-                    End Using
-
-                End Using
             End Using
 
         Catch ex As Exception
@@ -191,7 +161,7 @@ Public Class Tickets
                             txtDifficulty.Text = fetchDifficulty.GetString("difficulty_level")
                             txtPrice.Text = "Php " & fetchDifficulty.GetDecimal("base_salary")
                             issueId = fetchDifficulty.GetInt32("issue_type_id")
-                            cbxTechnician.Enabled = True
+
 
 
                         End While
@@ -200,7 +170,7 @@ Public Class Tickets
 
 
                 End Using
-
+                btnConfirm.Enabled = True
 
             End Using
         Catch ex As Exception
@@ -213,8 +183,8 @@ Public Class Tickets
 
     End Sub
 
-    Private Sub GroupBox2_Enter(sender As Object, e As EventArgs) Handles gbxTechnician.Click
-        If cbxIssueType.SelectedIndex = -1 AndAlso cbxTechnician.Enabled = False AndAlso (status <>
+    Private Sub GroupBox2_Enter(sender As Object, e As EventArgs)
+        If cbxIssueType.SelectedIndex = -1 AndAlso (status <>
             "Open" AndAlso status <> "In Progress" AndAlso status <> "Resolved" AndAlso status <> "Closed") Then
 
 
@@ -224,52 +194,7 @@ Public Class Tickets
         End If
     End Sub
 
-    Private Sub cbxTechnician_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxTechnician.SelectedIndexChanged
 
-        If cbxTechnician.SelectedItem Is Nothing Then Exit Sub
-
-        Dim getName As String = cbxTechnician.SelectedItem.ToString()
-
-        Try
-
-            Using conn As New MySqlConnection(con)
-
-                conn.Open()
-
-                Using getSkill As New MySqlCommand("SELECT t.technician_id, t.skills, u.is_active FROM technicians t 
-                                                    JOIN users u ON t.user_id = u.user_id WHERE CONCAT
-                                                    (u.firstName,' ', u.lastName) = @name", conn)
-
-                    getSkill.Parameters.AddWithValue("@name", getName)
-
-                    Using fetchSkill As MySqlDataReader = getSkill.ExecuteReader
-
-                        While fetchSkill.Read
-                            txtExpertise.Text = fetchSkill.GetString("skills")
-                            txtStatus.Text = fetchSkill.GetBoolean("is_active")
-                            technicianId = fetchSkill.GetInt32("technician_id")
-
-                            If txtStatus.Text = "True" Then
-                                txtStatus.Text = "Active"
-                            End If
-
-                        End While
-
-                    End Using
-
-                End Using
-
-
-
-
-                btnConfirm.Enabled = True
-            End Using
-
-
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message)
-        End Try
-    End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
 
@@ -308,17 +233,7 @@ Public Class Tickets
                         End Using
                     End Using
 
-                    Using cmd As New MySqlCommand("INSERT INTO ticket_technicians (ticket_id, technician_id)
-                                                  VALUES (@ticket_id, @technician_id)", conn)
-                        cmd.Transaction = transaction
-                        cmd.Parameters.AddWithValue("@ticket_id", ticket_id)
-                        cmd.Parameters.AddWithValue("@technician_id", technicianId)
-                        cmd.ExecuteNonQuery()
 
-
-
-
-                    End Using
 
                     transaction.Commit()
                     MsgBox("Ticket Successfully Added!")
@@ -334,7 +249,7 @@ Public Class Tickets
         End Using
     End Sub
 
-    Private Sub gbxTechnician_Enter(sender As Object, e As EventArgs) Handles gbxTechnician.Enter
+    Private Sub gbxTechnician_Enter(sender As Object, e As EventArgs)
 
     End Sub
 
@@ -344,7 +259,7 @@ Public Class Tickets
         txtTStatus.Clear()
         activates()
         btnConfirm.Enabled = False
-        cbxTechnician.Enabled = False
+
         status = ""
     End Sub
 End Class

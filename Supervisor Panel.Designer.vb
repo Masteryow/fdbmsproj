@@ -1,0 +1,398 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Supervisor_Panel
+    Inherits System.Windows.Forms.Form
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.MySqlCommand1 = New MySql.Data.MySqlClient.MySqlCommand()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.btnClear = New System.Windows.Forms.Button()
+        Me.btnChoose = New System.Windows.Forms.Button()
+        Me.txtNotes = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txtPrice = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.txtDifficulty = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.txtConcern = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.cbxSubName = New System.Windows.Forms.ComboBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.btnAssign = New System.Windows.Forms.Button()
+        Me.cbxCompletedTix = New System.Windows.Forms.ComboBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.cbxPendingTix = New System.Windows.Forms.ComboBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtStatus = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.txtSkills = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.cbxTechName = New System.Windows.Forms.ComboBox()
+        Me.Panel1.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'MySqlCommand1
+        '
+        Me.MySqlCommand1.CacheAge = 0
+        Me.MySqlCommand1.Connection = Nothing
+        Me.MySqlCommand1.EnableCaching = False
+        Me.MySqlCommand1.Transaction = Nothing
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.DarkSlateBlue
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Location = New System.Drawing.Point(-10, 27)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1023, 56)
+        Me.Panel1.TabIndex = 7
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Tahoma", 19.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(28, 8)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(297, 40)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "Supervisor Panel"
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.btnClear)
+        Me.GroupBox1.Controls.Add(Me.btnChoose)
+        Me.GroupBox1.Controls.Add(Me.txtNotes)
+        Me.GroupBox1.Controls.Add(Me.Label6)
+        Me.GroupBox1.Controls.Add(Me.txtPrice)
+        Me.GroupBox1.Controls.Add(Me.Label5)
+        Me.GroupBox1.Controls.Add(Me.txtDifficulty)
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.txtConcern)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.cbxSubName)
+        Me.GroupBox1.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.ForeColor = System.Drawing.Color.White
+        Me.GroupBox1.Location = New System.Drawing.Point(25, 101)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(473, 337)
+        Me.GroupBox1.TabIndex = 8
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Subscriber Concern"
+        '
+        'btnClear
+        '
+        Me.btnClear.BackColor = System.Drawing.Color.Black
+        Me.btnClear.ForeColor = System.Drawing.Color.White
+        Me.btnClear.Location = New System.Drawing.Point(250, 296)
+        Me.btnClear.Name = "btnClear"
+        Me.btnClear.Size = New System.Drawing.Size(187, 32)
+        Me.btnClear.TabIndex = 15
+        Me.btnClear.Text = "Clear"
+        Me.btnClear.UseVisualStyleBackColor = False
+        Me.btnClear.Visible = False
+        '
+        'btnChoose
+        '
+        Me.btnChoose.BackColor = System.Drawing.Color.Black
+        Me.btnChoose.ForeColor = System.Drawing.Color.White
+        Me.btnChoose.Location = New System.Drawing.Point(37, 296)
+        Me.btnChoose.Name = "btnChoose"
+        Me.btnChoose.Size = New System.Drawing.Size(187, 32)
+        Me.btnChoose.TabIndex = 14
+        Me.btnChoose.Text = "Choose"
+        Me.btnChoose.UseVisualStyleBackColor = False
+        Me.btnChoose.Visible = False
+        '
+        'txtNotes
+        '
+        Me.txtNotes.Location = New System.Drawing.Point(21, 228)
+        Me.txtNotes.Multiline = True
+        Me.txtNotes.Name = "txtNotes"
+        Me.txtNotes.ReadOnly = True
+        Me.txtNotes.Size = New System.Drawing.Size(434, 59)
+        Me.txtNotes.TabIndex = 13
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(205, 204)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(53, 21)
+        Me.Label6.TabIndex = 12
+        Me.Label6.Text = "Notes"
+        '
+        'txtPrice
+        '
+        Me.txtPrice.Location = New System.Drawing.Point(310, 154)
+        Me.txtPrice.Name = "txtPrice"
+        Me.txtPrice.ReadOnly = True
+        Me.txtPrice.Size = New System.Drawing.Size(145, 28)
+        Me.txtPrice.TabIndex = 11
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(258, 161)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(46, 21)
+        Me.Label5.TabIndex = 10
+        Me.Label5.Text = "Price"
+        '
+        'txtDifficulty
+        '
+        Me.txtDifficulty.Location = New System.Drawing.Point(110, 158)
+        Me.txtDifficulty.Name = "txtDifficulty"
+        Me.txtDifficulty.ReadOnly = True
+        Me.txtDifficulty.Size = New System.Drawing.Size(142, 28)
+        Me.txtDifficulty.TabIndex = 9
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(17, 165)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(75, 21)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Difficulty"
+        '
+        'txtConcern
+        '
+        Me.txtConcern.Location = New System.Drawing.Point(110, 101)
+        Me.txtConcern.Name = "txtConcern"
+        Me.txtConcern.ReadOnly = True
+        Me.txtConcern.Size = New System.Drawing.Size(345, 28)
+        Me.txtConcern.TabIndex = 7
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(17, 101)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(70, 21)
+        Me.Label3.TabIndex = 6
+        Me.Label3.Text = "Concern"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(17, 46)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(135, 21)
+        Me.Label1.TabIndex = 5
+        Me.Label1.Text = "Subscriber Name"
+        '
+        'cbxSubName
+        '
+        Me.cbxSubName.FormattingEnabled = True
+        Me.cbxSubName.Location = New System.Drawing.Point(158, 43)
+        Me.cbxSubName.Name = "cbxSubName"
+        Me.cbxSubName.Size = New System.Drawing.Size(297, 29)
+        Me.cbxSubName.TabIndex = 4
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.btnAssign)
+        Me.GroupBox2.Controls.Add(Me.cbxCompletedTix)
+        Me.GroupBox2.Controls.Add(Me.Label10)
+        Me.GroupBox2.Controls.Add(Me.cbxPendingTix)
+        Me.GroupBox2.Controls.Add(Me.Label9)
+        Me.GroupBox2.Controls.Add(Me.txtStatus)
+        Me.GroupBox2.Controls.Add(Me.Label8)
+        Me.GroupBox2.Controls.Add(Me.txtSkills)
+        Me.GroupBox2.Controls.Add(Me.Label7)
+        Me.GroupBox2.Controls.Add(Me.Label11)
+        Me.GroupBox2.Controls.Add(Me.cbxTechName)
+        Me.GroupBox2.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.ForeColor = System.Drawing.Color.White
+        Me.GroupBox2.Location = New System.Drawing.Point(520, 101)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(454, 337)
+        Me.GroupBox2.TabIndex = 16
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Technician Assignment"
+        '
+        'btnAssign
+        '
+        Me.btnAssign.BackColor = System.Drawing.Color.Black
+        Me.btnAssign.ForeColor = System.Drawing.Color.White
+        Me.btnAssign.Location = New System.Drawing.Point(110, 296)
+        Me.btnAssign.Name = "btnAssign"
+        Me.btnAssign.Size = New System.Drawing.Size(242, 32)
+        Me.btnAssign.TabIndex = 16
+        Me.btnAssign.Text = "Assign"
+        Me.btnAssign.UseVisualStyleBackColor = False
+        Me.btnAssign.Visible = False
+        '
+        'cbxCompletedTix
+        '
+        Me.cbxCompletedTix.FormattingEnabled = True
+        Me.cbxCompletedTix.Location = New System.Drawing.Point(305, 255)
+        Me.cbxCompletedTix.Name = "cbxCompletedTix"
+        Me.cbxCompletedTix.Size = New System.Drawing.Size(125, 29)
+        Me.cbxCompletedTix.TabIndex = 21
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(327, 231)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(89, 21)
+        Me.Label10.TabIndex = 20
+        Me.Label10.Text = "Completed"
+        '
+        'cbxPendingTix
+        '
+        Me.cbxPendingTix.FormattingEnabled = True
+        Me.cbxPendingTix.Location = New System.Drawing.Point(140, 255)
+        Me.cbxPendingTix.Name = "cbxPendingTix"
+        Me.cbxPendingTix.Size = New System.Drawing.Size(154, 29)
+        Me.cbxPendingTix.TabIndex = 19
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(159, 232)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(126, 21)
+        Me.Label9.TabIndex = 18
+        Me.Label9.Text = "Pending Tickets"
+        '
+        'txtStatus
+        '
+        Me.txtStatus.Location = New System.Drawing.Point(25, 255)
+        Me.txtStatus.Multiline = True
+        Me.txtStatus.Name = "txtStatus"
+        Me.txtStatus.ReadOnly = True
+        Me.txtStatus.Size = New System.Drawing.Size(103, 29)
+        Me.txtStatus.TabIndex = 17
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(49, 228)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(57, 21)
+        Me.Label8.TabIndex = 16
+        Me.Label8.Text = "Status"
+        '
+        'txtSkills
+        '
+        Me.txtSkills.Location = New System.Drawing.Point(21, 122)
+        Me.txtSkills.Multiline = True
+        Me.txtSkills.Name = "txtSkills"
+        Me.txtSkills.ReadOnly = True
+        Me.txtSkills.Size = New System.Drawing.Size(409, 91)
+        Me.txtSkills.TabIndex = 13
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(204, 98)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(47, 21)
+        Me.Label7.TabIndex = 12
+        Me.Label7.Text = "Skills"
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(17, 46)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(142, 21)
+        Me.Label11.TabIndex = 5
+        Me.Label11.Text = " Technician Name"
+        '
+        'cbxTechName
+        '
+        Me.cbxTechName.FormattingEnabled = True
+        Me.cbxTechName.Location = New System.Drawing.Point(158, 43)
+        Me.cbxTechName.Name = "cbxTechName"
+        Me.cbxTechName.Size = New System.Drawing.Size(272, 29)
+        Me.cbxTechName.TabIndex = 4
+        '
+        'Supervisor_Panel
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.Black
+        Me.ClientSize = New System.Drawing.Size(1001, 458)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.Panel1)
+        Me.Name = "Supervisor_Panel"
+        Me.Text = "Supervisor_Panel"
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents MySqlCommand1 As MySql.Data.MySqlClient.MySqlCommand
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Label2 As Label
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents btnClear As Button
+    Friend WithEvents btnChoose As Button
+    Friend WithEvents txtNotes As TextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents txtPrice As TextBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents txtDifficulty As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents txtConcern As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents cbxSubName As ComboBox
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents txtSkills As TextBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label11 As Label
+    Friend WithEvents cbxTechName As ComboBox
+    Friend WithEvents cbxCompletedTix As ComboBox
+    Friend WithEvents Label10 As Label
+    Friend WithEvents cbxPendingTix As ComboBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents txtStatus As TextBox
+    Friend WithEvents btnAssign As Button
+End Class

@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Tickets
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,8 @@ Partial Class Tickets
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SubscriptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -37,37 +36,20 @@ Partial Class Tickets
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtPrice = New System.Windows.Forms.TextBox()
         Me.btnConfirm = New System.Windows.Forms.Button()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.gbxTechnician = New System.Windows.Forms.GroupBox()
-        Me.txtStatus = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.cbxTechnician = New System.Windows.Forms.ComboBox()
+        Me.txtNote = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.btnClear = New System.Windows.Forms.Button()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.txtExpertise = New System.Windows.Forms.TextBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.txtNote = New System.Windows.Forms.TextBox()
         Me.txtTStatus = New System.Windows.Forms.TextBox()
         Me.btnNewTicket = New System.Windows.Forms.Button()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        Me.gbxTechnician.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Tahoma", 19.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(22, 41)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(135, 40)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Tickets"
         '
         'MenuStrip1
         '
@@ -78,7 +60,7 @@ Partial Class Tickets
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(800, 30)
+        Me.MenuStrip1.Size = New System.Drawing.Size(815, 28)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -139,7 +121,7 @@ Partial Class Tickets
         Me.cbxIssueType.FormattingEnabled = True
         Me.cbxIssueType.Location = New System.Drawing.Point(98, 49)
         Me.cbxIssueType.Name = "cbxIssueType"
-        Me.cbxIssueType.Size = New System.Drawing.Size(258, 29)
+        Me.cbxIssueType.Size = New System.Drawing.Size(373, 29)
         Me.cbxIssueType.TabIndex = 0
         '
         'Label3
@@ -158,7 +140,7 @@ Partial Class Tickets
         Me.txtDifficulty.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtDifficulty.Location = New System.Drawing.Point(98, 101)
         Me.txtDifficulty.Name = "txtDifficulty"
-        Me.txtDifficulty.Size = New System.Drawing.Size(258, 28)
+        Me.txtDifficulty.Size = New System.Drawing.Size(373, 28)
         Me.txtDifficulty.TabIndex = 5
         '
         'Label4
@@ -177,28 +159,18 @@ Partial Class Tickets
         Me.txtPrice.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtPrice.Location = New System.Drawing.Point(98, 149)
         Me.txtPrice.Name = "txtPrice"
-        Me.txtPrice.Size = New System.Drawing.Size(258, 28)
+        Me.txtPrice.Size = New System.Drawing.Size(373, 28)
         Me.txtPrice.TabIndex = 7
         '
         'btnConfirm
         '
         Me.btnConfirm.Enabled = False
-        Me.btnConfirm.Location = New System.Drawing.Point(203, 412)
+        Me.btnConfirm.Location = New System.Drawing.Point(563, 244)
         Me.btnConfirm.Name = "btnConfirm"
-        Me.btnConfirm.Size = New System.Drawing.Size(182, 26)
+        Me.btnConfirm.Size = New System.Drawing.Size(206, 49)
         Me.btnConfirm.TabIndex = 8
         Me.btnConfirm.Text = "Confirm"
         Me.btnConfirm.UseVisualStyleBackColor = True
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.ForeColor = System.Drawing.Color.White
-        Me.Label5.Location = New System.Drawing.Point(523, 110)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(0, 20)
-        Me.Label5.TabIndex = 9
         '
         'GroupBox1
         '
@@ -214,87 +186,30 @@ Partial Class Tickets
         Me.GroupBox1.ForeColor = System.Drawing.Color.White
         Me.GroupBox1.Location = New System.Drawing.Point(29, 110)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(380, 282)
+        Me.GroupBox1.Size = New System.Drawing.Size(491, 313)
         Me.GroupBox1.TabIndex = 10
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Please select the type of issue"
         '
-        'gbxTechnician
+        'txtNote
         '
-        Me.gbxTechnician.Controls.Add(Me.Label9)
-        Me.gbxTechnician.Controls.Add(Me.txtExpertise)
-        Me.gbxTechnician.Controls.Add(Me.txtStatus)
-        Me.gbxTechnician.Controls.Add(Me.Label7)
-        Me.gbxTechnician.Controls.Add(Me.Label2)
-        Me.gbxTechnician.Controls.Add(Me.cbxTechnician)
-        Me.gbxTechnician.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxTechnician.ForeColor = System.Drawing.Color.White
-        Me.gbxTechnician.Location = New System.Drawing.Point(440, 110)
-        Me.gbxTechnician.Name = "gbxTechnician"
-        Me.gbxTechnician.Size = New System.Drawing.Size(333, 282)
-        Me.gbxTechnician.TabIndex = 11
-        Me.gbxTechnician.TabStop = False
-        Me.gbxTechnician.Text = "Choose your technician"
+        Me.txtNote.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtNote.Location = New System.Drawing.Point(21, 204)
+        Me.txtNote.Multiline = True
+        Me.txtNote.Name = "txtNote"
+        Me.txtNote.Size = New System.Drawing.Size(450, 93)
+        Me.txtNote.TabIndex = 10
         '
-        'txtStatus
+        'Label10
         '
-        Me.txtStatus.Location = New System.Drawing.Point(93, 240)
-        Me.txtStatus.Name = "txtStatus"
-        Me.txtStatus.ReadOnly = True
-        Me.txtStatus.Size = New System.Drawing.Size(217, 27)
-        Me.txtStatus.TabIndex = 8
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.ForeColor = System.Drawing.Color.White
-        Me.Label7.Location = New System.Drawing.Point(8, 247)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(57, 20)
-        Me.Label7.TabIndex = 10
-        Me.Label7.Text = "Status"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(126, 112)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(79, 20)
-        Me.Label2.TabIndex = 8
-        Me.Label2.Text = "Expertise"
-        '
-        'cbxTechnician
-        '
-        Me.cbxTechnician.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        Me.cbxTechnician.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cbxTechnician.FormattingEnabled = True
-        Me.cbxTechnician.Location = New System.Drawing.Point(12, 67)
-        Me.cbxTechnician.Name = "cbxTechnician"
-        Me.cbxTechnician.Size = New System.Drawing.Size(298, 28)
-        Me.cbxTechnician.TabIndex = 8
-        '
-        'btnClear
-        '
-        Me.btnClear.Location = New System.Drawing.Point(415, 412)
-        Me.btnClear.Name = "btnClear"
-        Me.btnClear.Size = New System.Drawing.Size(182, 26)
-        Me.btnClear.TabIndex = 12
-        Me.btnClear.Text = "Clear Selection"
-        Me.btnClear.UseVisualStyleBackColor = True
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.ForeColor = System.Drawing.Color.White
-        Me.Label6.Location = New System.Drawing.Point(511, 56)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(112, 20)
-        Me.Label6.TabIndex = 8
-        Me.Label6.Text = "Ticket Status:"
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.ForeColor = System.Drawing.Color.White
+        Me.Label10.Location = New System.Drawing.Point(229, 181)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(44, 20)
+        Me.Label10.TabIndex = 9
+        Me.Label10.Text = "Note"
         '
         'Label8
         '
@@ -307,49 +222,29 @@ Partial Class Tickets
         Me.Label8.TabIndex = 8
         Me.Label8.Text = "Type"
         '
-        'txtExpertise
+        'btnClear
         '
-        Me.txtExpertise.Location = New System.Drawing.Point(12, 135)
-        Me.txtExpertise.Multiline = True
-        Me.txtExpertise.Name = "txtExpertise"
-        Me.txtExpertise.ReadOnly = True
-        Me.txtExpertise.Size = New System.Drawing.Size(298, 81)
-        Me.txtExpertise.TabIndex = 11
+        Me.btnClear.Location = New System.Drawing.Point(563, 314)
+        Me.btnClear.Name = "btnClear"
+        Me.btnClear.Size = New System.Drawing.Size(206, 49)
+        Me.btnClear.TabIndex = 12
+        Me.btnClear.Text = "Clear Selection"
+        Me.btnClear.UseVisualStyleBackColor = True
         '
-        'Label9
+        'Label6
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.ForeColor = System.Drawing.Color.White
-        Me.Label9.Location = New System.Drawing.Point(142, 39)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(53, 20)
-        Me.Label9.TabIndex = 9
-        Me.Label9.Text = "Name"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.ForeColor = System.Drawing.Color.White
-        Me.Label10.Location = New System.Drawing.Point(154, 181)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(44, 20)
-        Me.Label10.TabIndex = 9
-        Me.Label10.Text = "Note"
-        '
-        'txtNote
-        '
-        Me.txtNote.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtNote.Location = New System.Drawing.Point(21, 204)
-        Me.txtNote.Multiline = True
-        Me.txtNote.Name = "txtNote"
-        Me.txtNote.Size = New System.Drawing.Size(335, 63)
-        Me.txtNote.TabIndex = 10
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.ForeColor = System.Drawing.Color.White
+        Me.Label6.Location = New System.Drawing.Point(529, 121)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(112, 20)
+        Me.Label6.TabIndex = 8
+        Me.Label6.Text = "Ticket Status:"
         '
         'txtTStatus
         '
-        Me.txtTStatus.Location = New System.Drawing.Point(629, 56)
+        Me.txtTStatus.Location = New System.Drawing.Point(647, 121)
         Me.txtTStatus.Name = "txtTStatus"
         Me.txtTStatus.ReadOnly = True
         Me.txtTStatus.Size = New System.Drawing.Size(144, 22)
@@ -357,7 +252,7 @@ Partial Class Tickets
         '
         'btnNewTicket
         '
-        Me.btnNewTicket.Location = New System.Drawing.Point(629, 84)
+        Me.btnNewTicket.Location = New System.Drawing.Point(647, 149)
         Me.btnNewTicket.Name = "btnNewTicket"
         Me.btnNewTicket.Size = New System.Drawing.Size(144, 23)
         Me.btnNewTicket.TabIndex = 14
@@ -365,21 +260,39 @@ Partial Class Tickets
         Me.btnNewTicket.UseVisualStyleBackColor = True
         Me.btnNewTicket.Visible = False
         '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.MidnightBlue
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Location = New System.Drawing.Point(-12, 41)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(842, 56)
+        Me.Panel1.TabIndex = 15
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Tahoma", 19.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(28, 8)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(291, 40)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "Ticketing Center"
+        '
         'Tickets
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(815, 450)
+        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnNewTicket)
         Me.Controls.Add(Me.txtTStatus)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.btnClear)
-        Me.Controls.Add(Me.gbxTechnician)
-        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.btnConfirm)
         Me.Controls.Add(Me.MenuStrip1)
-        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.GroupBox1)
         Me.Name = "Tickets"
         Me.Text = "Tickets"
@@ -387,14 +300,12 @@ Partial Class Tickets
         Me.MenuStrip1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        Me.gbxTechnician.ResumeLayout(False)
-        Me.gbxTechnician.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents Label1 As Label
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents HomeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SubscriptionToolStripMenuItem As ToolStripMenuItem
@@ -409,20 +320,14 @@ Partial Class Tickets
     Friend WithEvents Label4 As Label
     Friend WithEvents txtPrice As TextBox
     Friend WithEvents btnConfirm As Button
-    Friend WithEvents Label5 As Label
     Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents gbxTechnician As GroupBox
-    Friend WithEvents Label2 As Label
-    Friend WithEvents cbxTechnician As ComboBox
     Friend WithEvents btnClear As Button
     Friend WithEvents Label6 As Label
-    Friend WithEvents txtStatus As TextBox
-    Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
-    Friend WithEvents txtExpertise As TextBox
-    Friend WithEvents Label9 As Label
     Friend WithEvents txtNote As TextBox
     Friend WithEvents Label10 As Label
     Friend WithEvents txtTStatus As TextBox
     Friend WithEvents btnNewTicket As Button
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Label2 As Label
 End Class
