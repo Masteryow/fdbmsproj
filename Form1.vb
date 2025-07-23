@@ -159,8 +159,10 @@ Public Class Form1
                     MsgBox("Login Successful")
                     TechnicianPanel.Show()
                     Me.Close()
-                'Case "employee"
-                    ' employeeForm.Show()
+                Case "Subscriber"
+                    MsgBox("Login Successful")
+                    subscribers.Show()
+                    Me.Close()
                 Case "customer"
                     MsgBox("Login Successful")
                     Main.Show()

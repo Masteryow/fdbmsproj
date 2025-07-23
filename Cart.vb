@@ -369,7 +369,7 @@ Public Class Cart
 
             ' Insert each cart item into customer_addons
             For Each item In cartItems
-                Dim insertQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) " &
+                Dim insertQuery As String = "INSERT INTO customer_addons (subscriber_id, addon_id, quantity, purchase_date) " &
                                            "VALUES (@customerId, @addonId, @quantity, NOW())"
                 Using cmd As New MySqlCommand(insertQuery, con, trans)
                     cmd.Parameters.AddWithValue("@customerId", Session.UserId)
@@ -378,6 +378,14 @@ Public Class Cart
                     cmd.ExecuteNonQuery()
                 End Using
             Next
+
+            Dim paymentQuery As String = "INSERT INTO payments (subscriber_id, amount, payment_date, payment_method) " &
+                "VALUES (@subscriber_id, @amount, NOW(), 'Cash')"
+            Using cmd As New MySqlCommand(paymentQuery, con, trans)
+                cmd.Parameters.AddWithValue("@subscriber_id", Session.UserId)
+                cmd.Parameters.AddWithValue("@amount", GetCartTotal())
+                cmd.ExecuteNonQuery()
+            End Using
 
             ' Clear shopping cart after successful purchase
             Dim clearCartQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"
@@ -438,6 +446,25 @@ Public Class Cart
                     cmd.ExecuteNonQuery()
                 End Using
             Next
+
+
+            Dim billingQuery As String = "INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date, status) " &
+                "VALUES (@subscriber_id, CURDATE(), @totalAmount, DATE_ADD(NOW(), INTERVAL 1 MONTH), 'Paid')"
+            Dim billingId As Integer
+            Using cmd As New MySqlCommand(billingQuery, con, trans)
+                cmd.Parameters.AddWithValue("@subscriber_id", subscriberId)
+                cmd.Parameters.AddWithValue("@totalAmount", GetCartTotal())
+                cmd.ExecuteNonQuery()
+                billingId = CInt(cmd.LastInsertedId)
+            End Using
+
+            Dim paymentQuery As String = "INSERT INTO payments (billing_id, amount, payment_date) " &
+                "VALUES (@billing_id, @amount, CURDATE())"
+            Using cmd As New MySqlCommand(paymentQuery, con, trans)
+                cmd.Parameters.AddWithValue("@billing_id", billingId)
+                cmd.Parameters.AddWithValue("@amount", GetCartTotal())
+                cmd.ExecuteNonQuery()
+            End Using
 
             ' Clear shopping cart after successful purchase
             Dim clearCartQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"

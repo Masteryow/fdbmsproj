@@ -227,6 +227,26 @@ Public Class Addon
                     End If
                 Next
 
+                Dim simpleBillingQuery As String = "INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date, status) " &
+            "VALUES (@subscriber_id, CURDATE(), @amount, CURDATE(), 'Paid')"
+                Dim billingId As Integer = 0
+
+                Using cmd As New MySqlCommand(simpleBillingQuery, con, trans)
+                    cmd.Parameters.AddWithValue("@subscriber_id", Session.SubscriberId)
+                    cmd.Parameters.AddWithValue("@amount", total)
+                    cmd.ExecuteNonQuery()
+                    billingId = cmd.LastInsertedId
+                End Using
+
+                ' Insert payment record
+                Dim paymentQuery As String = "INSERT INTO payments (billing_id, amount, payment_date) " &
+            "VALUES (@billingId, @amount, CURDATE())"
+                Using cmd As New MySqlCommand(paymentQuery, con, trans)
+                    cmd.Parameters.AddWithValue("@billingId", billingId)
+                    cmd.Parameters.AddWithValue("@amount", total)
+                    cmd.ExecuteNonQuery()
+                End Using
+
                 trans.Commit()
                 success = True
             Catch ex As Exception
@@ -483,7 +503,25 @@ Public Class Addon
 
                 End Using
 
+                Dim billingQuery As String = "INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date, status) " &
+            "VALUES (@subscriber, CURDATE(), @planAmount, DATE_ADD(CURDATE(), INTERVAL 1 MONTH), 'Paid')"
+                Dim billingId As Integer = 0
 
+                Using cmd As New MySqlCommand(billingQuery, con, trans)
+                    cmd.Parameters.AddWithValue("@subscriber", Session.SubscriberId)
+                    cmd.Parameters.AddWithValue("@planAmount", planPrice)
+                    cmd.ExecuteNonQuery()
+                    billingId = cmd.LastInsertedId
+                End Using
+
+                ' Insert payment record
+                Dim paymentQuery As String = "INSERT INTO payments (billing_id, amount, payment_date) " &
+            "VALUES (@billingId, @amount, CURDATE())"
+                Using cmd As New MySqlCommand(paymentQuery, con, trans)
+                    cmd.Parameters.AddWithValue("@billingId", billingId)
+                    cmd.Parameters.AddWithValue("@amount", total)
+                    cmd.ExecuteNonQuery()
+                End Using
 
                 trans.Commit()
                 success = True
