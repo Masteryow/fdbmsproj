@@ -462,8 +462,28 @@ Public Class Addon
                         addonCmd.ExecuteNonQuery()
 
                         Console.WriteLine($"Inserted addon: ID={actualAddonId}, Qty={quantity}, IsRecurring={isRecurring}")
+
+
                     End If
                 Next
+
+                'getting the subscriber id of newly subscribed customer for the ticket to be available immediately
+                Using getSubId As New MySqlCommand("SELECT u.user_id, u.username, s.subscriber_id FROM subscribers s JOIN
+                                                    users u ON u.user_id = s.customer_id WHERE u.user_id = @user_id", con)
+                    getSubId.Parameters.AddWithValue("@user_id", Session.UserId)
+
+                    Using fetchSubID As MySqlDataReader = getSubId.ExecuteReader
+
+                        While fetchSubID.Read
+                            Session.SubscriberId = fetchSubID.GetInt32("subscriber_id")
+                        End While
+
+                    End Using
+
+
+                End Using
+
+
 
                 trans.Commit()
                 success = True

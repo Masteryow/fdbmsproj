@@ -143,6 +143,60 @@ Public Class Subscription
                             End If
                             Addon.Show()
                             Me.Close()
+
+                        Else
+
+                            Dim convertedPayment As Decimal = 0
+
+                            Dim payment As String = InputBox($"Selected Plan: {plan_name}{vbNewLine}To Pay: {price.ToString("f2")}{vbNewLine}Please enter your money: ", "Payment")
+
+                            If Decimal.TryParse(payment, convertedPayment) Then
+
+                                If convertedPayment > price Then
+
+                                    Dim change As Decimal = convertedPayment - price
+                                    MsgBox($"Thank you for purchasing! Here is your change {change.ToString("f2")} ")
+
+                                ElseIf convertedPayment = price Then
+
+                                    MsgBox("Thank you for purchasing!", MsgBoxStyle.DefaultButton1, "Purchased Successfully")
+                                ElseIf convertedPayment < price Then
+
+                                    MsgBox("Insufficient money!", MsgBoxStyle.Exclamation, "Insufficient Amount")
+                                    Return
+                                End If
+
+                                Using insertSub As New MySqlCommand("INSERT INTO subscribers (customer_id, plan_id) 
+                                                                    VALUES (@customer_id, @plan_id)", con)
+
+                                    insertSub.Transaction = transaction
+                                    insertSub.Parameters.AddWithValue("@customer_id", CInt(Session.UserId))
+                                    insertSub.Parameters.AddWithValue("@plan_id", CInt(Session.PlanId))
+
+                                    insertSub.ExecuteNonQuery()
+                                End Using
+
+                                Using getSubID As New MySqlCommand("SELECT * FROM subscribers WHERE customer_id = @customer_id", con)
+                                    getSubID.Parameters.AddWithValue("@customer_id", Session.UserId)
+
+                                    getSubID.Transaction = transaction
+                                    Using fetchSubId As MySqlDataReader = getSubID.ExecuteReader
+
+                                        While fetchSubId.Read
+
+                                            Session.SubscriberId = fetchSubId.GetInt32("subscriber_id")
+
+                                        End While
+                                    End Using
+                                End Using
+
+                                transaction.Commit()
+
+                            Else
+                                MsgBox("Please enter a valid amount", MsgBoxStyle.Exclamation, "Invalid Amount")
+                                transaction.Rollback()
+                            End If
+
                         End If
                     End If
                 Else

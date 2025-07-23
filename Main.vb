@@ -60,6 +60,7 @@ Public Class Main
     End Sub
 
     Private Sub TicketsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketsToolStripMenuItem.Click
-
+        Tickets.Show()
+        Me.Close()
     End Sub
 End Class
