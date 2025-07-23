@@ -29,7 +29,6 @@ Partial Class subscribers
         Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.lblUser = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
@@ -37,9 +36,9 @@ Partial Class subscribers
         Me.lblPlan = New System.Windows.Forms.Label()
         Me.lblPrice = New System.Windows.Forms.Label()
         Me.panelBilling = New System.Windows.Forms.Panel()
-        Me.lblBillMonth = New System.Windows.Forms.Label()
-        Me.lblAmountDue = New System.Windows.Forms.Label()
         Me.btnPay = New System.Windows.Forms.Button()
+        Me.lblAmountDue = New System.Windows.Forms.Label()
+        Me.lblBillMonth = New System.Windows.Forms.Label()
         Me.MenuStrip1.SuspendLayout()
         Me.panelBilling.SuspendLayout()
         Me.SuspendLayout()
@@ -48,7 +47,7 @@ Partial Class subscribers
         '
         Me.MenuStrip1.BackColor = System.Drawing.Color.Transparent
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.ToolStripMenuItem1, Me.ProductsToolStripMenuItem, Me.HelpToolStripMenuItem, Me.HomeToolStripMenuItem1})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.ToolStripMenuItem1, Me.ProductsToolStripMenuItem, Me.HomeToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
@@ -73,7 +72,7 @@ Partial Class subscribers
         'TicketsToolStripMenuItem
         '
         Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.TicketsToolStripMenuItem.Text = "Tickets"
         '
         'ToolStripMenuItem1
@@ -87,12 +86,6 @@ Partial Class subscribers
         Me.ProductsToolStripMenuItem.Name = "ProductsToolStripMenuItem"
         Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(66, 20)
         Me.ProductsToolStripMenuItem.Text = "Products"
-        '
-        'HelpToolStripMenuItem
-        '
-        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(85, 20)
-        Me.HelpToolStripMenuItem.Text = "Subscription"
         '
         'HomeToolStripMenuItem1
         '
@@ -158,16 +151,14 @@ Partial Class subscribers
         Me.panelBilling.Size = New System.Drawing.Size(507, 173)
         Me.panelBilling.TabIndex = 7
         '
-        'lblBillMonth
+        'btnPay
         '
-        Me.lblBillMonth.AutoSize = True
-        Me.lblBillMonth.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblBillMonth.Location = New System.Drawing.Point(5, 9)
-        Me.lblBillMonth.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.lblBillMonth.Name = "lblBillMonth"
-        Me.lblBillMonth.Size = New System.Drawing.Size(119, 22)
-        Me.lblBillMonth.TabIndex = 8
-        Me.lblBillMonth.Text = "Billing Month:"
+        Me.btnPay.Location = New System.Drawing.Point(260, 124)
+        Me.btnPay.Name = "btnPay"
+        Me.btnPay.Size = New System.Drawing.Size(75, 23)
+        Me.btnPay.TabIndex = 10
+        Me.btnPay.Text = "Pay now"
+        Me.btnPay.UseVisualStyleBackColor = True
         '
         'lblAmountDue
         '
@@ -180,14 +171,16 @@ Partial Class subscribers
         Me.lblAmountDue.TabIndex = 9
         Me.lblAmountDue.Text = "Amount Due:"
         '
-        'btnPay
+        'lblBillMonth
         '
-        Me.btnPay.Location = New System.Drawing.Point(260, 124)
-        Me.btnPay.Name = "btnPay"
-        Me.btnPay.Size = New System.Drawing.Size(75, 23)
-        Me.btnPay.TabIndex = 10
-        Me.btnPay.Text = "Pay now"
-        Me.btnPay.UseVisualStyleBackColor = True
+        Me.lblBillMonth.AutoSize = True
+        Me.lblBillMonth.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblBillMonth.Location = New System.Drawing.Point(5, 9)
+        Me.lblBillMonth.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblBillMonth.Name = "lblBillMonth"
+        Me.lblBillMonth.Size = New System.Drawing.Size(119, 22)
+        Me.lblBillMonth.TabIndex = 8
+        Me.lblBillMonth.Text = "Billing Month:"
         '
         'subscribers
         '
@@ -217,7 +210,6 @@ Partial Class subscribers
     Friend WithEvents TicketsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HomeToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents lblUser As Label
     Friend WithEvents Timer1 As Timer

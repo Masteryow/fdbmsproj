@@ -14,6 +14,8 @@ Public Class subscribers
     Dim billingId As Integer = 0
 
     Private Sub subscribers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        receivID = Session.SubscriberId
+
         lblUser.Text = ""         ' Clear label before animation
         increment = 0             ' Reset increment
         Timer1.Interval = 100     ' Set interval (milliseconds)
@@ -36,6 +38,11 @@ Public Class subscribers
                             status = reader("status").ToString()
                             planName = reader("plan_name").ToString()
                             planPrice = Convert.ToDecimal(reader("price"))
+
+                            lblStatus.Text = "Status: " & status
+                            lblPlan.Text = "Plan Name: " & planName
+                            lblPrice.Text = "Price: " & planPrice.ToString("C")
+
                         End If
                     End Using
                 End Using
@@ -69,6 +76,8 @@ Public Class subscribers
                             billingId = Convert.ToInt32(reader("billing_id"))
                             billAmount = Convert.ToDecimal(reader("total_amount"))
                             billMonth = currentMonth
+                            lblAmountDue.Text = "Amount Due: " & billAmount.ToString("C")
+                            lblBillMonth.Text = "Billing Month: " & billMonth
                         End If
                     End Using
                 End Using
@@ -85,5 +94,20 @@ Public Class subscribers
         Else
             Timer1.Stop()
         End If
+    End Sub
+
+    Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
+        Addon.Show()
+        Me.Close()
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        Cart.Show()
+        Me.Close()
+    End Sub
+
+    Private Sub TicketsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketsToolStripMenuItem.Click
+        Tickets.Show()
+        Me.Close()
     End Sub
 End Class

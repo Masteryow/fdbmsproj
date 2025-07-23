@@ -159,7 +159,7 @@ Public Class Form1
                     MsgBox("Login Successful")
                     TechnicianPanel.Show()
                     Me.Close()
-                Case "Subscriber"
+                Case "subscriber"
                     MsgBox("Login Successful")
                     subscribers.Show()
                     Me.Close()

@@ -184,7 +184,7 @@ Public Class Admin
         pnlContent.Controls.Clear()
 
         ' Add User Form
-        Dim lblAddUser As New Label With {.Text = "Add New User", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(20, 20), .AutoSize = True}
+        Dim lblAddUser As New Label With {.Text = "Add New User", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(5, 3), .AutoSize = True}
 
         Dim txtUsername As New TextBox With {.Location = New Point(20, 50), .Size = New Size(100, 23)}
         Dim lblUsername As New Label With {.Text = "Username:", .Location = New Point(20, 30), .AutoSize = True}
@@ -254,7 +254,7 @@ Public Class Admin
         pnlContent.Controls.Clear()
 
         ' Add Plan Form
-        Dim lblAddPlan As New Label With {.Text = "Add New Internet Plan", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(20, 20), .AutoSize = True}
+        Dim lblAddPlan As New Label With {.Text = "Add New Internet Plan", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(5, 3), .AutoSize = True}
 
         Dim txtPlanName As New TextBox With {.Location = New Point(20, 50), .Size = New Size(120, 23)}
         Dim lblPlanName As New Label With {.Text = "Plan Name:", .Location = New Point(20, 30), .AutoSize = True}
@@ -309,12 +309,241 @@ Public Class Admin
     Private Sub ShowSubscribersPanel()
         pnlContent.Controls.Clear()
 
-        Dim lblSubscribers As New Label With {.Text = "Subscriber Management", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(20, 20), .AutoSize = True}
+        Dim lblSubscribers As New Label With {
+        .Text = "Subscriber Management",
+        .Font = New Font("Segoe UI", 12, FontStyle.Bold),
+        .Location = New Point(0, 0),
+        .AutoSize = True
+    }
 
-        Dim dgvSubscribers As New DataGridView With {.Location = New Point(20, 50), .Size = New Size(400, 280), .ReadOnly = True, .AllowUserToAddRows = False}
-        LoadSubscribersData(dgvSubscribers)
+        ' Delete subscriber section
+        Dim lblDeleteSubscriber As New Label With {
+        .Text = "Delete Subscriber:",
+        .Font = New Font("Segoe UI", 10, FontStyle.Bold),
+        .Location = New Point(0, 30),
+        .AutoSize = True
+    }
 
-        pnlContent.Controls.AddRange({lblSubscribers, dgvSubscribers})
+        Dim txtSubscriberID As New TextBox With {
+        .Location = New Point(0, 50),
+        .Size = New Size(100, 23)
+    }
+
+        Dim btnDeleteSubscriber As New Button With {
+        .Text = "Delete",
+        .Location = New Point(110, 50),
+        .Size = New Size(75, 23),
+        .BackColor = Color.FromArgb(231, 76, 60),
+        .ForeColor = Color.White,
+        .FlatStyle = FlatStyle.Flat
+    }
+        btnDeleteSubscriber.FlatAppearance.BorderSize = 0
+
+        ' Save changes button
+        Dim btnSaveChanges As New Button With {
+        .Text = "Save Changes",
+        .Location = New Point(0, 80),
+        .Size = New Size(100, 30),
+        .BackColor = Color.FromArgb(46, 204, 113),
+        .ForeColor = Color.White,
+        .FlatStyle = FlatStyle.Flat
+    }
+        btnSaveChanges.FlatAppearance.BorderSize = 0
+
+        ' DataGridView with custom columns
+        Dim dgvSubscribers As New DataGridView With {
+        .Location = New Point(0, 120),
+        .Size = New Size(410, 240),
+        .AllowUserToAddRows = False,
+        .AllowUserToDeleteRows = False,
+        .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+    }
+
+        ' Load subscribers data with enhanced functionality
+        LoadSubscribersDataEnhanced(dgvSubscribers)
+
+        ' Delete subscriber event handler
+        AddHandler btnDeleteSubscriber.Click, Sub()
+                                                  If String.IsNullOrEmpty(txtSubscriberID.Text) Then
+                                                      MessageBox.Show("Please enter a Subscriber ID!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                      Return
+                                                  End If
+
+                                                  If MessageBox.Show($"Are you sure you want to delete subscriber with ID {txtSubscriberID.Text}?",
+                          "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                                                      Try
+                                                          con.Open()
+                                                          Dim cmd As New MySqlCommand("DELETE FROM subscribers WHERE subscriber_id = @id", con)
+                                                          cmd.Parameters.AddWithValue("@id", Convert.ToInt32(txtSubscriberID.Text))
+
+                                                          Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+                                                          con.Close()
+
+                                                          If rowsAffected > 0 Then
+                                                              MessageBox.Show("Subscriber deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                                              txtSubscriberID.Clear()
+                                                              LoadSubscribersDataEnhanced(dgvSubscribers) ' Refresh the grid
+                                                          Else
+                                                              MessageBox.Show("No subscriber found with that ID!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                          End If
+                                                      Catch ex As Exception
+                                                          If con.State = ConnectionState.Open Then con.Close()
+                                                          MessageBox.Show("Error deleting subscriber: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                      End Try
+                                                  End If
+                                              End Sub
+
+        ' Save changes event handler
+        AddHandler btnSaveChanges.Click, Sub()
+                                             Try
+                                                 If con Is Nothing Then
+                                                     con = New MySqlConnection(strcon)
+                                                 End If
+
+                                                 If con.State = ConnectionState.Open Then
+                                                     con.Close()
+                                                 End If
+
+                                                 con.Open()
+                                                 For Each row As DataGridViewRow In dgvSubscribers.Rows
+                                                     If Not row.IsNewRow Then
+                                                         Dim subscriberID As Integer = Convert.ToInt32(row.Cells("subscriber_id").Value)
+                                                         Dim newStatus As String = row.Cells("status").Value.ToString()
+
+                                                         ' Check if the new plan column has a value
+                                                         Dim newPlanID As Integer
+                                                         If row.Cells("new_plan_id").Value IsNot Nothing Then
+                                                             newPlanID = Convert.ToInt32(row.Cells("new_plan_id").Value)
+                                                         Else
+                                                             newPlanID = Convert.ToInt32(row.Cells("plan_id").Value)
+                                                         End If
+
+                                                         Dim cmd As New MySqlCommand("UPDATE subscribers SET status = @status, plan_id = @planid WHERE subscriber_id = @id", con)
+                                                         cmd.Parameters.AddWithValue("@status", newStatus)
+                                                         cmd.Parameters.AddWithValue("@planid", newPlanID)
+                                                         cmd.Parameters.AddWithValue("@id", subscriberID)
+                                                         cmd.ExecuteNonQuery()
+                                                     End If
+                                                 Next
+                                                 con.Close()
+
+                                                 MessageBox.Show("Changes saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                                 LoadSubscribersDataEnhanced(dgvSubscribers) ' Refresh to show updated data
+                                             Catch ex As Exception
+                                                 If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+                                                 MessageBox.Show("Error saving changes: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                             End Try
+                                         End Sub
+
+        pnlContent.Controls.AddRange({lblSubscribers, lblDeleteSubscriber, txtSubscriberID, btnDeleteSubscriber, btnSaveChanges, dgvSubscribers})
+    End Sub
+
+    Private Sub LoadSubscribersDataEnhanced(dgv As DataGridView)
+        Try
+            If con Is Nothing Then
+                con = New MySqlConnection(strcon)
+            End If
+
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+
+            con.Open()
+
+            ' Load subscriber data with plan names
+            Dim cmd As New MySqlCommand("SELECT s.subscriber_id, u.username, s.customer_id, s.plan_id, p.plan_name, s.subscription_date, s.status FROM subscribers s JOIN users u ON s.customer_id = u.user_id JOIN internet_plans p ON s.plan_id = p.plan_id", con)
+            Dim adapter As New MySqlDataAdapter(cmd)
+            Dim dt As New DataTable()
+            adapter.Fill(dt)
+
+            ' Get available plans for dropdown
+            Dim plansCmd As New MySqlCommand("SELECT plan_id, plan_name FROM internet_plans", con)
+            Dim plansAdapter As New MySqlDataAdapter(plansCmd)
+            Dim plansTable As New DataTable()
+            plansAdapter.Fill(plansTable)
+
+            con.Close()
+
+            ' Check if we have data
+            If dt.Rows.Count = 0 Then
+                dgv.DataSource = Nothing
+                MessageBox.Show("No subscribers found.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return
+            End If
+
+            ' Clear existing columns and set data source
+            dgv.DataSource = Nothing
+            dgv.Columns.Clear()
+            dgv.DataSource = dt
+
+            ' Hide columns we don't want to show
+            If dgv.Columns.Contains("customer_id") Then
+                dgv.Columns("customer_id").Visible = False
+            End If
+
+            ' Make certain columns read-only
+            If dgv.Columns.Contains("subscriber_id") Then
+                dgv.Columns("subscriber_id").ReadOnly = True
+                dgv.Columns("subscriber_id").HeaderText = "ID"
+            End If
+
+            If dgv.Columns.Contains("username") Then
+                dgv.Columns("username").ReadOnly = True
+                dgv.Columns("username").HeaderText = "Username"
+            End If
+
+            If dgv.Columns.Contains("subscription_date") Then
+                dgv.Columns("subscription_date").ReadOnly = True
+                dgv.Columns("subscription_date").HeaderText = "Subscription Date"
+            End If
+
+            If dgv.Columns.Contains("plan_name") Then
+                dgv.Columns("plan_name").ReadOnly = True
+                dgv.Columns("plan_name").HeaderText = "Current Plan"
+            End If
+
+            ' Create dropdown for Status
+            If dgv.Columns.Contains("status") Then
+                Dim statusIndex As Integer = dgv.Columns("status").Index
+                dgv.Columns.RemoveAt(statusIndex)
+
+                Dim statusColumn As New DataGridViewComboBoxColumn()
+                statusColumn.Name = "status"
+                statusColumn.HeaderText = "Status"
+                statusColumn.DataPropertyName = "status"
+                statusColumn.Items.AddRange({"Active", "Suspended", "Cancelled", "Pending"})
+
+                dgv.Columns.Insert(statusIndex, statusColumn)
+            End If
+
+            ' Create dropdown for Plan (hide the plan_id column and add new dropdown)
+            If dgv.Columns.Contains("plan_id") Then
+                dgv.Columns("plan_id").Visible = False
+
+                Dim planColumn As New DataGridViewComboBoxColumn()
+                planColumn.Name = "new_plan_id"
+                planColumn.HeaderText = "Change Plan"
+                planColumn.DataSource = plansTable
+                planColumn.DisplayMember = "plan_name"
+                planColumn.ValueMember = "plan_id"
+
+                dgv.Columns.Add(planColumn)
+
+                ' Set the current plan values in the dropdown
+                For Each row As DataGridViewRow In dgv.Rows
+                    If Not row.IsNewRow Then
+                        row.Cells("new_plan_id").Value = row.Cells("plan_id").Value
+                    End If
+                Next
+            End If
+
+            ' Auto-resize columns
+            dgv.AutoResizeColumns()
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            MessageBox.Show("Error loading subscribers: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub ShowTechniciansPanel()
@@ -538,5 +767,6 @@ Public Class Admin
             MessageBox.Show("Error loading tickets report: " & ex.Message)
         End Try
     End Sub
+
 
 End Class
