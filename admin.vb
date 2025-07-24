@@ -46,6 +46,7 @@ Public Class Admin
     End Sub
 
     Private Sub btnAddons_Click(sender As Object, e As EventArgs) Handles btnAddons.Click
+
         AnimateButton(btnAddons)
         lblTitle.Text = "Add-ons"
         ShowAddonsPanel()
@@ -148,6 +149,8 @@ Public Class Admin
             Return 0
         End Try
     End Function
+
+
 
     ' Panel Display Methods
     Private Sub ShowDashboard()
@@ -648,6 +651,21 @@ Public Class Admin
         ' Load subscribers data
         LoadSubscribersDataEnhanced(dgvSubscribers)
 
+        AddHandler dgvSubscribers.DataError, Sub(sender, e)
+                                                 If e.Exception.GetType() = GetType(ArgumentException) Then
+                                                     ' Handle ComboBox invalid value
+                                                     MessageBox.Show("Invalid value detected. Setting to default.", "Data Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                                                     ' Set to first available value in ComboBox
+                                                     Dim comboColumn As DataGridViewComboBoxColumn = TryCast(dgvSubscribers.Columns(e.ColumnIndex), DataGridViewComboBoxColumn)
+                                                     If comboColumn IsNot Nothing AndAlso comboColumn.Items.Count > 0 Then
+                                                         dgvSubscribers.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = comboColumn.Items(0)
+                                                     End If
+
+                                                     e.ThrowException = False ' Suppress the error dialog
+                                                 End If
+                                             End Sub
+
         ' Search event handler
         AddHandler btnSearch.Click, Sub()
                                         LoadSubscribersDataEnhanced(dgvSubscribers, txtSearch.Text.Trim())
@@ -728,8 +746,8 @@ Public Class Admin
 
             con.Open()
 
-            ' Build query with optional search
-            Dim query As String = "SELECT s.subscriber_id, u.username, s.customer_id, s.plan_id, p.plan_name, s.subscription_date, s.status FROM subscribers s JOIN users u ON s.customer_id = u.user_id JOIN internet_plans p ON s.plan_id = p.plan_id"
+            ' Build query with optional search - Added INNER JOIN to ensure only valid plan_ids
+            Dim query As String = "SELECT s.subscriber_id, u.username, s.customer_id, s.plan_id, p.plan_name, s.subscription_date, s.status FROM subscribers s INNER JOIN users u ON s.customer_id = u.user_id INNER JOIN internet_plans p ON s.plan_id = p.plan_id"
 
             If Not String.IsNullOrEmpty(searchTerm) Then
                 query += " WHERE u.username LIKE @search OR s.subscriber_id LIKE @search"
@@ -747,7 +765,7 @@ Public Class Admin
             adapter.Fill(dt)
 
             ' Get available plans for dropdown
-            Dim plansCmd As New MySqlCommand("SELECT plan_id, plan_name FROM internet_plans", con)
+            Dim plansCmd As New MySqlCommand("SELECT plan_id, plan_name FROM internet_plans ORDER BY plan_name", con)
             Dim plansAdapter As New MySqlDataAdapter(plansCmd)
             Dim plansTable As New DataTable()
             plansAdapter.Fill(plansTable)
@@ -809,7 +827,7 @@ Public Class Admin
                 statusColumn.Name = "status"
                 statusColumn.HeaderText = "Status"
                 statusColumn.DataPropertyName = "status"
-                statusColumn.Items.AddRange({"Active", "Inactive"})
+                statusColumn.Items.AddRange({"Active", "Pending", "Inactive"})
                 statusColumn.Width = 70
 
                 dgv.Columns.Insert(statusIndex, statusColumn)
@@ -829,10 +847,36 @@ Public Class Admin
 
                 dgv.Columns.Add(planColumn)
 
-                ' Set the current plan values in the dropdown
+                ' FIXED: Set the current plan values in the dropdown with validation
                 For Each row As DataGridViewRow In dgv.Rows
                     If Not row.IsNewRow Then
-                        row.Cells("new_plan_id").Value = row.Cells("plan_id").Value
+                        Try
+                            Dim currentPlanId As Integer = Convert.ToInt32(row.Cells("plan_id").Value)
+
+                            ' Check if this plan_id exists in the plansTable
+                            Dim planExists As Boolean = False
+                            For Each planRow As DataRow In plansTable.Rows
+                                If Convert.ToInt32(planRow("plan_id")) = currentPlanId Then
+                                    planExists = True
+                                    Exit For
+                                End If
+                            Next
+
+                            If planExists Then
+                                row.Cells("new_plan_id").Value = currentPlanId
+                            Else
+                                ' If plan doesn't exist, set to the first available plan or leave empty
+                                If plansTable.Rows.Count > 0 Then
+                                    row.Cells("new_plan_id").Value = plansTable.Rows(0)("plan_id")
+                                End If
+                            End If
+
+                        Catch ex As Exception
+                            ' If there's any conversion error, set to first available plan
+                            If plansTable.Rows.Count > 0 Then
+                                row.Cells("new_plan_id").Value = plansTable.Rows(0)("plan_id")
+                            End If
+                        End Try
                     End If
                 Next
             End If
@@ -846,6 +890,11 @@ Public Class Admin
     Private Sub ShowTechniciansPanel()
         pnlContent.Controls.Clear()
 
+        ' Create panels for both pages
+        Dim pnlPage1 As New Panel With {.Location = New Point(0, 0), .Size = pnlContent.Size, .Visible = True}
+        Dim pnlPage2 As New Panel With {.Location = New Point(0, 0), .Size = pnlContent.Size, .Visible = False}
+
+        ' ===== PAGE 1 - ORIGINAL TECHNICIAN MANAGEMENT =====
         ' Add Technician Form
         Dim lblAddTechnician As New Label With {.Text = "Add Technician Skills", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(5, 3), .AutoSize = True}
 
@@ -923,9 +972,14 @@ Public Class Admin
         Dim lblManageTechnicians As New Label With {.Text = "Manage Technicians", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(5, 75), .AutoSize = True}
         Dim btnUpdate As New Button With {.Text = "Update", .Location = New Point(20, 310), .Size = New Size(75, 25), .BackColor = Color.FromArgb(52, 152, 219), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnUpdate.FlatAppearance.BorderSize = 0
+
         ' Save Changes Button
         Dim btnSaveChanges As New Button With {.Text = "Save Changes", .Location = New Point(100, 310), .Size = New Size(100, 25), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnSaveChanges.FlatAppearance.BorderSize = 0
+
+        ' NEW: Salary Management Button
+        Dim btnSalaryManagement As New Button With {.Text = "Salary Management", .Location = New Point(210, 310), .Size = New Size(120, 25), .BackColor = Color.FromArgb(155, 89, 182), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnSalaryManagement.FlatAppearance.BorderSize = 0
 
         LoadTechniciansDataEnhanced(dgvTechnicians)
 
@@ -978,8 +1032,399 @@ Public Class Admin
                                              End Try
                                          End Sub
 
-        pnlContent.Controls.AddRange({lblAddTechnician, lblTechnicianUser, cmbTechnicianUser, lblSkills, cmbSkills, btnAddTechnician, lblManageTechnicians, btnSaveChanges, btnUpdate, dgvTechnicians})
+        ' Add all Page 1 controls to pnlPage1
+        pnlPage1.Controls.AddRange({lblAddTechnician, lblTechnicianUser, cmbTechnicianUser, lblSkills, cmbSkills, btnAddTechnician, lblManageTechnicians, btnSaveChanges, btnUpdate, btnSalaryManagement, dgvTechnicians})
+
+        ' ===== PAGE 2 - SALARY MANAGEMENT =====
+        ' Salary Management Title
+        Dim lblSalaryManagement As New Label With {.Text = "Technician Salary Management", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(5, 0), .AutoSize = True}
+
+        ' Filter Section
+        Dim lblFilterRole As New Label With {.Text = "Filter by Role:", .Location = New Point(20, 25), .AutoSize = True}
+        Dim cmbRoleFilter As New ComboBox With {.Location = New Point(110, 23), .Size = New Size(100, 23), .DropDownStyle = ComboBoxStyle.DropDownList}
+        cmbRoleFilter.Items.AddRange({"All", "technician", "supervisor"})
+        cmbRoleFilter.SelectedIndex = 0
+
+        Dim btnFilterRole As New Button With {.Text = "Filter", .Location = New Point(220, 22), .Size = New Size(60, 25), .BackColor = Color.FromArgb(52, 152, 219), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnFilterRole.FlatAppearance.BorderSize = 0
+
+        ' Payment Status Filter
+        Dim lblPaymentFilter As New Label With {.Text = "Payment Status:", .Location = New Point(20, 55), .AutoSize = True}
+        Dim cmbPaymentFilter As New ComboBox With {.Location = New Point(120, 53), .Size = New Size(100, 23), .DropDownStyle = ComboBoxStyle.DropDownList}
+        cmbPaymentFilter.Items.AddRange({"All", "Paid", "Unpaid"})
+        cmbPaymentFilter.SelectedIndex = 0
+
+        Dim btnFilterPayment As New Button With {.Text = "Filter", .Location = New Point(230, 52), .Size = New Size(60, 25), .BackColor = Color.FromArgb(52, 152, 219), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnFilterPayment.FlatAppearance.BorderSize = 0
+
+        ' Salary DataGridView
+        Dim dgvSalaries As New DataGridView With {
+        .Location = New Point(20, 120),
+        .Size = New Size(400, 200),
+        .AllowUserToAddRows = False,
+        .AllowUserToDeleteRows = False,
+        .SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+        .MultiSelect = True
+    }
+
+
+
+        ' Action Buttons (update Y positions to accommodate new button)
+        Dim btnPaySelected As New Button With {.Text = "Pay Selected", .Location = New Point(20, 315), .Size = New Size(100, 25), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnPaySelected.FlatAppearance.BorderSize = 0
+
+        Dim btnPayAll As New Button With {.Text = "Pay All Unpaid", .Location = New Point(130, 315), .Size = New Size(100, 25), .BackColor = Color.FromArgb(231, 76, 60), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnPayAll.FlatAppearance.BorderSize = 0
+
+        Dim btnRefreshSalaries As New Button With {.Text = "Refresh", .Location = New Point(240, 315), .Size = New Size(70, 25), .BackColor = Color.FromArgb(52, 152, 219), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnRefreshSalaries.FlatAppearance.BorderSize = 0
+
+        ' Back Button
+        Dim btnBack As New Button With {.Text = "Back to Technicians", .Location = New Point(320, 315), .Size = New Size(120, 25), .BackColor = Color.FromArgb(149, 165, 166), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnBack.FlatAppearance.BorderSize = 0
+
+        ' Variables to track current filters
+        Dim currentRoleFilter As String = "All"
+        Dim currentPaymentFilter As String = "All"
+
+        ' Load initial salary data
+        LoadSalaryData(dgvSalaries)
+
+        ' Event Handlers for Page 2
+        AddHandler btnFilterRole.Click, Sub()
+                                            currentRoleFilter = cmbRoleFilter.SelectedItem.ToString()
+                                            LoadSalaryData(dgvSalaries, currentRoleFilter, currentPaymentFilter)
+                                        End Sub
+
+        AddHandler btnFilterPayment.Click, Sub()
+                                               currentPaymentFilter = cmbPaymentFilter.SelectedItem.ToString()
+                                               LoadSalaryData(dgvSalaries, currentRoleFilter, currentPaymentFilter)
+                                           End Sub
+
+        AddHandler btnPaySelected.Click, Sub()
+                                             If dgvSalaries.SelectedRows.Count = 0 Then
+                                                 MessageBox.Show("Please select at least one salary record to pay!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                 Return
+                                             End If
+
+                                             PaySelectedSalaries(dgvSalaries)
+                                             LoadSalaryData(dgvSalaries, currentRoleFilter, currentPaymentFilter)
+                                         End Sub
+
+        AddHandler btnPayAll.Click, Sub()
+                                        If MessageBox.Show("Are you sure you want to pay all unpaid salaries?", "Confirm Payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                                            PayAllUnpaidSalaries()
+                                            LoadSalaryData(dgvSalaries, currentRoleFilter, currentPaymentFilter)
+                                        End If
+                                    End Sub
+
+        AddHandler btnRefreshSalaries.Click, Sub()
+                                                 LoadSalaryData(dgvSalaries, currentRoleFilter, currentPaymentFilter)
+                                             End Sub
+
+        ' Add all Page 2 controls to pnlPage2
+        pnlPage2.Controls.AddRange({lblSalaryManagement, lblFilterRole, cmbRoleFilter, btnFilterRole, lblPaymentFilter, cmbPaymentFilter, btnFilterPayment, dgvSalaries, btnPaySelected, btnPayAll, btnRefreshSalaries, btnBack})
+
+        ' Page Navigation Event Handlers
+        AddHandler btnSalaryManagement.Click, Sub()
+                                                  pnlPage1.Visible = False
+                                                  pnlPage2.Visible = True
+                                                  LoadSalaryData(dgvSalaries)
+                                              End Sub
+
+        AddHandler btnBack.Click, Sub()
+                                      pnlPage2.Visible = False
+                                      pnlPage1.Visible = True
+                                  End Sub
+
+        ' Add both panels to main content panel
+        pnlContent.Controls.AddRange({pnlPage1, pnlPage2})
     End Sub
+
+    ' Helper method to load salary data from ticket_technicians table with filters
+    Private Sub LoadSalaryData(dgv As DataGridView, Optional roleFilter As String = "All", Optional paymentFilter As String = "All")
+        Try
+            If con Is Nothing Then
+                con = New MySqlConnection(strcon)
+            End If
+
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+
+            con.Open()
+
+            ' Build query to get both technician and supervisor salaries
+            Dim query As String = ""
+
+            ' Technician salaries from completed tickets
+            query = "SELECT " &
+                "tt.ticket_id, " &
+                "u.username, " &
+                "u.firstName, " &
+                "u.lastName, " &
+                "u.role, " &
+                "st.description as ticket_description, " &
+                "it.issue_name, " &
+                "it.difficulty_level, " &
+                "st.task_salary as amount, " &
+                "tt.assigned_at, " &
+                "tt.status as ticket_status, " &
+                "tt.payment_status, " &
+                "tt.remarks, " &
+                "st.created_at as ticket_created, " &
+                "st.resolved_at, " &
+                "'Task Payment' as salary_type " &
+                "FROM ticket_technicians tt " &
+                "JOIN technicians t ON tt.technician_id = t.technician_id " &
+                "JOIN users u ON t.user_id = u.user_id " &
+                "JOIN support_tickets st ON tt.ticket_id = st.ticket_id " &
+                "JOIN issue_types it ON st.issue_type_id = it.issue_type_id " &
+                "WHERE tt.status = 'Completed' AND st.task_salary > 0 " &
+                "AND u.role = 'technician'"
+
+            ' Add supervisor weekly salary from supervisor_salaries table
+            query += " UNION ALL " &
+                "SELECT " &
+                "ss.salary_id as ticket_id, " &
+                "u.username, " &
+                "u.firstName, " &
+                "u.lastName, " &
+                "u.role, " &
+                "CONCAT('Weekly Salary: ', DATE_FORMAT(ss.week_start_date, '%Y-%m-%d'), ' to ', DATE_FORMAT(ss.week_end_date, '%Y-%m-%d')) as ticket_description, " &
+                "'Supervision' as issue_name, " &
+                "'N/A' as difficulty_level, " &
+                "ss.amount, " &
+                "ss.created_at as assigned_at, " &
+                "'Completed' as ticket_status, " &
+                "ss.payment_status, " &
+                "CONCAT('Weekly supervisor salary for week ', DATE_FORMAT(ss.week_start_date, '%Y-%m-%d')) as remarks, " &
+                "ss.created_at as ticket_created, " &
+                "ss.created_at as resolved_at, " &
+                "'Weekly Salary' as salary_type " &
+                "FROM supervisor_salaries ss " &
+                "JOIN technicians t ON ss.supervisor_id = t.technician_id " &
+                "JOIN users u ON t.user_id = u.user_id " &
+                "WHERE u.role = 'supervisor' AND u.is_active = 1"
+
+            ' Apply filters
+            Dim whereConditions As String = ""
+            If roleFilter <> "All" Then
+                whereConditions = " WHERE role = @roleFilter"
+            End If
+            If paymentFilter <> "All" Then
+                If whereConditions = "" Then
+                    whereConditions = " WHERE payment_status = @paymentFilter"
+                Else
+                    whereConditions += " AND payment_status = @paymentFilter"
+                End If
+            End If
+
+            ' Wrap the UNION query in a subquery to apply filters
+            If whereConditions <> "" Then
+                query = "SELECT * FROM (" & query & ") as combined_salaries" & whereConditions
+            Else
+                query = "SELECT * FROM (" & query & ") as combined_salaries"
+            End If
+
+            query += " ORDER BY assigned_at DESC"
+
+            Dim cmd As New MySqlCommand(query, con)
+            If roleFilter <> "All" Then
+                cmd.Parameters.AddWithValue("@roleFilter", roleFilter)
+            End If
+            If paymentFilter <> "All" Then
+                cmd.Parameters.AddWithValue("@paymentFilter", paymentFilter)
+            End If
+
+            Dim adapter As New MySqlDataAdapter(cmd)
+            Dim dt As New DataTable()
+            adapter.Fill(dt)
+            con.Close()
+
+            ' Clear existing columns and set data source
+            dgv.DataSource = Nothing
+            dgv.Columns.Clear()
+            dgv.DataSource = dt
+
+            ' Configure columns
+            If dgv.Columns.Contains("ticket_id") Then
+                dgv.Columns("ticket_id").HeaderText = "Ticket ID"
+                dgv.Columns("ticket_id").Width = 70
+                dgv.Columns("ticket_id").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("username") Then
+                dgv.Columns("username").HeaderText = "Username"
+                dgv.Columns("username").Width = 80
+                dgv.Columns("username").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("firstName") Then
+                dgv.Columns("firstName").HeaderText = "First Name"
+                dgv.Columns("firstName").Width = 80
+                dgv.Columns("firstName").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("lastName") Then
+                dgv.Columns("lastName").HeaderText = "Last Name"
+                dgv.Columns("lastName").Width = 80
+                dgv.Columns("lastName").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("role") Then
+                dgv.Columns("role").HeaderText = "Role"
+                dgv.Columns("role").Width = 80
+                dgv.Columns("role").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("issue_name") Then
+                dgv.Columns("issue_name").HeaderText = "Issue Type"
+                dgv.Columns("issue_name").Width = 120
+                dgv.Columns("issue_name").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("difficulty_level") Then
+                dgv.Columns("difficulty_level").HeaderText = "Difficulty"
+                dgv.Columns("difficulty_level").Width = 70
+                dgv.Columns("difficulty_level").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("amount") Then
+                dgv.Columns("amount").HeaderText = "Salary (PHP)"
+                dgv.Columns("amount").Width = 100
+                dgv.Columns("amount").ReadOnly = True
+                dgv.Columns("amount").DefaultCellStyle.Format = "N2"
+            End If
+
+            If dgv.Columns.Contains("ticket_status") Then
+                dgv.Columns("ticket_status").HeaderText = "Task Status"
+                dgv.Columns("ticket_status").Width = 80
+                dgv.Columns("ticket_status").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("payment_status") Then
+                dgv.Columns("payment_status").HeaderText = "Payment"
+                dgv.Columns("payment_status").Width = 70
+                dgv.Columns("payment_status").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("salary_type") Then
+                dgv.Columns("salary_type").HeaderText = "Type"
+                dgv.Columns("salary_type").Width = 90
+                dgv.Columns("salary_type").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("assigned_at") Then
+                dgv.Columns("assigned_at").HeaderText = "Date"
+                dgv.Columns("assigned_at").Width = 100
+                dgv.Columns("assigned_at").ReadOnly = True
+            End If
+
+            ' Hide detailed columns that might clutter the view
+            If dgv.Columns.Contains("ticket_description") Then
+                dgv.Columns("ticket_description").Visible = False
+            End If
+            If dgv.Columns.Contains("remarks") Then
+                dgv.Columns("remarks").Visible = False
+            End If
+            If dgv.Columns.Contains("ticket_created") Then
+                dgv.Columns("ticket_created").Visible = False
+            End If
+            If dgv.Columns.Contains("resolved_at") Then
+                dgv.Columns("resolved_at").Visible = False
+            End If
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            MessageBox.Show("Error loading salary data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+
+
+    ' Helper method to pay selected salaries
+    Private Sub PaySelectedSalaries(dgv As DataGridView)
+        Try
+            If con Is Nothing Then
+                con = New MySqlConnection(strcon)
+            End If
+
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+
+            con.Open()
+            Dim updatedCount As Integer = 0
+
+            For Each row As DataGridViewRow In dgv.SelectedRows
+                If Not row.IsNewRow Then
+                    Dim currentStatus As String = row.Cells("payment_status").Value.ToString()
+                    Dim salaryType As String = row.Cells("salary_type").Value.ToString()
+
+                    If currentStatus = "Unpaid" Then
+                        If salaryType = "Task Payment" Then
+                            ' Handle technician task payment
+                            Dim ticketID As Integer = Convert.ToInt32(row.Cells("ticket_id").Value)
+                            Dim cmd As New MySqlCommand("UPDATE ticket_technicians SET payment_status = 'Paid' WHERE ticket_id = @ticketId", con)
+                            cmd.Parameters.AddWithValue("@ticketId", ticketID)
+                            updatedCount += cmd.ExecuteNonQuery()
+                        ElseIf salaryType = "Weekly Salary" Then
+                            ' Handle supervisor weekly salary
+                            Dim salaryID As Integer = Convert.ToInt32(row.Cells("ticket_id").Value)
+                            Dim cmd As New MySqlCommand("UPDATE supervisor_salaries SET payment_status = 'Paid', paid_at = CURRENT_TIMESTAMP WHERE salary_id = @salaryId", con)
+                            cmd.Parameters.AddWithValue("@salaryId", salaryID)
+                            updatedCount += cmd.ExecuteNonQuery()
+                        End If
+                    End If
+                End If
+            Next
+
+            con.Close()
+            If updatedCount > 0 Then
+                MessageBox.Show($"Successfully paid {updatedCount} salary record(s)!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            MessageBox.Show("Error paying selected salaries: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' Helper method to pay all unpaid salaries
+    Private Sub PayAllUnpaidSalaries()
+        Try
+            If con Is Nothing Then
+                con = New MySqlConnection(strcon)
+            End If
+
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+
+            con.Open()
+
+            ' Pay all unpaid technician task salaries
+            Dim techCmd As New MySqlCommand("UPDATE ticket_technicians SET payment_status = 'Paid' WHERE payment_status = 'Unpaid' AND status = 'Completed'", con)
+            Dim techUpdatedCount As Integer = techCmd.ExecuteNonQuery()
+
+            ' Pay all unpaid supervisor weekly salaries
+            Dim supervisorCmd As New MySqlCommand("UPDATE supervisor_salaries SET payment_status = 'Paid', paid_at = CURRENT_TIMESTAMP WHERE payment_status = 'Unpaid'", con)
+            Dim supervisorUpdatedCount As Integer = supervisorCmd.ExecuteNonQuery()
+
+            con.Close()
+
+            MessageBox.Show($"Successfully paid:" & vbCrLf &
+                        $"- {techUpdatedCount} technician task salary record(s)" & vbCrLf &
+                        $"- {supervisorUpdatedCount} supervisor weekly salary record(s)",
+                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            MessageBox.Show("Error paying all unpaid salaries: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
 
     Private Sub LoadAvailableTechnicianUsers(cmb As ComboBox)
         Try
@@ -993,7 +1438,7 @@ Public Class Admin
 
             con.Open()
             ' Get users with role 'technician' who are not in the technicians table
-            Dim cmd As New MySqlCommand("SELECT u.user_id, CONCAT(u.firstName, ' ', u.lastName, ' (', u.username, ')') as display_name FROM users u WHERE u.role = 'technician' AND u.user_id NOT IN (SELECT user_id FROM technicians)", con)
+            Dim cmd As New MySqlCommand("SELECT u.user_id, CONCAT(u.firstName, ' ', u.lastName, ' (', u.username, ')') as display_name FROM users u WHERE u.role IN ('technician','supervisor') AND u.user_id NOT IN (SELECT user_id FROM technicians)", con)
             Dim adapter As New MySqlDataAdapter(cmd)
             Dim dt As New DataTable()
             adapter.Fill(dt)
@@ -1184,6 +1629,11 @@ Public Class Admin
     Private Sub ShowAddonsPanel()
         pnlContent.Controls.Clear()
 
+        ' Create panels for both pages
+        Dim pnlPage1 As New Panel With {.Location = New Point(0, 0), .Size = pnlContent.Size, .Visible = True}
+        Dim pnlPage2 As New Panel With {.Location = New Point(0, 0), .Size = pnlContent.Size, .Visible = False}
+
+        ' ===== PAGE 1 - ORIGINAL ADDON MANAGEMENT =====
         ' Add Addon Form
         Dim lblAddAddon As New Label With {.Text = "Add New Addon", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(5, 3), .AutoSize = True}
 
@@ -1199,12 +1649,12 @@ Public Class Admin
 
         ' Addons DataGridView with enhanced functionality (declare early for reference)
         Dim dgvAddons As New DataGridView With {
-        .Location = New Point(20, 120),
-        .Size = New Size(400, 180),
-        .AllowUserToAddRows = False,
-        .AllowUserToDeleteRows = False,
-        .SelectionMode = DataGridViewSelectionMode.FullRowSelect
-    }
+    .Location = New Point(20, 120),
+    .Size = New Size(400, 180),
+    .AllowUserToAddRows = False,
+    .AllowUserToDeleteRows = False,
+    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+}
 
         Dim btnAddAddon As New Button With {.Text = "Add Add-on", .Location = New Point(350, 50), .Size = New Size(80, 23), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnAddAddon.FlatAppearance.BorderSize = 0
@@ -1230,6 +1680,15 @@ Public Class Admin
                                               cmd.Parameters.AddWithValue("@price", price)
 
                                               cmd.ExecuteNonQuery()
+
+                                              ' If it's hardware, add to stock table with 0 initial stock
+                                              If cmbCategory.SelectedItem.ToString() = "Hardware" Then
+                                                  Dim addonId As Integer = cmd.LastInsertedId
+                                                  Dim stockCmd As New MySqlCommand("INSERT INTO hardware_stocks (addon_id, quantity_available) VALUES (@addonid, 0)", con)
+                                                  stockCmd.Parameters.AddWithValue("@addonid", addonId)
+                                                  stockCmd.ExecuteNonQuery()
+                                              End If
+
                                               con.Close()
 
                                               MessageBox.Show("Add-on added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -1262,6 +1721,10 @@ Public Class Admin
         ' Save Changes Button
         Dim btnSaveChanges As New Button With {.Text = "Save Changes", .Location = New Point(20, 310), .Size = New Size(100, 25), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnSaveChanges.FlatAppearance.BorderSize = 0
+
+        ' NEW: Stock Management Button
+        Dim btnStockManagement As New Button With {.Text = "Stock Management", .Location = New Point(130, 310), .Size = New Size(120, 25), .BackColor = Color.FromArgb(155, 89, 182), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnStockManagement.FlatAppearance.BorderSize = 0
 
         LoadAddonsDataEnhanced(dgvAddons)
 
@@ -1317,7 +1780,187 @@ Public Class Admin
                                              End Try
                                          End Sub
 
-        pnlContent.Controls.AddRange({lblAddAddon, lblItemName, txtItemName, lblCategory, cmbCategory, lblPrice, txtPrice, btnAddAddon, lblSearch, txtSearch, btnSearch, btnShowAll, lblManageAddons, btnSaveChanges, dgvAddons})
+        ' Add all Page 1 controls to pnlPage1
+        pnlPage1.Controls.AddRange({lblAddAddon, lblItemName, txtItemName, lblCategory, cmbCategory, lblPrice, txtPrice, btnAddAddon, lblSearch, txtSearch, btnSearch, btnShowAll, lblManageAddons, btnSaveChanges, btnStockManagement, dgvAddons})
+
+        ' ===== PAGE 2 - STOCK MANAGEMENT =====
+        ' Stock Management Title
+        Dim lblStockManagement As New Label With {.Text = "Hardware Stock Management", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(5, 0), .AutoSize = True}
+
+        ' Add Stock Section
+        Dim lblAddStock As New Label With {.Text = "Adjust Stock", .Font = New Font("Segoe UI", 10, FontStyle.Bold), .Location = New Point(5, 19), .AutoSize = True}
+
+        ' Hardware dropdown
+        Dim cmbHardware As New ComboBox With {.Location = New Point(20, 60), .Size = New Size(100, 23), .DropDownStyle = ComboBoxStyle.DropDownList}
+        Dim lblHardware As New Label With {.Text = "Select Hardware:", .Location = New Point(20, 40), .AutoSize = True}
+
+        ' Quantity input
+        Dim txtQuantity As New TextBox With {.Location = New Point(125, 60), .Size = New Size(80, 23)}
+        Dim lblQuantity As New Label With {.Text = "Quantity:", .Location = New Point(125, 40), .AutoSize = True}
+
+        ' Add/Remove buttons
+        Dim btnAddStock As New Button With {.Text = "Add Stock", .Location = New Point(210, 58), .Size = New Size(80, 25), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnAddStock.FlatAppearance.BorderSize = 0
+
+        Dim btnRemoveStock As New Button With {.Text = "Remove Stock", .Location = New Point(295, 58), .Size = New Size(90, 25), .BackColor = Color.FromArgb(231, 76, 60), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnRemoveStock.FlatAppearance.BorderSize = 0
+
+        ' Stock DataGridView
+        Dim dgvStocks As New DataGridView With {
+    .Location = New Point(20, 100),
+    .Size = New Size(400, 200),
+    .AllowUserToAddRows = False,
+    .AllowUserToDeleteRows = False,
+    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+}
+
+        ' Back Button
+        Dim btnBack As New Button With {.Text = "Back to Addons", .Location = New Point(20, 310), .Size = New Size(100, 25), .BackColor = Color.FromArgb(52, 152, 219), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnBack.FlatAppearance.BorderSize = 0
+
+        ' Refresh Button
+        Dim btnRefreshStocks As New Button With {.Text = "Refresh", .Location = New Point(130, 310), .Size = New Size(70, 25), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        btnRefreshStocks.FlatAppearance.BorderSize = 0
+
+        ' Load hardware items and stock data
+        LoadHardwareItems(cmbHardware)
+        LoadStockData(dgvStocks)
+
+        ' Stock Management Event Handlers
+        AddHandler btnAddStock.Click, Sub()
+                                          If cmbHardware.SelectedValue Is Nothing OrElse String.IsNullOrEmpty(txtQuantity.Text) Then
+                                              MessageBox.Show("Please select hardware and enter quantity!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                              Return
+                                          End If
+
+                                          Dim quantity As Integer
+                                          If Not Integer.TryParse(txtQuantity.Text, quantity) OrElse quantity <= 0 Then
+                                              MessageBox.Show("Please enter a valid positive quantity!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                              Return
+                                          End If
+
+                                          Try
+                                              con.Open()
+                                              Dim cmd As New MySqlCommand("UPDATE hardware_stocks SET quantity_available = quantity_available + @quantity WHERE addon_id = @addonid", con)
+                                              cmd.Parameters.AddWithValue("@quantity", quantity)
+                                              cmd.Parameters.AddWithValue("@addonid", cmbHardware.SelectedValue)
+
+                                              Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+                                              con.Close()
+
+                                              If rowsAffected > 0 Then
+                                                  MessageBox.Show($"Successfully added {quantity} units to stock!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                                  txtQuantity.Clear()
+                                                  cmbHardware.SelectedIndex = -1
+                                                  LoadStockData(dgvStocks)
+                                              Else
+                                                  MessageBox.Show("No stock record found for this hardware!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                              End If
+
+                                          Catch ex As Exception
+                                              If con.State = ConnectionState.Open Then con.Close()
+                                              MessageBox.Show("Error adding stock: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                          End Try
+                                      End Sub
+
+        AddHandler btnRemoveStock.Click, Sub()
+                                             If cmbHardware.SelectedValue Is Nothing OrElse String.IsNullOrEmpty(txtQuantity.Text) Then
+                                                 MessageBox.Show("Please select hardware and enter quantity!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                 Return
+                                             End If
+
+                                             Dim quantity As Integer
+                                             If Not Integer.TryParse(txtQuantity.Text, quantity) OrElse quantity <= 0 Then
+                                                 MessageBox.Show("Please enter a valid positive quantity!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                 Return
+                                             End If
+
+                                             Try
+                                                 con.Open()
+                                                 ' Check current stock first
+                                                 Dim checkCmd As New MySqlCommand("SELECT quantity_available FROM hardware_stocks WHERE addon_id = @addonid", con)
+                                                 checkCmd.Parameters.AddWithValue("@addonid", cmbHardware.SelectedValue)
+                                                 Dim currentStock As Object = checkCmd.ExecuteScalar()
+
+                                                 If currentStock Is Nothing Then
+                                                     con.Close()
+                                                     MessageBox.Show("No stock record found for this hardware!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                     Return
+                                                 End If
+
+                                                 Dim availableStock As Integer = Convert.ToInt32(currentStock)
+                                                 If quantity > availableStock Then
+                                                     con.Close()
+                                                     MessageBox.Show($"Cannot remove {quantity} units. Only {availableStock} units available in stock!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                     Return
+                                                 End If
+
+                                                 Dim cmd As New MySqlCommand("UPDATE hardware_stocks SET quantity_available = quantity_available - @quantity WHERE addon_id = @addonid", con)
+                                                 cmd.Parameters.AddWithValue("@quantity", quantity)
+                                                 cmd.Parameters.AddWithValue("@addonid", cmbHardware.SelectedValue)
+
+                                                 cmd.ExecuteNonQuery()
+                                                 con.Close()
+
+                                                 MessageBox.Show($"Successfully removed {quantity} units from stock!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                                 txtQuantity.Clear()
+                                                 cmbHardware.SelectedIndex = -1
+                                                 LoadStockData(dgvStocks)
+
+                                             Catch ex As Exception
+                                                 If con.State = ConnectionState.Open Then con.Close()
+                                                 MessageBox.Show("Error removing stock: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                             End Try
+                                         End Sub
+
+        AddHandler btnRefreshStocks.Click, Sub()
+                                               LoadStockData(dgvStocks)
+                                               LoadHardwareItems(cmbHardware)
+                                           End Sub
+
+        ' Add all Page 2 controls to pnlPage2
+        pnlPage2.Controls.AddRange({lblStockManagement, lblAddStock, lblHardware, cmbHardware, lblQuantity, txtQuantity, btnAddStock, btnRemoveStock, dgvStocks, btnBack, btnRefreshStocks})
+
+        ' Page Navigation Event Handlers
+        AddHandler btnStockManagement.Click, Sub()
+                                                 InitializeMissingStockRecords()
+                                                 pnlPage1.Visible = False
+                                                 pnlPage2.Visible = True
+                                                 LoadStockData(dgvStocks)
+                                                 LoadHardwareItems(cmbHardware)
+                                             End Sub
+
+        AddHandler btnBack.Click, Sub()
+                                      pnlPage2.Visible = False
+                                      pnlPage1.Visible = True
+                                  End Sub
+
+        ' Add both panels to main content panel
+        pnlContent.Controls.AddRange({pnlPage1, pnlPage2})
+    End Sub
+
+    Private Sub InitializeMissingStockRecords()
+        Try
+            If con Is Nothing Then
+                con = New MySqlConnection(strcon)
+            End If
+
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+
+            con.Open()
+
+            ' This single query will insert stock records for all hardware items that don't have them
+            Dim cmd As New MySqlCommand("INSERT INTO hardware_stocks (addon_id, quantity_available) SELECT addon_id, 0 FROM addons WHERE category = 'Hardware' AND addon_id NOT IN (SELECT addon_id FROM hardware_stocks)", con)
+            cmd.ExecuteNonQuery()
+
+            con.Close()
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            ' Handle error silently or log it
+        End Try
     End Sub
 
     Private Sub LoadAddonsDataEnhanced(dgv As DataGridView, Optional searchTerm As String = "")
@@ -2137,6 +2780,84 @@ Public Class Admin
         Catch ex As Exception
             If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
             MessageBox.Show("Error loading billing records: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub LoadHardwareItems(cmb As ComboBox)
+        Try
+            If con Is Nothing Then
+                con = New MySqlConnection(strcon)
+            End If
+
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+
+            con.Open()
+            Dim cmd As New MySqlCommand("SELECT addon_id, item_name FROM addons WHERE category = 'Hardware' ORDER BY item_name", con)
+            Dim adapter As New MySqlDataAdapter(cmd)
+            Dim dt As New DataTable()
+            adapter.Fill(dt)
+            con.Close()
+
+            cmb.DataSource = dt
+            cmb.DisplayMember = "item_name"
+            cmb.ValueMember = "addon_id"
+            cmb.SelectedIndex = -1
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            MessageBox.Show("Error loading hardware items: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' Helper method to load stock data
+    Private Sub LoadStockData(dgv As DataGridView)
+        Try
+            If con Is Nothing Then
+                con = New MySqlConnection(strcon)
+            End If
+
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+
+            con.Open()
+            Dim cmd As New MySqlCommand("SELECT hs.stock_id, a.item_name as 'Hardware Name', hs.quantity_available as 'Available Stock', a.price as 'Unit Price' FROM hardware_stocks hs JOIN addons a ON hs.addon_id = a.addon_id ORDER BY a.item_name", con)
+            Dim adapter As New MySqlDataAdapter(cmd)
+            Dim dt As New DataTable()
+            adapter.Fill(dt)
+            con.Close()
+
+            ' Clear existing columns and set data source
+            dgv.DataSource = Nothing
+            dgv.Columns.Clear()
+            dgv.DataSource = dt
+
+            ' Configure columns
+            If dgv.Columns.Contains("stock_id") Then
+                dgv.Columns("stock_id").Visible = False
+            End If
+
+            If dgv.Columns.Contains("Hardware Name") Then
+                dgv.Columns("Hardware Name").Width = 150
+                dgv.Columns("Hardware Name").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("Available Stock") Then
+                dgv.Columns("Available Stock").Width = 100
+                dgv.Columns("Available Stock").ReadOnly = True
+            End If
+
+            If dgv.Columns.Contains("Unit Price") Then
+                dgv.Columns("Unit Price").Width = 100
+                dgv.Columns("Unit Price").ReadOnly = True
+                dgv.Columns("Unit Price").DefaultCellStyle.Format = "C2"
+            End If
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            MessageBox.Show("Error loading stock data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
