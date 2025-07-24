@@ -671,7 +671,7 @@ Public Class Cart
         ' Return to addon selection - keep transaction active
         Dim addonForm As New Addon()
         addonForm.Show()
-        Me.Close() 'Me.Hide
+        Me.Hide() 'Me.Hide
     End Sub
 
     Private Sub btnCancelOrder_Click(sender As Object, e As EventArgs) Handles btnCancelOrder.Click
@@ -826,7 +826,7 @@ Public Class Cart
 
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
         Addon.Show()
-        Me.Close()
+        Me.Hide()
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
