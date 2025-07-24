@@ -145,10 +145,11 @@ Public Class Cart
             CheckedListBox1.Items.RemoveAt(i)
         Next
 
-        ' Add cart items
+        ' Add cart items (items start unselected)
         For Each item In cartItems
             Dim displayText As String = $"{item.ProductName} - Qty: {item.Quantity} - Php {(item.Price * item.Quantity):F2} [{item.Category}]"
             CheckedListBox1.Items.Add(displayText)
+            ' Items start unselected by default
         Next
     End Sub
 
@@ -185,6 +186,59 @@ Public Class Cart
         Next
 
         Return cartTotal
+    End Function
+
+    ' Helper method to get only selected cart items
+    Private Function GetSelectedCartItems() As List(Of CartItem)
+        Dim selectedItems As New List(Of CartItem)
+        Dim startIndex As Integer = 0
+
+        ' Skip plan/subscriber info item if it exists
+        If (Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Not String.IsNullOrEmpty(Session.planName)) OrElse
+           (Not Session.fromProduct AndAlso Not Session.IsNewSubscription AndAlso Session.SubscriberId > 0) Then
+            startIndex = 1
+        End If
+
+        ' Get selected cart items
+        For i As Integer = startIndex To CheckedListBox1.Items.Count - 1
+            If CheckedListBox1.GetItemCheckState(i) = CheckState.Checked Then
+                Dim cartIndex As Integer = i - startIndex
+                If cartIndex >= 0 AndAlso cartIndex < cartItems.Count Then
+                    selectedItems.Add(cartItems(cartIndex))
+                End If
+            End If
+        Next
+
+        Return selectedItems
+    End Function
+
+    ' Calculate total for selected items only
+    Private Function GetSelectedItemsTotal() As Decimal
+        Dim selectedTotal As Decimal = 0
+        Dim startIndex As Integer = 0
+
+        ' Add plan price only for new subscriptions
+        If Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Session.planPrice > 0 Then
+            selectedTotal += Session.planPrice
+        End If
+
+        ' Skip plan/subscriber info item if it exists
+        If (Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Not String.IsNullOrEmpty(Session.planName)) OrElse
+           (Not Session.fromProduct AndAlso Not Session.IsNewSubscription AndAlso Session.SubscriberId > 0) Then
+            startIndex = 1
+        End If
+
+        ' Add only selected cart items
+        For i As Integer = startIndex To CheckedListBox1.Items.Count - 1
+            If CheckedListBox1.GetItemCheckState(i) = CheckState.Checked Then
+                Dim cartIndex As Integer = i - startIndex
+                If cartIndex >= 0 AndAlso cartIndex < cartItems.Count Then
+                    selectedTotal += (cartItems(cartIndex).Price * cartItems(cartIndex).Quantity)
+                End If
+            End If
+        Next
+
+        Return selectedTotal
     End Function
 
     Private Sub RemoveSelectedItems()
@@ -276,7 +330,7 @@ Public Class Cart
         End Try
     End Sub
 
-    ' Button event handlers (add these buttons to your form if they don't exist)
+    ' Button event handlers
     Private Sub btnRemoveSelected_Click(sender As Object, e As EventArgs) Handles btnDeletionMode.Click
         If CheckedListBox1.Items.Count = 1 AndAlso Session.fromProduct = False Then
             MsgBox("There is nothing to delete")
@@ -331,22 +385,27 @@ Public Class Cart
         End If
 
         ' Only check transaction for new subscriptions
-        If Session.IsNewSubscription Then
-            Session.CheckTransactionTimeout()
-            If Not Session.IsTransactionActive Then
-                MessageBox.Show("Session expired. Please select a plan again.")
-                ReturnToPlanSelection()
-                Return
-            End If
-        End If
 
-        If cartItems.Count = 0 AndAlso (Session.fromProduct OrElse (Not Session.IsNewSubscription AndAlso Session.planPrice = 0)) Then
-            MessageBox.Show("Your cart is empty!", "Empty Cart", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        ' Get selected items and validate
+        Dim selectedItems As List(Of CartItem) = GetSelectedCartItems()
+
+        ' Check if we have items to process
+        If selectedItems.Count = 0 AndAlso (Session.fromProduct OrElse (Not Session.IsNewSubscription AndAlso Session.planPrice = 0)) Then
+            MessageBox.Show("Please select items to checkout!", "No Items Selected", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
 
-        Dim totalAmount As Decimal = GetCartTotal()
-        Dim message As String = $"Total amount: Php {totalAmount:F2}" & vbCrLf & "Enter payment amount:"
+        ' Calculate total for selected items only
+        Dim checkoutTotal As Decimal = GetSelectedItemsTotal()
+
+        ' If no total (no plan and no selected items), show error
+        If checkoutTotal = 0 Then
+            MessageBox.Show("Please select items to checkout!", "No Items Selected", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
+        Dim message As String = $"Total amount: Php {checkoutTotal:F2}" & vbCrLf & "Enter payment amount:"
 
         Dim paymentInput As String = InputBox(message, "Payment")
 
@@ -361,47 +420,61 @@ Public Class Cart
             Return ' Keep transaction active for retry
         End If
 
-        If paymentAmount < totalAmount Then
+        If paymentAmount < checkoutTotal Then
             MessageBox.Show("Insufficient payment amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return ' Keep transaction active for retry
         End If
 
-        ' Process payment based on purchase type
+        ' Process payment based on purchase type - using selected items only
         Dim purchaseSuccess As Boolean = False
-        If Session.fromProduct Then
-            ' Direct product purchase
-            purchaseSuccess = ProcessDirectPurchase()
+        If Session.fromProduct = True Then
+            ' Direct product purchase - selected items only
+            purchaseSuccess = ProcessSelectedDirectPurchase(selectedItems)
         ElseIf Session.IsNewSubscription Then
-            ' Plan with addons purchase
-            purchaseSuccess = ProcessPlanWithAddonsPurchase()
+            ' Plan with selected addons purchase
+            purchaseSuccess = ProcessPlanWithSelectedAddonsPurchase(selectedItems)
+            Session.userRole = "Subscriber"
         Else
-            ' Existing subscriber buying addons
-            purchaseSuccess = ProcessAddonsForExistingSubscriber()
+            ' Existing subscriber buying selected addons
+            purchaseSuccess = ProcessSelectedAddonsForExistingSubscriber(selectedItems)
         End If
 
         If purchaseSuccess Then
-            Dim change As Decimal = paymentAmount - totalAmount
+            Dim change As Decimal = paymentAmount - checkoutTotal
             Dim resultMessage As String = "Payment successful!" & vbCrLf &
-                                     $"Total: Php {totalAmount:F2}" & vbCrLf &
+                                     $"Total: Php {checkoutTotal:F2}" & vbCrLf &
                                      $"Payment: Php {paymentAmount:F2}" & vbCrLf &
                                      $"Change: Php {change:F2}" & vbCrLf &
                                      "Thank you for your purchase!"
 
             MessageBox.Show(resultMessage, "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-            ' Payment successful - complete transaction and clear cart
+            ' Payment successful - complete transaction and remove only purchased items
             If Session.IsNewSubscription Then
                 Session.EndTransaction(True)
             End If
-            ClearCartAfterPurchase()
-            ' Close cart form and return to plan selection or product view
+
+            ' Remove only the items that were actually purchased
+            RemovePurchasedItemsFromCart(selectedItems)
+
+            ' Refresh display and recalculate total
+            RefreshCartDisplay()
+            UpdateTotal()
+
+            If Session.userRole = "Subscriber" Then
+                subscribers.Show()
+            Else
+                Main.Show()
+            End If
+
             Me.Close()
         Else
             MessageBox.Show("Purchase failed. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 
-    Private Function ProcessAddonsForExistingSubscriber() As Boolean
+    ' Process selected direct purchases only
+    Private Function ProcessSelectedDirectPurchase(selectedItems As List(Of CartItem)) As Boolean
         Dim success As Boolean = False
         Dim con As New MySqlConnection(strCon)
         Dim trans As MySqlTransaction = Nothing
@@ -410,57 +483,9 @@ Public Class Cart
             con.Open()
             trans = con.BeginTransaction()
 
-            ' Insert each cart item into customer_addons for existing subscriber
-            For Each item In cartItems
+            ' Insert only selected cart items into customer_addons
+            For Each item In selectedItems
                 Dim insertQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) " &
-                                       "VALUES (@customerId, @addonId, @quantity, NOW())"
-                Using cmd As New MySqlCommand(insertQuery, con, trans)
-                    cmd.Parameters.AddWithValue("@customerId", Session.UserId)
-                    cmd.Parameters.AddWithValue("@addonId", item.AddonId)
-                    cmd.Parameters.AddWithValue("@quantity", item.Quantity)
-                    cmd.ExecuteNonQuery()
-                End Using
-            Next
-
-            ' Clear shopping cart after successful purchase
-            Dim clearCartQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"
-            Using cmd As New MySqlCommand(clearCartQuery, con, trans)
-                cmd.Parameters.AddWithValue("@customerId", Session.UserId)
-                cmd.ExecuteNonQuery()
-            End Using
-
-            trans.Commit()
-            success = True
-
-        Catch ex As Exception
-            MessageBox.Show("Error during addon purchase: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            If trans IsNot Nothing Then
-                Try
-                    trans.Rollback()
-                Catch rollEx As Exception
-                    MessageBox.Show("Rollback failed: " & rollEx.Message)
-                End Try
-            End If
-        Finally
-            con.Close()
-        End Try
-
-        Return success
-    End Function
-
-    Private Function ProcessDirectPurchase() As Boolean
-        ' Process direct addon purchases (from Products tab)
-        Dim success As Boolean = False
-        Dim con As New MySqlConnection(strCon)
-        Dim trans As MySqlTransaction = Nothing
-
-        Try
-            con.Open()
-            trans = con.BeginTransaction()
-
-            ' Insert each cart item into customer_addons
-            For Each item In cartItems
-                Dim insertQuery As String = "INSERT INTO customer_addons (subscriber_id, addon_id, quantity, purchase_date) " &
                                            "VALUES (@customerId, @addonId, @quantity, NOW())"
                 Using cmd As New MySqlCommand(insertQuery, con, trans)
                     cmd.Parameters.AddWithValue("@customerId", Session.UserId)
@@ -469,21 +494,6 @@ Public Class Cart
                     cmd.ExecuteNonQuery()
                 End Using
             Next
-
-            Dim paymentQuery As String = "INSERT INTO payments (subscriber_id, amount, payment_date, payment_method) " &
-                "VALUES (@subscriber_id, @amount, NOW(), 'Cash')"
-            Using cmd As New MySqlCommand(paymentQuery, con, trans)
-                cmd.Parameters.AddWithValue("@subscriber_id", Session.UserId)
-                cmd.Parameters.AddWithValue("@amount", GetCartTotal())
-                cmd.ExecuteNonQuery()
-            End Using
-
-            ' Clear shopping cart after successful purchase
-            Dim clearCartQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"
-            Using cmd As New MySqlCommand(clearCartQuery, con, trans)
-                cmd.Parameters.AddWithValue("@customerId", Session.UserId)
-                cmd.ExecuteNonQuery()
-            End Using
 
             trans.Commit()
             success = True
@@ -504,8 +514,49 @@ Public Class Cart
         Return success
     End Function
 
-    Private Function ProcessPlanWithAddonsPurchase() As Boolean
-        ' Process plan subscription with addons
+    ' Process selected addons for existing subscriber
+    Private Function ProcessSelectedAddonsForExistingSubscriber(selectedItems As List(Of CartItem)) As Boolean
+        Dim success As Boolean = False
+        Dim con As New MySqlConnection(strCon)
+        Dim trans As MySqlTransaction = Nothing
+
+        Try
+            con.Open()
+            trans = con.BeginTransaction()
+
+            ' Insert only selected cart items into customer_addons for existing subscriber
+            For Each item In selectedItems
+                Dim insertQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) " &
+                                       "VALUES (@customerId, @addonId, @quantity, NOW())"
+                Using cmd As New MySqlCommand(insertQuery, con, trans)
+                    cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                    cmd.Parameters.AddWithValue("@addonId", item.AddonId)
+                    cmd.Parameters.AddWithValue("@quantity", item.Quantity)
+                    cmd.ExecuteNonQuery()
+                End Using
+            Next
+
+            trans.Commit()
+            success = True
+
+        Catch ex As Exception
+            MessageBox.Show("Error during addon purchase: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If trans IsNot Nothing Then
+                Try
+                    trans.Rollback()
+                Catch rollEx As Exception
+                    MessageBox.Show("Rollback failed: " & rollEx.Message)
+                End Try
+            End If
+        Finally
+            con.Close()
+        End Try
+
+        Return success
+    End Function
+
+    ' Process plan with selected addons
+    Private Function ProcessPlanWithSelectedAddonsPurchase(selectedItems As List(Of CartItem)) As Boolean
         Dim success As Boolean = False
         Dim con As New MySqlConnection(strCon)
         Dim trans As MySqlTransaction = Nothing
@@ -525,26 +576,33 @@ Public Class Cart
                 subscriberId = CInt(cmd.LastInsertedId)
             End Using
 
-            ' Insert each cart item into customer_addons
-            For Each item In cartItems
+            Using getId As New MySqlCommand("SELECT u.user_id, s.subscriber_id FROM users u JOIN subscribers s ON u.user_id = s.customer_id WHERE u.user_id = @user_id", con, trans)
+                getId.Parameters.AddWithValue("@user_id", Session.UserId)
+                Using fetchId As MySqlDataReader = getId.ExecuteReader
+                    While fetchId.Read
+                        Session.SubscriberId = fetchId.GetInt32("subscriber_id")
+                    End While
+                End Using
+            End Using
+
+            ' Insert only selected cart items into customer_addons
+            For Each item In selectedItems
                 Dim insertAddonQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) " &
                                                "VALUES (@customerId, @addonId, @quantity, NOW())"
                 Using cmd As New MySqlCommand(insertAddonQuery, con, trans)
                     cmd.Parameters.AddWithValue("@customerId", Session.UserId)
                     cmd.Parameters.AddWithValue("@addonId", item.AddonId)
                     cmd.Parameters.AddWithValue("@quantity", item.Quantity)
-                    cmd.Parameters.AddWithValue("@totalPrice", item.Price * item.Quantity)
                     cmd.ExecuteNonQuery()
                 End Using
             Next
-
 
             Dim billingQuery As String = "INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date, status) " &
                 "VALUES (@subscriber_id, CURDATE(), @totalAmount, DATE_ADD(NOW(), INTERVAL 1 MONTH), 'Paid')"
             Dim billingId As Integer
             Using cmd As New MySqlCommand(billingQuery, con, trans)
                 cmd.Parameters.AddWithValue("@subscriber_id", subscriberId)
-                cmd.Parameters.AddWithValue("@totalAmount", GetCartTotal())
+                cmd.Parameters.AddWithValue("@totalAmount", GetSelectedItemsTotal())
                 cmd.ExecuteNonQuery()
                 billingId = CInt(cmd.LastInsertedId)
             End Using
@@ -553,14 +611,7 @@ Public Class Cart
                 "VALUES (@billing_id, @amount, CURDATE())"
             Using cmd As New MySqlCommand(paymentQuery, con, trans)
                 cmd.Parameters.AddWithValue("@billing_id", billingId)
-                cmd.Parameters.AddWithValue("@amount", GetCartTotal())
-                cmd.ExecuteNonQuery()
-            End Using
-
-            ' Clear shopping cart after successful purchase
-            Dim clearCartQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"
-            Using cmd As New MySqlCommand(clearCartQuery, con, trans)
-                cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                cmd.Parameters.AddWithValue("@amount", GetSelectedItemsTotal())
                 cmd.ExecuteNonQuery()
             End Using
 
@@ -583,14 +634,36 @@ Public Class Cart
         Return success
     End Function
 
-    Private Sub ClearCartAfterPurchase()
-        ' Clear local cart items and display
-        cartItems.Clear()
-        CheckedListBox1.Items.Clear()
+    ' Remove only the purchased items from cart and database
+    Private Sub RemovePurchasedItemsFromCart(purchasedItems As List(Of CartItem))
+        Try
+            Using con As New MySqlConnection(strCon)
+                con.Open()
 
-        ' Reset totals
-        total = 0
-        txtTotal.Text = "Php " & total.ToString("F2")
+                ' Remove purchased items from database
+                For Each item In purchasedItems
+                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id = @addonId"
+                    Using cmd As New MySqlCommand(deleteQuery, con)
+                        cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                        cmd.Parameters.AddWithValue("@addonId", item.AddonId)
+                        cmd.ExecuteNonQuery()
+                    End Using
+                Next
+            End Using
+
+            ' Remove from local cart items list
+            For Each purchasedItem In purchasedItems
+                For i As Integer = cartItems.Count - 1 To 0 Step -1
+                    If cartItems(i).AddonId = purchasedItem.AddonId Then
+                        cartItems.RemoveAt(i)
+                        Exit For
+                    End If
+                Next
+            Next
+
+        Catch ex As Exception
+            MessageBox.Show("Error removing purchased items: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     ' Add navigation methods
@@ -598,7 +671,7 @@ Public Class Cart
         ' Return to addon selection - keep transaction active
         Dim addonForm As New Addon()
         addonForm.Show()
-        Me.Hide()
+        Me.Close() 'Me.Hide
     End Sub
 
     Private Sub btnCancelOrder_Click(sender As Object, e As EventArgs) Handles btnCancelOrder.Click
@@ -737,21 +810,23 @@ Public Class Cart
     End Sub
 
     Private Sub HomeToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem1.Click
-        Main.Show()
-        Me.Close()
+        If Session.userRole = "Subscriber" Then
+            subscribers.Show()
+        Else
+            Main.Show()
+        End If
 
+        Me.Close()
     End Sub
 
     Private Sub HelpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubscriptionToolStripMenuItem.Click
         Subscription.Show()
         Me.Close()
-
     End Sub
 
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
         Addon.Show()
         Me.Close()
-
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
@@ -761,6 +836,5 @@ Public Class Cart
     Private Sub TicketToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketToolStripMenuItem.Click
         Tickets.Show()
         Me.Close()
-
     End Sub
 End Class

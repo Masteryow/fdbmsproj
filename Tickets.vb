@@ -277,4 +277,18 @@ Public Class Tickets
     Private Sub HomeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem.Click
 
     End Sub
+
+    Private Sub HomeToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem1.Click
+
+        If Session.userRole = "Subscriber" Then
+
+            subscribers.Show()
+        Else
+            Main.Show()
+
+        End If
+
+        Me.Close()
+
+    End Sub
 End Class

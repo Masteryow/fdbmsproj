@@ -118,9 +118,9 @@ Public Class Form1
                 Dim subStatus As String = ""
 
                 If reader.IsDBNull(reader.GetOrdinal("status")) Then
-                    subStatus = ""
+                    Session.subStatus = ""
                 Else
-                    subStatus = reader.GetString("status")
+                    Session.subStatus = reader.GetString("status")
                 End If
 
 

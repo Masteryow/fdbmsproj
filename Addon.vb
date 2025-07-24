@@ -22,6 +22,7 @@ Public Class Addon
     Dim addonIds() As Integer
     Dim addedItemsTotal As Decimal = 0
 
+    Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
     Public Class cartItem
         Public Property ProductName As String
         Public Property Quantity As Integer
@@ -80,16 +81,17 @@ Public Class Addon
     ' Modified RecalculateTotal method to handle existing subscribers properly
     Private Sub RecalculateTotal()
         ' Calculate total based on user type and context
-        If Session.fromProduct Then
+        Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
+        If Session.fromProduct = True Then
             ' From Products tab - show cart total from database
-            Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
+
             total = cartTotal
         ElseIf Session.IsNewSubscription Then
             ' New subscription - include plan price + addons
-            total = planPrice
+            total = planPrice + cartTotal
         Else
             ' Existing subscriber viewing addons - start with 0 (no plan price)
-            total = 0
+
         End If
 
         ' Add all addon quantities across all pages
@@ -105,9 +107,11 @@ Public Class Addon
             Next
         Next
 
-        total += addedItemsTotal
-        txtTotal.Text = "Php " & total.ToString("F2")
-        TextBox3.Text = "Php " & addedItemsTotal.ToString("F2")
+
+
+        TextBox3.Text = "Php " & (planPrice + addedItemsTotal).ToString("F2")
+
+
     End Sub
 
     Private Function GetPriceForAddon(addonId As Integer) As Decimal
@@ -184,19 +188,20 @@ Public Class Addon
 
         Dim strDPayment As String = InputBox("Please enter your money:", "Payment", "0.00")
 
+
         If Decimal.TryParse(strDPayment, decDPayment) Then
 
-            If decDPayment > total Then
+            If decDPayment > addedItemsTotal Then
 
-                Dim dChange As Decimal = decDPayment - total
+                Dim dChange As Decimal = decDPayment - addedItemsTotal
 
                 MsgBox($"Thank your for purchasing! Here is your change: Php {dChange.ToString("f2")}")
 
-            ElseIf decDPayment = total Then
+            ElseIf decDPayment = addedItemsTotal Then
 
                 MsgBox($"Thank your for purchasing!")
 
-            ElseIf decDPayment < total Then
+            ElseIf decDPayment < addedItemsTotal Then
 
                 MsgBox("Insufficient money, please try again!")
                 success = False
@@ -233,25 +238,25 @@ Public Class Addon
                     End If
                 Next
 
-                Dim simpleBillingQuery As String = "INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date, status) " &
-            "VALUES (@subscriber_id, CURDATE(), @amount, CURDATE(), 'Paid')"
-                Dim billingId As Integer = 0
+                '      Dim simpleBillingQuery As String = "INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date, status) " &
+                '    "VALUES (@subscriber_id, CURDATE(), @amount, CURDATE(), 'Paid')"
+                '       Dim billingId As Integer = 0
 
-                Using cmd As New MySqlCommand(simpleBillingQuery, con, trans)
-                    cmd.Parameters.AddWithValue("@subscriber_id", Session.SubscriberId)
-                    cmd.Parameters.AddWithValue("@amount", total)
-                    cmd.ExecuteNonQuery()
-                    billingId = cmd.LastInsertedId
-                End Using
+                '    Using cmd As New MySqlCommand(simpleBillingQuery, con, trans)
+                '   cmd.Parameters.AddWithValue("@subscriber_id", Session.SubscriberId)
+                '   cmd.Parameters.AddWithValue("@amount", total)
+                '       cmd.ExecuteNonQuery()
+                '   billingId = cmd.LastInsertedId
+                '  End Using
 
                 ' Insert payment record
-                Dim paymentQuery As String = "INSERT INTO payments (billing_id, amount, payment_date) " &
-            "VALUES (@billingId, @amount, CURDATE())"
-                Using cmd As New MySqlCommand(paymentQuery, con, trans)
-                    cmd.Parameters.AddWithValue("@billingId", billingId)
-                    cmd.Parameters.AddWithValue("@amount", total)
-                    cmd.ExecuteNonQuery()
-                End Using
+                '     Dim paymentQuery As String = "INSERT INTO payments (billing_id, amount, payment_date) " &
+                '  "VALUES (@billingId, @amount, CURDATE())"
+                '    Using cmd As New MySqlCommand(paymentQuery, con, trans)
+                '   cmd.Parameters.AddWithValue("@billingId", billingId)
+                '    cmd.Parameters.AddWithValue("@amount", total)
+                '   cmd.ExecuteNonQuery()
+                '    End Using
 
                 trans.Commit()
                 success = True
@@ -284,6 +289,8 @@ Public Class Addon
     End Function
 
     Private Sub ClearAllQuantities()
+
+
         ' Reset all quantities
         For i As Integer = 0 To 14
             selectedQuantities(i) = 0
@@ -296,17 +303,22 @@ Public Class Addon
         Next
 
         ' Reset totals
-        addedItemsTotal = 0
-        If Session.fromProduct Then
-            total = 0
+
+        If Session.fromProduct = False Then
+
+
+            addedItemsTotal = planPrice
+
         Else
-            total = planPrice
+            addedItemsTotal = 0
         End If
-        txtTotal.Text = "Php " & total.ToString("F2")
-        TextBox3.Text = "Php " & total.ToString("F2")
+        ' txtTotal.Text = "Php " & total.ToString("F2")
+        TextBox3.Text = "Php " & addedItemsTotal.ToString("F2")
     End Sub
 
+
     Private Sub Addon_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
 
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
             HelpToolStripMenuItem.Visible = False
@@ -337,13 +349,12 @@ Public Class Addon
                 Return
             End If
         End If
-
+        Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
         If Session.fromProduct Then
             pbxPlanImage.Visible = False
             btnPrevious.Visible = False
             btnNext.Visible = False
             Dim skylinkProduct As New Label()
-            Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
             total = cartTotal
             txtTotal.Text = "Php " & total.ToString("F2")
             skylinkProduct.Size = New Size(600, 100)
@@ -352,13 +363,21 @@ Public Class Addon
             skylinkProduct.Location = New Point(15, 50)
             skylinkProduct.ForeColor = Color.White
             Me.Controls.Add(skylinkProduct)
-        ElseIf Session.IsNewSubscription Then
-            total += planPrice
+        ElseIf Session.IsNewSubscription = True Then
+            total = planPrice + cartTotal
             txtTotal.Text = "Php " & total.ToString("F2")
+            TextBox3.Text = "Php " & total.ToString("F2")
             pbxPlanImage.Image = imageRcv
             lblName.Text = "Plan: " & planName
             lblType.Text = "Type: " & planType
             lblPrice.Text = "Price: " & planPrice.ToString("F2")
+
+        ElseIf Session.userRole = "Subscriber" Then
+            total = cartTotal
+            btnPrevious.Visible = True
+            btnNext.Visible = True
+            txtTotal.Text = "Php " & total.ToString("F2")
+
         End If
 
         pageHandling()
@@ -489,10 +508,22 @@ Public Class Addon
         End If
 
         ' Confirm purchase
-        Dim confirmResult As DialogResult = MessageBox.Show($"Confirm purchase of items totaling Php {total:F2}?",
-                                                   "Confirm Purchase",
-                                                   MessageBoxButtons.YesNo,
-                                                   MessageBoxIcon.Question)
+        Dim confirmResult As DialogResult
+
+        If Session.fromProduct = True Then
+
+            confirmResult = MessageBox.Show($"Confirm purchase of items totaling Php {addedItemsTotal:F2}?",
+                                              "Confirm Purchase",
+                                              MessageBoxButtons.YesNo,
+                                              MessageBoxIcon.Question)
+        Else
+
+            confirmResult = MessageBox.Show($"Confirm purchase of items totaling Php {planPrice + addedItemsTotal:F2}?",
+                                              "Confirm Purchase",
+                                              MessageBoxButtons.YesNo,
+                                              MessageBoxIcon.Question)
+        End If
+
 
         If confirmResult = DialogResult.Yes Then
             Dim purchaseSuccess As Boolean = False
@@ -500,7 +531,9 @@ Public Class Addon
             If Session.IsNewSubscription Then
                 ' This is a new subscription purchase (plan + addons)
                 purchaseSuccess = PurchaseSubscriptionWithAddons()
-            ElseIf Session.fromProduct Then
+                Session.userRole = "Subscriber"
+
+            ElseIf Session.fromProduct = True Then
                 ' Buying addons directly (from Products tab)
                 purchaseSuccess = PurchaseAddonsDirectly()
             Else
@@ -701,6 +734,8 @@ Public Class Addon
         If hasItems Then
             If failedItems.Count = 0 Then
                 MessageBox.Show($"All {successCount} items added to cart successfully!" & vbCrLf & "Added Php " & addedItemsTotal.ToString("F2") & " to your total.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                total += addedItemsTotal
+                txtTotal.Text = "Php " & total.ToString("F2")
                 ClearAllQuantities() ' Clear after successful cart addition
             Else
                 MessageBox.Show("Some items failed to add to cart: " & String.Join(", ", failedItems),
@@ -733,14 +768,7 @@ Public Class Addon
     End Function
 
     Private Sub CartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles cartbutton.Click
-        Session.CheckTransactionTimeout()
 
-        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False Then
-            MessageBox.Show("Your session has expired. Please select a plan again.", "Session Expired", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Subscription.Show()
-            Me.Close()
-            Return
-        End If
 
         Cart.Show()
         Me.Close()
@@ -752,13 +780,26 @@ Public Class Addon
     End Sub
 
     Private Sub HomeToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem1.Click
-        Main.Show()
+
+
+        If Session.userRole = "Subscriber" Then
+
+            subscribers.Show()
+        Else
+            Main.Show()
+
+        End If
+
         Me.Close()
 
     End Sub
 
     Private Sub TicketToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketToolStripMenuItem.Click
         Tickets.Show()
+
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
 
     End Sub
 End Class

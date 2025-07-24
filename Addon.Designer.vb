@@ -76,6 +76,7 @@ Partial Class Addon
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.MenuStrip1.SuspendLayout()
         Me.gbxProduct1.SuspendLayout()
         Me.gbxProduct2.SuspendLayout()
@@ -122,7 +123,7 @@ Partial Class Addon
         'TicketToolStripMenuItem
         '
         Me.TicketToolStripMenuItem.Name = "TicketToolStripMenuItem"
-        Me.TicketToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
+        Me.TicketToolStripMenuItem.Size = New System.Drawing.Size(131, 26)
         Me.TicketToolStripMenuItem.Text = "Ticket"
         '
         'cartbutton
@@ -546,7 +547,7 @@ Partial Class Addon
         'txtTotal
         '
         Me.txtTotal.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTotal.Location = New System.Drawing.Point(625, 54)
+        Me.txtTotal.Location = New System.Drawing.Point(413, 85)
         Me.txtTotal.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtTotal.Name = "txtTotal"
         Me.txtTotal.ReadOnly = True
@@ -556,14 +557,14 @@ Partial Class Addon
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(551, 54)
+        Me.Label1.Location = New System.Drawing.Point(449, 62)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(67, 24)
+        Me.Label1.Size = New System.Drawing.Size(112, 21)
         Me.Label1.TabIndex = 64
-        Me.Label1.Text = "Total:"
+        Me.Label1.Text = "Total in cart"
         '
         'btnPrevious
         '
@@ -651,10 +652,23 @@ Partial Class Addon
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(312, 85)
+        Me.TextBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox3.Location = New System.Drawing.Point(626, 85)
         Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(100, 22)
+        Me.TextBox3.Size = New System.Drawing.Size(177, 24)
         Me.TextBox3.TabIndex = 68
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(689, 61)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(53, 21)
+        Me.Label2.TabIndex = 69
+        Me.Label2.Text = "Total"
         '
         'Addon
         '
@@ -662,6 +676,7 @@ Partial Class Addon
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(815, 450)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.TextBox2)
@@ -768,4 +783,5 @@ Partial Class Addon
     Friend WithEvents cartbutton As ToolStripMenuItem
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents TicketToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Label2 As Label
 End Class

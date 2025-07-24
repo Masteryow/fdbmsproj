@@ -15,7 +15,7 @@ Public Class subscribers
 
     Private Sub subscribers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         receivID = Session.SubscriberId
-
+        TextBox1.Text = receivID
         lblUser.Text = ""         ' Clear label before animation
         increment = 0             ' Reset increment
         Timer1.Interval = 100     ' Set interval (milliseconds)
@@ -97,6 +97,7 @@ Public Class subscribers
     End Sub
 
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
+        Session.fromProduct = False
         Addon.Show()
         Me.Close()
     End Sub

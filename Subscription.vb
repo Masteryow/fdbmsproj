@@ -135,6 +135,7 @@ Public Class Subscription
                             Session.fromProduct = False
                             If addons = DialogResult.Yes Then
                                 Session.fromProduct = False
+
                                 navigatingAway = True
                                 Addon.Show()
                                 Me.Close()
@@ -224,7 +225,8 @@ Public Class Subscription
 
                                 Session.userRole = "Subscriber"
 
-
+                                subscribers.Show()
+                                Me.Close()
 
                                 transaction.Commit()
 
