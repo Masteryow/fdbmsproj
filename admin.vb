@@ -1059,7 +1059,7 @@ Public Class Admin
 
         ' Salary DataGridView
         Dim dgvSalaries As New DataGridView With {
-        .Location = New Point(20, 120),
+        .Location = New Point(20, 80),
         .Size = New Size(400, 200),
         .AllowUserToAddRows = False,
         .AllowUserToDeleteRows = False,
@@ -1070,17 +1070,17 @@ Public Class Admin
 
 
         ' Action Buttons (update Y positions to accommodate new button)
-        Dim btnPaySelected As New Button With {.Text = "Pay Selected", .Location = New Point(20, 315), .Size = New Size(100, 25), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        Dim btnPaySelected As New Button With {.Text = "Pay Selected", .Location = New Point(20, 285), .Size = New Size(100, 25), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnPaySelected.FlatAppearance.BorderSize = 0
 
-        Dim btnPayAll As New Button With {.Text = "Pay All Unpaid", .Location = New Point(130, 315), .Size = New Size(100, 25), .BackColor = Color.FromArgb(231, 76, 60), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        Dim btnPayAll As New Button With {.Text = "Pay All Unpaid", .Location = New Point(125, 285), .Size = New Size(100, 25), .BackColor = Color.FromArgb(231, 76, 60), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnPayAll.FlatAppearance.BorderSize = 0
 
-        Dim btnRefreshSalaries As New Button With {.Text = "Refresh", .Location = New Point(240, 315), .Size = New Size(70, 25), .BackColor = Color.FromArgb(52, 152, 219), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        Dim btnRefreshSalaries As New Button With {.Text = "Refresh", .Location = New Point(230, 285), .Size = New Size(70, 25), .BackColor = Color.FromArgb(52, 152, 219), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnRefreshSalaries.FlatAppearance.BorderSize = 0
 
         ' Back Button
-        Dim btnBack As New Button With {.Text = "Back to Technicians", .Location = New Point(320, 315), .Size = New Size(120, 25), .BackColor = Color.FromArgb(149, 165, 166), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        Dim btnBack As New Button With {.Text = "Back to Technicians", .Location = New Point(305, 285), .Size = New Size(115, 25), .BackColor = Color.FromArgb(149, 165, 166), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnBack.FlatAppearance.BorderSize = 0
 
         ' Variables to track current filters
