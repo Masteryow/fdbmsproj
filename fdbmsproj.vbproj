@@ -212,6 +212,12 @@
     <Compile Include="TechnicianPanel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TechnicianSalary.Designer.vb">
+      <DependentUpon>TechnicianSalary.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TechnicianSalary.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Tickets.Designer.vb">
       <DependentUpon>Tickets.vb</DependentUpon>
     </Compile>
@@ -258,6 +264,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TechnicianPanel.resx">
       <DependentUpon>TechnicianPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechnicianSalary.resx">
+      <DependentUpon>TechnicianSalary.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tickets.resx">
       <DependentUpon>Tickets.vb</DependentUpon>

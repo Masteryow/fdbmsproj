@@ -25,11 +25,11 @@ Partial Class Main
         Me.components = New System.ComponentModel.Container()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SubscriptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SubscriptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.lblUser = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
@@ -40,12 +40,12 @@ Partial Class Main
         '
         Me.MenuStrip1.BackColor = System.Drawing.Color.Transparent
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.ToolStripMenuItem1, Me.ProductsToolStripMenuItem, Me.HelpToolStripMenuItem, Me.HomeToolStripMenuItem1})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.HelpToolStripMenuItem, Me.ToolStripMenuItem1, Me.ProductsToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.HomeToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(815, 30)
+        Me.MenuStrip1.Size = New System.Drawing.Size(815, 28)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -55,36 +55,36 @@ Partial Class Main
         Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(84, 24)
         Me.HomeToolStripMenuItem.Text = "About Us"
         '
-        'SubscriptionToolStripMenuItem
+        'HelpToolStripMenuItem
         '
-        Me.SubscriptionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
-        Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
-        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(55, 24)
-        Me.SubscriptionToolStripMenuItem.Text = "Help"
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
+        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(152, 26)
+        Me.HelpToolStripMenuItem.Text = "Help"
         '
         'TicketsToolStripMenuItem
         '
         Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
         Me.TicketsToolStripMenuItem.Text = "Tickets"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(50, 24)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(50, 26)
         Me.ToolStripMenuItem1.Text = "Cart"
         '
         'ProductsToolStripMenuItem
         '
         Me.ProductsToolStripMenuItem.Name = "ProductsToolStripMenuItem"
-        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(80, 24)
+        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(80, 26)
         Me.ProductsToolStripMenuItem.Text = "Products"
         '
-        'HelpToolStripMenuItem
+        'SubscriptionToolStripMenuItem
         '
-        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(105, 24)
-        Me.HelpToolStripMenuItem.Text = "Subscription"
+        Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
+        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(105, 26)
+        Me.SubscriptionToolStripMenuItem.Text = "Subscription"
         '
         'HomeToolStripMenuItem1
         '
@@ -124,9 +124,9 @@ Partial Class Main
 
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents HomeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SubscriptionToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SubscriptionToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HomeToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents lblUser As Label
     Friend WithEvents Timer1 As Timer

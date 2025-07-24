@@ -307,6 +307,11 @@ Public Class Addon
     End Sub
 
     Private Sub Addon_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
+            HelpToolStripMenuItem.Visible = False
+        End If
+
         Session.CheckTransactionTimeout()
 
         If Not Session.IsTransactionActive AndAlso Session.fromProduct = False AndAlso Session.IsNewSubscription = False Then
@@ -612,6 +617,9 @@ Public Class Addon
                     cmd.ExecuteNonQuery()
                 End Using
 
+
+
+
                 trans.Commit()
                 success = True
 
@@ -738,9 +746,20 @@ Public Class Addon
         Me.Close()
     End Sub
 
-    Private Sub HelpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem.Click
+    Private Sub HelpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubscriptionToolStripMenuItem.Click
         Subscription.Show()
         Me.Close()
+    End Sub
+
+    Private Sub HomeToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem1.Click
+        Main.Show()
+        Me.Close()
+
+    End Sub
+
+    Private Sub TicketToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketToolStripMenuItem.Click
+        Tickets.Show()
+
     End Sub
 End Class
 

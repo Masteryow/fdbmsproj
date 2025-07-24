@@ -24,10 +24,10 @@ Partial Class Subscription
     Private Sub InitializeComponent()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SubscriptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnCart = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SubscriptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -35,7 +35,7 @@ Partial Class Subscription
         Me.btnSubscribe = New System.Windows.Forms.Button()
         Me.txtSpecs = New System.Windows.Forms.TextBox()
         Me.pbxPlan = New System.Windows.Forms.PictureBox()
-        Me.btnCart = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TicketToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.pbxPlan, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -44,7 +44,7 @@ Partial Class Subscription
         '
         Me.MenuStrip1.BackColor = System.Drawing.Color.Transparent
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.btnCart, Me.ProductsToolStripMenuItem, Me.HelpToolStripMenuItem, Me.HomeToolStripMenuItem1})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.HelpToolStripMenuItem, Me.btnCart, Me.ProductsToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.HomeToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
@@ -55,24 +55,25 @@ Partial Class Subscription
         '
         'HomeToolStripMenuItem
         '
-        Me.HomeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
         Me.HomeToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
         Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(84, 24)
         Me.HomeToolStripMenuItem.Text = "About Us"
         '
-        'TicketsToolStripMenuItem
+        'HelpToolStripMenuItem
         '
-        Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
-        Me.TicketsToolStripMenuItem.Text = "Tickets"
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketToolStripMenuItem})
+        Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(55, 24)
+        Me.HelpToolStripMenuItem.Text = "Help"
         '
-        'SubscriptionToolStripMenuItem
+        'btnCart
         '
-        Me.SubscriptionToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
-        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(55, 24)
-        Me.SubscriptionToolStripMenuItem.Text = "Help"
+        Me.btnCart.ForeColor = System.Drawing.Color.White
+        Me.btnCart.Name = "btnCart"
+        Me.btnCart.Size = New System.Drawing.Size(50, 24)
+        Me.btnCart.Text = "Cart"
         '
         'ProductsToolStripMenuItem
         '
@@ -81,12 +82,12 @@ Partial Class Subscription
         Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(80, 24)
         Me.ProductsToolStripMenuItem.Text = "Products"
         '
-        'HelpToolStripMenuItem
+        'SubscriptionToolStripMenuItem
         '
-        Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(105, 24)
-        Me.HelpToolStripMenuItem.Text = "Subscription"
+        Me.SubscriptionToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
+        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(105, 24)
+        Me.SubscriptionToolStripMenuItem.Text = "Subscription"
         '
         'HomeToolStripMenuItem1
         '
@@ -157,12 +158,11 @@ Partial Class Subscription
         Me.pbxPlan.TabIndex = 18
         Me.pbxPlan.TabStop = False
         '
-        'btnCart
+        'TicketToolStripMenuItem
         '
-        Me.btnCart.ForeColor = System.Drawing.Color.White
-        Me.btnCart.Name = "btnCart"
-        Me.btnCart.Size = New System.Drawing.Size(50, 24)
-        Me.btnCart.Text = "Cart"
+        Me.TicketToolStripMenuItem.Name = "TicketToolStripMenuItem"
+        Me.TicketToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
+        Me.TicketToolStripMenuItem.Text = "Ticket"
         '
         'Subscription
         '
@@ -190,10 +190,9 @@ Partial Class Subscription
 
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents HomeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents TicketsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SubscriptionToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SubscriptionToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HomeToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
@@ -202,4 +201,5 @@ Partial Class Subscription
     Friend WithEvents btnSubscribe As Button
     Friend WithEvents txtSpecs As TextBox
     Friend WithEvents btnCart As ToolStripMenuItem
+    Friend WithEvents TicketToolStripMenuItem As ToolStripMenuItem
 End Class

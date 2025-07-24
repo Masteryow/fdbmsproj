@@ -20,6 +20,11 @@ Public Class Cart
     Dim deletionMode = False
 
     Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
+
+        If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
+            HelpToolStripMenuItem.Visible = False
+        End If
+
         DisplayPlanDetails()             ' Show selected plan if exists
         LoadCartFromDatabase()          ' Load actual cart items from DB
         RefreshCartDisplay()            ' Display them in CheckedListBox
@@ -729,5 +734,33 @@ Public Class Cart
     End Sub
 
     Private Sub CheckedListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox1.SelectedIndexChanged
+    End Sub
+
+    Private Sub HomeToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem1.Click
+        Main.Show()
+        Me.Close()
+
+    End Sub
+
+    Private Sub HelpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubscriptionToolStripMenuItem.Click
+        Subscription.Show()
+        Me.Close()
+
+    End Sub
+
+    Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
+        Addon.Show()
+        Me.Close()
+
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+
+    End Sub
+
+    Private Sub TicketToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketToolStripMenuItem.Click
+        Tickets.Show()
+        Me.Close()
+
     End Sub
 End Class

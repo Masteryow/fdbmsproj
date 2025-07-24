@@ -50,6 +50,7 @@ Partial Class Supervisor_Panel
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.cbxTechName = New System.Windows.Forms.ComboBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -65,6 +66,7 @@ Partial Class Supervisor_Panel
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.DarkSlateBlue
+        Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Location = New System.Drawing.Point(-10, 27)
         Me.Panel1.Name = "Panel1"
@@ -346,6 +348,18 @@ Partial Class Supervisor_Panel
         Me.cbxTechName.Size = New System.Drawing.Size(272, 29)
         Me.cbxTechName.TabIndex = 4
         '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.MidnightBlue
+        Me.Button1.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Location = New System.Drawing.Point(793, 12)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(191, 33)
+        Me.Button1.TabIndex = 3
+        Me.Button1.Text = "Salary Assignment"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
         'Supervisor_Panel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -395,4 +409,5 @@ Partial Class Supervisor_Panel
     Friend WithEvents Label9 As Label
     Friend WithEvents txtStatus As TextBox
     Friend WithEvents btnAssign As Button
+    Friend WithEvents Button1 As Button
 End Class

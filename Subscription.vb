@@ -18,6 +18,9 @@ Public Class Subscription
     Dim data_cap As String = ""
 
     Private Sub Subscription_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
+            HelpToolStripMenuItem.Visible = False
+        End If
         Interactive_Menu(id)
     End Sub
 
@@ -219,6 +222,10 @@ Public Class Subscription
                                     End Using
                                 End Using
 
+                                Session.userRole = "Subscriber"
+
+
+
                                 transaction.Commit()
 
                             Else
@@ -289,8 +296,15 @@ Public Class Subscription
             Session.EndTransaction(False)
         End If
 
-        Main.Show()
-        Me.Close()
+        If Session.userRole = "Subscriber" Then
+            subscribers.Show()
+            Me.Close()
+
+        Else
+            Main.Show()
+            Me.Close()
+        End If
+
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -334,5 +348,19 @@ Public Class Subscription
     Private Sub btnCart_Click(sender As Object, e As EventArgs) Handles btnCart.Click
         Cart.Show()
         Me.Close()
+    End Sub
+
+    Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
+        Addon.Show()
+        Me.Close()
+
+    End Sub
+
+    Private Sub HelpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub TicketToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketToolStripMenuItem.Click
+        Tickets.Show()
     End Sub
 End Class

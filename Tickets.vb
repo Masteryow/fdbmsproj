@@ -46,6 +46,10 @@ Public Class Tickets
     End Sub
     Private Sub Tickets_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
+            HelpToolStripMenuItem.Visible = False
+        End If
+
         Try
             Using conn As New MySqlConnection(con)
 
@@ -268,5 +272,9 @@ Public Class Tickets
         btnConfirm.Enabled = False
 
         status = ""
+    End Sub
+
+    Private Sub HomeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem.Click
+
     End Sub
 End Class
