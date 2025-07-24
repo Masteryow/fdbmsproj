@@ -19,7 +19,6 @@ Public Class Cart
     Dim itemTotal As Decimal
     Dim deletionMode = False
 
-    ' In Cart.vb
     Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
         DisplayPlanDetails()             ' Show selected plan if exists
         LoadCartFromDatabase()          ' Load actual cart items from DB
@@ -30,9 +29,15 @@ Public Class Cart
         btnDM.Visible = False
         btnClearCart.Visible = False
 
-        If Session.fromProduct = False Then
+        ' Handle different user types
+        If Session.fromProduct = False AndAlso Session.IsNewSubscription = False Then
+            ' Existing subscriber accessing cart
+            btnCancelOrder.Visible = False ' Don't show cancel for existing subscribers
+        ElseIf Session.fromProduct = False Then
+            ' New subscription flow
             btnCancelOrder.Visible = True
         Else
+            ' Products tab
             btnCancelOrder.Visible = False
         End If
     End Sub
@@ -87,30 +92,50 @@ Public Class Cart
     End Sub
 
     Private Sub DisplayPlanDetails()
-        ' Display plan information if coming from a plan selection
-        If Not Session.fromProduct AndAlso Not String.IsNullOrEmpty(Session.planName) Then
-            ' You can add plan details to a label or at the top of the CheckedListBox
+        ' Display plan information if coming from a plan selection (new subscribers only)
+        If Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Not String.IsNullOrEmpty(Session.planName) Then
             Dim planInfo As String = $"Selected Plan: {Session.planName} - {Session.planType} - Php {Session.planPrice:F2}"
-
-            ' If you have a label for plan details, uncomment this:
-            ' lblPlanDetails.Text = planInfo
-
-            ' Or add it as the first item in CheckedListBox (non-selectable)
             CheckedListBox1.Items.Add($"PLAN: {Session.planName} - {Session.planType} - Php {Session.planPrice:F2}")
             CheckedListBox1.SetItemCheckState(0, CheckState.Indeterminate) ' Make it non-selectable
+        ElseIf Not Session.fromProduct AndAlso Not Session.IsNewSubscription AndAlso Session.SubscriberId > 0 Then
+            ' Existing subscriber - show their current plan info
+            Try
+                Using con As New MySqlConnection(strCon)
+                    con.Open()
+                    Dim query As String = "SELECT ip.plan_name, ip.plan_type, ip.price " &
+                                     "FROM subscribers s " &
+                                     "JOIN internet_plans ip ON s.plan_id = ip.plan_id " &
+                                     "WHERE s.subscriber_id = @subscriberId"
+                    Using cmd As New MySqlCommand(query, con)
+                        cmd.Parameters.AddWithValue("@subscriberId", Session.SubscriberId)
+                        Using reader As MySqlDataReader = cmd.ExecuteReader()
+                            If reader.Read() Then
+                                Dim currentPlan As String = $"Current Plan: {reader("plan_name")} - {reader("plan_type")} (Additional Add-ons Only)"
+                                CheckedListBox1.Items.Add(currentPlan)
+                                CheckedListBox1.SetItemCheckState(0, CheckState.Indeterminate)
+                            End If
+                        End Using
+                    End Using
+                End Using
+            Catch ex As Exception
+                ' If can't load plan info, just show generic message
+                CheckedListBox1.Items.Add("Current Subscriber - Add-ons Only")
+                CheckedListBox1.SetItemCheckState(0, CheckState.Indeterminate)
+            End Try
         End If
     End Sub
 
     Private Sub RefreshCartDisplay()
-        ' Clear only cart items, keep plan if it exists
+        ' Clear only cart items, keep plan/subscriber info if it exists
         Dim startIndex As Integer = 0
-        If Not Session.fromProduct AndAlso Not String.IsNullOrEmpty(Session.planName) Then
-            startIndex = 1 ' Keep the plan item
+        If (Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Not String.IsNullOrEmpty(Session.planName)) OrElse
+       (Not Session.fromProduct AndAlso Not Session.IsNewSubscription AndAlso Session.SubscriberId > 0) Then
+            startIndex = 1 ' Keep the plan/subscriber info item
         Else
             CheckedListBox1.Items.Clear()
         End If
 
-        ' Remove only cart items, not the plan
+        ' Remove only cart items, not the plan/subscriber info
         For i As Integer = CheckedListBox1.Items.Count - 1 To startIndex Step -1
             CheckedListBox1.Items.RemoveAt(i)
         Next
@@ -125,10 +150,11 @@ Public Class Cart
     Private Sub UpdateTotal()
         Dim total As Decimal = 0
 
-        ' Add plan price if applicable
-        If Not Session.fromProduct AndAlso Session.planPrice > 0 Then
+        ' Add plan price only for new subscriptions
+        If Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Session.planPrice > 0 Then
             total += Session.planPrice
         End If
+        ' For existing subscribers, don't add plan price - they're only buying addons
 
         ' Add cart items total
         For Each item In cartItems
@@ -142,10 +168,11 @@ Public Class Cart
     Public Function GetCartTotal() As Decimal
         Dim cartTotal As Decimal = 0
 
-        ' Add plan price if applicable
-        If Not Session.fromProduct AndAlso Session.planPrice > 0 Then
+        ' Add plan price only for new subscriptions
+        If Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Session.planPrice > 0 Then
             cartTotal += Session.planPrice
         End If
+        ' For existing subscribers, don't add plan price
 
         ' Add cart items total
         For Each item In cartItems
@@ -156,23 +183,26 @@ Public Class Cart
     End Function
 
     Private Sub RemoveSelectedItems()
-        ' Check transaction validity before modifying cart
-        Session.CheckTransactionTimeout()
-        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False Then
-            MessageBox.Show("Session expired. Please select a plan again.")
-            ReturnToPlanSelection()
-            Return
+        ' Check transaction validity only for new subscriptions
+        If Session.IsNewSubscription Then
+            Session.CheckTransactionTimeout()
+            If Not Session.IsTransactionActive Then
+                MessageBox.Show("Session expired. Please select a plan again.")
+                ReturnToPlanSelection()
+                Return
+            End If
         End If
 
         Dim itemsToRemove As New List(Of Integer)
         Dim startIndex As Integer = 0
 
-        ' Skip plan item if it exists
-        If Not Session.fromProduct AndAlso Not String.IsNullOrEmpty(Session.planName) Then
+        ' Skip plan/subscriber info item if it exists
+        If (Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Not String.IsNullOrEmpty(Session.planName)) OrElse
+       (Not Session.fromProduct AndAlso Not Session.IsNewSubscription AndAlso Session.SubscriberId > 0) Then
             startIndex = 1
         End If
 
-        ' Get selected items (skip plan item)
+        ' Get selected items (skip plan/subscriber info item)
         For i As Integer = startIndex To CheckedListBox1.Items.Count - 1
             If CheckedListBox1.GetItemCheckState(i) = CheckState.Checked Then
                 itemsToRemove.Add(i - startIndex) ' Adjust index for cartItems list
@@ -210,12 +240,14 @@ Public Class Cart
     End Sub
 
     Public Sub ClearCart()
-        ' Check transaction validity before clearing cart
-        Session.CheckTransactionTimeout()
-        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False Then
-            MessageBox.Show("Session expired. Please select a plan again.")
-            ReturnToPlanSelection()
-            Return
+        ' Check transaction validity only for new subscriptions
+        If Session.IsNewSubscription Then
+            Session.CheckTransactionTimeout()
+            If Not Session.IsTransactionActive Then
+                MessageBox.Show("Session expired. Please select a plan again.")
+                ReturnToPlanSelection()
+                Return
+            End If
         End If
 
         Try
@@ -230,7 +262,7 @@ Public Class Cart
 
             cartItems.Clear()
             CheckedListBox1.Items.Clear()
-            DisplayPlanDetails() ' Re-add plan if applicable
+            DisplayPlanDetails() ' Re-add plan/subscriber info if applicable
             UpdateTotal()
             MessageBox.Show("Cart cleared!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -293,14 +325,17 @@ Public Class Cart
             Return
         End If
 
-        Session.CheckTransactionTimeout()
-        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False Then
-            MessageBox.Show("Session expired. Please select a plan again.")
-            ReturnToPlanSelection()
-            Return
+        ' Only check transaction for new subscriptions
+        If Session.IsNewSubscription Then
+            Session.CheckTransactionTimeout()
+            If Not Session.IsTransactionActive Then
+                MessageBox.Show("Session expired. Please select a plan again.")
+                ReturnToPlanSelection()
+                Return
+            End If
         End If
 
-        If cartItems.Count = 0 AndAlso (Session.fromProduct OrElse Session.planPrice = 0) Then
+        If cartItems.Count = 0 AndAlso (Session.fromProduct OrElse (Not Session.IsNewSubscription AndAlso Session.planPrice = 0)) Then
             MessageBox.Show("Your cart is empty!", "Empty Cart", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
@@ -331,31 +366,82 @@ Public Class Cart
         If Session.fromProduct Then
             ' Direct product purchase
             purchaseSuccess = ProcessDirectPurchase()
-        Else
+        ElseIf Session.IsNewSubscription Then
             ' Plan with addons purchase
             purchaseSuccess = ProcessPlanWithAddonsPurchase()
+        Else
+            ' Existing subscriber buying addons
+            purchaseSuccess = ProcessAddonsForExistingSubscriber()
         End If
 
         If purchaseSuccess Then
             Dim change As Decimal = paymentAmount - totalAmount
             Dim resultMessage As String = "Payment successful!" & vbCrLf &
-                                         $"Total: Php {totalAmount:F2}" & vbCrLf &
-                                         $"Payment: Php {paymentAmount:F2}" & vbCrLf &
-                                         $"Change: Php {change:F2}" & vbCrLf &
-                                         "Thank you for your purchase!"
+                                     $"Total: Php {totalAmount:F2}" & vbCrLf &
+                                     $"Payment: Php {paymentAmount:F2}" & vbCrLf &
+                                     $"Change: Php {change:F2}" & vbCrLf &
+                                     "Thank you for your purchase!"
 
             MessageBox.Show(resultMessage, "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             ' Payment successful - complete transaction and clear cart
-            Session.EndTransaction(True)
+            If Session.IsNewSubscription Then
+                Session.EndTransaction(True)
+            End If
             ClearCartAfterPurchase()
-
-            ' Navigate back to main menu or close
+            ' Close cart form and return to plan selection or product view
             Me.Close()
         Else
             MessageBox.Show("Purchase failed. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
+
+    Private Function ProcessAddonsForExistingSubscriber() As Boolean
+        Dim success As Boolean = False
+        Dim con As New MySqlConnection(strCon)
+        Dim trans As MySqlTransaction = Nothing
+
+        Try
+            con.Open()
+            trans = con.BeginTransaction()
+
+            ' Insert each cart item into customer_addons for existing subscriber
+            For Each item In cartItems
+                Dim insertQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) " &
+                                       "VALUES (@customerId, @addonId, @quantity, NOW())"
+                Using cmd As New MySqlCommand(insertQuery, con, trans)
+                    cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                    cmd.Parameters.AddWithValue("@addonId", item.AddonId)
+                    cmd.Parameters.AddWithValue("@quantity", item.Quantity)
+                    cmd.ExecuteNonQuery()
+                End Using
+            Next
+
+            ' Clear shopping cart after successful purchase
+            Dim clearCartQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"
+            Using cmd As New MySqlCommand(clearCartQuery, con, trans)
+                cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                cmd.ExecuteNonQuery()
+            End Using
+
+            trans.Commit()
+            success = True
+
+        Catch ex As Exception
+            MessageBox.Show("Error during addon purchase: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If trans IsNot Nothing Then
+                Try
+                    trans.Rollback()
+                Catch rollEx As Exception
+                    MessageBox.Show("Rollback failed: " & rollEx.Message)
+                End Try
+            End If
+        Finally
+            con.Close()
+        End Try
+
+        Return success
+    End Function
 
     Private Function ProcessDirectPurchase() As Boolean
         ' Process direct addon purchases (from Products tab)
@@ -529,8 +615,8 @@ Public Class Cart
     Private isProgrammaticClose As Boolean = False
 
     Private Sub form_closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        ' Explicitly cancel the transaction
-        If Session.fromProduct = False Then
+        ' Only clear cart and end transaction for new subscriptions
+        If Session.IsNewSubscription Then
             Try
                 Using con As New MySqlConnection(strCon)
                     con.Open()

@@ -183,10 +183,39 @@ Public Class Subscription
                                     Using fetchSubId As MySqlDataReader = getSubID.ExecuteReader
 
                                         While fetchSubId.Read
-
                                             Session.SubscriberId = fetchSubId.GetInt32("subscriber_id")
-
                                         End While
+                                    End Using
+
+                                    ' Insert billing record
+                                    Dim billingMonth As Date = Date.Today
+                                    Dim dueDate As Date = billingMonth.AddDays(7)
+                                    Dim totalAmount As Decimal = Decimal.Parse(price)
+
+                                    Using billingCmd As New MySqlCommand("INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date)
+                                      VALUES (@sid, @month, @amount, @due)", con)
+                                        billingCmd.Transaction = transaction
+                                        billingCmd.Parameters.AddWithValue("@sid", Session.SubscriberId)
+                                        billingCmd.Parameters.AddWithValue("@month", billingMonth)
+                                        billingCmd.Parameters.AddWithValue("@amount", totalAmount)
+                                        billingCmd.Parameters.AddWithValue("@due", dueDate)
+                                        billingCmd.ExecuteNonQuery()
+                                    End Using
+
+                                    Dim billingId As Integer
+                                    Using getBillingId As New MySqlCommand("SELECT LAST_INSERT_ID()", con)
+                                        getBillingId.Transaction = transaction
+                                        billingId = CInt(getBillingId.ExecuteScalar())
+                                    End Using
+
+                                    ' Insert payment
+                                    Using paymentCmd As New MySqlCommand("INSERT INTO payments (billing_id, amount, payment_date)
+                                      VALUES (@bid, @amount, @payDate)", con)
+                                        paymentCmd.Transaction = transaction
+                                        paymentCmd.Parameters.AddWithValue("@bid", billingId)
+                                        paymentCmd.Parameters.AddWithValue("@amount", totalAmount)
+                                        paymentCmd.Parameters.AddWithValue("@payDate", Date.Today)
+                                        paymentCmd.ExecuteNonQuery()
                                     End Using
                                 End Using
 

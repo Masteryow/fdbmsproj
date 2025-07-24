@@ -77,13 +77,19 @@ Public Class Addon
         Next
     End Sub
 
+    ' Modified RecalculateTotal method to handle existing subscribers properly
     Private Sub RecalculateTotal()
-        ' Calculate total from base plan price and all selected quantities
+        ' Calculate total based on user type and context
         If Session.fromProduct Then
+            ' From Products tab - show cart total from database
             Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
             total = cartTotal
-        Else
+        ElseIf Session.IsNewSubscription Then
+            ' New subscription - include plan price + addons
             total = planPrice
+        Else
+            ' Existing subscriber viewing addons - start with 0 (no plan price)
+            total = 0
         End If
 
         ' Add all addon quantities across all pages
@@ -303,11 +309,28 @@ Public Class Addon
     Private Sub Addon_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Session.CheckTransactionTimeout()
 
-        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False Then
-            MessageBox.Show("Your session has expired. Please select a plan again.", "Session Expired", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Subscription.Show()
-            Me.Close()
-            Return
+        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False AndAlso Session.IsNewSubscription = False Then
+            ' Check if user is an existing subscriber
+            If Session.SubscriberId > 0 Then
+                ' Existing subscriber - allow them to view addons
+                pbxPlanImage.Visible = False
+                btnPrevious.Visible = True
+                btnNext.Visible = True
+
+                Dim skylinkProduct As New Label()
+                skylinkProduct.Size = New Size(600, 100)
+                skylinkProduct.Font = New Font("Tahoma", 25, FontStyle.Bold)
+                skylinkProduct.Text = "SkyLink Add-ons"
+                skylinkProduct.Location = New Point(15, 50)
+                skylinkProduct.ForeColor = Color.White
+                Me.Controls.Add(skylinkProduct)
+            Else
+                ' No active session and not a subscriber
+                MessageBox.Show("Your session has expired. Please select a plan again.", "Session Expired", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Subscription.Show()
+                Me.Close()
+                Return
+            End If
         End If
 
         If Session.fromProduct Then
@@ -324,7 +347,7 @@ Public Class Addon
             skylinkProduct.Location = New Point(15, 50)
             skylinkProduct.ForeColor = Color.White
             Me.Controls.Add(skylinkProduct)
-        Else
+        ElseIf Session.IsNewSubscription Then
             total += planPrice
             txtTotal.Text = "Php " & total.ToString("F2")
             pbxPlanImage.Image = imageRcv
@@ -369,6 +392,73 @@ Public Class Addon
         RecalculateTotal()
     End Sub
 
+    Private Function PurchaseAddonsForExistingSubscriber() As Boolean
+        Dim success As Boolean = False
+        Dim conStr As String = "server=localhost; userid=root; database=fdbmsproject"
+        Dim con As New MySqlConnection(conStr)
+        Dim trans As MySqlTransaction = Nothing
+
+        Dim decPayment As Decimal = 0
+        Dim strPayment As String = InputBox("Please enter your money:", "Payment", "0.00")
+
+        If Decimal.TryParse(strPayment, decPayment) Then
+            If decPayment > addedItemsTotal Then
+                Dim change As Decimal = decPayment - addedItemsTotal
+                MsgBox($"Thank you for purchasing! Here is your change: Php {change.ToString("f2")}")
+            ElseIf decPayment = addedItemsTotal Then
+                MsgBox($"Thank you for purchasing!")
+            ElseIf decPayment < addedItemsTotal Then
+                MsgBox("Insufficient money, please try again!")
+                Return False
+            End If
+
+            Try
+                con.Open()
+                trans = con.BeginTransaction()
+
+                ' Process all selected addon items - only insert into customer_addons
+                For addonIndex As Integer = 0 To 14 ' 0-14 for addons 1-15
+                    Dim quantity As Integer = selectedQuantities(addonIndex)
+                    If quantity > 0 Then
+                        Dim actualAddonId As Integer = addonIndex + 1 ' addon_ids are 1-15
+
+                        ' Insert addon purchase for existing subscriber
+                        Dim insertAddonQuery As String = "
+                INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) 
+                VALUES (@custId, @addonId, @qty, NOW())"
+                        Dim addonCmd As New MySqlCommand(insertAddonQuery, con, trans)
+                        addonCmd.Parameters.AddWithValue("@custId", Session.UserId)
+                        addonCmd.Parameters.AddWithValue("@addonId", actualAddonId)
+                        addonCmd.Parameters.AddWithValue("@qty", quantity)
+                        addonCmd.ExecuteNonQuery()
+
+                        Console.WriteLine($"Inserted addon for existing subscriber: ID={actualAddonId}, Qty={quantity}")
+                    End If
+                Next
+
+                trans.Commit()
+                success = True
+
+            Catch ex As Exception
+                MessageBox.Show("Error during addon purchase: " & ex.Message)
+                If trans IsNot Nothing Then
+                    Try
+                        trans.Rollback()
+                    Catch rollEx As Exception
+                        MessageBox.Show("Rollback failed: " & rollEx.Message)
+                    End Try
+                End If
+            Finally
+                con.Close()
+            End Try
+
+            Return success
+        Else
+            MsgBox("Please Enter A Valid Amount")
+            Return False
+        End If
+    End Function
+
     Private Sub btnBuyNow_Click(sender As Object, e As EventArgs) Handles btnBuyNow.Click
         ' Save current page quantities first
         SavePageQuantities()
@@ -395,10 +485,9 @@ Public Class Addon
 
         ' Confirm purchase
         Dim confirmResult As DialogResult = MessageBox.Show($"Confirm purchase of items totaling Php {total:F2}?",
-                                                       "Confirm Purchase",
-                                                       MessageBoxButtons.YesNo,
-                                                       MessageBoxIcon.Question)
-
+                                                   "Confirm Purchase",
+                                                   MessageBoxButtons.YesNo,
+                                                   MessageBoxIcon.Question)
 
         If confirmResult = DialogResult.Yes Then
             Dim purchaseSuccess As Boolean = False
@@ -406,12 +495,12 @@ Public Class Addon
             If Session.IsNewSubscription Then
                 ' This is a new subscription purchase (plan + addons)
                 purchaseSuccess = PurchaseSubscriptionWithAddons()
-
-
-
-            ElseIf Session.fromProduct = True Then
+            ElseIf Session.fromProduct Then
                 ' Buying addons directly (from Products tab)
                 purchaseSuccess = PurchaseAddonsDirectly()
+            Else
+                ' This is an existing subscriber buying addons from the subscription flow
+                purchaseSuccess = PurchaseAddonsForExistingSubscriber()
             End If
 
             If purchaseSuccess Then

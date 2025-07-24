@@ -97,85 +97,109 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
-
-    End Sub
-
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-
-
-        con.Open()
-        ' Modified query to also get the role
-        Dim getCredentials As New MySqlCommand("SELECT u.user_id, u.username, u.role, s.subscriber_id
+        Try
+            con.Open()
+            ' Modified query to also get the role and active status
+            Dim getCredentials As New MySqlCommand("SELECT u.user_id, u.username, u.role, u.is_active, s.subscriber_id
                                                 FROM users u LEFT JOIN subscribers s ON u.user_id = s.customer_id
                                                 WHERE username = @username AND password = @password", con)
-        getCredentials.Parameters.AddWithValue("@username", txtUsername.Text)
-        getCredentials.Parameters.AddWithValue("@password", txtPassword.Text)
-        Dim reader As MySqlDataReader = getCredentials.ExecuteReader()
+            getCredentials.Parameters.AddWithValue("@username", txtUsername.Text)
+            getCredentials.Parameters.AddWithValue("@password", txtPassword.Text)
+            Dim reader As MySqlDataReader = getCredentials.ExecuteReader()
 
-        If reader.Read() Then
-            Dim userId As Integer = reader.GetInt32("user_id")
-            Dim userName As String = reader("username").ToString
-            Dim userRole As String = reader("role").ToString
-            Dim subscriber_id As Integer
+            If reader.Read() Then
+                Dim userId As Integer = reader.GetInt32("user_id")
+                Dim userName As String = reader("username").ToString
+                Dim userRole As String = reader("role").ToString
+                Dim isActive As Boolean = reader.GetBoolean("is_active")
+                Dim subscriber_id As Integer
 
-            If reader.IsDBNull(reader.GetOrdinal("subscriber_id")) Then
-                subscriber_id = -1
-            Else
-                subscriber_id = reader.GetInt32("subscriber_id")
-            End If
-            ' Store user information in session
-            Session.UserId = userId
-            Session.UserName = userName
-            Session.UserRole = userRole ' You might want to add this to your Session class
-            Session.SubscriberId = subscriber_id
-            reader.Close()
+                If reader.IsDBNull(reader.GetOrdinal("subscriber_id")) Then
+                    subscriber_id = -1
+                Else
+                    subscriber_id = reader.GetInt32("subscriber_id")
+                End If
 
-            ' Redirect based on role
-            Select Case userRole.ToLower()
-                Case "admin"
-                    MsgBox("Login Successful")
-                    admin.Show()
-                    Me.Close()
+                reader.Close()
 
-                Case "technician"
+                ' Check if account is active
+                If Not isActive Then
+                    MessageBox.Show("Your account has been deactivated. Please contact the system administrator for assistance.",
+                              "Account Inactive",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Warning)
+                    con.Close()
+                    Return
+                End If
 
-                    Using getTechId As New MySqlCommand("SELECT t.technician_id, u.username FROM technicians t JOIN users u ON t.user_id = u.user_id WHERE u.user_id = @user_id", con)
-                        getTechId.Parameters.AddWithValue("@user_id", CInt(Session.UserId))
+                ' Store user information in session
+                Session.UserId = userId
+                Session.UserName = userName
+                Session.userRole = userRole
+                Session.SubscriberId = subscriber_id
 
-                        Using fetchTechID As MySqlDataReader = getTechId.ExecuteReader
+                ' Redirect based on role
+                Select Case userRole.ToLower()
+                    Case "admin"
+                        MessageBox.Show("Login Successful", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        Admin.Show()
+                        Me.Close()
 
-                            While fetchTechID.Read
+                    Case "technician"
+                        Using getTechId As New MySqlCommand("SELECT t.technician_id, u.username FROM technicians t JOIN users u ON t.user_id = u.user_id WHERE u.user_id = @user_id", con)
+                            getTechId.Parameters.AddWithValue("@user_id", CInt(Session.UserId))
 
-                                Session.technicianID = fetchTechID.GetInt32("technician_id")
-
-                            End While
+                            Using fetchTechID As MySqlDataReader = getTechId.ExecuteReader
+                                While fetchTechID.Read
+                                    Session.technicianID = fetchTechID.GetInt32("technician_id")
+                                End While
+                            End Using
                         End Using
+                        MessageBox.Show("Login Successful", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        TechnicianPanel.Show()
+                        Me.Close()
 
+                    Case "subscriber"
+                        MessageBox.Show("Login Successful", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        subscribers.Show()
+                        Me.Close()
 
+                    Case "customer"
+                        MessageBox.Show("Login Successful", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        Main.Show()
+                        Me.Close()
 
+                    Case "supervisor"
+                        MessageBox.Show("Login Successful", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        ' Add supervisor form here when created
+                        ' SupervisorPanel.Show()
+                        Me.Close()
 
-                    End Using
-                    MsgBox("Login Successful")
-                    TechnicianPanel.Show()
-                    Me.Close()
-                Case "subscriber"
-                    MsgBox("Login Successful")
-                    subscribers.Show()
-                    Me.Close()
-                Case "customer"
-                    MsgBox("Login Successful")
-                    Main.Show()
-                    Me.Close()
-            End Select
+                    Case Else
+                        MessageBox.Show("Invalid user role. Please contact the system administrator.",
+                                  "Access Denied",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Error)
+                End Select
 
-            Me.Close()
-        Else
-            MsgBox("Invalid username or password.")
-        End If
+            Else
+                MessageBox.Show("Invalid username or password. Please check your credentials and try again.",
+                          "Login Failed",
+                          MessageBoxButtons.OK,
+                          MessageBoxIcon.Error)
+            End If
 
-
-        con.Close()
+        Catch ex As Exception
+            MessageBox.Show("An error occurred during login: " & ex.Message,
+                      "Error",
+                      MessageBoxButtons.OK,
+                      MessageBoxIcon.Error)
+        Finally
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+        End Try
     End Sub
 
 
