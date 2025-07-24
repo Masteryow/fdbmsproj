@@ -33,9 +33,10 @@ Partial Class Form1
         Me.lblForgotPass = New System.Windows.Forms.Label()
         Me.lblNotMem = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -155,6 +156,16 @@ Partial Class Form1
         Me.Panel1.Size = New System.Drawing.Size(399, 453)
         Me.Panel1.TabIndex = 9
         '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(71, 245)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(122, 20)
+        Me.CheckBox1.TabIndex = 9
+        Me.CheckBox1.Text = "Remember Me!"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("Perpetua Titling MT", 19.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -168,15 +179,12 @@ Partial Class Form1
         'Timer1
         '
         '
-        'CheckBox1
+        'TextBox1
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(71, 245)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(122, 20)
-        Me.CheckBox1.TabIndex = 9
-        Me.CheckBox1.Text = "Remember Me!"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.TextBox1.Location = New System.Drawing.Point(158, 257)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(100, 22)
+        Me.TextBox1.TabIndex = 11
         '
         'Form1
         '
@@ -184,6 +192,7 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(815, 450)
+        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.Panel1)
@@ -210,4 +219,5 @@ Partial Class Form1
     Friend WithEvents Label1 As Label
     Friend WithEvents Timer1 As Timer
     Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents TextBox1 As TextBox
 End Class
