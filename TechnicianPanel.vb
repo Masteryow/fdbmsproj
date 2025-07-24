@@ -84,7 +84,7 @@ Public Class TechnicianPanel
                 Using cmd As New MySqlCommand("
                     SELECT CONCAT(cust.firstName, ' ', cust.lastName) AS fullName,
                            it.issue_name, it.difficulty_level, it.base_salary,
-                           st.description, tt.status
+                           st.description, st.status
                     FROM ticket_technicians tt
                     JOIN technicians t ON tt.technician_id = t.technician_id
                     JOIN support_tickets st ON tt.ticket_id = st.ticket_id
@@ -104,6 +104,7 @@ Public Class TechnicianPanel
                             txtNotes.Text = reader.GetString("description")
 
                             Dim statusStr = reader.GetString("status")
+                            cbxStatus.Text = statusStr
                             Dim index = cbxStatus.FindStringExact(statusStr)
                             If index >= 0 Then
                                 cbxStatus.SelectedIndex = index
@@ -199,6 +200,8 @@ Public Class TechnicianPanel
             btnSave.Visible = True
             cbxStatus.Enabled = True
             txtRemarks.Enabled = True
+
+
         End If
 
     End Sub

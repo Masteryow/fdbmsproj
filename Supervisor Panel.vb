@@ -13,14 +13,15 @@ Public Class Supervisor_Panel
                 conn.Open()
 
                 ' Load Subscriber Tickets
-                Using getInfo As New MySqlCommand("
-                      SELECT u.user_id, s.subscriber_id, CONCAT(u.firstName, ' ', u.lastName) AS fullName,
-           it.issue_name, it.difficulty_level, it.base_salary, st.description, st.ticket_id, st.status
-    FROM users u 
-    JOIN subscribers s ON u.user_id = s.customer_id
-    JOIN support_tickets st ON s.subscriber_id = st.subscriber_id
-    JOIN issue_types it ON st.issue_type_id = it.issue_type_id
-    WHERE st.status = 'Open' ", conn)
+                Using getInfo As New MySqlCommand("SELECT u.user_id, s.subscriber_id, 
+                            CONCAT(u.firstName, ' ', u.lastName) AS fullName, it.issue_name, it.difficulty_level, 
+                            it.base_salary, st.description, st.ticket_id, st.status AS ticket_status, tt.status AS 
+                            technician_status FROM ticket_technicians tt
+                            JOIN support_tickets st ON tt.ticket_id = st.ticket_id
+                            JOIN subscribers s ON st.subscriber_id = s.subscriber_id
+                            JOIN users u ON s.customer_id = u.user_id
+                            JOIN issue_types it ON st.issue_type_id = it.issue_type_id
+                            WHERE tt.status = 'Unassigned' ", conn)
 
                     Using getOpen As MySqlDataReader = getInfo.ExecuteReader()
                         ticketDict.Clear()
@@ -237,23 +238,6 @@ Public Class Supervisor_Panel
                                     MsgBox("Ticket assigned and status updated successfully!")
                                 Else
                                     MsgBox("Failed to update the ticket assignment.")
-                                End If
-                            End Using
-                        Else
-                            ' Insert new assignment record
-                            Using insertCmd As New MySqlCommand("
-                            INSERT INTO ticket_technicians (ticket_id, technician_id, status) 
-                            VALUES (@ticket_id, @technician_id, @status)", conn)
-
-                                insertCmd.Parameters.AddWithValue("@ticket_id", ticketID)
-                                insertCmd.Parameters.AddWithValue("@technician_id", technicianId)
-                                insertCmd.Parameters.AddWithValue("@status", "Assigned")
-
-                                Dim rowsInserted As Integer = insertCmd.ExecuteNonQuery()
-                                If rowsInserted > 0 Then
-                                    MsgBox("Ticket assigned successfully!")
-                                Else
-                                    MsgBox("Failed to assign the ticket.")
                                 End If
                             End Using
                         End If

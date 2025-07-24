@@ -233,6 +233,13 @@ Public Class Tickets
                         End Using
                     End Using
 
+                    Using cmd2 As New MySqlCommand("INSERT INTO ticket_technicians (ticket_id, assigned_at) VALUES (@ticket_id, @assigned_at)", conn)
+
+                        cmd2.Transaction = transaction
+                        cmd2.Parameters.AddWithValue("@ticket_id", ticket_id)
+                        cmd2.Parameters.AddWithValue("@assigned_at", DBNull.Value)
+                        cmd2.ExecuteNonQuery()
+                    End Using
 
 
                     transaction.Commit()

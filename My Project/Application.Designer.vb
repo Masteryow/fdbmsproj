@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.fdbmsproj.Admin
+            Me.MainForm = Global.fdbmsproj.Supervisor_Panel
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _

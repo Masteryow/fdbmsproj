@@ -13,7 +13,7 @@
     Public Shared Property userRole As String
     Public Shared Property fromProduct As Boolean
 
-    Public Shared Property technicianID As Integer = 2 'for debug, remove if final
+    Public Shared Property technicianID As Integer = 4 'for debug, remove if final
     ' Transaction Management Properties
     Public Shared Property TransactionId As String
     Public Shared Property TransactionStartTime As DateTime
