@@ -101,7 +101,8 @@ Public Class Form1
         Try
             con.Open()
             ' Modified query to also get the role and active status
-            Dim getCredentials As New MySqlCommand("SELECT u.email, u.user_id, u.username, u.role, u.is_active, s.subscriber_id, s.status
+            Dim getCredentials As New MySqlCommand("SELECT CONCAT(u.firstName, ' ', u.lastName) AS fullName, u.address, u.phoneNumber,
+                                                u.email, u.user_id, u.username, u.role, u.is_active, s.subscriber_id, s.status
                                                 FROM users u LEFT JOIN subscribers s ON u.user_id = s.customer_id
                                                 WHERE username = @username AND password = @password", con)
             getCredentials.Parameters.AddWithValue("@username", txtUsername.Text)
@@ -116,7 +117,9 @@ Public Class Form1
                 Dim email As String = reader.GetString("email")
                 Dim subscriber_id As Integer
                 Dim subStatus As String = ""
-
+                Dim fullName As String = reader.GetString("fullName")
+                Dim address As String = reader.GetString("address")
+                Dim contactNumber As String = reader.GetString("phoneNumber")
                 If reader.IsDBNull(reader.GetOrdinal("status")) Then
                     Session.subStatus = ""
                 Else
@@ -149,6 +152,9 @@ Public Class Form1
                 Session.SubscriberId = subscriber_id
                 Session.subStatus = subStatus
                 Session.email = email
+                Session.fullName = fullName
+                Session.address = address
+                Session.contactNumber = contactNumber
                 ' Redirect based on role
                 Select Case userRole.ToLower()
                     Case "admin"

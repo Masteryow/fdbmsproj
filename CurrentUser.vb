@@ -3,12 +3,18 @@
     Public Shared Property UserId As Integer  'for debug, remove if final
     Public Shared Property UserName As String
     Public Shared Property email As String
-
+    Public Shared Property fullName As String
     Public Shared Property PlanId As Integer
     Public Shared Property planImage As Image
     Public Shared Property SubscriberId As Integer
     Public Shared Property IsNewSubscription As Boolean
     Public Shared Property subStatus As String
+    Public Shared Property contactNumber As String
+    Public Shared Property cashOnHand As Decimal
+    Public Shared Property planSpeed As String
+    Public Shared Property planDataCap As String
+
+    Public Shared Property address As String
     Public Shared Property planName As String
     Public Shared Property planType As String
     Public Shared Property planPrice As Decimal

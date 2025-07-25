@@ -3,6 +3,7 @@ Imports System.Numerics
 Imports System.Transactions
 Imports MySql.Data.MySqlClient
 
+
 Public Class Subscription
     Private navigatingAway As Boolean = False
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
@@ -16,6 +17,9 @@ Public Class Subscription
     Dim price As Decimal = 0
     Dim speed As String = ""
     Dim data_cap As String = ""
+
+
+
 
     Private Sub Subscription_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
@@ -123,6 +127,8 @@ Public Class Subscription
 
                         Session.fromProduct = False
                         Session.IsNewSubscription = True
+                        Session.planSpeed = speed
+                        Session.planDataCap = data_cap
 
                         ' Start new transaction when plan is selected
                         Session.StartTransaction()
@@ -142,6 +148,7 @@ Public Class Subscription
                             Else
                                 Session.fromProduct = False
                                 navigatingAway = True
+                                Session.IsNewSubscription = True
                                 Cart.Show()
                                 Me.Close()
                             End If
@@ -150,11 +157,16 @@ Public Class Subscription
 
                         Else
 
+
+
+
                             Dim convertedPayment As Decimal = 0
 
                             Dim payment As String = InputBox($"Selected Plan: {plan_name}{vbNewLine}To Pay: {price.ToString("f2")}{vbNewLine}Please enter your money: ", "Payment")
 
                             If Decimal.TryParse(payment, convertedPayment) Then
+
+
 
                                 If convertedPayment > price Then
 
@@ -169,6 +181,8 @@ Public Class Subscription
                                     MsgBox("Insufficient money!", MsgBoxStyle.Exclamation, "Insufficient Amount")
                                     Return
                                 End If
+
+                                Session.cashOnHand = convertedPayment
 
                                 Using insertSub As New MySqlCommand("INSERT INTO subscribers (customer_id, plan_id) 
                                                                     VALUES (@customer_id, @plan_id)", con)
@@ -224,8 +238,6 @@ Public Class Subscription
                                 End Using
 
                                 Session.userRole = "Subscriber"
-
-
 
                                 transaction.Commit()
 
