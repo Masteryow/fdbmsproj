@@ -2492,10 +2492,41 @@ Public Class Admin
         .AutoSize = True
     }
 
+        ' Date range controls for Income & Expenses
+        Dim lblDateFrom As New Label With {
+        .Text = "From:",
+        .Location = New Point(20, 15),
+        .AutoSize = True,
+        .Visible = False
+    }
+
+        Dim dtpDateFrom As New DateTimePicker With {
+        .Location = New Point(60, 12),
+        .Size = New Size(100, 25),
+        .Format = DateTimePickerFormat.Short,
+        .Value = DateTime.Now.AddMonths(-1),
+        .Visible = False
+    }
+
+        Dim lblDateTo As New Label With {
+        .Text = "To:",
+        .Location = New Point(170, 15),
+        .AutoSize = True,
+        .Visible = False
+    }
+
+        Dim dtpDateTo As New DateTimePicker With {
+        .Location = New Point(195, 12),
+        .Size = New Size(100, 25),
+        .Format = DateTimePickerFormat.Short,
+        .Value = DateTime.Now,
+        .Visible = False
+    }
+
         ' Report type buttons
         Dim btnRevenueReport As New Button With {
         .Text = "Revenue Report",
-        .Location = New Point(20, 40),
+        .Location = New Point(20, 45),
         .Size = New Size(120, 30),
         .BackColor = Color.FromArgb(52, 152, 219),
         .ForeColor = Color.White,
@@ -2504,20 +2535,20 @@ Public Class Admin
     }
         btnRevenueReport.FlatAppearance.BorderSize = 0
 
-        Dim btnUsersReport As New Button With {
-        .Text = "Active Users Report",
-        .Location = New Point(150, 40),
-        .Size = New Size(120, 30),
+        Dim btnIncomeExpensesReport As New Button With {
+        .Text = "Income & Expenses",
+        .Location = New Point(150, 45),
+        .Size = New Size(130, 30),
         .BackColor = Color.FromArgb(149, 165, 166),
         .ForeColor = Color.White,
         .FlatStyle = FlatStyle.Flat,
-        .Tag = "users"
+        .Tag = "incomeexpenses"
     }
-        btnUsersReport.FlatAppearance.BorderSize = 0
+        btnIncomeExpensesReport.FlatAppearance.BorderSize = 0
 
         Dim btnTicketsReport As New Button With {
         .Text = "Tickets Report",
-        .Location = New Point(280, 40),
+        .Location = New Point(290, 45),
         .Size = New Size(120, 30),
         .BackColor = Color.FromArgb(149, 165, 166),
         .ForeColor = Color.White,
@@ -2528,7 +2559,7 @@ Public Class Admin
 
         Dim btnSubscribersReport As New Button With {
         .Text = "Subscribers Report",
-        .Location = New Point(20, 80),
+        .Location = New Point(20, 85),
         .Size = New Size(120, 30),
         .BackColor = Color.FromArgb(149, 165, 166),
         .ForeColor = Color.White,
@@ -2539,7 +2570,7 @@ Public Class Admin
 
         Dim btnPlansReport As New Button With {
         .Text = "Plans Report",
-        .Location = New Point(150, 80),
+        .Location = New Point(150, 85),
         .Size = New Size(120, 30),
         .BackColor = Color.FromArgb(149, 165, 166),
         .ForeColor = Color.White,
@@ -2550,7 +2581,7 @@ Public Class Admin
 
         ' DataGridView for reports
         Dim dgvReports As New DataGridView With {
-        .Location = New Point(20, 120),
+        .Location = New Point(20, 125),
         .Size = New Size(400, 220),
         .ReadOnly = True,
         .AllowUserToAddRows = False,
@@ -2561,7 +2592,7 @@ Public Class Admin
         Dim currentReportType As String = "revenue"
 
         ' Button click handlers with color management
-        Dim reportButtons() As Button = {btnRevenueReport, btnUsersReport, btnTicketsReport, btnSubscribersReport, btnPlansReport}
+        Dim reportButtons() As Button = {btnRevenueReport, btnIncomeExpensesReport, btnTicketsReport, btnSubscribersReport, btnPlansReport}
 
         For Each btn As Button In reportButtons
             AddHandler btn.Click, Sub(sender As Button, e As EventArgs)
@@ -2578,22 +2609,215 @@ Public Class Admin
                                       Select Case currentReportType
                                           Case "revenue"
                                               LoadEnhancedRevenueReport(dgvReports)
-                                          Case "users"
-                                              LoadUsersReport(dgvReports)
+                                              lblReports.Visible = True
+                                              lblDateFrom.Visible = False
+                                              lblDateTo.Visible = False
+                                              dtpDateFrom.Visible = False
+                                              dtpDateTo.Visible = False
+                                          Case "incomeexpenses"
+                                              LoadIncomeExpensesReport(dgvReports, dtpDateFrom.Value, dtpDateTo.Value)
+                                              lblReports.Visible = False
+                                              lblDateFrom.Visible = True
+                                              lblDateTo.Visible = True
+                                              dtpDateFrom.Visible = True
+                                              dtpDateTo.Visible = True
                                           Case "tickets"
                                               LoadTicketsReport(dgvReports)
+                                              lblReports.Visible = True
+                                              lblDateFrom.Visible = False
+                                              lblDateTo.Visible = False
+                                              dtpDateFrom.Visible = False
+                                              dtpDateTo.Visible = False
                                           Case "subscribers"
                                               LoadSubscribersReport(dgvReports)
+                                              lblReports.Visible = True
+                                              lblDateFrom.Visible = False
+                                              lblDateTo.Visible = False
+                                              dtpDateFrom.Visible = False
+                                              dtpDateTo.Visible = False
                                           Case "plans"
                                               LoadPlansReport(dgvReports)
+                                              lblReports.Visible = True
+                                              lblDateFrom.Visible = False
+                                              lblDateTo.Visible = False
+                                              dtpDateFrom.Visible = False
+                                              dtpDateTo.Visible = False
                                       End Select
                                   End Sub
         Next
 
+        ' Date picker change handlers for Income & Expenses report
+        AddHandler dtpDateFrom.ValueChanged, Sub()
+                                                 If currentReportType = "incomeexpenses" Then
+                                                     LoadIncomeExpensesReport(dgvReports, dtpDateFrom.Value, dtpDateTo.Value)
+                                                 End If
+                                             End Sub
+
+        AddHandler dtpDateTo.ValueChanged, Sub()
+                                               If currentReportType = "incomeexpenses" Then
+                                                   LoadIncomeExpensesReport(dgvReports, dtpDateFrom.Value, dtpDateTo.Value)
+                                               End If
+                                           End Sub
+
         ' Load default report
         LoadEnhancedRevenueReport(dgvReports)
 
-        pnlContent.Controls.AddRange({lblReports, btnRevenueReport, btnUsersReport, btnTicketsReport, btnSubscribersReport, btnPlansReport, dgvReports})
+        pnlContent.Controls.AddRange({lblReports, lblDateFrom, dtpDateFrom, lblDateTo, dtpDateTo, btnRevenueReport, btnIncomeExpensesReport, btnTicketsReport, btnSubscribersReport, btnPlansReport, dgvReports})
+    End Sub
+
+    Private Sub LoadIncomeExpensesReport(dgv As DataGridView, dateFrom As DateTime, dateTo As DateTime)
+        Try
+            If con Is Nothing Then
+                con = New MySqlConnection(strcon)
+            End If
+
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+
+            con.Open()
+
+            ' Query to get income and expenses within date range - Updated for correct column names
+            Dim query As String = "
+            SELECT 
+                transaction_date,
+                transaction_type,
+                description,
+                CASE WHEN transaction_type IN ('Plan Payment', 'Addon Purchase') THEN amount ELSE 0 END as income,
+                CASE WHEN transaction_type IN ('Salary Payment', 'Hardware Expense') THEN amount ELSE 0 END as expense,
+                amount
+            FROM (
+                -- Plan payments (income from billing records)
+                SELECT 
+                    DATE(br.created_at) as transaction_date,
+                    'Plan Payment' as transaction_type,
+                    CONCAT('Plan billing - ', u.username, ' (', p.plan_name, ')') as description,
+                    br.total_amount as amount
+                FROM billing_records br
+                JOIN subscribers s ON br.subscriber_id = s.subscriber_id
+                JOIN users u ON s.customer_id = u.user_id
+                JOIN internet_plans p ON s.plan_id = p.plan_id
+                WHERE br.status = 'Paid' 
+                    AND DATE(br.created_at) BETWEEN @dateFrom AND @dateTo
+                
+                UNION ALL
+                
+                -- Addon purchases (income from customer addons)
+                SELECT 
+                    DATE(ca.purchase_date) as transaction_date,
+                    'Addon Purchase' as transaction_type,
+                    CONCAT('Addon - ', a.item_name, ' x', ca.quantity, ' by ', u.username) as description,
+                    (a.price * ca.quantity) as amount
+                FROM customer_addons ca
+                JOIN addons a ON ca.addon_id = a.addon_id
+                JOIN users u ON ca.customer_id = u.user_id
+                WHERE DATE(ca.purchase_date) BETWEEN @dateFrom AND @dateTo
+                
+                UNION ALL
+                
+                -- Salary payments (expenses) - includes automatic payments from triggers
+                SELECT 
+                    sp.payment_date as transaction_date,
+                    'Salary Payment' as transaction_type,
+                    CONCAT(sp.employee_type, ' - ', u.firstName, ' ', u.lastName, ' (', sp.payment_type, ') - ', sp.description) as description,
+                    sp.amount as amount
+                FROM salary_payments sp
+                JOIN users u ON sp.employee_id = u.user_id
+                WHERE sp.payment_date BETWEEN @dateFrom AND @dateTo
+                
+                UNION ALL
+                
+                -- Hardware expenses (when stock is added) - Updated column names
+                SELECT 
+                    he.expense_date as transaction_date,
+                    'Hardware Expense' as transaction_type,
+                    CONCAT('Hardware restocking - ', a.item_name, ' (Qty: ', he.quantity_added, ' @ ', FORMAT(he.estimated_cost_per_unit, 2), ' each)') as description,
+                    he.total_estimated_cost as amount
+                FROM hardware_expenses he
+                JOIN addons a ON he.addon_id = a.addon_id
+                WHERE he.expense_date BETWEEN @dateFrom AND @dateTo
+            ) as all_transactions
+            ORDER BY transaction_date DESC"
+
+            Dim cmd As New MySqlCommand(query, con)
+            cmd.Parameters.AddWithValue("@dateFrom", dateFrom.ToString("yyyy-MM-dd"))
+            cmd.Parameters.AddWithValue("@dateTo", dateTo.ToString("yyyy-MM-dd"))
+
+            Dim adapter As New MySqlDataAdapter(cmd)
+            Dim dt As New DataTable()
+            adapter.Fill(dt)
+            con.Close()
+
+            ' Add summary row
+            Dim totalIncome As Decimal = 0
+            Dim totalExpense As Decimal = 0
+
+            For Each row As DataRow In dt.Rows
+                totalIncome += Convert.ToDecimal(row("income"))
+                totalExpense += Convert.ToDecimal(row("expense"))
+            Next
+
+            ' Add summary row
+            Dim summaryRow As DataRow = dt.NewRow()
+            summaryRow("transaction_date") = DBNull.Value
+            summaryRow("transaction_type") = "SUMMARY"
+            summaryRow("description") = $"Period: {dateFrom.ToShortDateString()} to {dateTo.ToShortDateString()}"
+            summaryRow("income") = totalIncome
+            summaryRow("expense") = totalExpense
+            summaryRow("amount") = totalIncome - totalExpense
+            dt.Rows.InsertAt(summaryRow, 0)
+
+            ' Clear existing columns and set data source
+            dgv.DataSource = Nothing
+            dgv.Columns.Clear()
+            dgv.DataSource = dt
+
+            ' Configure columns
+            If dgv.Columns.Contains("transaction_date") Then
+                dgv.Columns("transaction_date").HeaderText = "Date"
+                dgv.Columns("transaction_date").Width = 80
+            End If
+
+            If dgv.Columns.Contains("transaction_type") Then
+                dgv.Columns("transaction_type").HeaderText = "Type"
+                dgv.Columns("transaction_type").Width = 100
+            End If
+
+            If dgv.Columns.Contains("description") Then
+                dgv.Columns("description").HeaderText = "Description"
+                dgv.Columns("description").Width = 200
+            End If
+
+            If dgv.Columns.Contains("income") Then
+                dgv.Columns("income").HeaderText = "Income"
+                dgv.Columns("income").Width = 80
+                dgv.Columns("income").DefaultCellStyle.Format = "C2"
+                dgv.Columns("income").DefaultCellStyle.ForeColor = Color.Green
+            End If
+
+            If dgv.Columns.Contains("expense") Then
+                dgv.Columns("expense").HeaderText = "Expense"
+                dgv.Columns("expense").Width = 80
+                dgv.Columns("expense").DefaultCellStyle.Format = "C2"
+                dgv.Columns("expense").DefaultCellStyle.ForeColor = Color.Red
+            End If
+
+            If dgv.Columns.Contains("amount") Then
+                dgv.Columns("amount").HeaderText = "Net Amount"
+                dgv.Columns("amount").Width = 80
+                dgv.Columns("amount").DefaultCellStyle.Format = "C2"
+            End If
+
+            ' Highlight summary row
+            If dt.Rows.Count > 0 Then
+                dgv.Rows(0).DefaultCellStyle.BackColor = Color.LightGray
+                dgv.Rows(0).DefaultCellStyle.Font = New Font(dgv.Font, FontStyle.Bold)
+            End If
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            MessageBox.Show("Error loading income & expenses report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     ' Data Loading Methods
