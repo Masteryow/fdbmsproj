@@ -24,6 +24,8 @@ Public Class Addon
     Dim addedItemsTotal As Decimal = 0
 
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
+
+
     Public Class cartItem
         Public Property ProductName As String
         Public Property Quantity As Integer
@@ -442,7 +444,7 @@ Public Class Addon
             End Try
         End If
     End Sub
-    Private Sub Addon_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Addon_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
 
 
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
@@ -475,6 +477,12 @@ Public Class Addon
                 'Return
             End If
         End If
+
+
+
+
+
+
         Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
         If Session.fromProduct Then
             pbxPlanImage.Visible = False

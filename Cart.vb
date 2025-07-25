@@ -74,7 +74,7 @@ Public Class Cart
                 Dim query As String = "SELECT sc.addon_id, sc.quantity, a.item_name, a.price, a.category " &
                                      "FROM shopping_cart sc " &
                                      "INNER JOIN addons a ON sc.addon_id = a.addon_id " &
-                                     "WHERE sc.customer_id = @customerId AND sc.addon_id BETWEEN 1 AND 5"
+                                     "WHERE sc.customer_id = @customerId AND sc.addon_id BETWEEN 1 AND 15"
 
                 Using cmd As New MySqlCommand(query, con)
                     cmd.Parameters.AddWithValue("@customerId", Session.UserId)
@@ -199,7 +199,7 @@ Public Class Cart
 
                 For Each item In cartItems
                     ' Double check that item is hardware addon (ID 1-5)
-                    If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                    If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                         Dim stockQuery As String = "SELECT hs.quantity_available FROM hardware_stocks hs WHERE hs.addon_id = @addonId"
                         Dim stockStatus As String = ""
 
@@ -229,7 +229,7 @@ Public Class Cart
         Catch ex As Exception
             ' Fallback to original display if stock check fails
             For Each item In cartItems
-                If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                     Dim displayText As String = $"{item.ProductName} - Qty: {item.Quantity} - Php {(item.Price * item.Quantity):F2} [{item.Category}]"
                     CheckedListBox1.Items.Add(displayText)
                 End If
@@ -249,7 +249,7 @@ Public Class Cart
 
         ' Add cart items total - ONLY HARDWARE ADDONS (ID 1-5)
         For Each item In cartItems
-            If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+            If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                 total += (item.Price * item.Quantity)
             End If
         Next
@@ -269,7 +269,7 @@ Public Class Cart
 
         ' Add cart items total - ONLY HARDWARE ADDONS (ID 1-5)
         For Each item In cartItems
-            If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+            If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                 cartTotal += (item.Price * item.Quantity)
             End If
         Next
@@ -295,7 +295,7 @@ Public Class Cart
                 If cartIndex >= 0 AndAlso cartIndex < cartItems.Count Then
                     Dim item As CartItem = cartItems(cartIndex)
                     ' Only include hardware addons (ID 1-5)
-                    If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                    If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                         selectedItems.Add(item)
                     End If
                 End If
@@ -328,7 +328,7 @@ Public Class Cart
                 If cartIndex >= 0 AndAlso cartIndex < cartItems.Count Then
                     Dim item As CartItem = cartItems(cartIndex)
                     ' Only include hardware addons (ID 1-5)
-                    If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                    If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                         selectedTotal += (item.Price * item.Quantity)
                     End If
                 End If
@@ -365,7 +365,7 @@ Public Class Cart
                 If cartIndex >= 0 AndAlso cartIndex < cartItems.Count Then
                     Dim item As CartItem = cartItems(cartIndex)
                     ' Only remove hardware addons (ID 1-5)
-                    If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                    If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                         itemsToRemove.Add(cartIndex)
                     End If
                 End If
@@ -381,7 +381,7 @@ Public Class Cart
                     If index >= 0 AndAlso index < cartItems.Count Then
                         Dim item As CartItem = cartItems(index)
                         ' Only remove hardware addons (ID 1-5)
-                        If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                        If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                             ' Remove from database
                             Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id = @addonId"
                             Using cmd As New MySqlCommand(deleteQuery, con)
@@ -421,7 +421,7 @@ Public Class Cart
             Using con As New MySqlConnection(strCon)
                 con.Open()
                 ' Only clear hardware addons (ID 1-5) from cart
-                Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 5"
+                Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 15"
                 Using cmd As New MySqlCommand(deleteQuery, con)
                     cmd.Parameters.AddWithValue("@customerId", Session.UserId)
                     cmd.ExecuteNonQuery()
@@ -606,7 +606,7 @@ Public Class Cart
 
             ' Insert only selected hardware cart items into customer_addons
             For Each item In selectedItems
-                If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                     Dim insertQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) " &
                                                "VALUES (@customerId, @addonId, @quantity, NOW())"
                     Using cmd As New MySqlCommand(insertQuery, con, trans)
@@ -649,7 +649,7 @@ Public Class Cart
 
             ' Insert only selected hardware cart items into customer_addons for existing subscriber
             For Each item In selectedItems
-                If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                     Dim insertQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) " &
                                            "VALUES (@customerId, @addonId, @quantity, NOW())"
                     Using cmd As New MySqlCommand(insertQuery, con, trans)
@@ -712,7 +712,7 @@ Public Class Cart
 
             ' Insert only selected hardware cart items into customer_addons
             For Each item In selectedItems
-                If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                     Dim insertAddonQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) " &
                                                    "VALUES (@customerId, @addonId, @quantity, NOW())"
                     Using cmd As New MySqlCommand(insertAddonQuery, con, trans)
@@ -774,7 +774,7 @@ Public Class Cart
 
                 ' Remove purchased hardware items from database
                 For Each item In purchasedItems
-                    If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                    If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                         Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id = @addonId"
                         Using cmd As New MySqlCommand(deleteQuery, con)
                             cmd.Parameters.AddWithValue("@customerId", Session.UserId)
@@ -835,7 +835,7 @@ Public Class Cart
                 Using con As New MySqlConnection(strCon)
                     con.Open()
                     ' Only clear hardware addons (ID 1-5) from cart
-                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 5"
+                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 15"
                     Using cmd As New MySqlCommand(deleteQuery, con)
                         cmd.Parameters.AddWithValue("@customerId", Session.UserId)
                         cmd.ExecuteNonQuery()
@@ -876,7 +876,7 @@ Public Class Cart
 
                 ' Only check hardware addons (ID 1-5)
                 Dim query As String = "SELECT sc.addon_id, a.item_name, sc.quantity, a.price FROM shopping_cart sc JOIN 
-                                    addons a ON sc.addon_id = a.addon_id WHERE sc.customer_id = @customerId AND item_name = @itemName AND sc.addon_id BETWEEN 1 AND 5"
+                                    addons a ON sc.addon_id = a.addon_id WHERE sc.customer_id = @customerId AND item_name = @itemName AND sc.addon_id BETWEEN 1 AND 15"
                 Using cmd As New MySqlCommand(query, con)
                     cmd.Parameters.AddWithValue("@customerId", Session.UserId)
                     cmd.Parameters.AddWithValue("@itemName", itemChanging)
