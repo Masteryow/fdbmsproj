@@ -187,7 +187,7 @@ Public Class CreateAccount
         txtBox1.PasswordChar = "*"
         txtBox.Multiline = False
         txtBox.Size = New Size(233, 33)
-        txtBox.Location = New Point(487, 100)
+        txtBox.Location = New Point(320, 100)
         txtBox.Name = "txtUsername"
         txtBox.BorderStyle = BorderStyle.FixedSingle
         txtBox.Font = New Font("Microsoft Sans Serif", 12, FontStyle.Regular)
@@ -198,7 +198,7 @@ Public Class CreateAccount
 
         label1.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Bold)
         label1.ForeColor = Color.DarkSlateGray
-        label1.Location = New Point(560, 70)
+        label1.Location = New Point(400, 70)
         label1.Text = "Username"
         label1.Size = New Size(100, 22)
         label1.Name = "lblUsername"
@@ -207,7 +207,7 @@ Public Class CreateAccount
 
         label2.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Bold)
         label2.ForeColor = Color.DarkSlateGray
-        label2.Location = New Point(560, 150)
+        label2.Location = New Point(400, 150)
         label2.Text = "Password"
         label2.Size = New Size(100, 22)
         label2.Name = "lblPassword"
@@ -216,7 +216,7 @@ Public Class CreateAccount
 
         txtBox1.Multiline = False
         txtBox1.Size = New Size(233, 33)
-        txtBox1.Location = New Point(487, 180)
+        txtBox1.Location = New Point(320, 180)
         txtBox1.Name = "txtPassword"
         txtBox1.BorderStyle = BorderStyle.FixedSingle
         txtBox1.Font = New Font("Microsoft Sans Serif", 12, FontStyle.Regular)
@@ -226,7 +226,7 @@ Public Class CreateAccount
 
         label3.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label3.ForeColor = Color.DarkSlateGray
-        label3.Location = New Point(490, 230)
+        label3.Location = New Point(323, 230)
         label3.Text = "• Must be at least 8 characters"
         label3.Size = New Size(500, 22)
         label3.Name = "lbl3"
@@ -234,7 +234,7 @@ Public Class CreateAccount
 
         label4.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label4.ForeColor = Color.DarkSlateGray
-        label4.Location = New Point(490, 250)
+        label4.Location = New Point(323, 250)
         label4.Text = "• Use both uppercase and lowercase 
                          letters"
         label4.Size = New Size(500, 15)
@@ -243,7 +243,7 @@ Public Class CreateAccount
 
         label5.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label5.ForeColor = Color.DarkSlateGray
-        label5.Location = New Point(490, 270)
+        label5.Location = New Point(323, 270)
         label5.Text = "• Include at least one number"
         label5.Size = New Size(500, 15)
         label5.Name = "lbl5"
@@ -252,7 +252,7 @@ Public Class CreateAccount
 
         label6.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label6.ForeColor = Color.DarkSlateGray
-        label6.Location = New Point(490, 290)
+        label6.Location = New Point(323, 290)
         label6.Text = "• Add at least one special character"
         label6.Size = New Size(500, 15)
         label6.Name = "lbl6"
@@ -401,7 +401,7 @@ Public Class CreateAccount
 
                 label7.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 label7.ForeColor = Color.DarkSlateGray
-                label7.Location = New Point(510, 230)
+                label7.Location = New Point(360, 230)
                 label7.Text = "Password Verification"
                 label7.Size = New Size(200, 22)
                 label7.Name = "lbl7"
@@ -409,7 +409,7 @@ Public Class CreateAccount
 
                 txtPassConfirm.Multiline = False
                 txtPassConfirm.Size = New Size(233, 33)
-                txtPassConfirm.Location = New Point(487, 260)
+                txtPassConfirm.Location = New Point(320, 260)
                 txtPassConfirm.Name = "txtPconfirmation"
                 txtPassConfirm.BorderStyle = BorderStyle.FixedSingle
                 txtPassConfirm.Font = New Font("Microsoft Sans Serif", 12, FontStyle.Regular)
@@ -422,7 +422,7 @@ Public Class CreateAccount
                 btnTrigger.Visible = True
                 btnTrigger.Text = "Submit"
                 btnTrigger.Size = New Size(113, 34)
-                btnTrigger.Location = New Point(555, 330)
+                btnTrigger.Location = New Point(388, 305)
                 btnTrigger.BackColor = Color.WhiteSmoke
                 btnTrigger.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Regular)
 
@@ -601,5 +601,7 @@ Public Class CreateAccount
         End If
     End Sub
 
+    Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
 
+    End Sub
 End Class

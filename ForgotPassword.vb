@@ -31,7 +31,7 @@ Public Class ForgotPassword
         label6.Visible = True
         label3.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label3.ForeColor = Color.DarkSlateGray
-        label3.Location = New Point(290, 300)
+        label3.Location = New Point(200, 260)
         label3.Text = "• Must be at least 8 characters"
         label3.Size = New Size(500, 22)
         label3.Name = "lbl3"
@@ -39,7 +39,7 @@ Public Class ForgotPassword
 
         label4.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label4.ForeColor = Color.DarkSlateGray
-        label4.Location = New Point(290, 320)
+        label4.Location = New Point(200, 280)
         label4.Text = "• Use both uppercase and lowercase 
                          letters"
         label4.Size = New Size(500, 15)
@@ -48,7 +48,7 @@ Public Class ForgotPassword
 
         label5.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label5.ForeColor = Color.DarkSlateGray
-        label5.Location = New Point(290, 340)
+        label5.Location = New Point(200, 300)
         label5.Text = "• Include at least one number"
         label5.Size = New Size(500, 15)
         label5.Name = "lbl5"
@@ -57,7 +57,7 @@ Public Class ForgotPassword
 
         label6.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         label6.ForeColor = Color.DarkSlateGray
-        label6.Location = New Point(290, 360)
+        label6.Location = New Point(200, 320)
         label6.Text = "• Add at least one special character"
         label6.Size = New Size(500, 15)
         label6.Name = "lbl6"
