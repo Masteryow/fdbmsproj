@@ -1,5 +1,8 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.Text.RegularExpressions
+Imports System.Net
+Imports System.Net.Mail
+Imports System.Threading.Tasks
 
 Public Class ForgotPassword
 
@@ -11,8 +14,46 @@ Public Class ForgotPassword
     Private label5 As New Label
     Private label6 As New Label
     Private verifiedCount As Integer = 0
-    Private Sub ForgotPassword_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Dim randomCode As String = ""
 
+    Sub email_verification()
+
+        Dim sendCode As New MailMessage
+        sendCode.From = New MailAddress("yohasakura200519@gmail.com")
+        sendCode.To.Add(Session.email)
+        sendCode.Subject = "Email Verification"
+        sendCode.Body = "Your Code is " & randomCode.ToString
+
+
+        Dim smtp As New SmtpClient("smtp.gmail.com", 587)
+        smtp.Credentials = New NetworkCredential("yohasakura200519@gmail.com", "rwxe oxyt ocnc dfmx")
+        smtp.EnableSsl = True
+
+        Try
+            smtp.Send(sendCode)
+
+        Catch ex As Exception
+            MessageBox.Show("Failed to send email: " & ex.Message)
+        End Try
+
+
+    End Sub
+
+    Sub random_number()
+
+        randomCode = ""
+        Dim random As New Random
+
+
+        For i As Integer = 1 To 4
+            randomCode &= random.Next(0, 10).ToString
+
+        Next
+
+    End Sub
+    Private Async Sub ForgotPassword_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Panel1.Visible = True
         receiveUser = Session.UserName
 
         userInput.Text = receiveUser
@@ -20,6 +61,11 @@ Public Class ForgotPassword
         Label7.Visible = False
         txtNewPass.PasswordChar = "*"
         txtNewPassConfirm.PasswordChar = "*"
+
+        random_number()
+
+
+        Await Task.Run(Sub() email_verification())
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles txtNewPass.TextChanged
@@ -67,74 +113,74 @@ Public Class ForgotPassword
 
         Dim strPassword As String = txtNewPass.Text
         If Len(strPassword) >= 8 Then
-                label3.ForeColor = Color.DarkGreen
-                label3.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
-                verifiedCount += 1
+            label3.ForeColor = Color.DarkGreen
+            label3.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
+            verifiedCount += 1
 
-            Else
-                label3.ForeColor = Color.DarkSlateGray
-                label3.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
-            End If
-            Dim password As String = strPassword
-
-
-            Dim hasUpper As Boolean = False
-            Dim hasLower As Boolean = False
-            Dim hasDigit As Boolean = False
-
-            For Each ch As Char In strPassword
-                If Char.IsUpper(ch) Then
-                    hasUpper = True
-
-                End If
-
-                If Char.IsLower(ch) Then
-                    hasLower = True
-                End If
-            Next
+        Else
+            label3.ForeColor = Color.DarkSlateGray
+            label3.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
+        End If
+        Dim password As String = strPassword
 
 
-            If hasUpper And hasLower = True Then
-                label4.ForeColor = Color.DarkGreen
-                label4.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
-                verifiedCount += 1
-            Else
-                label4.ForeColor = Color.DarkSlateGray
-                label4.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
+        Dim hasUpper As Boolean = False
+        Dim hasLower As Boolean = False
+        Dim hasDigit As Boolean = False
+
+        For Each ch As Char In strPassword
+            If Char.IsUpper(ch) Then
+                hasUpper = True
+
             End If
 
+            If Char.IsLower(ch) Then
+                hasLower = True
+            End If
+        Next
+
+
+        If hasUpper And hasLower = True Then
+            label4.ForeColor = Color.DarkGreen
+            label4.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
+            verifiedCount += 1
+        Else
+            label4.ForeColor = Color.DarkSlateGray
+            label4.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
+        End If
 
 
 
-            For Each int As Char In strPassword
-                If Char.IsDigit(int) Then
 
-                    hasDigit = True
+        For Each int As Char In strPassword
+            If Char.IsDigit(int) Then
 
-                End If
+                hasDigit = True
 
-            Next
-
-
-
-            If hasDigit = True Then
-                label5.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
-                label5.ForeColor = Color.DarkGreen
-            Else
-                label5.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
-                label5.ForeColor = Color.DarkSlateGray
             End If
 
+        Next
 
-            Dim hasSpecial As Boolean = Regex.IsMatch(password, "[^a-zA-Z0-9\s]")
 
-            If hasSpecial Then
-                label6.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
-                label6.ForeColor = Color.DarkGreen
-            Else
-                label6.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
-                label6.ForeColor = Color.DarkSlateGray
-            End If
+
+        If hasDigit = True Then
+            label5.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
+            label5.ForeColor = Color.DarkGreen
+        Else
+            label5.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
+            label5.ForeColor = Color.DarkSlateGray
+        End If
+
+
+        Dim hasSpecial As Boolean = Regex.IsMatch(password, "[^a-zA-Z0-9\s]")
+
+        If hasSpecial Then
+            label6.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
+            label6.ForeColor = Color.DarkGreen
+        Else
+            label6.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
+            label6.ForeColor = Color.DarkSlateGray
+        End If
 
 
         If Not String.IsNullOrEmpty(txtNewPass.Text) AndAlso hasUpper = True AndAlso hasLower = True AndAlso Len(strPassword) >= 8 AndAlso
@@ -179,5 +225,34 @@ Public Class ForgotPassword
             End Using
         End If
 
+    End Sub
+
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnVerify.Click
+
+        If txtCode.Text <> randomCode Then
+            MsgBox("Invalid code, please try again")
+
+        Else
+
+            MsgBox("Code verified!")
+            Panel1.Visible = False
+            btnVerify.Visible = False
+            btnResend.Visible = False
+            txtCode.Visible = False
+            lblHeader.Visible = False
+            lblSubheader.Visible = False
+        End If
+
+
+
+
+    End Sub
+
+    Private Sub btnResend_Click(sender As Object, e As EventArgs) Handles btnResend.Click
+        MsgBox("Resend Successfully!")
+        random_number()
+        email_verification()
     End Sub
 End Class

@@ -101,7 +101,7 @@ Public Class Form1
         Try
             con.Open()
             ' Modified query to also get the role and active status
-            Dim getCredentials As New MySqlCommand("SELECT u.user_id, u.username, u.role, u.is_active, s.subscriber_id, s.status
+            Dim getCredentials As New MySqlCommand("SELECT u.email, u.user_id, u.username, u.role, u.is_active, s.subscriber_id, s.status
                                                 FROM users u LEFT JOIN subscribers s ON u.user_id = s.customer_id
                                                 WHERE username = @username AND password = @password", con)
             getCredentials.Parameters.AddWithValue("@username", txtUsername.Text)
@@ -113,7 +113,7 @@ Public Class Form1
                 Dim userName As String = reader("username").ToString
                 Dim userRole As String = reader("role").ToString
                 Dim isActive As Boolean = reader.GetBoolean("is_active")
-
+                Dim email As String = reader.GetString("email")
                 Dim subscriber_id As Integer
                 Dim subStatus As String = ""
 
@@ -148,6 +148,7 @@ Public Class Form1
                 Session.userRole = userRole
                 Session.SubscriberId = subscriber_id
                 Session.subStatus = subStatus
+                Session.email = email
                 ' Redirect based on role
                 Select Case userRole.ToLower()
                     Case "admin"
@@ -219,9 +220,10 @@ Public Class Form1
 
             con.Open()
 
-            Dim getUser As New MySqlCommand("SELECT COUNT(*) FROM users WHERE username = @username", con)
+            Dim getUser As New MySqlCommand("SELECT COUNT(*), email FROM users WHERE username = @username", con)
 
             getUser.Parameters.AddWithValue("@username", txtUsername.Text)
+
 
             getUser.ExecuteNonQuery()
 
@@ -231,6 +233,12 @@ Public Class Form1
 
             If isFound = 1 Then
 
+                Using getEmail As MySqlDataReader = getUser.ExecuteReader
+
+                    While getEmail.Read
+                        Session.email = getEmail.GetString("email")
+                    End While
+                End Using
                 ForgotPassword.Show()
                 Me.Close()
 

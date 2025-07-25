@@ -415,7 +415,29 @@ Public Class Addon
         TextBox3.Text = "Php " & addedItemsTotal.ToString("F2")
     End Sub
 
+    Private Sub form_closing(sender As Object, e As EventArgs) Handles MyBase.FormClosing
 
+        If Session.IsNewSubscription Then
+            Try
+                Using con As New MySqlConnection(strCon)
+                    con.Open()
+                    ' Only clear hardware addons (ID 1-5) from cart
+                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 5"
+                    Using cmd As New MySqlCommand(deleteQuery, con)
+                        cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                        cmd.ExecuteNonQuery()
+                    End Using
+                End Using
+
+                cartItems.Clear()
+
+                Session.EndTransaction(False)
+
+            Catch ex As Exception
+                MessageBox.Show("Error clearing cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+    End Sub
     Private Sub Addon_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
 
@@ -891,10 +913,8 @@ Public Class Addon
     End Function
 
     Private Sub CartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles cartbutton.Click
-
-
         Cart.Show()
-        Me.Close()
+        Me.Hide()
     End Sub
 
     Private Sub HelpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubscriptionToolStripMenuItem.Click
