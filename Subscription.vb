@@ -225,11 +225,12 @@ Public Class Subscription
 
                                 Session.userRole = "Subscriber"
 
-                                subscribers.Show()
-                                Me.Close()
+
 
                                 transaction.Commit()
 
+                                subscribers.Show()
+                                Me.Close()
                             Else
                                 MsgBox("Please enter a valid amount", MsgBoxStyle.Exclamation, "Invalid Amount")
                                 transaction.Rollback()
