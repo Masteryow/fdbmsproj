@@ -114,6 +114,125 @@ Public Class Addon
 
     End Sub
 
+    Private Function CheckStockAvailability() As List(Of String)
+        Dim outOfStockItems As New List(Of String)
+
+        Try
+            Using con As New MySqlConnection(strCon)
+                con.Open()
+
+                ' Check stock ONLY for hardware items (addon IDs 1-5)
+                For addonIndex As Integer = 0 To 4 ' 0-4 for hardware addons 1-5
+                    Dim quantity As Integer = selectedQuantities(addonIndex)
+                    If quantity > 0 Then
+                        Dim actualAddonId As Integer = addonIndex + 1 ' addon_ids 1-5 (hardware only)
+
+                        Dim stockQuery As String = "SELECT hs.quantity_available FROM hardware_stocks hs " &
+                                             "WHERE hs.addon_id = @addonId"
+
+                        Using cmd As New MySqlCommand(stockQuery, con)
+                            cmd.Parameters.AddWithValue("@addonId", actualAddonId)
+
+                            Dim result = cmd.ExecuteScalar()
+                            If result IsNot Nothing Then
+                                Dim availableStock As Integer = Convert.ToInt32(result)
+
+                                ' Check if requested quantity exceeds available stock
+                                If quantity > availableStock Then
+                                    Dim productName As String = GetProductNameByAddonId(actualAddonId)
+                                    If availableStock = 0 Then
+                                        outOfStockItems.Add($"{productName} (Out of Stock)")
+                                    Else
+                                        outOfStockItems.Add($"{productName} (Only {availableStock} available, you selected {quantity})")
+                                    End If
+                                End If
+                            Else
+                                ' No stock record found - assume out of stock for hardware
+                                Dim productName As String = GetProductNameByAddonId(actualAddonId)
+                                outOfStockItems.Add($"{productName} (No stock information)")
+                            End If
+                        End Using
+                    End If
+                Next
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error checking stock: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return outOfStockItems
+    End Function
+
+    Private Function CheckStockForCart(addonId As Integer, requestedQuantity As Integer) As Boolean
+        ' Only check stock for hardware items (addon IDs 1-5)
+        If addonId < 1 Or addonId > 5 Then
+            Return True ' Non-hardware items don't need stock checking
+        End If
+
+        Try
+            Using con As New MySqlConnection(strCon)
+                con.Open()
+
+                ' Get current cart quantity for this item
+                Dim cartQuery As String = "SELECT COALESCE(SUM(quantity), 0) FROM shopping_cart " &
+                                    "WHERE customer_id = @customerId AND addon_id = @addonId"
+                Dim currentCartQuantity As Integer = 0
+
+                Using cartCmd As New MySqlCommand(cartQuery, con)
+                    cartCmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                    cartCmd.Parameters.AddWithValue("@addonId", addonId)
+                    Dim cartResult = cartCmd.ExecuteScalar()
+                    If cartResult IsNot Nothing Then
+                        currentCartQuantity = Convert.ToInt32(cartResult)
+                    End If
+                End Using
+
+                ' Check available stock for hardware items
+                Dim stockQuery As String = "SELECT hs.quantity_available FROM hardware_stocks hs " &
+                                     "WHERE hs.addon_id = @addonId"
+
+                Using cmd As New MySqlCommand(stockQuery, con)
+                    cmd.Parameters.AddWithValue("@addonId", addonId)
+
+                    Dim result = cmd.ExecuteScalar()
+                    If result IsNot Nothing Then
+                        Dim availableStock As Integer = Convert.ToInt32(result)
+                        Dim totalRequested As Integer = currentCartQuantity + requestedQuantity
+
+                        If totalRequested > availableStock Then
+                            Dim productName As String = GetProductNameByAddonId(addonId)
+                            If availableStock = 0 Then
+                                MessageBox.Show($"{productName} is out of stock and cannot be added to cart.",
+                                          "Out of Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Else
+                                Dim canAdd As Integer = availableStock - currentCartQuantity
+                                If canAdd <= 0 Then
+                                    MessageBox.Show($"You already have the maximum available quantity of {productName} in your cart.",
+                                              "Maximum Quantity Reached", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                Else
+                                    MessageBox.Show($"{productName}: Only {availableStock} available in stock. " &
+                                              $"You have {currentCartQuantity} in cart. You can add {canAdd} more.",
+                                              "Insufficient Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                End If
+                            End If
+                            Return False
+                        End If
+                    Else
+                        ' No stock record found for hardware item
+                        Dim productName As String = GetProductNameByAddonId(addonId)
+                        MessageBox.Show($"{productName} has no stock information and cannot be added to cart.",
+                                  "No Stock Information", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Return False
+                    End If
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error checking stock: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+
+        Return True
+    End Function
+
     Private Function GetPriceForAddon(addonId As Integer) As Decimal
         ' Get price based on addon ID (1-15)
         Select Case addonId
@@ -238,26 +357,6 @@ Public Class Addon
                     End If
                 Next
 
-                '      Dim simpleBillingQuery As String = "INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date, status) " &
-                '    "VALUES (@subscriber_id, CURDATE(), @amount, CURDATE(), 'Paid')"
-                '       Dim billingId As Integer = 0
-
-                '    Using cmd As New MySqlCommand(simpleBillingQuery, con, trans)
-                '   cmd.Parameters.AddWithValue("@subscriber_id", Session.SubscriberId)
-                '   cmd.Parameters.AddWithValue("@amount", total)
-                '       cmd.ExecuteNonQuery()
-                '   billingId = cmd.LastInsertedId
-                '  End Using
-
-                ' Insert payment record
-                '     Dim paymentQuery As String = "INSERT INTO payments (billing_id, amount, payment_date) " &
-                '  "VALUES (@billingId, @amount, CURDATE())"
-                '    Using cmd As New MySqlCommand(paymentQuery, con, trans)
-                '   cmd.Parameters.AddWithValue("@billingId", billingId)
-                '    cmd.Parameters.AddWithValue("@amount", total)
-                '   cmd.ExecuteNonQuery()
-                '    End Using
-
                 trans.Commit()
                 success = True
             Catch ex As Exception
@@ -322,6 +421,7 @@ Public Class Addon
 
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
             HelpToolStripMenuItem.Visible = False
+            SubscriptionToolStripMenuItem.Visible = False
         End If
 
         Session.CheckTransactionTimeout()
@@ -507,23 +607,34 @@ Public Class Addon
             Return
         End If
 
+        ' Check stock availability for all selected items
+        Dim outOfStockItems As List(Of String) = CheckStockAvailability()
+
+        If outOfStockItems.Count > 0 Then
+            Dim stockMessage As String = "The following items are out of stock or have insufficient quantity:" & vbCrLf & vbCrLf
+            For Each item In outOfStockItems
+                stockMessage += "• " & item & vbCrLf
+            Next
+            stockMessage += vbCrLf & "Please reduce the quantities or remove these items to proceed with purchase."
+
+            MessageBox.Show(stockMessage, "Stock Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
         ' Confirm purchase
         Dim confirmResult As DialogResult
 
         If Session.fromProduct = True Then
-
             confirmResult = MessageBox.Show($"Confirm purchase of items totaling Php {addedItemsTotal:F2}?",
-                                              "Confirm Purchase",
-                                              MessageBoxButtons.YesNo,
-                                              MessageBoxIcon.Question)
+                                          "Confirm Purchase",
+                                          MessageBoxButtons.YesNo,
+                                          MessageBoxIcon.Question)
         Else
-
             confirmResult = MessageBox.Show($"Confirm purchase of items totaling Php {planPrice + addedItemsTotal:F2}?",
-                                              "Confirm Purchase",
-                                              MessageBoxButtons.YesNo,
-                                              MessageBoxIcon.Question)
+                                          "Confirm Purchase",
+                                          MessageBoxButtons.YesNo,
+                                          MessageBoxIcon.Question)
         End If
-
 
         If confirmResult = DialogResult.Yes Then
             Dim purchaseSuccess As Boolean = False
@@ -532,7 +643,6 @@ Public Class Addon
                 ' This is a new subscription purchase (plan + addons)
                 purchaseSuccess = PurchaseSubscriptionWithAddons()
                 Session.userRole = "Subscriber"
-
             ElseIf Session.fromProduct = True Then
                 ' Buying addons directly (from Products tab)
                 purchaseSuccess = PurchaseAddonsDirectly()
@@ -542,6 +652,7 @@ Public Class Addon
             End If
 
             If purchaseSuccess Then
+                ' Stock will be automatically reduced by the database trigger
                 ClearAllQuantities() ' Clear after successful purchase
             End If
         End If
@@ -721,12 +832,19 @@ Public Class Addon
                 hasItems = True
                 Dim actualAddonId As Integer = addonIndex + 1 ' addon_ids are 1-15
 
-                If AddToCartDatabase(Session.UserId, actualAddonId, quantity) Then
-                    successCount += 1
+                ' Check stock before adding to cart
+                If CheckStockForCart(actualAddonId, quantity) Then
+                    If AddToCartDatabase(Session.UserId, actualAddonId, quantity) Then
+                        successCount += 1
+                    Else
+                        ' Get product name for failed item
+                        Dim productName As String = GetProductNameByAddonId(actualAddonId)
+                        failedItems.Add(productName)
+                    End If
                 Else
-                    ' Get product name for failed item
+                    ' Stock check failed - item not added
                     Dim productName As String = GetProductNameByAddonId(actualAddonId)
-                    failedItems.Add(productName)
+                    failedItems.Add(productName & " (Stock issue)")
                 End If
             End If
         Next
@@ -738,8 +856,13 @@ Public Class Addon
                 txtTotal.Text = "Php " & total.ToString("F2")
                 ClearAllQuantities() ' Clear after successful cart addition
             Else
-                MessageBox.Show("Some items failed to add to cart: " & String.Join(", ", failedItems),
+                If successCount > 0 Then
+                    MessageBox.Show($"{successCount} items added successfully. Some items failed to add to cart: " & String.Join(", ", failedItems),
                            "Partial Success", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Else
+                    MessageBox.Show("No items were added to cart due to stock issues: " & String.Join(", ", failedItems),
+                           "Add to Cart Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
             End If
         Else
             MessageBox.Show("No items selected to add to cart!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)

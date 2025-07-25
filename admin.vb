@@ -2677,67 +2677,85 @@ Public Class Admin
 
             con.Open()
 
-            ' Query to get income and expenses within date range - Updated for correct column names
+            ' Query to get income and expenses within date range - Updated to handle stock adjustments
             Dim query As String = "
+        SELECT 
+            transaction_date,
+            transaction_type,
+            description,
+            CASE WHEN transaction_type IN ('Plan Payment', 'Addon Purchase') THEN amount ELSE 0 END as income,
+            CASE WHEN transaction_type IN ('Salary Payment', 'Hardware Expense', 'Stock Adjustment') THEN ABS(amount) ELSE 0 END as expense,
+            amount
+        FROM (
+            -- Plan payments (income from billing records)
             SELECT 
-                transaction_date,
-                transaction_type,
-                description,
-                CASE WHEN transaction_type IN ('Plan Payment', 'Addon Purchase') THEN amount ELSE 0 END as income,
-                CASE WHEN transaction_type IN ('Salary Payment', 'Hardware Expense') THEN amount ELSE 0 END as expense,
-                amount
-            FROM (
-                -- Plan payments (income from billing records)
-                SELECT 
-                    DATE(br.created_at) as transaction_date,
-                    'Plan Payment' as transaction_type,
-                    CONCAT('Plan billing - ', u.username, ' (', p.plan_name, ')') as description,
-                    br.total_amount as amount
-                FROM billing_records br
-                JOIN subscribers s ON br.subscriber_id = s.subscriber_id
-                JOIN users u ON s.customer_id = u.user_id
-                JOIN internet_plans p ON s.plan_id = p.plan_id
-                WHERE br.status = 'Paid' 
-                    AND DATE(br.created_at) BETWEEN @dateFrom AND @dateTo
-                
-                UNION ALL
-                
-                -- Addon purchases (income from customer addons)
-                SELECT 
-                    DATE(ca.purchase_date) as transaction_date,
-                    'Addon Purchase' as transaction_type,
-                    CONCAT('Addon - ', a.item_name, ' x', ca.quantity, ' by ', u.username) as description,
-                    (a.price * ca.quantity) as amount
-                FROM customer_addons ca
-                JOIN addons a ON ca.addon_id = a.addon_id
-                JOIN users u ON ca.customer_id = u.user_id
-                WHERE DATE(ca.purchase_date) BETWEEN @dateFrom AND @dateTo
-                
-                UNION ALL
-                
-                -- Salary payments (expenses) - includes automatic payments from triggers
-                SELECT 
-                    sp.payment_date as transaction_date,
-                    'Salary Payment' as transaction_type,
-                    CONCAT(sp.employee_type, ' - ', u.firstName, ' ', u.lastName, ' (', sp.payment_type, ') - ', sp.description) as description,
-                    sp.amount as amount
-                FROM salary_payments sp
-                JOIN users u ON sp.employee_id = u.user_id
-                WHERE sp.payment_date BETWEEN @dateFrom AND @dateTo
-                
-                UNION ALL
-                
-                -- Hardware expenses (when stock is added) - Updated column names
-                SELECT 
-                    he.expense_date as transaction_date,
-                    'Hardware Expense' as transaction_type,
-                    CONCAT('Hardware restocking - ', a.item_name, ' (Qty: ', he.quantity_added, ' @ ', FORMAT(he.estimated_cost_per_unit, 2), ' each)') as description,
-                    he.total_estimated_cost as amount
-                FROM hardware_expenses he
-                JOIN addons a ON he.addon_id = a.addon_id
-                WHERE he.expense_date BETWEEN @dateFrom AND @dateTo
-            ) as all_transactions
-            ORDER BY transaction_date DESC"
+                DATE(br.created_at) as transaction_date,
+                'Plan Payment' as transaction_type,
+                CONCAT('Plan billing - ', u.username, ' (', p.plan_name, ')') as description,
+                br.total_amount as amount
+            FROM billing_records br
+            JOIN subscribers s ON br.subscriber_id = s.subscriber_id
+            JOIN users u ON s.customer_id = u.user_id
+            JOIN internet_plans p ON s.plan_id = p.plan_id
+            WHERE br.status = 'Paid' 
+                AND DATE(br.created_at) BETWEEN @dateFrom AND @dateTo
+            
+            UNION ALL
+            
+            -- Addon purchases (income from customer addons)
+            SELECT 
+                DATE(ca.purchase_date) as transaction_date,
+                'Addon Purchase' as transaction_type,
+                CONCAT('Addon - ', a.item_name, ' x', ca.quantity, ' by ', u.username) as description,
+                (a.price * ca.quantity) as amount
+            FROM customer_addons ca
+            JOIN addons a ON ca.addon_id = a.addon_id
+            JOIN users u ON ca.customer_id = u.user_id
+            WHERE DATE(ca.purchase_date) BETWEEN @dateFrom AND @dateTo
+            
+            UNION ALL
+            
+            -- Salary payments (expenses)
+            SELECT 
+                sp.payment_date as transaction_date,
+                'Salary Payment' as transaction_type,
+                CONCAT(sp.employee_type, ' - ', u.firstName, ' ', u.lastName, ' (', sp.payment_type, ') - ', sp.description) as description,
+                sp.amount as amount
+            FROM salary_payments sp
+            JOIN users u ON sp.employee_id = u.user_id
+            WHERE sp.payment_date BETWEEN @dateFrom AND @dateTo
+            
+            UNION ALL
+            
+            -- Hardware expenses - Stock additions (positive values)
+            SELECT 
+                he.expense_date as transaction_date,
+                'Hardware Expense' as transaction_type,
+                CONCAT('Hardware restocking - ', a.item_name, ' (Qty: +', he.quantity_added, ' @ ', FORMAT(he.estimated_cost_per_unit, 2), ' each)') as description,
+                he.total_estimated_cost as amount
+            FROM hardware_expenses he
+            JOIN addons a ON he.addon_id = a.addon_id
+            WHERE he.expense_date BETWEEN @dateFrom AND @dateTo
+                AND he.quantity_added > 0
+            
+            UNION ALL
+            
+            -- Stock adjustments - Stock reductions (negative values shown as adjustments)
+            SELECT 
+                he.expense_date as transaction_date,
+                'Stock Adjustment' as transaction_type,
+                CONCAT('Stock correction - ', a.item_name, ' (Qty: ', he.quantity_added, ' @ ', FORMAT(he.estimated_cost_per_unit, 2), ' each) - ', 
+                    CASE 
+                        WHEN he.notes LIKE '%correction%' OR he.notes LIKE '%adjustment%' THEN 'Inventory correction'
+                        ELSE 'Stock reduction'
+                    END) as description,
+                he.total_estimated_cost as amount
+            FROM hardware_expenses he
+            JOIN addons a ON he.addon_id = a.addon_id
+            WHERE he.expense_date BETWEEN @dateFrom AND @dateTo
+                AND he.quantity_added < 0
+        ) as all_transactions
+        ORDER BY transaction_date DESC"
 
             Dim cmd As New MySqlCommand(query, con)
             cmd.Parameters.AddWithValue("@dateFrom", dateFrom.ToString("yyyy-MM-dd"))
@@ -2748,12 +2766,13 @@ Public Class Admin
             adapter.Fill(dt)
             con.Close()
 
-            ' Add summary row
+            ' Add summary row - Updated calculation to handle negative adjustments properly
             Dim totalIncome As Decimal = 0
             Dim totalExpense As Decimal = 0
 
             For Each row As DataRow In dt.Rows
                 totalIncome += Convert.ToDecimal(row("income"))
+                ' For expenses, use absolute value to ensure positive display
                 totalExpense += Convert.ToDecimal(row("expense"))
             Next
 
@@ -2785,7 +2804,7 @@ Public Class Admin
 
             If dgv.Columns.Contains("description") Then
                 dgv.Columns("description").HeaderText = "Description"
-                dgv.Columns("description").Width = 200
+                dgv.Columns("description").Width = 250
             End If
 
             If dgv.Columns.Contains("income") Then
@@ -2808,31 +2827,22 @@ Public Class Admin
                 dgv.Columns("amount").DefaultCellStyle.Format = "C2"
             End If
 
-            ' Highlight summary row
+            ' Highlight summary row and format stock adjustment rows
             If dt.Rows.Count > 0 Then
                 dgv.Rows(0).DefaultCellStyle.BackColor = Color.LightGray
                 dgv.Rows(0).DefaultCellStyle.Font = New Font(dgv.Font, FontStyle.Bold)
+
+                ' Color code stock adjustments differently
+                For i As Integer = 1 To dgv.Rows.Count - 1
+                    If dgv.Rows(i).Cells("transaction_type").Value?.ToString() = "Stock Adjustment" Then
+                        dgv.Rows(i).DefaultCellStyle.BackColor = Color.LightYellow
+                    End If
+                Next
             End If
 
         Catch ex As Exception
             If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
             MessageBox.Show("Error loading income & expenses report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    ' Data Loading Methods
-    Private Sub LoadUsersData(dgv As DataGridView)
-        Try
-            con.Open()
-            Dim cmd As New MySqlCommand("SELECT user_id, username, role, firstName, lastName, email, is_active FROM users", con)
-            Dim adapter As New MySqlDataAdapter(cmd)
-            Dim dt As New DataTable()
-            adapter.Fill(dt)
-            dgv.DataSource = dt
-            con.Close()
-        Catch ex As Exception
-            If con.State = ConnectionState.Open Then con.Close()
-            MessageBox.Show("Error loading users: " & ex.Message)
         End Try
     End Sub
 
