@@ -229,6 +229,7 @@ Public Class subscribers
 
     Private Sub subscribers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Session.subscriberAccess = True
 
         receivID = Session.SubscriberId
         TextBox1.Text = receivID

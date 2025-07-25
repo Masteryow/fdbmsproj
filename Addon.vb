@@ -106,7 +106,7 @@ Public Class Addon
             ' From Products tab - show cart total from database
 
             total = cartTotal + addedItemsTotal
-        ElseIf Session.IsNewSubscription Then
+        ElseIf Session.preSubscriber Then
             ' New subscription - include plan price + addons
 
             total = planPrice + addedItemsTotal
@@ -412,18 +412,18 @@ Public Class Addon
         If Session.fromProduct = False Then
 
 
-            addedItemsTotal = planPrice
+            total = planPrice
 
         Else
-            addedItemsTotal = 0
+            total = 0
         End If
         ' txtTotal.Text = "Php " & total.ToString("F2")
-        TextBox3.Text = "Php " & addedItemsTotal.ToString("F2")
+        TextBox3.Text = "Php " & total.ToString("F2")
     End Sub
 
     Private Sub form_closing(sender As Object, e As EventArgs) Handles MyBase.FormClosing
 
-        If Session.IsNewSubscription Then
+        If Session.preSubscriber Then
             Try
                 Using con As New MySqlConnection(strCon)
                     con.Open()
@@ -449,12 +449,15 @@ Public Class Addon
 
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
             HelpToolStripMenuItem.Visible = False
+
+        Else
+
             SubscriptionToolStripMenuItem.Visible = False
         End If
 
         Session.CheckTransactionTimeout()
 
-        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False AndAlso Session.IsNewSubscription = False Then
+        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False AndAlso Session.preSubscriber = False Then
             ' Check if user is an existing subscriber
             If Session.SubscriberId > 0 Then
                 ' Existing subscriber - allow them to view addons
@@ -497,7 +500,7 @@ Public Class Addon
             skylinkProduct.Location = New Point(15, 50)
             skylinkProduct.ForeColor = Color.White
             Me.Controls.Add(skylinkProduct)
-        ElseIf Session.IsNewSubscription = True Then
+        ElseIf Session.preSubscriber = True Then
             total = planPrice + cartTotal
             txtTotal.Text = "Php " & total.ToString("F2")
             TextBox3.Text = "Php " & total.ToString("F2")
@@ -638,7 +641,7 @@ Public Class Addon
             End If
         Next
 
-        If Not hasSelectedItems AndAlso Not Session.IsNewSubscription Then
+        If Not hasSelectedItems AndAlso Not Session.preSubscriber Then
             MessageBox.Show("Please select at least one item to purchase!", "No Items Selected", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
@@ -675,10 +678,10 @@ Public Class Addon
         If confirmResult = DialogResult.Yes Then
             Dim purchaseSuccess As Boolean = False
 
-            If Session.IsNewSubscription Then
+            If Session.preSubscriber Then
                 ' This is a new subscription purchase (plan + addons)
                 purchaseSuccess = PurchaseSubscriptionWithAddons()
-                Session.userRole = "Subscriber"
+
             ElseIf Session.fromProduct = True Then
                 ' Buying addons directly (from Products tab)
                 purchaseSuccess = PurchaseAddonsDirectly()
@@ -687,7 +690,8 @@ Public Class Addon
                 purchaseSuccess = PurchaseAddonsForExistingSubscriber()
             End If
 
-            If purchaseSuccess AndAlso Session.IsNewSubscription Then
+            If purchaseSuccess AndAlso Session.preSubscriber Then
+                Session.userRole = "Subscriber"
                 subscribers.Show()
                 Me.Close()
                 ClearAllQuantities()

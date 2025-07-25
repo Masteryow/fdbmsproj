@@ -20,7 +20,8 @@
     Public Shared Property planPrice As Decimal
     Public Shared Property userRole As String
     Public Shared Property fromProduct As Boolean
-
+    Public Shared Property subscriberAccess As Boolean
+    Public Shared Property preSubscriber As Boolean 'for ui control in product/addons
     Public Shared Property technicianID As Integer = 2 'for debug, remove if final
     ' Transaction Management Properties
     Public Shared Property TransactionId As String

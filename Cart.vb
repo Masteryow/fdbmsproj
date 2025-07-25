@@ -17,16 +17,28 @@ Public Class Cart
 
     Dim total As Decimal
     Dim itemTotal As Decimal
-    Dim deletionMode = False
-
+    Dim deletionMode As Boolean = False
+    Dim planName As String = Session.planName
+    Dim planType As String = Session.planType
+    Dim planSpeed As String = Session.planSpeed
+    Dim data_cap As String = Session.planDataCap
+    Dim price As Decimal = Session.planPrice
+    Dim status As String = Session.subStatus
     Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
-
+        TextBox1.Text = Session.planName
+        TextBox2.Text = Session.planType
+        TextBox3.Text = Session.planPrice
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
             HelpToolStripMenuItem.Visible = False
+
+        Else
             SubscriptionToolStripMenuItem.Visible = False
         End If
 
-        DisplayPlanDetails()             ' Show selected plan if exists
+        If Session.preSubscriber = True Then
+            DisplayPlanDetails()
+        End If
+        ' Show selected plan if exists
         LoadCartFromDatabase()          ' Load actual cart items from DB (hardware only)
         RefreshCartDisplay()            ' Display them in CheckedListBox
         UpdateTotal()
@@ -36,7 +48,7 @@ Public Class Cart
         btnClearCart.Visible = False
 
         ' Handle different user types
-        If Session.fromProduct = False AndAlso Session.IsNewSubscription = False Then
+        If Session.fromProduct = False AndAlso Session.preSubscriber = False Then
             ' Existing subscriber accessing cart
             btnCancelOrder.Visible = False ' Don't show cancel for existing subscribers
         ElseIf Session.fromProduct = False Then
@@ -145,11 +157,11 @@ Public Class Cart
 
     Private Sub DisplayPlanDetails()
         ' Display plan information if coming from a plan selection (new subscribers only)
-        If Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Not String.IsNullOrEmpty(Session.planName) Then
+        If Not Session.fromProduct AndAlso Session.preSubscriber AndAlso Not String.IsNullOrEmpty(Session.planName) Then
             Dim planInfo As String = $"Selected Plan: {Session.planName} - {Session.planType} - Php {Session.planPrice:F2}"
             CheckedListBox1.Items.Add($"PLAN: {Session.planName} - {Session.planType} - Php {Session.planPrice:F2}")
             CheckedListBox1.SetItemCheckState(0, CheckState.Indeterminate) ' Make it non-selectable
-        ElseIf Not Session.fromProduct AndAlso Not Session.IsNewSubscription AndAlso Session.SubscriberId > 0 Then
+        ElseIf Not Session.fromProduct AndAlso Not Session.preSubscriber AndAlso Session.SubscriberId > 0 Then
             ' Existing subscriber - show their current plan info
             Try
                 Using con As New MySqlConnection(strCon)
@@ -180,9 +192,12 @@ Public Class Cart
     Private Sub RefreshCartDisplay()
         ' Clear only cart items, keep plan/subscriber info if it exists
         Dim startIndex As Integer = 0
-        If (Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Not String.IsNullOrEmpty(Session.planName)) OrElse
-   (Not Session.fromProduct AndAlso Not Session.IsNewSubscription AndAlso Session.SubscriberId > 0) Then
+        If Session.preSubscriber = True Then
             startIndex = 1 ' Keep the plan/subscriber info item
+
+        ElseIf Session.subscriberAccess = True Then
+
+            startIndex = 0
         Else
             CheckedListBox1.Items.Clear()
         End If
@@ -242,7 +257,7 @@ Public Class Cart
         Dim total As Decimal = 0
 
         ' Add plan price only for new subscriptions
-        If Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Session.planPrice > 0 Then
+        If Not Session.fromProduct AndAlso Session.preSubscriber AndAlso Session.planPrice > 0 Then
             total += Session.planPrice
         End If
         ' For existing subscribers, don't add plan price - they're only buying addons
@@ -254,15 +269,14 @@ Public Class Cart
             End If
         Next
 
-        ' Display total in TextBox1
-        txtTotal.Text = "Php " & total.ToString("F2")
+
     End Sub
 
     Public Function GetCartTotal() As Decimal
         Dim cartTotal As Decimal = 0
 
         ' Add plan price only for new subscriptions
-        If Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Session.planPrice > 0 Then
+        If Not Session.fromProduct AndAlso Session.preSubscriber AndAlso Session.planPrice > 0 Then
             cartTotal += Session.planPrice
         End If
         ' For existing subscribers, don't add plan price
@@ -283,9 +297,12 @@ Public Class Cart
         Dim startIndex As Integer = 0
 
         ' Skip plan/subscriber info item if it exists
-        If (Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Not String.IsNullOrEmpty(Session.planName)) OrElse
-           (Not Session.fromProduct AndAlso Not Session.IsNewSubscription AndAlso Session.SubscriberId > 0) Then
+        If Session.preSubscriber = True Then
             startIndex = 1
+
+        ElseIf Session.subscriberAccess = True Then
+
+            startIndex = 0
         End If
 
         ' Get selected cart items - ONLY HARDWARE ADDONS (ID 1-5)
@@ -311,14 +328,15 @@ Public Class Cart
         Dim startIndex As Integer = 0
 
         ' Add plan price only for new subscriptions
-        If Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Session.planPrice > 0 Then
+        If Not Session.fromProduct AndAlso Session.preSubscriber AndAlso Session.planPrice > 0 Then
             selectedTotal += Session.planPrice
         End If
 
         ' Skip plan/subscriber info item if it exists
-        If (Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Not String.IsNullOrEmpty(Session.planName)) OrElse
-           (Not Session.fromProduct AndAlso Not Session.IsNewSubscription AndAlso Session.SubscriberId > 0) Then
+        If Session.preSubscriber = True Then
             startIndex = 1
+        Else
+            startIndex = 0
         End If
 
         ' Add only selected cart items - ONLY HARDWARE ADDONS (ID 1-5)
@@ -340,7 +358,7 @@ Public Class Cart
 
     Private Sub RemoveSelectedItems()
         ' Check transaction validity only for new subscriptions
-        If Session.IsNewSubscription Then
+        If Session.preSubscriber Then
             Session.CheckTransactionTimeout()
             If Not Session.IsTransactionActive Then
                 MessageBox.Show("Session expired. Please select a plan again.")
@@ -353,9 +371,12 @@ Public Class Cart
         Dim startIndex As Integer = 0
 
         ' Skip plan/subscriber info item if it exists
-        If (Not Session.fromProduct AndAlso Session.IsNewSubscription AndAlso Not String.IsNullOrEmpty(Session.planName)) OrElse
-       (Not Session.fromProduct AndAlso Not Session.IsNewSubscription AndAlso Session.SubscriberId > 0) Then
+        If Session.preSubscriber = True Then
             startIndex = 1
+
+        ElseIf Session.subscriberAccess = True Then
+            startIndex = 0
+
         End If
 
         ' Get selected items (skip plan/subscriber info item) - ONLY HARDWARE ADDONS
@@ -398,6 +419,8 @@ Public Class Cart
             End Using
 
             RefreshCartDisplay()
+
+
             UpdateTotal()
             MessageBox.Show("Selected hardware items removed from cart!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -408,14 +431,14 @@ Public Class Cart
 
     Public Sub ClearCart()
         ' Check transaction validity only for new subscriptions
-        If Session.IsNewSubscription Then
-            Session.CheckTransactionTimeout()
-            If Not Session.IsTransactionActive Then
-                MessageBox.Show("Session expired. Please select a plan again.")
-                ReturnToPlanSelection()
-                Return
-            End If
-        End If
+        '     If Session.IsNewSubscription Then
+        ' Session.CheckTransactionTimeout()
+        ' If Not Session.IsTransactionActive Then
+        ' MessageBox.Show("Session expired. Please select a plan again.")
+        '  ReturnToPlanSelection()
+        '  Return
+        '  End If
+        '  End If
 
         Try
             Using con As New MySqlConnection(strCon)
@@ -430,7 +453,10 @@ Public Class Cart
 
             cartItems.Clear()
             CheckedListBox1.Items.Clear()
-            DisplayPlanDetails() ' Re-add plan/subscriber info if applicable
+            If Session.preSubscriber = True Then
+                DisplayPlanDetails()
+            End If
+            ' Re-add plan/subscriber info if applicable
             UpdateTotal()
             MessageBox.Show("Hardware cart items cleared!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -441,13 +467,24 @@ Public Class Cart
 
     ' Button event handlers
     Private Sub btnRemoveSelected_Click(sender As Object, e As EventArgs) Handles btnDeletionMode.Click
-        If CheckedListBox1.Items.Count = 1 AndAlso Session.fromProduct = False Then
-            MsgBox("There are no hardware items to delete")
-            Return
-        ElseIf CheckedListBox1.Items.Count = 0 AndAlso Session.fromProduct = True Then
-            MsgBox("There are no hardware items to delete")
-            Return
+
+        If Session.preSubscriber = True Then
+            If CheckedListBox1.Items.Count = 1 Then
+                MsgBox("There is no item to delete")
+                Return
+
+            End If
+
+        ElseIf Session.subscriberAccess = True OrElse Session.fromProduct = True Then
+
+            If CheckedListBox1.Items.Count = 0 Then
+                MsgBox("There is no item to delete")
+                Return
+
+            End If
+
         End If
+
 
         btnCheck.Visible = True
         btnDM.Visible = True
@@ -457,12 +494,13 @@ Public Class Cart
         btnDeletionMode.Enabled = False
         btnDM.Enabled = True
 
-        If Session.fromProduct = False Then
+        If Session.preSubscriber = True Then
             For i As Integer = 1 To CheckedListBox1.Items.Count - 1
                 CheckedListBox1.SetItemChecked(i, False)
             Next
             total = Session.planPrice
-        Else
+        ElseIf Session.fromProduct = True OrElse Session.subscriberAccess = True Then
+
             For i As Integer = 0 To CheckedListBox1.Items.Count - 1
                 CheckedListBox1.SetItemChecked(i, False)
             Next
@@ -497,7 +535,7 @@ Public Class Cart
         Dim selectedItems As List(Of CartItem) = GetSelectedCartItems()
 
         ' Check if we have items to process
-        If selectedItems.Count = 0 AndAlso (Session.fromProduct OrElse (Not Session.IsNewSubscription AndAlso Session.planPrice = 0)) Then
+        If selectedItems.Count = 0 AndAlso (Session.fromProduct OrElse (Not Session.preSubscriber AndAlso Session.planPrice = 0)) Then
             MessageBox.Show("Please select hardware items to checkout!", "No Items Selected", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
@@ -550,7 +588,7 @@ Public Class Cart
         If Session.fromProduct = True Then
             ' Direct product purchase - selected items only
             purchaseSuccess = ProcessSelectedDirectPurchase(selectedItems)
-        ElseIf Session.IsNewSubscription Then
+        ElseIf Session.preSubscriber Then
             ' Plan with selected addons purchase
             purchaseSuccess = ProcessPlanWithSelectedAddonsPurchase(selectedItems)
             Session.userRole = "Subscriber"
@@ -570,7 +608,7 @@ Public Class Cart
             MessageBox.Show(resultMessage, "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             ' Payment successful - complete transaction and remove only purchased items
-            If Session.IsNewSubscription Then
+            If Session.preSubscriber Then
                 Session.EndTransaction(True)
             End If
 
@@ -581,7 +619,14 @@ Public Class Cart
             RefreshCartDisplay()
             UpdateTotal()
 
-            If Session.userRole = "Subscriber" Then
+            If Session.IsNewSubscription = True Then
+
+                Session.planName = planName
+                Session.planType = planType
+                Session.planSpeed = planSpeed
+                Session.planDataCap = data_cap
+                Session.planPrice = price
+                Session.subStatus = status
                 subscribers.Show()
 
             Else
@@ -830,7 +875,7 @@ Public Class Cart
 
     Private Sub form_closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         ' Only clear cart and end transaction for new subscriptions
-        If Session.IsNewSubscription Then
+        If Session.preSubscriber Then
             Try
                 Using con As New MySqlConnection(strCon)
                     con.Open()
@@ -899,17 +944,17 @@ Public Class Cart
     End Sub
 
     Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
-        If Session.fromProduct = False Then
+        If Session.preSubscriber = True Then
             If CheckedListBox1.SelectedIndex = 0 Then
                 MsgBox("Plan cannot be deleted")
                 Return
             End If
         End If
 
-        If CheckedListBox1.CheckedItems.Count = 1 AndAlso Session.fromProduct = False Then
+        If CheckedListBox1.CheckedItems.Count = 1 AndAlso Session.preSubscriber = True Then
             MessageBox.Show("Please select hardware items to remove!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
-        ElseIf CheckedListBox1.CheckedItems.Count = 0 AndAlso Session.fromProduct = True Then
+        ElseIf CheckedListBox1.CheckedItems.Count = 0 AndAlso (Session.fromProduct = True OrElse Session.subscriberAccess = True) Then
             MessageBox.Show("Please select hardware items to remove!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
@@ -931,11 +976,11 @@ Public Class Cart
 
         RemoveHandler CheckedListBox1.ItemCheck, AddressOf CheckedListBox1_ItemCheck
 
-        If Session.fromProduct = False Then
+        If Session.preSubscriber = True Then
             For i As Integer = 1 To CheckedListBox1.Items.Count - 1
                 CheckedListBox1.SetItemChecked(i, False)
             Next
-        ElseIf Session.fromProduct = True Then
+        ElseIf Session.subscriberAccess = True OrElse Session.fromProduct = True Then
             For i As Integer = 0 To CheckedListBox1.Items.Count - 1
                 CheckedListBox1.SetItemChecked(i, False)
             Next

@@ -124,9 +124,9 @@ Public Class Subscription
                         Session.planName = plan_name
                         Session.planType = plan_type
                         Session.planPrice = price
-
+                        Session.preSubscriber = True
                         Session.fromProduct = False
-                        Session.IsNewSubscription = True
+
                         Session.planSpeed = speed
                         Session.planDataCap = data_cap
 
@@ -172,12 +172,12 @@ Public Class Subscription
 
                                     Dim change As Decimal = convertedPayment - price
                                     MsgBox($"Thank you for purchasing! Here is your change {change.ToString("f2")} ")
-
+                                    Session.IsNewSubscription = True
                                 ElseIf convertedPayment = price Then
 
                                     MsgBox("Thank you for purchasing!", MsgBoxStyle.DefaultButton1, "Purchased Successfully")
                                 ElseIf convertedPayment < price Then
-
+                                    Session.IsNewSubscription = True
                                     MsgBox("Insufficient money!", MsgBoxStyle.Exclamation, "Insufficient Amount")
                                     Return
                                 End If
@@ -366,6 +366,8 @@ Public Class Subscription
     End Sub
 
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
+
+        Session.fromProduct = True
         Addon.Show()
         Me.Close()
 
