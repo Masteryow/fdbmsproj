@@ -81,19 +81,8 @@ Public Class Addon
 
     ' Modified RecalculateTotal method to handle existing subscribers properly
     Private Sub RecalculateTotal()
-        ' Calculate total based on user type and context
-        Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
-        If Session.fromProduct = True Then
-            ' From Products tab - show cart total from database
 
-            total = cartTotal
-        ElseIf Session.IsNewSubscription Then
-            ' New subscription - include plan price + addons
-            total = planPrice + cartTotal
-        Else
-            ' Existing subscriber viewing addons - start with 0 (no plan price)
 
-        End If
 
         ' Add all addon quantities across all pages
         addedItemsTotal = 0
@@ -108,7 +97,21 @@ Public Class Addon
             Next
         Next
 
+        ' Calculate total based on user type and context
 
+        Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
+        If Session.fromProduct = True Then
+            ' From Products tab - show cart total from database
+
+            total = cartTotal + addedItemsTotal
+        ElseIf Session.IsNewSubscription Then
+            ' New subscription - include plan price + addons
+
+            total = planPrice + addedItemsTotal
+        Else
+            ' Existing subscriber viewing addons - start with 0 (no plan price)
+
+        End If
 
         TextBox3.Text = "Php " & (planPrice + addedItemsTotal).ToString("F2")
 
@@ -517,6 +520,8 @@ Public Class Addon
         selectedQuantities(baseIndex + index) = txtValues(index)
 
         ' Recalculate totals
+
+
         RecalculateTotal()
     End Sub
 
