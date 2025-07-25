@@ -465,10 +465,10 @@ Public Class Addon
                 Me.Controls.Add(skylinkProduct)
             Else
                 ' No active session and not a subscriber
-                MessageBox.Show("Your session has expired. Please select a plan again.", "Session Expired", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                Subscription.Show()
-                Me.Close()
-                Return
+                'MessageBox.Show("Your session has expired. Please select a plan again.", "Session Expired", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                'Subscription.Show()
+                'Me.Close()
+                'Return
             End If
         End If
         Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
