@@ -9,6 +9,7 @@ Public Class Addon
     Dim planName As String = Session.planName
     Dim planType As String = Session.planType
     Dim planPrice As Decimal = Session.planPrice
+
     Dim txtValues(4) As Integer ' Current page display values
     Dim groupHardware() As TextBox
     Dim prices() As Integer
@@ -422,7 +423,7 @@ Public Class Addon
                 Using con As New MySqlConnection(strCon)
                     con.Open()
                     ' Only clear hardware addons (ID 1-5) from cart
-                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 5"
+                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 15"
                     Using cmd As New MySqlCommand(deleteQuery, con)
                         cmd.Parameters.AddWithValue("@customerId", Session.UserId)
                         cmd.ExecuteNonQuery()
@@ -673,7 +674,12 @@ Public Class Addon
                 purchaseSuccess = PurchaseAddonsForExistingSubscriber()
             End If
 
-            If purchaseSuccess Then
+            If purchaseSuccess AndAlso Session.IsNewSubscription Then
+                subscribers.Show()
+                Me.Close()
+                ClearAllQuantities()
+            Else
+
                 ' Stock will be automatically reduced by the database trigger
                 ClearAllQuantities() ' Clear after successful purchase
             End If
@@ -802,11 +808,17 @@ Public Class Addon
                 con.Close()
             End Try
 
+
+
+
+            Session.IsNewSubscription = True
+            Session.cashOnHand = planPrice
             Return success
 
         Else
 
             MsgBox("Please Enter A Valid Amount")
+
             success = False
             Return success
 

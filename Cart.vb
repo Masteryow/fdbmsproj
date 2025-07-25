@@ -583,6 +583,7 @@ Public Class Cart
 
             If Session.userRole = "Subscriber" Then
                 subscribers.Show()
+
             Else
                 Main.Show()
             End If
@@ -756,6 +757,11 @@ Public Class Cart
         Finally
             con.Close()
         End Try
+
+        Session.IsNewSubscription = True
+        Session.cashOnHand = Session.planPrice
+
+
 
         Return success
     End Function

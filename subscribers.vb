@@ -206,7 +206,7 @@ Public Class subscribers
 
             Dim footer As New Paragraph()
             footer.Add(New Paragraph("This report is confidential and intended solely" &
-                        "for the subscriber. Do not share or reproduce without permission.", dates) With {.Alignment = Element.ALIGN_CENTER})
+                        " for the subscriber. Do not share or reproduce without permission.", dates) With {.Alignment = Element.ALIGN_CENTER})
             crystalPDF.Add(footer)
 
             crystalPDF.Add(space)
