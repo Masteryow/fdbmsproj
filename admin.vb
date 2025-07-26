@@ -2508,6 +2508,25 @@ Public Class Admin
         .Visible = False
     }
 
+        ' Filter dropdown (positioned to the right of dtpDateFrom)
+        Dim lblFilter As New Label With {
+        .Text = "Filter:",
+        .Location = New Point(299, 15),
+        .AutoSize = True,
+        .Visible = False
+    }
+
+        Dim cmbFilter As New ComboBox With {
+        .Location = New Point(333, 11),
+        .Size = New Size(120, 25),
+        .DropDownStyle = ComboBoxStyle.DropDownList,
+        .Visible = False
+    }
+
+        ' Add filter options
+        cmbFilter.Items.AddRange({"All Transactions", "Income Only", "Expenses Only", "Stock Adjustments"})
+        cmbFilter.SelectedIndex = 0 ' Default to "All Transactions"
+
         Dim lblDateTo As New Label With {
         .Text = "To:",
         .Location = New Point(170, 15),
@@ -2614,13 +2633,17 @@ Public Class Admin
                                               lblDateTo.Visible = False
                                               dtpDateFrom.Visible = False
                                               dtpDateTo.Visible = False
+                                              lblFilter.Visible = False
+                                              cmbFilter.Visible = False
                                           Case "incomeexpenses"
-                                              LoadIncomeExpensesReport(dgvReports, dtpDateFrom.Value, dtpDateTo.Value)
+                                              LoadIncomeExpensesReport(dgvReports, dtpDateFrom.Value, dtpDateTo.Value, cmbFilter.SelectedItem.ToString())
                                               lblReports.Visible = False
                                               lblDateFrom.Visible = True
                                               lblDateTo.Visible = True
                                               dtpDateFrom.Visible = True
                                               dtpDateTo.Visible = True
+                                              lblFilter.Visible = True
+                                              cmbFilter.Visible = True
                                           Case "tickets"
                                               LoadTicketsReport(dgvReports)
                                               lblReports.Visible = True
@@ -2628,6 +2651,8 @@ Public Class Admin
                                               lblDateTo.Visible = False
                                               dtpDateFrom.Visible = False
                                               dtpDateTo.Visible = False
+                                              lblFilter.Visible = False
+                                              cmbFilter.Visible = False
                                           Case "subscribers"
                                               LoadSubscribersReport(dgvReports)
                                               lblReports.Visible = True
@@ -2635,6 +2660,8 @@ Public Class Admin
                                               lblDateTo.Visible = False
                                               dtpDateFrom.Visible = False
                                               dtpDateTo.Visible = False
+                                              lblFilter.Visible = False
+                                              cmbFilter.Visible = False
                                           Case "plans"
                                               LoadPlansReport(dgvReports)
                                               lblReports.Visible = True
@@ -2642,6 +2669,8 @@ Public Class Admin
                                               lblDateTo.Visible = False
                                               dtpDateFrom.Visible = False
                                               dtpDateTo.Visible = False
+                                              lblFilter.Visible = False
+                                              cmbFilter.Visible = False
                                       End Select
                                   End Sub
         Next
@@ -2649,23 +2678,30 @@ Public Class Admin
         ' Date picker change handlers for Income & Expenses report
         AddHandler dtpDateFrom.ValueChanged, Sub()
                                                  If currentReportType = "incomeexpenses" Then
-                                                     LoadIncomeExpensesReport(dgvReports, dtpDateFrom.Value, dtpDateTo.Value)
+                                                     LoadIncomeExpensesReport(dgvReports, dtpDateFrom.Value, dtpDateTo.Value, cmbFilter.SelectedItem.ToString())
                                                  End If
                                              End Sub
 
         AddHandler dtpDateTo.ValueChanged, Sub()
                                                If currentReportType = "incomeexpenses" Then
-                                                   LoadIncomeExpensesReport(dgvReports, dtpDateFrom.Value, dtpDateTo.Value)
+                                                   LoadIncomeExpensesReport(dgvReports, dtpDateFrom.Value, dtpDateTo.Value, cmbFilter.SelectedItem.ToString())
                                                End If
                                            End Sub
+
+        ' Filter dropdown change handler for automatic update
+        AddHandler cmbFilter.SelectedIndexChanged, Sub()
+                                                       If currentReportType = "incomeexpenses" Then
+                                                           LoadIncomeExpensesReport(dgvReports, dtpDateFrom.Value, dtpDateTo.Value, cmbFilter.SelectedItem.ToString())
+                                                       End If
+                                                   End Sub
 
         ' Load default report
         LoadEnhancedRevenueReport(dgvReports)
 
-        pnlContent.Controls.AddRange({lblReports, lblDateFrom, dtpDateFrom, lblDateTo, dtpDateTo, btnRevenueReport, btnIncomeExpensesReport, btnTicketsReport, btnSubscribersReport, btnPlansReport, dgvReports})
+        pnlContent.Controls.AddRange({lblReports, lblDateFrom, dtpDateFrom, lblFilter, cmbFilter, lblDateTo, dtpDateTo, btnRevenueReport, btnIncomeExpensesReport, btnTicketsReport, btnSubscribersReport, btnPlansReport, dgvReports})
     End Sub
 
-    Private Sub LoadIncomeExpensesReport(dgv As DataGridView, dateFrom As DateTime, dateTo As DateTime)
+    Private Sub LoadIncomeExpensesReport(dgv As DataGridView, dateFrom As DateTime, dateTo As DateTime, filterType As String)
         Try
             If con Is Nothing Then
                 con = New MySqlConnection(strcon)
@@ -2677,85 +2713,99 @@ Public Class Admin
 
             con.Open()
 
-            ' Query to get income and expenses within date range - Updated to handle stock adjustments
+            ' Build the base query with filter conditions
+            Dim whereClause As String = ""
+            Select Case filterType
+                Case "Income Only"
+                    whereClause = " AND transaction_type IN ('Plan Payment', 'Addon Purchase')"
+                Case "Expenses Only"
+                    whereClause = " AND transaction_type IN ('Salary Payment', 'Hardware Expense', 'Stock Adjustment')"
+                Case "Stock Adjustments"
+                    whereClause = " AND transaction_type = 'Stock Adjustment'"
+                Case Else ' "All Transactions"
+                    whereClause = ""
+            End Select
+
+            ' Query to get income and expenses within date range with filter
             Dim query As String = "
+    SELECT 
+        transaction_date,
+        transaction_type,
+        description,
+        CASE WHEN transaction_type IN ('Plan Payment', 'Addon Purchase') THEN amount ELSE 0 END as income,
+        CASE WHEN transaction_type IN ('Salary Payment', 'Hardware Expense', 'Stock Adjustment') THEN ABS(amount) ELSE 0 END as expense,
+        amount
+    FROM (
+        -- Plan payments (income from billing records)
         SELECT 
-            transaction_date,
-            transaction_type,
-            description,
-            CASE WHEN transaction_type IN ('Plan Payment', 'Addon Purchase') THEN amount ELSE 0 END as income,
-            CASE WHEN transaction_type IN ('Salary Payment', 'Hardware Expense', 'Stock Adjustment') THEN ABS(amount) ELSE 0 END as expense,
-            amount
-        FROM (
-            -- Plan payments (income from billing records)
-            SELECT 
-                DATE(br.created_at) as transaction_date,
-                'Plan Payment' as transaction_type,
-                CONCAT('Plan billing - ', u.username, ' (', p.plan_name, ')') as description,
-                br.total_amount as amount
-            FROM billing_records br
-            JOIN subscribers s ON br.subscriber_id = s.subscriber_id
-            JOIN users u ON s.customer_id = u.user_id
-            JOIN internet_plans p ON s.plan_id = p.plan_id
-            WHERE br.status = 'Paid' 
-                AND DATE(br.created_at) BETWEEN @dateFrom AND @dateTo
-            
-            UNION ALL
-            
-            -- Addon purchases (income from customer addons)
-            SELECT 
-                DATE(ca.purchase_date) as transaction_date,
-                'Addon Purchase' as transaction_type,
-                CONCAT('Addon - ', a.item_name, ' x', ca.quantity, ' by ', u.username) as description,
-                (a.price * ca.quantity) as amount
-            FROM customer_addons ca
-            JOIN addons a ON ca.addon_id = a.addon_id
-            JOIN users u ON ca.customer_id = u.user_id
-            WHERE DATE(ca.purchase_date) BETWEEN @dateFrom AND @dateTo
-            
-            UNION ALL
-            
-            -- Salary payments (expenses)
-            SELECT 
-                sp.payment_date as transaction_date,
-                'Salary Payment' as transaction_type,
-                CONCAT(sp.employee_type, ' - ', u.firstName, ' ', u.lastName, ' (', sp.payment_type, ') - ', sp.description) as description,
-                sp.amount as amount
-            FROM salary_payments sp
-            JOIN users u ON sp.employee_id = u.user_id
-            WHERE sp.payment_date BETWEEN @dateFrom AND @dateTo
-            
-            UNION ALL
-            
-            -- Hardware expenses - Stock additions (positive values)
-            SELECT 
-                he.expense_date as transaction_date,
-                'Hardware Expense' as transaction_type,
-                CONCAT('Hardware restocking - ', a.item_name, ' (Qty: +', he.quantity_added, ' @ ', FORMAT(he.estimated_cost_per_unit, 2), ' each)') as description,
-                he.total_estimated_cost as amount
-            FROM hardware_expenses he
-            JOIN addons a ON he.addon_id = a.addon_id
-            WHERE he.expense_date BETWEEN @dateFrom AND @dateTo
-                AND he.quantity_added > 0
-            
-            UNION ALL
-            
-            -- Stock adjustments - Stock reductions (negative values shown as adjustments)
-            SELECT 
-                he.expense_date as transaction_date,
-                'Stock Adjustment' as transaction_type,
-                CONCAT('Stock correction - ', a.item_name, ' (Qty: ', he.quantity_added, ' @ ', FORMAT(he.estimated_cost_per_unit, 2), ' each) - ', 
-                    CASE 
-                        WHEN he.notes LIKE '%correction%' OR he.notes LIKE '%adjustment%' THEN 'Inventory correction'
-                        ELSE 'Stock reduction'
-                    END) as description,
-                he.total_estimated_cost as amount
-            FROM hardware_expenses he
-            JOIN addons a ON he.addon_id = a.addon_id
-            WHERE he.expense_date BETWEEN @dateFrom AND @dateTo
-                AND he.quantity_added < 0
-        ) as all_transactions
-        ORDER BY transaction_date DESC"
+            DATE(br.created_at) as transaction_date,
+            'Plan Payment' as transaction_type,
+            CONCAT('Plan billing - ', u.username, ' (', p.plan_name, ')') as description,
+            br.total_amount as amount
+        FROM billing_records br
+        JOIN subscribers s ON br.subscriber_id = s.subscriber_id
+        JOIN users u ON s.customer_id = u.user_id
+        JOIN internet_plans p ON s.plan_id = p.plan_id
+        WHERE br.status = 'Paid' 
+            AND DATE(br.created_at) BETWEEN @dateFrom AND @dateTo
+        
+        UNION ALL
+        
+        -- Addon purchases (income from customer addons)
+        SELECT 
+            DATE(ca.purchase_date) as transaction_date,
+            'Addon Purchase' as transaction_type,
+            CONCAT('Addon - ', a.item_name, ' x', ca.quantity, ' by ', u.username) as description,
+            (a.price * ca.quantity) as amount
+        FROM customer_addons ca
+        JOIN addons a ON ca.addon_id = a.addon_id
+        JOIN users u ON ca.customer_id = u.user_id
+        WHERE DATE(ca.purchase_date) BETWEEN @dateFrom AND @dateTo
+        
+        UNION ALL
+        
+        -- Salary payments (expenses)
+        SELECT 
+            sp.payment_date as transaction_date,
+            'Salary Payment' as transaction_type,
+            CONCAT(sp.employee_type, ' - ', u.firstName, ' ', u.lastName, ' (', sp.payment_type, ') - ', sp.description) as description,
+            sp.amount as amount
+        FROM salary_payments sp
+        JOIN users u ON sp.employee_id = u.user_id
+        WHERE sp.payment_date BETWEEN @dateFrom AND @dateTo
+        
+        UNION ALL
+        
+        -- Hardware expenses - Stock additions (positive values)
+        SELECT 
+            he.expense_date as transaction_date,
+            'Hardware Expense' as transaction_type,
+            CONCAT('Hardware restocking - ', a.item_name, ' (Qty: +', he.quantity_added, ' @ ', FORMAT(he.estimated_cost_per_unit, 2), ' each)') as description,
+            he.total_estimated_cost as amount
+        FROM hardware_expenses he
+        JOIN addons a ON he.addon_id = a.addon_id
+        WHERE he.expense_date BETWEEN @dateFrom AND @dateTo
+            AND he.quantity_added > 0
+        
+        UNION ALL
+        
+        -- Stock adjustments - Stock reductions (negative values shown as adjustments)
+        SELECT 
+            he.expense_date as transaction_date,
+            'Stock Adjustment' as transaction_type,
+            CONCAT('Stock correction - ', a.item_name, ' (Qty: ', he.quantity_added, ' @ ', FORMAT(he.estimated_cost_per_unit, 2), ' each) - ', 
+                CASE 
+                    WHEN he.notes LIKE '%correction%' OR he.notes LIKE '%adjustment%' THEN 'Inventory correction'
+                    ELSE 'Stock reduction'
+                END) as description,
+            he.total_estimated_cost as amount
+        FROM hardware_expenses he
+        JOIN addons a ON he.addon_id = a.addon_id
+        WHERE he.expense_date BETWEEN @dateFrom AND @dateTo
+            AND he.quantity_added < 0
+    ) as all_transactions
+    WHERE 1=1" & whereClause & "
+    ORDER BY transaction_date DESC"
 
             Dim cmd As New MySqlCommand(query, con)
             cmd.Parameters.AddWithValue("@dateFrom", dateFrom.ToString("yyyy-MM-dd"))
@@ -2776,11 +2826,11 @@ Public Class Admin
                 totalExpense += Convert.ToDecimal(row("expense"))
             Next
 
-            ' Add summary row
+            ' Add summary row with filter information
             Dim summaryRow As DataRow = dt.NewRow()
             summaryRow("transaction_date") = DBNull.Value
             summaryRow("transaction_type") = "SUMMARY"
-            summaryRow("description") = $"Period: {dateFrom.ToShortDateString()} to {dateTo.ToShortDateString()}"
+            summaryRow("description") = $"Period: {dateFrom.ToShortDateString()} to {dateTo.ToShortDateString()} | Filter: {filterType}"
             summaryRow("income") = totalIncome
             summaryRow("expense") = totalExpense
             summaryRow("amount") = totalIncome - totalExpense
@@ -2805,6 +2855,7 @@ Public Class Admin
             If dgv.Columns.Contains("description") Then
                 dgv.Columns("description").HeaderText = "Description"
                 dgv.Columns("description").Width = 250
+                dgv.Columns("description").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             End If
 
             If dgv.Columns.Contains("income") Then
@@ -2832,11 +2883,16 @@ Public Class Admin
                 dgv.Rows(0).DefaultCellStyle.BackColor = Color.LightGray
                 dgv.Rows(0).DefaultCellStyle.Font = New Font(dgv.Font, FontStyle.Bold)
 
-                ' Color code stock adjustments differently
+                ' Color code different transaction types
                 For i As Integer = 1 To dgv.Rows.Count - 1
-                    If dgv.Rows(i).Cells("transaction_type").Value?.ToString() = "Stock Adjustment" Then
-                        dgv.Rows(i).DefaultCellStyle.BackColor = Color.LightYellow
-                    End If
+                    Select Case dgv.Rows(i).Cells("transaction_type").Value?.ToString()
+                        Case "Stock Adjustment"
+                            dgv.Rows(i).DefaultCellStyle.BackColor = Color.LightYellow
+                        Case "Plan Payment", "Addon Purchase"
+                            dgv.Rows(i).DefaultCellStyle.BackColor = Color.LightGreen
+                        Case "Salary Payment", "Hardware Expense"
+                            dgv.Rows(i).DefaultCellStyle.BackColor = Color.LightPink
+                    End Select
                 Next
             End If
 
