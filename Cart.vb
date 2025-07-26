@@ -624,7 +624,7 @@ Public Class Cart
             RefreshCartDisplay()
             UpdateTotal()
 
-            If Session.IsNewSubscription = True Then
+            If Session.userRole = "Subscriber" Then
 
                 Session.planName = planName
                 Session.planType = planType
