@@ -113,7 +113,9 @@ Public Class Addon
 
             total = planPrice + cartTotal
 
-        Else
+        ElseIf Session.userRole = "Subscriber" Then
+
+            total = cartTotal
             ' Existing subscriber viewing addons - start with 0 (no plan price)
 
         End If

@@ -228,6 +228,9 @@ Public Class subscribers
     End Sub
 
     Private Sub subscribers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
+
         Session.subscriberAccess = True
         Session.preSubscriber = False
 
