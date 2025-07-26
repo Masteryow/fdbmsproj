@@ -52,56 +52,57 @@ Partial Class subscribers
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.ToolStripMenuItem1, Me.ProductsToolStripMenuItem, Me.HomeToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
+        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(815, 28)
+        Me.MenuStrip1.Size = New System.Drawing.Size(611, 24)
         Me.MenuStrip1.TabIndex = 2
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'HomeToolStripMenuItem
         '
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(84, 24)
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(68, 20)
         Me.HomeToolStripMenuItem.Text = "About Us"
         '
         'SubscriptionToolStripMenuItem
         '
         Me.SubscriptionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
         Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
-        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(55, 24)
+        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.SubscriptionToolStripMenuItem.Text = "Help"
         '
         'TicketsToolStripMenuItem
         '
         Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
         Me.TicketsToolStripMenuItem.Text = "Tickets"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(50, 24)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(41, 20)
         Me.ToolStripMenuItem1.Text = "Cart"
         '
         'ProductsToolStripMenuItem
         '
         Me.ProductsToolStripMenuItem.Name = "ProductsToolStripMenuItem"
-        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(80, 24)
+        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(66, 20)
         Me.ProductsToolStripMenuItem.Text = "Products"
         '
         'HomeToolStripMenuItem1
         '
         Me.HomeToolStripMenuItem1.Name = "HomeToolStripMenuItem1"
-        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(64, 24)
+        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(52, 20)
         Me.HomeToolStripMenuItem1.Text = "Home"
         '
         'lblUser
         '
         Me.lblUser.AutoSize = True
         Me.lblUser.Font = New System.Drawing.Font("Palatino Linotype", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblUser.Location = New System.Drawing.Point(61, 54)
+        Me.lblUser.Location = New System.Drawing.Point(46, 44)
+        Me.lblUser.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblUser.Name = "lblUser"
-        Me.lblUser.Size = New System.Drawing.Size(203, 46)
+        Me.lblUser.Size = New System.Drawing.Size(167, 37)
         Me.lblUser.TabIndex = 3
         Me.lblUser.Text = "placeholder"
         '
@@ -112,9 +113,10 @@ Partial Class subscribers
         '
         Me.lblStatus.AutoSize = True
         Me.lblStatus.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblStatus.Location = New System.Drawing.Point(65, 106)
+        Me.lblStatus.Location = New System.Drawing.Point(49, 86)
+        Me.lblStatus.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(74, 27)
+        Me.lblStatus.Size = New System.Drawing.Size(61, 22)
         Me.lblStatus.TabIndex = 4
         Me.lblStatus.Text = "Status:"
         '
@@ -122,9 +124,10 @@ Partial Class subscribers
         '
         Me.lblPlan.AutoSize = True
         Me.lblPlan.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPlan.Location = New System.Drawing.Point(65, 133)
+        Me.lblPlan.Location = New System.Drawing.Point(49, 108)
+        Me.lblPlan.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblPlan.Name = "lblPlan"
-        Me.lblPlan.Size = New System.Drawing.Size(56, 27)
+        Me.lblPlan.Size = New System.Drawing.Size(46, 22)
         Me.lblPlan.TabIndex = 5
         Me.lblPlan.Text = "Plan:"
         '
@@ -132,9 +135,10 @@ Partial Class subscribers
         '
         Me.lblPrice.AutoSize = True
         Me.lblPrice.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPrice.Location = New System.Drawing.Point(65, 160)
+        Me.lblPrice.Location = New System.Drawing.Point(49, 130)
+        Me.lblPrice.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblPrice.Name = "lblPrice"
-        Me.lblPrice.Size = New System.Drawing.Size(62, 27)
+        Me.lblPrice.Size = New System.Drawing.Size(51, 22)
         Me.lblPrice.TabIndex = 6
         Me.lblPrice.Text = "Price:"
         '
@@ -144,18 +148,16 @@ Partial Class subscribers
         Me.panelBilling.Controls.Add(Me.btnPay)
         Me.panelBilling.Controls.Add(Me.lblAmountDue)
         Me.panelBilling.Controls.Add(Me.lblBillMonth)
-        Me.panelBilling.Location = New System.Drawing.Point(71, 191)
-        Me.panelBilling.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.panelBilling.Location = New System.Drawing.Point(53, 155)
         Me.panelBilling.Name = "panelBilling"
-        Me.panelBilling.Size = New System.Drawing.Size(675, 212)
+        Me.panelBilling.Size = New System.Drawing.Size(507, 173)
         Me.panelBilling.TabIndex = 7
         '
         'btnPay
         '
-        Me.btnPay.Location = New System.Drawing.Point(347, 153)
-        Me.btnPay.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnPay.Location = New System.Drawing.Point(260, 124)
         Me.btnPay.Name = "btnPay"
-        Me.btnPay.Size = New System.Drawing.Size(100, 28)
+        Me.btnPay.Size = New System.Drawing.Size(75, 23)
         Me.btnPay.TabIndex = 10
         Me.btnPay.Text = "Pay now"
         Me.btnPay.UseVisualStyleBackColor = True
@@ -164,9 +166,10 @@ Partial Class subscribers
         '
         Me.lblAmountDue.AutoSize = True
         Me.lblAmountDue.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAmountDue.Location = New System.Drawing.Point(7, 50)
+        Me.lblAmountDue.Location = New System.Drawing.Point(5, 41)
+        Me.lblAmountDue.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblAmountDue.Name = "lblAmountDue"
-        Me.lblAmountDue.Size = New System.Drawing.Size(137, 27)
+        Me.lblAmountDue.Size = New System.Drawing.Size(111, 22)
         Me.lblAmountDue.TabIndex = 9
         Me.lblAmountDue.Text = "Amount Due:"
         '
@@ -174,17 +177,19 @@ Partial Class subscribers
         '
         Me.lblBillMonth.AutoSize = True
         Me.lblBillMonth.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblBillMonth.Location = New System.Drawing.Point(7, 11)
+        Me.lblBillMonth.Location = New System.Drawing.Point(5, 9)
+        Me.lblBillMonth.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblBillMonth.Name = "lblBillMonth"
-        Me.lblBillMonth.Size = New System.Drawing.Size(144, 27)
+        Me.lblBillMonth.Size = New System.Drawing.Size(119, 22)
         Me.lblBillMonth.TabIndex = 8
         Me.lblBillMonth.Text = "Billing Month:"
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(453, 106)
+        Me.TextBox1.Location = New System.Drawing.Point(340, 86)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(100, 22)
+        Me.TextBox1.Size = New System.Drawing.Size(76, 20)
         Me.TextBox1.TabIndex = 8
         '
         'MySqlCommand1
@@ -196,9 +201,9 @@ Partial Class subscribers
         '
         'subscribers
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(815, 450)
+        Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.panelBilling)
         Me.Controls.Add(Me.lblPrice)
@@ -206,7 +211,6 @@ Partial Class subscribers
         Me.Controls.Add(Me.lblStatus)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.lblUser)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "subscribers"
         Me.Text = "subscribers"
         Me.MenuStrip1.ResumeLayout(False)

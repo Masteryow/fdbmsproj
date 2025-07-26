@@ -725,7 +725,8 @@ Public Class Cart
         Return success
     End Function
 
-    ' Process plan with selected addons (hardware only)
+
+    ' Process plan with selected addons (hardware only) - FIXED VERSION
     Private Function ProcessPlanWithSelectedAddonsPurchase(selectedItems As List(Of CartItem)) As Boolean
         Dim success As Boolean = False
         Dim con As New MySqlConnection(strCon)
@@ -737,7 +738,7 @@ Public Class Cart
 
             ' Insert subscription record
             Dim insertSubQuery As String = "INSERT INTO subscribers (customer_id, plan_id, subscription_date, status) " &
-                                          "VALUES (@customerId, @planId, NOW(), 'Pending')"
+                                      "VALUES (@customerId, @planId, NOW(), 'Pending')"
             Dim subscriberId As Integer
             Using cmd As New MySqlCommand(insertSubQuery, con, trans)
                 cmd.Parameters.AddWithValue("@customerId", Session.UserId)
@@ -755,11 +756,11 @@ Public Class Cart
                 End Using
             End Using
 
-            ' Insert only selected hardware cart items into customer_addons
+            ' Insert all selected addon items (1-15) into customer_addons
             For Each item In selectedItems
                 If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
                     Dim insertAddonQuery As String = "INSERT INTO customer_addons (customer_id, addon_id, quantity, purchase_date) " &
-                                                   "VALUES (@customerId, @addonId, @quantity, NOW())"
+                                               "VALUES (@customerId, @addonId, @quantity, NOW())"
                     Using cmd As New MySqlCommand(insertAddonQuery, con, trans)
                         cmd.Parameters.AddWithValue("@customerId", Session.UserId)
                         cmd.Parameters.AddWithValue("@addonId", item.AddonId)
@@ -769,23 +770,28 @@ Public Class Cart
                 End If
             Next
 
+            ' Create billing record for PLAN ONLY (not including addons)
             Dim billingQuery As String = "INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date, status) " &
-                "VALUES (@subscriber_id, CURDATE(), @totalAmount, DATE_ADD(NOW(), INTERVAL 1 MONTH), 'Paid')"
+            "VALUES (@subscriber_id, CURDATE(), @totalAmount, DATE_ADD(NOW(), INTERVAL 1 MONTH), 'Paid')"
             Dim billingId As Integer
             Using cmd As New MySqlCommand(billingQuery, con, trans)
                 cmd.Parameters.AddWithValue("@subscriber_id", subscriberId)
-                cmd.Parameters.AddWithValue("@totalAmount", GetSelectedItemsTotal())
+                cmd.Parameters.AddWithValue("@totalAmount", Session.planPrice) ' ONLY plan price, not total
                 cmd.ExecuteNonQuery()
                 billingId = CInt(cmd.LastInsertedId)
             End Using
 
+            ' Create payment record for PLAN ONLY
             Dim paymentQuery As String = "INSERT INTO payments (billing_id, amount, payment_date) " &
-                "VALUES (@billing_id, @amount, CURDATE())"
+            "VALUES (@billing_id, @amount, CURDATE())"
             Using cmd As New MySqlCommand(paymentQuery, con, trans)
                 cmd.Parameters.AddWithValue("@billing_id", billingId)
-                cmd.Parameters.AddWithValue("@amount", GetSelectedItemsTotal())
+                cmd.Parameters.AddWithValue("@amount", Session.planPrice) ' ONLY plan price, not total
                 cmd.ExecuteNonQuery()
             End Using
+
+            ' All addons (1-15) are already inserted into customer_addons table above
+            ' No separate billing records needed for any addons - they're one-time purchases
 
             trans.Commit()
             success = True
@@ -804,9 +810,7 @@ Public Class Cart
         End Try
 
         Session.IsNewSubscription = True
-        Session.cashOnHand = Session.planPrice
-
-
+        Session.cashOnHand = Session.planPrice ' This should only be the plan price
 
         Return success
     End Function

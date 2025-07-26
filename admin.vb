@@ -642,7 +642,7 @@ Public Class Admin
         ' DataGridView
         Dim dgvSubscribers As New DataGridView With {
         .Location = New Point(0, 100),
-        .Size = New Size(410, 260),
+        .Size = New Size(420, 250),
         .AllowUserToAddRows = False,
         .AllowUserToDeleteRows = False,
         .SelectionMode = DataGridViewSelectionMode.FullRowSelect
