@@ -24,6 +24,7 @@ Public Class Cart
     Dim data_cap As String = Session.planDataCap
     Dim price As Decimal = Session.planPrice
     Dim status As String = Session.subStatus
+    Private skipClosingEvent As Boolean = False
     Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
 
         TextBox1.Text = Session.planName
@@ -896,7 +897,6 @@ Public Class Cart
         End If
     End Sub
 
-    ' Add this field to your form class
 
 
     Public Sub delete()
@@ -925,7 +925,7 @@ Public Class Cart
         End If
     End Sub
 
-    Private skipClosingEvent As Boolean = False
+
 
     Private Sub form_closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         ' Only clear cart and end transaction for new subscriptions
@@ -938,7 +938,7 @@ Public Class Cart
 
         ' Only handle user closing (X button click)
         If e.CloseReason = CloseReason.UserClosing Then
-            MessageBox.Show("User clicked X button")
+
             delete()
             ' Your code here for X button click
         End If
