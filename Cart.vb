@@ -786,7 +786,7 @@ Public Class Cart
             "VALUES (@billing_id, @amount, CURDATE())"
             Using cmd As New MySqlCommand(paymentQuery, con, trans)
                 cmd.Parameters.AddWithValue("@billing_id", billingId)
-                cmd.Parameters.AddWithValue("@amount", Session.planPrice) ' ONLY plan price, not total
+                cmd.Parameters.AddWithValue("@amount", GetSelectedItemsTotal()) ' ONLY plan price, not total
                 cmd.ExecuteNonQuery()
             End Using
 
