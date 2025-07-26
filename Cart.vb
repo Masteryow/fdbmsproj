@@ -868,19 +868,13 @@ Public Class Cart
     ' Add navigation methods
     Private Sub btnContinueShopping_Click(sender As Object, e As EventArgs) Handles btnContinueShopping.Click
         ' Return to addon selection - keep transaction active
-        If Session.userRole = "Customer" Then
+        If Session.userRole = "Customer" AndAlso Session.subscriberAccess = False Then
             Session.preSubscriber = False
             Session.fromProduct = True
             Session.planName = ""
             Session.planPrice = 0
             Session.planType = ""
 
-            For Each form As Form In Application.OpenForms
-                If form.Name = "Addon" Then
-                    form.Close()
-                    Exit For
-                End If
-            Next
 
         End If
 
