@@ -101,15 +101,18 @@ Public Class Addon
 
         ' Calculate total based on user type and context
 
+
         Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
         If Session.fromProduct = True Then
             ' From Products tab - show cart total from database
 
-            total = cartTotal + addedItemsTotal
+            total = cartTotal
+            TextBox4.Text = total.ToString
         ElseIf Session.preSubscriber Then
             ' New subscription - include plan price + addons
 
-            total = planPrice + addedItemsTotal
+            total = planPrice + cartTotal
+
         Else
             ' Existing subscriber viewing addons - start with 0 (no plan price)
 
@@ -296,6 +299,8 @@ Public Class Addon
                     cmd.ExecuteNonQuery()
                 End Using
             End Using
+
+            RecalculateTotal()
             Return True
         Catch ex As Exception
             MessageBox.Show("Error adding to cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -411,7 +416,6 @@ Public Class Addon
 
         If Session.fromProduct = False Then
 
-
             total = planPrice
 
         Else
@@ -423,7 +427,7 @@ Public Class Addon
 
     Private Sub form_closing(sender As Object, e As EventArgs) Handles MyBase.FormClosing
 
-        If Session.preSubscriber Then
+        If Session.preSubscriber AndAlso Session.subscriberAccess = False Then
             Try
                 Using con As New MySqlConnection(strCon)
                     con.Open()
@@ -457,39 +461,28 @@ Public Class Addon
 
         Session.CheckTransactionTimeout()
 
-        If Not Session.IsTransactionActive AndAlso Session.fromProduct = False AndAlso Session.preSubscriber = False Then
-            ' Check if user is an existing subscriber
-            If Session.SubscriberId > 0 Then
-                ' Existing subscriber - allow them to view addons
-                pbxPlanImage.Visible = False
-                btnPrevious.Visible = True
-                btnNext.Visible = True
+        '    If Not Session.IsTransactionActive AndAlso Session.IsNewSubscription Then
+        ' Check if user is an existing subscriber
+        '  If Session.SubscriberId > 0 Then
+        ' Existing subscriber - allow them to view addons
 
-                Dim skylinkProduct As New Label()
-                skylinkProduct.Size = New Size(600, 100)
-                skylinkProduct.Font = New Font("Tahoma", 25, FontStyle.Bold)
-                skylinkProduct.Text = "SkyLink Add-ons"
-                skylinkProduct.Location = New Point(15, 50)
-                skylinkProduct.ForeColor = Color.White
-                Me.Controls.Add(skylinkProduct)
-            Else
-                ' No active session and not a subscriber
-                'MessageBox.Show("Your session has expired. Please select a plan again.", "Session Expired", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                'Subscription.Show()
-                'Me.Close()
-                'Return
-            End If
-        End If
-
-
-
-
+        '  Else
+        ' No active session and not a subscriber
+        'MessageBox.Show("Your session has expired. Please select a plan again.", "Session Expired", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        'Subscription.Show()
+        'Me.Close()
+        'Return
+        ' End If
+        ' End If
 
 
         Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
-        If Session.fromProduct Then
+        If Session.fromProduct = True AndAlso Session.subscriberAccess = False Then
             pbxPlanImage.Visible = False
             btnPrevious.Visible = False
+            lblName.Visible = False
+            lblType.Visible = False
+            lblPrice.Visible = False
             btnNext.Visible = False
             Dim skylinkProduct As New Label()
             total = cartTotal
@@ -500,7 +493,7 @@ Public Class Addon
             skylinkProduct.Location = New Point(15, 50)
             skylinkProduct.ForeColor = Color.White
             Me.Controls.Add(skylinkProduct)
-        ElseIf Session.preSubscriber = True Then
+        ElseIf Session.preSubscriber = True AndAlso Session.subscriberAccess = False Then
             total = planPrice + cartTotal
             txtTotal.Text = "Php " & total.ToString("F2")
             TextBox3.Text = "Php " & total.ToString("F2")
@@ -509,11 +502,28 @@ Public Class Addon
             lblType.Text = "Type: " & planType
             lblPrice.Text = "Price: " & planPrice.ToString("F2")
 
-        ElseIf Session.userRole = "Subscriber" Then
-            total = cartTotal
+        ElseIf Session.subscriberAccess = True Then
+
+            lblName.Visible = False
+            lblType.Visible = False
+            lblPrice.Visible = False
+            pbxPlanImage.Visible = False
             btnPrevious.Visible = True
             btnNext.Visible = True
             txtTotal.Text = "Php " & total.ToString("F2")
+            Dim skylinkProduct As New Label()
+            skylinkProduct.Size = New Size(600, 100)
+            skylinkProduct.Font = New Font("Tahoma", 25, FontStyle.Bold)
+            skylinkProduct.Text = "SkyLink Add-ons"
+            skylinkProduct.Location = New Point(15, 50)
+            skylinkProduct.ForeColor = Color.White
+            Me.Controls.Add(skylinkProduct)
+
+            ' ElseIf Session.userRole = "Subscriber" Then
+            '  total = cartTotal
+            '  btnPrevious.Visible = True
+            ' btnNext.Visible = True
+            ' txtTotal.Text = "Php " & total.ToString("F2")
 
         End If
 
@@ -531,9 +541,8 @@ Public Class Addon
         selectedQuantities(baseIndex + index) = txtValues(index)
 
         ' Recalculate totals
-
-
         RecalculateTotal()
+
     End Sub
 
     Private Sub btnMinus1_Click(sender As Object, e As EventArgs) Handles btnMinus1.Click, btnMinus2.Click, btnMinus3.Click, btnMinus4.Click, btnMinus5.Click
@@ -903,7 +912,7 @@ Public Class Addon
         If hasItems Then
             If failedItems.Count = 0 Then
                 MessageBox.Show($"All {successCount} items added to cart successfully!" & vbCrLf & "Added Php " & addedItemsTotal.ToString("F2") & " to your total.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                total += addedItemsTotal
+
                 txtTotal.Text = "Php " & total.ToString("F2")
                 ClearAllQuantities() ' Clear after successful cart addition
             Else

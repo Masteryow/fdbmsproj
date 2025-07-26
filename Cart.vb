@@ -592,6 +592,7 @@ Public Class Cart
             ' Plan with selected addons purchase
             purchaseSuccess = ProcessPlanWithSelectedAddonsPurchase(selectedItems)
             Session.userRole = "Subscriber"
+
         Else
             ' Existing subscriber buying selected addons
             purchaseSuccess = ProcessSelectedAddonsForExistingSubscriber(selectedItems)
@@ -627,6 +628,15 @@ Public Class Cart
                 Session.planDataCap = data_cap
                 Session.planPrice = price
                 Session.subStatus = status
+                cartItems.Clear()
+
+                For Each form As Form In Application.OpenForms
+                    If form.Name = "Addon" Then
+                        form.Close()
+                        Exit For
+                    End If
+                Next
+
                 subscribers.Show()
 
             Else
@@ -879,7 +889,7 @@ Public Class Cart
 
     Private Sub form_closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         ' Only clear cart and end transaction for new subscriptions
-        If Session.preSubscriber Then
+        If Session.preSubscriber AndAlso Session.subscriberAccess = False Then
             Try
                 Using con As New MySqlConnection(strCon)
                     con.Open()
