@@ -1025,24 +1025,24 @@ Public Class Cart
     End Sub
 
     Private Sub HomeToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem1.Click
-
+        delete()
 
         If Session.userRole = "Subscriber" Then
             subscribers.Show()
         ElseIf Session.userRole = "Customer" Then
             Session.preSubscriber = False
-                Session.fromProduct = True
-                Session.planName = ""
-                Session.planPrice = 0
-                Session.planType = ""
+            Session.fromProduct = True
+            Session.planName = ""
+            Session.planPrice = 0
+            Session.planType = ""
 
             For Each form As Form In Application.OpenForms
-                    If form.Name = "Addon" Then
-                        form.Close()
-                        Exit For
-                    End If
-                Next
-                Main.Show()
+                If form.Name = "Addon" Then
+                    form.Close()
+                    Exit For
+                End If
+            Next
+            Main.Show()
         End If
 
         Me.Close()
