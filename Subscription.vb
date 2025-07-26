@@ -19,7 +19,26 @@ Public Class Subscription
     Dim data_cap As String = ""
 
 
+    Public Sub delete()
+        If Session.preSubscriber AndAlso Session.subscriberAccess = False Then
+            Try
+                Using con As New MySqlConnection(strCon)
+                    con.Open()
+                    ' Only clear hardware addons (ID 1-5) from cart
+                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 15"
+                    Using cmd As New MySqlCommand(deleteQuery, con)
+                        cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                        cmd.ExecuteNonQuery()
+                    End Using
+                End Using
 
+
+
+            Catch ex As Exception
+                MessageBox.Show("Error clearing cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+    End Sub
 
     Private Sub Subscription_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
@@ -153,8 +172,9 @@ Public Class Subscription
                                 Session.fromProduct = False
                                 Session.subscriberAccess = False
                                 navigatingAway = True
+                                delete()
                                 Addon.Show()
-                                Session.fromProduct = False
+
                                 Me.Close()
                             Else
                                 Session.fromProduct = False
