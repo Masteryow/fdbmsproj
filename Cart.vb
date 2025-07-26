@@ -27,7 +27,7 @@ Public Class Cart
     Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
 
         TextBox1.Text = Session.planName
-        TextBox2.Text = Session.preSubscriber
+        TextBox2.Text = Session.planType
         TextBox3.Text = Session.planPrice
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
             HelpToolStripMenuItem.Visible = False
@@ -878,7 +878,7 @@ Public Class Cart
         End If
 
         Addon.Show()
-        Me.Close() 'Me.Hide
+        CloseProgrammatically() 'Me.Hide
     End Sub
 
     Private Sub btnCancelOrder_Click(sender As Object, e As EventArgs) Handles btnCancelOrder.Click
@@ -897,7 +897,7 @@ Public Class Cart
     End Sub
 
     ' Add this field to your form class
-    Private isProgrammaticClose As Boolean = False
+
 
     Public Sub delete()
         If Session.preSubscriber AndAlso Session.subscriberAccess = False Then
@@ -924,9 +924,32 @@ Public Class Cart
             End Try
         End If
     End Sub
+
+    Private skipClosingEvent As Boolean = False
+
     Private Sub form_closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         ' Only clear cart and end transaction for new subscriptions
-        delete()
+
+        If skipClosingEvent Then
+        ' Skip all processing when closing programmatically
+        Return
+    End If
+
+
+        ' Only handle user closing (X button click)
+        If e.CloseReason = CloseReason.UserClosing Then
+            MessageBox.Show("User clicked X button")
+            delete()
+            ' Your code here for X button click
+        End If
+
+
+
+    End Sub
+
+    Public Sub CloseProgrammatically()
+        skipClosingEvent = True
+        Me.Close()
     End Sub
 
     Private Sub ReturnToPlanSelection()
