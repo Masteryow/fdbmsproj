@@ -26,11 +26,8 @@ Public Class Cart
     Dim status As String = Session.subStatus
     Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
 
-
-
-
         TextBox1.Text = Session.planName
-        TextBox2.Text = Session.planType
+        TextBox2.Text = Session.preSubscriber
         TextBox3.Text = Session.planPrice
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
             HelpToolStripMenuItem.Visible = False
@@ -161,7 +158,7 @@ Public Class Cart
 
     Private Sub DisplayPlanDetails()
         ' Display plan information if coming from a plan selection (new subscribers only)
-        If Not Session.fromProduct AndAlso Session.preSubscriber AndAlso Not String.IsNullOrEmpty(Session.planName) Then
+        If Session.preSubscriber = True Then
             Dim planInfo As String = $"Selected Plan: {Session.planName} - {Session.planType} - Php {Session.planPrice:F2}"
             CheckedListBox1.Items.Add($"PLAN: {Session.planName} - {Session.planType} - Php {Session.planPrice:F2}")
             CheckedListBox1.SetItemCheckState(0, CheckState.Indeterminate) ' Make it non-selectable
@@ -199,7 +196,7 @@ Public Class Cart
         If Session.preSubscriber = True Then
             startIndex = 1 ' Keep the plan/subscriber info item
 
-        ElseIf Session.subscriberAccess = True Then
+        ElseIf Session.subscriberAccess = True OrElse session.fromProduct = True Then
 
             startIndex = 0
         Else
@@ -881,7 +878,7 @@ Public Class Cart
         End If
 
         Addon.Show()
-        Me.Hide() 'Me.Hide
+        Me.Close() 'Me.Hide
     End Sub
 
     Private Sub btnCancelOrder_Click(sender As Object, e As EventArgs) Handles btnCancelOrder.Click

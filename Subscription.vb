@@ -20,8 +20,8 @@ Public Class Subscription
 
 
     Public Sub delete()
-        If Session.preSubscriber AndAlso Session.subscriberAccess = False Then
-            Try
+
+        Try
                 Using con As New MySqlConnection(strCon)
                     con.Open()
                     ' Only clear hardware addons (ID 1-5) from cart
@@ -37,7 +37,7 @@ Public Class Subscription
             Catch ex As Exception
                 MessageBox.Show("Error clearing cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
-        End If
+
     End Sub
 
     Private Sub Subscription_Load(sender As Object, e As EventArgs) Handles MyBase.Load
