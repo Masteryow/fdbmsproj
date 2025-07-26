@@ -25,6 +25,7 @@ Partial Class Subscription
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TicketToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnCart = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SubscriptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -35,7 +36,6 @@ Partial Class Subscription
         Me.btnSubscribe = New System.Windows.Forms.Button()
         Me.txtSpecs = New System.Windows.Forms.TextBox()
         Me.pbxPlan = New System.Windows.Forms.PictureBox()
-        Me.TicketToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.pbxPlan, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -47,9 +47,9 @@ Partial Class Subscription
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.HelpToolStripMenuItem, Me.btnCart, Me.ProductsToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.HomeToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
+        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(815, 28)
+        Me.MenuStrip1.Size = New System.Drawing.Size(611, 24)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -57,7 +57,7 @@ Partial Class Subscription
         '
         Me.HomeToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(84, 24)
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(68, 20)
         Me.HomeToolStripMenuItem.Text = "About Us"
         '
         'HelpToolStripMenuItem
@@ -65,63 +65,69 @@ Partial Class Subscription
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketToolStripMenuItem})
         Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(55, 24)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.HelpToolStripMenuItem.Text = "Help"
+        '
+        'TicketToolStripMenuItem
+        '
+        Me.TicketToolStripMenuItem.Name = "TicketToolStripMenuItem"
+        Me.TicketToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
+        Me.TicketToolStripMenuItem.Text = "Ticket"
         '
         'btnCart
         '
         Me.btnCart.ForeColor = System.Drawing.Color.White
         Me.btnCart.Name = "btnCart"
-        Me.btnCart.Size = New System.Drawing.Size(50, 24)
+        Me.btnCart.Size = New System.Drawing.Size(41, 20)
         Me.btnCart.Text = "Cart"
         '
         'ProductsToolStripMenuItem
         '
         Me.ProductsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ProductsToolStripMenuItem.Name = "ProductsToolStripMenuItem"
-        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(80, 24)
+        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(66, 20)
         Me.ProductsToolStripMenuItem.Text = "Products"
         '
         'SubscriptionToolStripMenuItem
         '
         Me.SubscriptionToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
-        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(105, 24)
+        Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(85, 20)
         Me.SubscriptionToolStripMenuItem.Text = "Subscription"
         '
         'HomeToolStripMenuItem1
         '
         Me.HomeToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HomeToolStripMenuItem1.Name = "HomeToolStripMenuItem1"
-        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(64, 24)
+        Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(52, 20)
         Me.HomeToolStripMenuItem1.Text = "Home"
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(33, 178)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Button1.Location = New System.Drawing.Point(25, 145)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.Size = New System.Drawing.Size(56, 19)
         Me.Button1.TabIndex = 14
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(389, 178)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Button2.Location = New System.Drawing.Point(292, 145)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.Size = New System.Drawing.Size(56, 19)
         Me.Button2.TabIndex = 15
         Me.Button2.Text = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(205, 417)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.TextBox1.Location = New System.Drawing.Point(154, 339)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(100, 22)
+        Me.TextBox1.Size = New System.Drawing.Size(76, 20)
         Me.TextBox1.TabIndex = 17
         '
         'btnSubscribe
@@ -129,10 +135,10 @@ Partial Class Subscription
         Me.btnSubscribe.BackColor = System.Drawing.Color.White
         Me.btnSubscribe.Font = New System.Drawing.Font("Century Gothic", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSubscribe.ForeColor = System.Drawing.Color.Black
-        Me.btnSubscribe.Location = New System.Drawing.Point(115, 306)
-        Me.btnSubscribe.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.btnSubscribe.Location = New System.Drawing.Point(86, 249)
+        Me.btnSubscribe.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnSubscribe.Name = "btnSubscribe"
-        Me.btnSubscribe.Size = New System.Drawing.Size(269, 37)
+        Me.btnSubscribe.Size = New System.Drawing.Size(202, 30)
         Me.btnSubscribe.TabIndex = 19
         Me.btnSubscribe.Text = "Subscribe"
         Me.btnSubscribe.UseVisualStyleBackColor = False
@@ -140,36 +146,30 @@ Partial Class Subscription
         'txtSpecs
         '
         Me.txtSpecs.Font = New System.Drawing.Font("Times New Roman", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSpecs.Location = New System.Drawing.Point(480, 78)
-        Me.txtSpecs.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.txtSpecs.Location = New System.Drawing.Point(360, 63)
+        Me.txtSpecs.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.txtSpecs.Multiline = True
         Me.txtSpecs.Name = "txtSpecs"
         Me.txtSpecs.ReadOnly = True
-        Me.txtSpecs.Size = New System.Drawing.Size(293, 139)
+        Me.txtSpecs.Size = New System.Drawing.Size(221, 114)
         Me.txtSpecs.TabIndex = 21
         '
         'pbxPlan
         '
-        Me.pbxPlan.Location = New System.Drawing.Point(115, 62)
-        Me.pbxPlan.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.pbxPlan.Location = New System.Drawing.Point(86, 50)
+        Me.pbxPlan.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.pbxPlan.Name = "pbxPlan"
-        Me.pbxPlan.Size = New System.Drawing.Size(269, 209)
+        Me.pbxPlan.Size = New System.Drawing.Size(202, 170)
         Me.pbxPlan.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.pbxPlan.TabIndex = 18
         Me.pbxPlan.TabStop = False
         '
-        'TicketToolStripMenuItem
-        '
-        Me.TicketToolStripMenuItem.Name = "TicketToolStripMenuItem"
-        Me.TicketToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
-        Me.TicketToolStripMenuItem.Text = "Ticket"
-        '
         'Subscription
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(815, 450)
+        Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.txtSpecs)
         Me.Controls.Add(Me.btnSubscribe)
         Me.Controls.Add(Me.pbxPlan)
@@ -177,7 +177,7 @@ Partial Class Subscription
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.MenuStrip1)
-        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Name = "Subscription"
         Me.Text = "Subscription"
         Me.MenuStrip1.ResumeLayout(False)

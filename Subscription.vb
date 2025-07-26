@@ -25,6 +25,13 @@ Public Class Subscription
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
             HelpToolStripMenuItem.Visible = False
         End If
+
+        Session.PlanId = 0
+        Session.planName = ""
+        Session.planType = ""
+        Session.planPrice = 0
+        Session.preSubscriber = False
+        Session.fromProduct = False
         Interactive_Menu(id)
     End Sub
 
@@ -179,6 +186,14 @@ Public Class Subscription
                                 ElseIf convertedPayment < price Then
                                     Session.IsNewSubscription = True
                                     MsgBox("Insufficient money!", MsgBoxStyle.Exclamation, "Insufficient Amount")
+
+                                    'Added1
+                                    Session.PlanId = 0
+                                    Session.planName = ""
+                                    Session.planType = ""
+                                    Session.planPrice = 0
+                                    Session.preSubscriber = False
+                                    Session.fromProduct = False
                                     Return
                                 End If
 
@@ -245,6 +260,12 @@ Public Class Subscription
                                 Me.Close()
                             Else
                                 MsgBox("Please enter a valid amount", MsgBoxStyle.Exclamation, "Invalid Amount")
+                                Session.PlanId = 0
+                                Session.planName = ""
+                                Session.planType = ""
+                                Session.planPrice = 0
+                                Session.preSubscriber = False
+                                Session.fromProduct = False
                                 transaction.Rollback()
                             End If
 
@@ -315,7 +336,18 @@ Public Class Subscription
             subscribers.Show()
             Me.Close()
 
-        Else
+        ElseIf Session.userRole = "Customer" Then
+
+            'Added1
+            Session.PlanId = 0
+            Session.planName = ""
+            Session.planType = ""
+            Session.planPrice = 0
+            Session.preSubscriber = False
+            Session.fromProduct = False
+
+            Session.planSpeed = ""
+            Session.planDataCap = ""
             Main.Show()
             Me.Close()
         End If
@@ -380,4 +412,6 @@ Public Class Subscription
     Private Sub TicketToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketToolStripMenuItem.Click
         Tickets.Show()
     End Sub
+
+
 End Class
