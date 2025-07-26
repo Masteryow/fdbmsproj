@@ -474,7 +474,8 @@ Public Class Addon
         'Return
         ' End If
         ' End If
-
+        TextBox4.Text = Session.fromProduct
+        TextBox5.Text = Session.subscriberAccess
 
         Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
         If Session.fromProduct = True AndAlso Session.subscriberAccess = False Then

@@ -26,12 +26,15 @@ Public Class Subscription
             HelpToolStripMenuItem.Visible = False
         End If
 
+        Session.fromProduct = True
         Session.PlanId = 0
         Session.planName = ""
         Session.planType = ""
         Session.planPrice = 0
         Session.preSubscriber = False
-        Session.fromProduct = False
+
+        Session.subscriberAccess = False
+
         Interactive_Menu(id)
     End Sub
 
@@ -132,7 +135,7 @@ Public Class Subscription
                         Session.planType = plan_type
                         Session.planPrice = price
                         Session.preSubscriber = True
-                        Session.fromProduct = False
+
 
                         Session.planSpeed = speed
                         Session.planDataCap = data_cap
@@ -151,6 +154,7 @@ Public Class Subscription
                                 Session.subscriberAccess = False
                                 navigatingAway = True
                                 Addon.Show()
+                                Session.fromProduct = False
                                 Me.Close()
                             Else
                                 Session.fromProduct = False
@@ -165,7 +169,7 @@ Public Class Subscription
                         Else
 
 
-
+                            Session.fromProduct = False
 
                             Dim convertedPayment As Decimal = 0
 

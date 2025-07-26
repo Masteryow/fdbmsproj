@@ -78,6 +78,7 @@ Partial Class Addon
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.TextBox5 = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         Me.gbxProduct1.SuspendLayout()
         Me.gbxProduct2.SuspendLayout()
@@ -628,10 +629,17 @@ Partial Class Addon
         '
         'TextBox4
         '
-        Me.TextBox4.Location = New System.Drawing.Point(193, 61)
+        Me.TextBox4.Location = New System.Drawing.Point(169, 62)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(100, 20)
         Me.TextBox4.TabIndex = 70
+        '
+        'TextBox5
+        '
+        Me.TextBox5.Location = New System.Drawing.Point(169, 87)
+        Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox5.TabIndex = 71
         '
         'Addon
         '
@@ -639,6 +647,7 @@ Partial Class Addon
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(611, 366)
+        Me.Controls.Add(Me.TextBox5)
         Me.Controls.Add(Me.TextBox4)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBox3)
@@ -748,4 +757,5 @@ Partial Class Addon
     Friend WithEvents TicketToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Label2 As Label
     Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents TextBox5 As TextBox
 End Class
