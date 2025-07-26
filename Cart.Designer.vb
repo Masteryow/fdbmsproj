@@ -125,7 +125,7 @@ Partial Class Cart
         'txtTotal
         '
         Me.txtTotal.Location = New System.Drawing.Point(422, 54)
-        Me.txtTotal.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtTotal.Margin = New System.Windows.Forms.Padding(2)
         Me.txtTotal.Name = "txtTotal"
         Me.txtTotal.Size = New System.Drawing.Size(162, 20)
         Me.txtTotal.TabIndex = 25
@@ -146,7 +146,7 @@ Partial Class Cart
         '
         Me.CheckedListBox1.FormattingEnabled = True
         Me.CheckedListBox1.Location = New System.Drawing.Point(31, 99)
-        Me.CheckedListBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.CheckedListBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.CheckedListBox1.Name = "CheckedListBox1"
         Me.CheckedListBox1.Size = New System.Drawing.Size(212, 214)
         Me.CheckedListBox1.TabIndex = 27
@@ -211,7 +211,7 @@ Partial Class Cart
         'btnCheck
         '
         Me.btnCheck.Location = New System.Drawing.Point(106, 8)
-        Me.btnCheck.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnCheck.Margin = New System.Windows.Forms.Padding(2)
         Me.btnCheck.Name = "btnCheck"
         Me.btnCheck.Size = New System.Drawing.Size(56, 19)
         Me.btnCheck.TabIndex = 35
@@ -221,7 +221,7 @@ Partial Class Cart
         'btnDM
         '
         Me.btnDM.Location = New System.Drawing.Point(167, 8)
-        Me.btnDM.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnDM.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDM.Name = "btnDM"
         Me.btnDM.Size = New System.Drawing.Size(56, 19)
         Me.btnDM.TabIndex = 36
@@ -271,7 +271,7 @@ Partial Class Cart
         Me.Controls.Add(Me.txtTotal)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.MenuStrip1)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Cart"
         Me.Text = "Cart"
         Me.MenuStrip1.ResumeLayout(False)

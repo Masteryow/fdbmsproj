@@ -141,7 +141,7 @@ Public Class Subscription
                             Session.fromProduct = False
                             If addons = DialogResult.Yes Then
                                 Session.fromProduct = False
-
+                                Session.preSubscriber = True
                                 navigatingAway = True
                                 Addon.Show()
                                 Me.Close()

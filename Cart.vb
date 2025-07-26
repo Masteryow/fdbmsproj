@@ -25,6 +25,10 @@ Public Class Cart
     Dim price As Decimal = Session.planPrice
     Dim status As String = Session.subStatus
     Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
+
+
+
+
         TextBox1.Text = Session.planName
         TextBox2.Text = Session.planType
         TextBox3.Text = Session.planPrice
@@ -864,8 +868,23 @@ Public Class Cart
     ' Add navigation methods
     Private Sub btnContinueShopping_Click(sender As Object, e As EventArgs) Handles btnContinueShopping.Click
         ' Return to addon selection - keep transaction active
-        Dim addonForm As New Addon()
-        addonForm.Show()
+        If Session.userRole = "Customer" Then
+            Session.preSubscriber = False
+            Session.fromProduct = True
+            Session.planName = ""
+            Session.planPrice = 0
+            Session.planType = ""
+
+            For Each form As Form In Application.OpenForms
+                If form.Name = "Addon" Then
+                    form.Close()
+                    Exit For
+                End If
+            Next
+
+        End If
+
+        Addon.Show()
         Me.Hide() 'Me.Hide
     End Sub
 
@@ -887,8 +906,7 @@ Public Class Cart
     ' Add this field to your form class
     Private isProgrammaticClose As Boolean = False
 
-    Private Sub form_closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        ' Only clear cart and end transaction for new subscriptions
+    Public Sub delete()
         If Session.preSubscriber AndAlso Session.subscriberAccess = False Then
             Try
                 Using con As New MySqlConnection(strCon)
@@ -912,6 +930,10 @@ Public Class Cart
                 MessageBox.Show("Error clearing cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End If
+    End Sub
+    Private Sub form_closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        ' Only clear cart and end transaction for new subscriptions
+        delete()
     End Sub
 
     Private Sub ReturnToPlanSelection()
@@ -1007,18 +1029,54 @@ Public Class Cart
     End Sub
 
     Private Sub HomeToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem1.Click
+
+
         If Session.userRole = "Subscriber" Then
             subscribers.Show()
-        Else
-            Main.Show()
+        ElseIf Session.userRole = "Customer" Then
+            Session.preSubscriber = False
+                Session.fromProduct = True
+                Session.planName = ""
+                Session.planPrice = 0
+                Session.planType = ""
+
+            For Each form As Form In Application.OpenForms
+                    If form.Name = "Addon" Then
+                        form.Close()
+                        Exit For
+                    End If
+                Next
+                Main.Show()
         End If
 
         Me.Close()
     End Sub
 
     Private Sub HelpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubscriptionToolStripMenuItem.Click
-        Subscription.Show()
-        Me.Close()
+
+
+
+        If Session.userRole = "Customer" Then
+            Session.preSubscriber = False
+            Session.fromProduct = True
+            Session.planName = ""
+            Session.planPrice = 0
+            Session.planType = ""
+
+            For Each form As Form In Application.OpenForms
+                If form.Name = "Addon" Then
+                    form.Close()
+                    Exit For
+                End If
+            Next
+
+            Subscription.Show()
+            Me.Close()
+
+        End If
+
+
+
     End Sub
 
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
@@ -1033,5 +1091,9 @@ Public Class Cart
     Private Sub TicketToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketToolStripMenuItem.Click
         Tickets.Show()
         Me.Close()
+    End Sub
+
+    Private Sub MenuStrip1_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles MenuStrip1.ItemClicked
+
     End Sub
 End Class
