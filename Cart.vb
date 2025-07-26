@@ -868,7 +868,7 @@ Public Class Cart
     ' Add navigation methods
     Private Sub btnContinueShopping_Click(sender As Object, e As EventArgs) Handles btnContinueShopping.Click
         ' Return to addon selection - keep transaction active
-        If Session.userRole = "Customer" AndAlso Session.subscriberAccess = False Then
+        If Session.userRole = "Customer" AndAlso Session.fromProduct = True Then
             Session.preSubscriber = False
             Session.fromProduct = True
             Session.planName = ""
