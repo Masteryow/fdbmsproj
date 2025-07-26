@@ -148,7 +148,7 @@ Partial Class Cart
         Me.CheckedListBox1.Location = New System.Drawing.Point(31, 99)
         Me.CheckedListBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(212, 214)
+        Me.CheckedListBox1.Size = New System.Drawing.Size(253, 214)
         Me.CheckedListBox1.TabIndex = 27
         '
         'btnDeletionMode

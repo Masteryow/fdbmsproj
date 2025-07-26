@@ -45,7 +45,7 @@ Partial Class ForgotPassword
         Me.txtNewPass.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtNewPass.Location = New System.Drawing.Point(70, 206)
         Me.txtNewPass.Name = "txtNewPass"
-        Me.txtNewPass.Size = New System.Drawing.Size(460, 27)
+        Me.txtNewPass.Size = New System.Drawing.Size(460, 23)
         Me.txtNewPass.TabIndex = 0
         '
         'txtNewPassConfirm
@@ -53,7 +53,7 @@ Partial Class ForgotPassword
         Me.txtNewPassConfirm.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtNewPassConfirm.Location = New System.Drawing.Point(74, 279)
         Me.txtNewPassConfirm.Name = "txtNewPassConfirm"
-        Me.txtNewPassConfirm.Size = New System.Drawing.Size(456, 27)
+        Me.txtNewPassConfirm.Size = New System.Drawing.Size(456, 23)
         Me.txtNewPassConfirm.TabIndex = 1
         '
         'userInput
@@ -63,7 +63,7 @@ Partial Class ForgotPassword
         Me.userInput.Margin = New System.Windows.Forms.Padding(2)
         Me.userInput.Name = "userInput"
         Me.userInput.ReadOnly = True
-        Me.userInput.Size = New System.Drawing.Size(460, 27)
+        Me.userInput.Size = New System.Drawing.Size(460, 23)
         Me.userInput.TabIndex = 2
         '
         'btnPassUpdate
@@ -87,7 +87,7 @@ Partial Class ForgotPassword
         Me.Label8.Location = New System.Drawing.Point(236, 39)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(173, 31)
+        Me.Label8.Size = New System.Drawing.Size(142, 25)
         Me.Label8.TabIndex = 7
         Me.Label8.Text = "Reset Password"
         '
@@ -98,7 +98,7 @@ Partial Class ForgotPassword
         Me.Label9.Location = New System.Drawing.Point(203, 84)
         Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(258, 20)
+        Me.Label9.Size = New System.Drawing.Size(207, 15)
         Me.Label9.TabIndex = 8
         Me.Label9.Text = "Enter and confirm your new password"
         '
@@ -109,7 +109,7 @@ Partial Class ForgotPassword
         Me.Label1.Location = New System.Drawing.Point(68, 132)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(78, 20)
+        Me.Label1.Size = New System.Drawing.Size(60, 15)
         Me.Label1.TabIndex = 9
         Me.Label1.Text = "Username"
         '
@@ -120,7 +120,7 @@ Partial Class ForgotPassword
         Me.Label10.Location = New System.Drawing.Point(71, 187)
         Me.Label10.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(73, 20)
+        Me.Label10.Size = New System.Drawing.Size(57, 15)
         Me.Label10.TabIndex = 10
         Me.Label10.Text = "Password"
         '
@@ -131,7 +131,7 @@ Partial Class ForgotPassword
         Me.Label7.Location = New System.Drawing.Point(71, 251)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(132, 20)
+        Me.Label7.Size = New System.Drawing.Size(103, 15)
         Me.Label7.TabIndex = 11
         Me.Label7.Text = "Confirm Password"
         '
@@ -167,7 +167,7 @@ Partial Class ForgotPassword
         Me.lblSubheader.Location = New System.Drawing.Point(244, 152)
         Me.lblSubheader.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblSubheader.Name = "lblSubheader"
-        Me.lblSubheader.Size = New System.Drawing.Size(123, 20)
+        Me.lblSubheader.Size = New System.Drawing.Size(97, 15)
         Me.lblSubheader.TabIndex = 17
         Me.lblSubheader.Text = "Code Verification"
         '
@@ -178,7 +178,7 @@ Partial Class ForgotPassword
         Me.lblHeader.Location = New System.Drawing.Point(131, 106)
         Me.lblHeader.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblHeader.Name = "lblHeader"
-        Me.lblHeader.Size = New System.Drawing.Size(377, 31)
+        Me.lblHeader.Size = New System.Drawing.Size(312, 25)
         Me.lblHeader.TabIndex = 16
         Me.lblHeader.Text = "A code has been sent to your email"
         '
@@ -200,7 +200,7 @@ Partial Class ForgotPassword
         Me.txtCode.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtCode.Location = New System.Drawing.Point(86, 189)
         Me.txtCode.Name = "txtCode"
-        Me.txtCode.Size = New System.Drawing.Size(456, 27)
+        Me.txtCode.Size = New System.Drawing.Size(456, 23)
         Me.txtCode.TabIndex = 13
         '
         'ForgotPassword

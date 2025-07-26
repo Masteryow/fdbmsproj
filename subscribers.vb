@@ -5,6 +5,8 @@ Imports iTextSharp.text.pdf
 Imports System.IO
 Imports iTextSharp.text.pdf.draw
 Imports System.Security.Cryptography
+Imports System.Net
+Imports System.Net.Mail
 
 Public Class subscribers
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
@@ -18,12 +20,39 @@ Public Class subscribers
     Dim billMonth As String = ""
     Dim billingId As Integer = 0
 
+
+    Public Sub pdfReport(reportPath As String)
+
+        Dim sendPdf As New MailMessage
+        sendPdf.From = New MailAddress("yohasakura200519@gmail.com")
+        sendPdf.To.Add(Session.email)
+        sendPdf.Subject = "User Report"
+        sendPdf.Body = "Thank you for joining the SkyLink!"
+
+
+        If File.Exists(reportPath) Then
+            sendPdf.Attachments.Add(New Attachment(reportPath))
+        End If
+        Dim smtp As New SmtpClient("smtp.gmail.com", 587)
+            smtp.Credentials = New NetworkCredential("yohasakura200519@gmail.com", "rwxe oxyt ocnc dfmx")
+            smtp.EnableSsl = True
+
+            Try
+                smtp.Send(sendPdf)
+
+            Catch ex As Exception
+                MessageBox.Show("Failed to send email: " & ex.Message)
+            End Try
+
+
+    End Sub
     Public Sub SendPath()
-        Dim pdfPath As String = Application.StartupPath & "User Report.pdf"
+        Dim pdfPath As String = Path.Combine(Application.StartupPath, "User Report" & Guid.NewGuid().ToString() & ".pdf")
 
         crystal_report(pdfPath)
 
     End Sub
+
 
     Public Sub crystal_report(filePath As String)
 
@@ -216,7 +245,7 @@ Public Class subscribers
             crystalPDF.Add(companyContact1)
 
             crystalPDF.Close()
-
+            pdfReport(filePath)
         Catch ex As Exception
 
             MessageBox.Show("Error generating PDF: " & ex.Message)
@@ -399,10 +428,8 @@ Public Class subscribers
     End Sub
 
 
-    Public Sub GenerateBillingReport()
-        Dim pdfPath As String = Application.StartupPath & "\Billing Report.pdf"
-        CreateBillingPDF(pdfPath)
-    End Sub
+
+
 
     Private Sub LoadBillingInfo()
         ' === Load billing record for current month ===
@@ -451,7 +478,40 @@ Public Class subscribers
         End Using
     End Sub
 
-    Public Sub CreateBillingPDF(filePath As String)
+    Public Sub GenerateBillingReport()
+        Dim pdfPath As String = Path.Combine(Application.StartupPath, "\Billing Report.pdf")
+        CreateBillingPDF(pdfPath)
+    End Sub
+
+
+    Public Sub forBilling(billingReportPath As String)
+
+        Dim billingPDF As New MailMessage
+        billingPDF.From = New MailAddress("yohasakura200519@gmail.com")
+        billingPDF.To.Add(Session.email)
+        billingPDF.Subject = "User Report"
+        billingPDF.Body = "Thank you for joining the SkyLink!"
+
+
+        If File.Exists(billingReportPath) Then
+            billingPDF.Attachments.Add(New Attachment(billingReportPath))
+        End If
+        Dim smtp As New SmtpClient("smtp.gmail.com", 587)
+        smtp.Credentials = New NetworkCredential("yohasakura200519@gmail.com", "rwxe oxyt ocnc dfmx")
+        smtp.EnableSsl = True
+
+        Try
+            smtp.Send(billingPDF)
+
+        Catch ex As Exception
+            MessageBox.Show("Failed to send email: " & ex.Message)
+        End Try
+
+
+    End Sub
+
+
+    Public Sub CreateBillingPDF(billingPath As String)
         Try
             ' Define colors and fonts
             Dim midnightBlue As New BaseColor(25, 25, 112)
@@ -465,7 +525,7 @@ Public Class subscribers
 
             ' Create PDF document
             Dim billingPDF As New Document()
-            PdfWriter.GetInstance(billingPDF, New FileStream(filePath, FileMode.Create))
+            PdfWriter.GetInstance(billingPDF, New FileStream(billingPath, FileMode.Create))
             billingPDF.Open()
 
             ' Title
@@ -659,8 +719,8 @@ Public Class subscribers
             billingPDF.Add(companyContact1)
 
             billingPDF.Close()
-
-            MessageBox.Show("Billing report generated successfully at: " & filePath, "PDF Generated", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            forBilling(billingPath)
+            MessageBox.Show("Billing report generated successfully at: " & billingPath, "PDF Generated", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Catch ex As Exception
             MessageBox.Show("Error generating billing PDF: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)

@@ -104,8 +104,8 @@ Partial Class Subscription
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(25, 145)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Button1.Location = New System.Drawing.Point(31, 133)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(56, 19)
         Me.Button1.TabIndex = 14
@@ -114,8 +114,8 @@ Partial Class Subscription
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(292, 145)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Button2.Location = New System.Drawing.Point(297, 133)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(56, 19)
         Me.Button2.TabIndex = 15
@@ -124,8 +124,8 @@ Partial Class Subscription
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(154, 339)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.TextBox1.Location = New System.Drawing.Point(11, 339)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(76, 20)
         Me.TextBox1.TabIndex = 17
@@ -135,8 +135,8 @@ Partial Class Subscription
         Me.btnSubscribe.BackColor = System.Drawing.Color.White
         Me.btnSubscribe.Font = New System.Drawing.Font("Century Gothic", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSubscribe.ForeColor = System.Drawing.Color.Black
-        Me.btnSubscribe.Location = New System.Drawing.Point(86, 249)
-        Me.btnSubscribe.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnSubscribe.Location = New System.Drawing.Point(91, 262)
+        Me.btnSubscribe.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSubscribe.Name = "btnSubscribe"
         Me.btnSubscribe.Size = New System.Drawing.Size(202, 30)
         Me.btnSubscribe.TabIndex = 19
@@ -146,18 +146,18 @@ Partial Class Subscription
         'txtSpecs
         '
         Me.txtSpecs.Font = New System.Drawing.Font("Times New Roman", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSpecs.Location = New System.Drawing.Point(360, 63)
-        Me.txtSpecs.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtSpecs.Location = New System.Drawing.Point(370, 64)
+        Me.txtSpecs.Margin = New System.Windows.Forms.Padding(2)
         Me.txtSpecs.Multiline = True
         Me.txtSpecs.Name = "txtSpecs"
         Me.txtSpecs.ReadOnly = True
-        Me.txtSpecs.Size = New System.Drawing.Size(221, 114)
+        Me.txtSpecs.Size = New System.Drawing.Size(221, 170)
         Me.txtSpecs.TabIndex = 21
         '
         'pbxPlan
         '
-        Me.pbxPlan.Location = New System.Drawing.Point(86, 50)
-        Me.pbxPlan.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.pbxPlan.Location = New System.Drawing.Point(91, 64)
+        Me.pbxPlan.Margin = New System.Windows.Forms.Padding(2)
         Me.pbxPlan.Name = "pbxPlan"
         Me.pbxPlan.Size = New System.Drawing.Size(202, 170)
         Me.pbxPlan.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -177,7 +177,7 @@ Partial Class Subscription
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.MenuStrip1)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Subscription"
         Me.Text = "Subscription"
         Me.MenuStrip1.ResumeLayout(False)
