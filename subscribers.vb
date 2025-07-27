@@ -264,7 +264,6 @@ Public Class subscribers
         Session.preSubscriber = False
 
         receivID = Session.SubscriberId
-        TextBox1.Text = receivID
         lblUser.Text = ""         ' Clear label before animation
         increment = 0             ' Reset increment
         Timer1.Interval = 100     ' Set interval (milliseconds)

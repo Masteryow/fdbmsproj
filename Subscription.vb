@@ -388,7 +388,6 @@ Public Class Subscription
         End If
 
         Interactive_Menu(id)
-        TextBox1.Text = id
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -401,7 +400,6 @@ Public Class Subscription
         End If
 
         Interactive_Menu(id)
-        TextBox1.Text = id
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles btnSubscribe.Click

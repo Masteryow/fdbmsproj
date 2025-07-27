@@ -33,9 +33,6 @@ Public Class Cart
         data_cap = Session.planDataCap
         price = Session.planPrice
         status = Session.subStatus
-        TextBox1.Text = Session.planName
-        TextBox2.Text = Session.planType
-        TextBox3.Text = Session.planPrice
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
             HelpToolStripMenuItem.Visible = False
 
@@ -203,7 +200,7 @@ Public Class Cart
         If Session.preSubscriber = True Then
             startIndex = 1 ' Keep the plan/subscriber info item
 
-        ElseIf Session.subscriberAccess = True OrElse session.fromProduct = True Then
+        ElseIf Session.subscriberAccess = True OrElse Session.fromProduct = True Then
 
             startIndex = 0
         Else
@@ -937,9 +934,9 @@ Public Class Cart
         ' Only clear cart and end transaction for new subscriptions
 
         If skipClosingEvent Then
-        ' Skip all processing when closing programmatically
-        Return
-    End If
+            ' Skip all processing when closing programmatically
+            Return
+        End If
 
 
         ' Only handle user closing (X button click)

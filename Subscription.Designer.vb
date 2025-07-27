@@ -32,7 +32,6 @@ Partial Class Subscription
         Me.HomeToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.btnSubscribe = New System.Windows.Forms.Button()
         Me.txtSpecs = New System.Windows.Forms.TextBox()
         Me.pbxPlan = New System.Windows.Forms.PictureBox()
@@ -122,14 +121,6 @@ Partial Class Subscription
         Me.Button2.Text = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
         '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(11, 339)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(76, 20)
-        Me.TextBox1.TabIndex = 17
-        '
         'btnSubscribe
         '
         Me.btnSubscribe.BackColor = System.Drawing.Color.White
@@ -173,7 +164,6 @@ Partial Class Subscription
         Me.Controls.Add(Me.txtSpecs)
         Me.Controls.Add(Me.btnSubscribe)
         Me.Controls.Add(Me.pbxPlan)
-        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -196,7 +186,6 @@ Partial Class Subscription
     Friend WithEvents HomeToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
-    Friend WithEvents TextBox1 As TextBox
     Friend WithEvents pbxPlan As PictureBox
     Friend WithEvents btnSubscribe As Button
     Friend WithEvents txtSpecs As TextBox

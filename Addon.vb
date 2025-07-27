@@ -130,7 +130,6 @@ Public Class Addon
             ' From Products tab - show cart total from database
 
             total = cartTotal
-            TextBox4.Text = total.ToString
         ElseIf Session.preSubscriber Then
             ' New subscription - include plan price + addons
 
@@ -499,8 +498,7 @@ Public Class Addon
         'Return
         ' End If
         ' End If
-        TextBox4.Text = Session.fromProduct
-        TextBox5.Text = Session.subscriberAccess
+
 
         Dim cartTotal As Decimal = GetCartTotal(Session.UserId)
         If Session.fromProduct = True AndAlso Session.subscriberAccess = False Then
@@ -1003,10 +1001,15 @@ Public Class Addon
 
     Private Sub TicketToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketToolStripMenuItem.Click
         Tickets.Show()
-
+        Me.Close()
     End Sub
 
     Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+
+    Private Sub HelpToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem.Click
+
 
     End Sub
 End Class

@@ -22,7 +22,6 @@ Partial Class Addon
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Addon))
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -67,12 +66,8 @@ Partial Class Addon
         Me.txtTotal = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnPrevious = New System.Windows.Forms.Button()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
@@ -85,7 +80,6 @@ Partial Class Addon
         Me.gbxProduct3.SuspendLayout()
         Me.gbxProduct5.SuspendLayout()
         Me.gbxProduct4.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -512,7 +506,7 @@ Partial Class Addon
         'txtTotal
         '
         Me.txtTotal.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTotal.Location = New System.Drawing.Point(310, 69)
+        Me.txtTotal.Location = New System.Drawing.Point(332, 68)
         Me.txtTotal.Margin = New System.Windows.Forms.Padding(2)
         Me.txtTotal.Name = "txtTotal"
         Me.txtTotal.ReadOnly = True
@@ -524,7 +518,7 @@ Partial Class Addon
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(337, 50)
+        Me.Label1.Location = New System.Drawing.Point(354, 50)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(90, 17)
         Me.Label1.TabIndex = 64
@@ -538,14 +532,6 @@ Partial Class Addon
         Me.btnPrevious.TabIndex = 65
         Me.btnPrevious.Text = "Previous"
         Me.btnPrevious.UseVisualStyleBackColor = True
-        '
-        'TextBox2
-        '
-        Me.TextBox2.Location = New System.Drawing.Point(116, 119)
-        Me.TextBox2.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(488, 20)
-        Me.TextBox2.TabIndex = 66
         '
         'TextBox3
         '
@@ -566,31 +552,6 @@ Partial Class Addon
         Me.Label2.Size = New System.Drawing.Size(43, 17)
         Me.Label2.TabIndex = 69
         Me.Label2.Text = "Total"
-        '
-        'TextBox4
-        '
-        Me.TextBox4.Location = New System.Drawing.Point(169, 62)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox4.TabIndex = 70
-        '
-        'TextBox5
-        '
-        Me.TextBox5.Location = New System.Drawing.Point(169, 87)
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox5.TabIndex = 71
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(116, 119)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(21, 20)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 67
-        Me.PictureBox1.TabStop = False
         '
         'PictureBox6
         '
@@ -652,12 +613,8 @@ Partial Class Addon
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(611, 366)
-        Me.Controls.Add(Me.TextBox5)
-        Me.Controls.Add(Me.TextBox4)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBox3)
-        Me.Controls.Add(Me.PictureBox1)
-        Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.btnPrevious)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.txtTotal)
@@ -695,7 +652,6 @@ Partial Class Addon
         Me.gbxProduct5.PerformLayout()
         Me.gbxProduct4.ResumeLayout(False)
         Me.gbxProduct4.PerformLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
@@ -749,18 +705,14 @@ Partial Class Addon
     Friend WithEvents txtTotal As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents btnPrevious As Button
-    Friend WithEvents TextBox2 As TextBox
     Friend WithEvents pbxPlanImage As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents PictureBox4 As PictureBox
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents cartbutton As ToolStripMenuItem
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents TicketToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Label2 As Label
-    Friend WithEvents TextBox4 As TextBox
-    Friend WithEvents TextBox5 As TextBox
 End Class

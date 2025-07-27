@@ -39,11 +39,7 @@ Partial Class subscribers
         Me.btnPay = New System.Windows.Forms.Button()
         Me.lblAmountDue = New System.Windows.Forms.Label()
         Me.lblBillMonth = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.MySqlCommand1 = New MySql.Data.MySqlClient.MySqlCommand()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         Me.panelBilling.SuspendLayout()
         Me.SuspendLayout()
@@ -187,14 +183,6 @@ Partial Class subscribers
         Me.lblBillMonth.TabIndex = 8
         Me.lblBillMonth.Text = "Billing Month:"
         '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(313, 130)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(76, 20)
-        Me.TextBox1.TabIndex = 8
-        '
         'MySqlCommand1
         '
         Me.MySqlCommand1.CacheAge = 0
@@ -202,36 +190,11 @@ Partial Class subscribers
         Me.MySqlCommand1.EnableCaching = False
         Me.MySqlCommand1.Transaction = Nothing
         '
-        'TextBox2
-        '
-        Me.TextBox2.Location = New System.Drawing.Point(340, 35)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox2.TabIndex = 9
-        '
-        'TextBox3
-        '
-        Me.TextBox3.Location = New System.Drawing.Point(340, 61)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox3.TabIndex = 10
-        '
-        'TextBox4
-        '
-        Me.TextBox4.Location = New System.Drawing.Point(340, 87)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox4.TabIndex = 11
-        '
         'subscribers
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(611, 366)
-        Me.Controls.Add(Me.TextBox4)
-        Me.Controls.Add(Me.TextBox3)
-        Me.Controls.Add(Me.TextBox2)
-        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.panelBilling)
         Me.Controls.Add(Me.lblPrice)
         Me.Controls.Add(Me.lblPlan)
@@ -265,9 +228,5 @@ Partial Class subscribers
     Friend WithEvents btnPay As Button
     Friend WithEvents lblAmountDue As Label
     Friend WithEvents lblBillMonth As Label
-    Friend WithEvents TextBox1 As TextBox
     Friend WithEvents MySqlCommand1 As MySql.Data.MySqlClient.MySqlCommand
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents TextBox4 As TextBox
 End Class
