@@ -722,8 +722,6 @@ Public Class subscribers
 
             billingPDF.Close()
             forBilling(billingPath)
-            MessageBox.Show("Billing report generated successfully at: " & billingPath, "PDF Generated", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
         Catch ex As Exception
             MessageBox.Show("Error generating billing PDF: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try

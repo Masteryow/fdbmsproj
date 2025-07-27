@@ -331,5 +331,83 @@
   <ItemGroup>
     <None Include="Resources\search-icon-transparent-background-8.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Skylink Basic Fiber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SkyLink Home 5g 200gb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SkyLink Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SkyLink Prepaid Wifi Basic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SkyLink Prepaid Wifi Premium.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SkyLink Prepaid Wifi Standard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SkyLink Ultra Fiber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SkyLink Business 5g.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Skylink Premium Fiber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SkyLink Standard Fiber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SkyLinkHome5gUnli.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backupbatterypack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wifiextender.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5gmodemrouter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\databoost50gb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\databoost100gb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ethernetcable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\external antenna.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\homenetworksetup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Installationservice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\landlineservice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\netflixsubscription.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\premiumtechsupport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\prioritysupportupgrade.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\speedboost100mbps.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\speedboost200mbps.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

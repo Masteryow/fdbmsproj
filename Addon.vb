@@ -42,23 +42,46 @@ Public Class Addon
 
         If page = 1 Then
             lblSpecific.Text = "Hardware"
-            productNames = {"5G Modem/Router", "WiFi Extender", "Ethernet Cable (10m)", "External Antenna", "Backup Battey Pack"}
+            productNames = {"5G Modem/Router", "WiFi Extender", "Ethernet Cable (10m)", "External Antenna", "Backup Battery Pack"}
             prices = {7990D, 2500D, 500D, 1200D, 3500D}
             addonIds = {1, 2, 3, 4, 5}
+
+            ' Set images for hardware page
+            PictureBox2.Image = My.Resources._5gmodemrouter ' 5G Modem/Router -> PictureBox2
+            PictureBox3.Image = My.Resources.wifiextender ' WiFi Extender -> PictureBox3  
+            PictureBox4.Image = My.Resources.ethernetcable ' Ethernet Cable -> PictureBox4
+            PictureBox5.Image = My.Resources.external_antenna ' External Antenna -> PictureBox5
+            PictureBox6.Image = My.Resources.backupbatterypack ' Backup Battery Pack -> PictureBox6
+
         ElseIf page = 2 Then
             lblSpecific.Text = "Services"
             productNames = {"Installation Service", "Netflix Subscription (Monthly)", "Landline Service (Monthly)",
-                        "Home Network Setup", "Premium Tech Support"}
+                    "Home Network Setup", "Premium Tech Support"}
             prices = {1500D, 549D, 800D, 2000D, 500D}
             addonIds = {6, 7, 8, 9, 10}
+
+            ' Set images for services page
+            PictureBox2.Image = My.Resources.Installationservice ' Installation Service -> PictureBox2
+            PictureBox3.Image = My.Resources.netflixsubscription ' Netflix -> PictureBox3
+            PictureBox4.Image = My.Resources.landlineservice ' Landline Service -> PictureBox4
+            PictureBox5.Image = My.Resources.homenetworksetup ' Home Network Setup -> PictureBox5
+            PictureBox6.Image = My.Resources.premiumtechsupport ' Premium Tech Support -> PictureBox6
+
         ElseIf page = 3 Then
             lblSpecific.Text = "Plan Upgrades"
             productNames = {"Speed Boost 100 Mbps", "Speed Boost 200 Mbps", "Data Allowance +100GB",
-                        "Data Allowance +50GB", "Priority Support Upgrade"}
+                    "Data Allowance +50GB", "Priority Support Upgrade"}
             prices = {500D, 1000D, 500D, 300D, 400D}
             addonIds = {11, 12, 13, 14, 15}
-        Else
 
+            ' Set images for plan upgrades page
+            PictureBox2.Image = My.Resources.speedboost100mbps ' Speed Boost 100 Mbps -> PictureBox2
+            PictureBox3.Image = My.Resources.speedboost200mbps ' Speed Boost 200 Mbps -> PictureBox3
+            PictureBox4.Image = My.Resources.databoost100gb ' Data Allowance +100GB -> PictureBox4
+            PictureBox5.Image = My.Resources.databoost50gb ' Data Allowance +50GB -> PictureBox5
+            PictureBox6.Image = My.Resources.prioritysupportupgrade ' Priority Support Upgrade -> PictureBox6
+
+        Else
         End If
 
         ' Load saved quantities from selectedQuantities array into txtValues and display

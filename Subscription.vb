@@ -59,35 +59,35 @@ Public Class Subscription
 
     Public Sub Interactive_Menu(currentID As Integer)
         If currentID = 1 Then
-            pbxPlan.Image = My.Resources.vigan1
-            Session.planImage = My.Resources.vigan1
+            pbxPlan.Image = My.Resources.SkyLinkHome5gUnli
+            Session.planImage = My.Resources.SkyLinkHome5gUnli
         ElseIf currentID = 2 Then
-            pbxPlan.Image = My.Resources.anticorrupt2
-            Session.planImage = My.Resources.anticorrupt2
+            pbxPlan.Image = My.Resources.SkyLink_Home_5g_200gb
+            Session.planImage = My.Resources.SkyLink_Home_5g_200gb
         ElseIf currentID = 3 Then
-            pbxPlan.Image = My.Resources.casagua3
-            Session.planImage = My.Resources.casagua3
+            pbxPlan.Image = My.Resources.Skylink_Basic_Fiber
+            Session.planImage = My.Resources.Skylink_Basic_Fiber
         ElseIf currentID = 4 Then
-            pbxPlan.Image = My.Resources.church4
-            Session.planImage = My.Resources.church4
+            pbxPlan.Image = My.Resources.SkyLink_Standard_Fiber
+            Session.planImage = My.Resources.SkyLink_Standard_Fiber
         ElseIf currentID = 5 Then
-            pbxPlan.Image = My.Resources.church5
-            Session.planImage = My.Resources.church5
+            pbxPlan.Image = My.Resources.Skylink_Premium_Fiber
+            Session.planImage = My.Resources.Skylink_Premium_Fiber
         ElseIf currentID = 6 Then
-            pbxPlan.Image = My.Resources.flag6
-            Session.planImage = My.Resources.flag6
+            pbxPlan.Image = My.Resources.SkyLink_Ultra_Fiber
+            Session.planImage = My.Resources.SkyLink_Ultra_Fiber
         ElseIf currentID = 7 Then
-            pbxPlan.Image = My.Resources.fortsantiago7
-            Session.planImage = My.Resources.fortsantiago7
+            pbxPlan.Image = My.Resources.SkyLink_Business_5g
+            Session.planImage = My.Resources.SkyLink_Business_5g
         ElseIf currentID = 8 Then
-            pbxPlan.Image = My.Resources.philippiness8
-            Session.planImage = My.Resources.philippiness8
+            pbxPlan.Image = My.Resources.SkyLink_Prepaid_Wifi_Basic
+            Session.planImage = My.Resources.SkyLink_Prepaid_Wifi_Basic
         ElseIf currentID = 9 Then
-            pbxPlan.Image = My.Resources.rizal9
-            Session.planImage = My.Resources.rizal9
+            pbxPlan.Image = My.Resources.SkyLink_Prepaid_Wifi_Standard
+            Session.planImage = My.Resources.SkyLink_Prepaid_Wifi_Standard
         ElseIf currentID = 10 Then
-            pbxPlan.Image = My.Resources.shrineemilio10
-            Session.planImage = My.Resources.shrineemilio10
+            pbxPlan.Image = My.Resources.SkyLink_Prepaid_Wifi_Premium
+            Session.planImage = My.Resources.SkyLink_Prepaid_Wifi_Premium
         End If
 
         selection(currentID, False)

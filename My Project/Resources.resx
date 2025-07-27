@@ -121,6 +121,9 @@
   <data name="anticorrupt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\anticorrupt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="backupbatterypack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\backupbatterypack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="casagua3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\casagua.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -129,6 +132,18 @@
   </data>
   <data name="church5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\church3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="databoost100gb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\databoost100gb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="databoost50gb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\databoost50gb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ethernetcable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ethernetcable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="external_antenna" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\external antenna.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="flag6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\flag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,8 +154,26 @@
   <data name="gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="homenetworksetup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\homenetworksetup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Installationservice" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Installationservice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="landlineservice" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\landlineservice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="netflixsubscription" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\netflixsubscription.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="philippiness8" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\philippiness.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="premiumtechsupport" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\premiumtechsupport.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="prioritysupportupgrade" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\prioritysupportupgrade.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="rizal9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\rizal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -151,10 +184,55 @@
   <data name="shrineemilio10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shrineemilio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SkyLinkHome5gUnli" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SkyLinkHome5gUnli.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skylink_Basic_Fiber" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Skylink Basic Fiber.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SkyLink_Business_5g" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SkyLink Business 5g.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SkyLink_Home_5g_200gb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SkyLink Home 5g 200gb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SkyLink_Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SkyLink Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skylink_Premium_Fiber" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Skylink Premium Fiber.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SkyLink_Prepaid_Wifi_Basic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SkyLink Prepaid Wifi Basic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SkyLink_Prepaid_Wifi_Premium" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SkyLink Prepaid Wifi Premium.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SkyLink_Prepaid_Wifi_Standard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SkyLink Prepaid Wifi Standard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SkyLink_Standard_Fiber" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SkyLink Standard Fiber.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SkyLink_Ultra_Fiber" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SkyLink Ultra Fiber.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="speedboost100mbps" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\speedboost100mbps.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="speedboost200mbps" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\speedboost200mbps.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="vigan1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vigan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="volunteer11" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\volunteer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wifiextender" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wifiextender.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_5gmodemrouter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\5gmodemrouter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
