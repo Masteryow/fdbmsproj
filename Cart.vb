@@ -24,9 +24,15 @@ Public Class Cart
     Dim data_cap As String = Session.planDataCap
     Dim price As Decimal = Session.planPrice
     Dim status As String = Session.subStatus
+
     Private skipClosingEvent As Boolean = False
     Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
-
+        planName = Session.planName
+        planType = Session.planType
+        planSpeed = Session.planSpeed
+        data_cap = Session.planDataCap
+        price = Session.planPrice
+        status = Session.subStatus
         TextBox1.Text = Session.planName
         TextBox2.Text = Session.planType
         TextBox3.Text = Session.planPrice
@@ -590,7 +596,7 @@ Public Class Cart
         If Session.fromProduct = True Then
             ' Direct product purchase - selected items only
             purchaseSuccess = ProcessSelectedDirectPurchase(selectedItems)
-        ElseIf Session.preSubscriber Then
+        ElseIf Session.preSubscriber = True Then
             ' Plan with selected addons purchase
             purchaseSuccess = ProcessPlanWithSelectedAddonsPurchase(selectedItems)
             Session.userRole = "Subscriber"
@@ -611,9 +617,6 @@ Public Class Cart
             MessageBox.Show(resultMessage, "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             ' Payment successful - complete transaction and remove only purchased items
-            If Session.preSubscriber Then
-                Session.EndTransaction(True)
-            End If
 
             ' Remove only the items that were actually purchased
             RemovePurchasedItemsFromCart(selectedItems)
@@ -622,7 +625,9 @@ Public Class Cart
             RefreshCartDisplay()
             UpdateTotal()
 
-            If Session.userRole = "Subscriber" Then
+
+
+            If Session.preSubscriber = True Then
 
                 Session.planName = planName
                 Session.planType = planType
@@ -630,6 +635,8 @@ Public Class Cart
                 Session.planDataCap = data_cap
                 Session.planPrice = price
                 Session.subStatus = status
+
+                subscribers.Show()
                 cartItems.Clear()
 
                 For Each form As Form In Application.OpenForms
@@ -639,12 +646,11 @@ Public Class Cart
                     End If
                 Next
 
-                subscribers.Show()
 
             Else
                 Main.Show()
             End If
-
+            Session.EndTransaction(True)
             Me.Close()
         Else
             MessageBox.Show("Purchase failed. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
