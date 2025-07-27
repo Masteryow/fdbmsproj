@@ -34,15 +34,15 @@ Public Class subscribers
             sendPdf.Attachments.Add(New Attachment(reportPath))
         End If
         Dim smtp As New SmtpClient("smtp.gmail.com", 587)
-            smtp.Credentials = New NetworkCredential("yohasakura200519@gmail.com", "rwxe oxyt ocnc dfmx")
-            smtp.EnableSsl = True
+        smtp.Credentials = New NetworkCredential("yohasakura200519@gmail.com", "rwxe oxyt ocnc dfmx")
+        smtp.EnableSsl = True
 
-            Try
-                smtp.Send(sendPdf)
+        Try
+            smtp.Send(sendPdf)
 
-            Catch ex As Exception
-                MessageBox.Show("Failed to send email: " & ex.Message)
-            End Try
+        Catch ex As Exception
+            MessageBox.Show("Failed to send email: " & ex.Message)
+        End Try
 
 
     End Sub
@@ -388,6 +388,9 @@ Public Class subscribers
                         Return
                     End If
 
+                    ' Store payment info in Session for the crystal report
+                    Session.cashOnHand = paymentAmount
+
                     ' Insert payment record
                     Using paymentCmd As New MySqlCommand("INSERT INTO payments (billing_id, amount, payment_date) VALUES (@bid, @amount, @payDate)", con)
                         paymentCmd.Transaction = transaction
@@ -413,8 +416,8 @@ Public Class subscribers
                     ' Refresh the billing information
                     LoadBillingInfo()
 
-                    ' Generate updated billing report
-                    GenerateBillingReport()
+                    ' Generate and send crystal report using the same path pattern as SendPath()
+                    SendPaymentPath()
 
                 Catch ex As Exception
                     transaction.Rollback()
@@ -426,10 +429,6 @@ Public Class subscribers
             End Try
         End Using
     End Sub
-
-
-
-
 
     Private Sub LoadBillingInfo()
         ' === Load billing record for current month ===
@@ -478,8 +477,11 @@ Public Class subscribers
         End Using
     End Sub
 
-    Public Sub GenerateBillingReport()
-        Dim pdfPath As String = Path.Combine(Application.StartupPath, "\Billing Report.pdf")
+    Public Sub SendPaymentPath()
+        ' Use the same file path pattern as SendPath() with GUID for unique naming
+        Dim pdfPath As String = Path.Combine(Application.StartupPath, "User Report" & Guid.NewGuid().ToString() & ".pdf")
+
+        ' Generate the billing PDF (the one from pay now)
         CreateBillingPDF(pdfPath)
     End Sub
 

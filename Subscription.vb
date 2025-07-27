@@ -22,21 +22,21 @@ Public Class Subscription
     Public Sub delete()
 
         Try
-                Using con As New MySqlConnection(strCon)
-                    con.Open()
-                    ' Only clear hardware addons (ID 1-5) from cart
-                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 15"
-                    Using cmd As New MySqlCommand(deleteQuery, con)
-                        cmd.Parameters.AddWithValue("@customerId", Session.UserId)
-                        cmd.ExecuteNonQuery()
-                    End Using
+            Using con As New MySqlConnection(strCon)
+                con.Open()
+                ' Only clear hardware addons (ID 1-5) from cart
+                Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 15"
+                Using cmd As New MySqlCommand(deleteQuery, con)
+                    cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                    cmd.ExecuteNonQuery()
                 End Using
+            End Using
 
 
 
-            Catch ex As Exception
-                MessageBox.Show("Error clearing cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End Try
+        Catch ex As Exception
+            MessageBox.Show("Error clearing cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
     End Sub
 
@@ -246,7 +246,7 @@ Public Class Subscription
 
                                     ' Insert billing record
                                     Dim billingMonth As Date = Date.Today
-                                    Dim dueDate As Date = billingMonth.AddDays(7)
+                                    Dim dueDate As Date = billingMonth.AddDays(30)
                                     Dim totalAmount As Decimal = Decimal.Parse(price)
 
                                     Using billingCmd As New MySqlCommand("INSERT INTO billing_records (subscriber_id, billing_month, total_amount, due_date)
