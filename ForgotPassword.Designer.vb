@@ -218,6 +218,7 @@ Partial Class ForgotPassword
         Me.Controls.Add(Me.userInput)
         Me.Controls.Add(Me.txtNewPassConfirm)
         Me.Controls.Add(Me.txtNewPass)
+        Me.DoubleBuffered = True
         Me.Name = "ForgotPassword"
         Me.Text = "ForgotPassword"
         Me.Panel1.ResumeLayout(False)

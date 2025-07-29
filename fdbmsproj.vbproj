@@ -409,5 +409,29 @@
   <ItemGroup>
     <None Include="Resources\speedboost200mbps.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ad1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copilot_20250729_214243.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\browse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copilot_20250729_220331.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nextreak.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\prev.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

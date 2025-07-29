@@ -65,10 +65,10 @@ Partial Class Tickets
         '
         'HomeToolStripMenuItem
         '
-        Me.HomeToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.HomeToolStripMenuItem.ForeColor = System.Drawing.Color.Red
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(68, 20)
-        Me.HomeToolStripMenuItem.Text = "About Us"
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(62, 20)
+        Me.HomeToolStripMenuItem.Text = "Log Out"
         '
         'SubscriptionToolStripMenuItem
         '
@@ -112,7 +112,7 @@ Partial Class Tickets
         Me.cbxIssueType.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbxIssueType.FormattingEnabled = True
         Me.cbxIssueType.Location = New System.Drawing.Point(74, 40)
-        Me.cbxIssueType.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cbxIssueType.Margin = New System.Windows.Forms.Padding(2)
         Me.cbxIssueType.Name = "cbxIssueType"
         Me.cbxIssueType.Size = New System.Drawing.Size(281, 25)
         Me.cbxIssueType.TabIndex = 0
@@ -133,7 +133,7 @@ Partial Class Tickets
         '
         Me.txtDifficulty.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtDifficulty.Location = New System.Drawing.Point(74, 82)
-        Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDifficulty.Name = "txtDifficulty"
         Me.txtDifficulty.Size = New System.Drawing.Size(281, 24)
         Me.txtDifficulty.TabIndex = 5
@@ -154,7 +154,7 @@ Partial Class Tickets
         '
         Me.txtPrice.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtPrice.Location = New System.Drawing.Point(74, 121)
-        Me.txtPrice.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtPrice.Margin = New System.Windows.Forms.Padding(2)
         Me.txtPrice.Name = "txtPrice"
         Me.txtPrice.Size = New System.Drawing.Size(281, 24)
         Me.txtPrice.TabIndex = 7
@@ -163,7 +163,7 @@ Partial Class Tickets
         '
         Me.btnConfirm.Enabled = False
         Me.btnConfirm.Location = New System.Drawing.Point(422, 198)
-        Me.btnConfirm.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnConfirm.Margin = New System.Windows.Forms.Padding(2)
         Me.btnConfirm.Name = "btnConfirm"
         Me.btnConfirm.Size = New System.Drawing.Size(154, 40)
         Me.btnConfirm.TabIndex = 8
@@ -183,9 +183,9 @@ Partial Class Tickets
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.White
         Me.GroupBox1.Location = New System.Drawing.Point(22, 89)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Size = New System.Drawing.Size(368, 254)
         Me.GroupBox1.TabIndex = 10
         Me.GroupBox1.TabStop = False
@@ -195,7 +195,7 @@ Partial Class Tickets
         '
         Me.txtNote.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtNote.Location = New System.Drawing.Point(16, 166)
-        Me.txtNote.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtNote.Margin = New System.Windows.Forms.Padding(2)
         Me.txtNote.Multiline = True
         Me.txtNote.Name = "txtNote"
         Me.txtNote.Size = New System.Drawing.Size(338, 76)
@@ -228,7 +228,7 @@ Partial Class Tickets
         'btnClear
         '
         Me.btnClear.Location = New System.Drawing.Point(422, 255)
-        Me.btnClear.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(154, 40)
         Me.btnClear.TabIndex = 12
@@ -250,7 +250,7 @@ Partial Class Tickets
         'txtTStatus
         '
         Me.txtTStatus.Location = New System.Drawing.Point(485, 98)
-        Me.txtTStatus.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtTStatus.Margin = New System.Windows.Forms.Padding(2)
         Me.txtTStatus.Name = "txtTStatus"
         Me.txtTStatus.ReadOnly = True
         Me.txtTStatus.Size = New System.Drawing.Size(109, 20)
@@ -259,7 +259,7 @@ Partial Class Tickets
         'btnNewTicket
         '
         Me.btnNewTicket.Location = New System.Drawing.Point(485, 121)
-        Me.btnNewTicket.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnNewTicket.Margin = New System.Windows.Forms.Padding(2)
         Me.btnNewTicket.Name = "btnNewTicket"
         Me.btnNewTicket.Size = New System.Drawing.Size(108, 19)
         Me.btnNewTicket.TabIndex = 14
@@ -272,7 +272,7 @@ Partial Class Tickets
         Me.Panel1.BackColor = System.Drawing.Color.MidnightBlue
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Location = New System.Drawing.Point(-9, 33)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(632, 46)
         Me.Panel1.TabIndex = 15
@@ -303,7 +303,7 @@ Partial Class Tickets
         Me.Controls.Add(Me.btnConfirm)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Tickets"
         Me.Text = "Tickets"
         Me.MenuStrip1.ResumeLayout(False)

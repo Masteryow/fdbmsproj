@@ -46,7 +46,7 @@ Partial Class subscribers
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.BackColor = System.Drawing.Color.Transparent
+        Me.MenuStrip1.BackColor = System.Drawing.Color.White
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.ToolStripMenuItem1, Me.ProductsToolStripMenuItem, Me.HomeToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
@@ -59,9 +59,10 @@ Partial Class subscribers
         '
         'HomeToolStripMenuItem
         '
+        Me.HomeToolStripMenuItem.ForeColor = System.Drawing.Color.Red
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(68, 20)
-        Me.HomeToolStripMenuItem.Text = "About Us"
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(62, 20)
+        Me.HomeToolStripMenuItem.Text = "Log Out"
         '
         'SubscriptionToolStripMenuItem
         '
@@ -97,7 +98,9 @@ Partial Class subscribers
         'lblUser
         '
         Me.lblUser.AutoSize = True
+        Me.lblUser.BackColor = System.Drawing.Color.Transparent
         Me.lblUser.Font = New System.Drawing.Font("Palatino Linotype", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUser.ForeColor = System.Drawing.Color.White
         Me.lblUser.Location = New System.Drawing.Point(46, 44)
         Me.lblUser.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblUser.Name = "lblUser"
@@ -111,7 +114,9 @@ Partial Class subscribers
         'lblStatus
         '
         Me.lblStatus.AutoSize = True
+        Me.lblStatus.BackColor = System.Drawing.Color.Transparent
         Me.lblStatus.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblStatus.ForeColor = System.Drawing.Color.White
         Me.lblStatus.Location = New System.Drawing.Point(49, 86)
         Me.lblStatus.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblStatus.Name = "lblStatus"
@@ -122,7 +127,9 @@ Partial Class subscribers
         'lblPlan
         '
         Me.lblPlan.AutoSize = True
+        Me.lblPlan.BackColor = System.Drawing.Color.Transparent
         Me.lblPlan.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPlan.ForeColor = System.Drawing.Color.White
         Me.lblPlan.Location = New System.Drawing.Point(49, 108)
         Me.lblPlan.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblPlan.Name = "lblPlan"
@@ -133,7 +140,9 @@ Partial Class subscribers
         'lblPrice
         '
         Me.lblPrice.AutoSize = True
+        Me.lblPrice.BackColor = System.Drawing.Color.Transparent
         Me.lblPrice.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPrice.ForeColor = System.Drawing.Color.White
         Me.lblPrice.Location = New System.Drawing.Point(49, 130)
         Me.lblPrice.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblPrice.Name = "lblPrice"
@@ -143,6 +152,7 @@ Partial Class subscribers
         '
         'panelBilling
         '
+        Me.panelBilling.BackColor = System.Drawing.Color.Transparent
         Me.panelBilling.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.panelBilling.Controls.Add(Me.btnPay)
         Me.panelBilling.Controls.Add(Me.lblAmountDue)
@@ -154,17 +164,20 @@ Partial Class subscribers
         '
         'btnPay
         '
-        Me.btnPay.Location = New System.Drawing.Point(260, 124)
+        Me.btnPay.BackColor = System.Drawing.Color.Transparent
+        Me.btnPay.Font = New System.Drawing.Font("Palatino Linotype", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPay.Location = New System.Drawing.Point(116, 122)
         Me.btnPay.Name = "btnPay"
-        Me.btnPay.Size = New System.Drawing.Size(75, 23)
+        Me.btnPay.Size = New System.Drawing.Size(248, 46)
         Me.btnPay.TabIndex = 10
         Me.btnPay.Text = "Pay now"
-        Me.btnPay.UseVisualStyleBackColor = True
+        Me.btnPay.UseVisualStyleBackColor = False
         '
         'lblAmountDue
         '
         Me.lblAmountDue.AutoSize = True
         Me.lblAmountDue.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAmountDue.ForeColor = System.Drawing.Color.Transparent
         Me.lblAmountDue.Location = New System.Drawing.Point(5, 41)
         Me.lblAmountDue.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblAmountDue.Name = "lblAmountDue"
@@ -176,6 +189,7 @@ Partial Class subscribers
         '
         Me.lblBillMonth.AutoSize = True
         Me.lblBillMonth.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblBillMonth.ForeColor = System.Drawing.Color.Transparent
         Me.lblBillMonth.Location = New System.Drawing.Point(5, 9)
         Me.lblBillMonth.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblBillMonth.Name = "lblBillMonth"
@@ -194,6 +208,7 @@ Partial Class subscribers
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.back1
         Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.panelBilling)
         Me.Controls.Add(Me.lblPrice)
@@ -201,6 +216,7 @@ Partial Class subscribers
         Me.Controls.Add(Me.lblStatus)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.lblUser)
+        Me.DoubleBuffered = True
         Me.Name = "subscribers"
         Me.Text = "subscribers"
         Me.MenuStrip1.ResumeLayout(False)

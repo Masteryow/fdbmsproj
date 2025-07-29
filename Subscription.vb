@@ -378,7 +378,7 @@ Public Class Subscription
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
         id -= 1
 
         If id > 10 Then
@@ -390,7 +390,7 @@ Public Class Subscription
         Interactive_Menu(id)
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs)
         id += 1
 
         If id > 10 Then
@@ -435,5 +435,27 @@ Public Class Subscription
         Tickets.Show()
     End Sub
 
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+        id += 1
 
+        If id > 10 Then
+            id = 1
+        ElseIf id <= 0 Then
+            id = 10
+        End If
+
+        Interactive_Menu(id)
+    End Sub
+
+    Private Sub PictureBox2_Click(sender As Object, e As EventArgs) Handles PictureBox2.Click
+        id -= 1
+
+        If id > 10 Then
+            id = 1
+        ElseIf id <= 0 Then
+            id = 10
+        End If
+
+        Interactive_Menu(id)
+    End Sub
 End Class

@@ -103,10 +103,10 @@ Partial Class Addon
         '
         'HomeToolStripMenuItem
         '
-        Me.HomeToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.HomeToolStripMenuItem.ForeColor = System.Drawing.Color.Red
         Me.HomeToolStripMenuItem.Name = "HomeToolStripMenuItem"
-        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(68, 20)
-        Me.HomeToolStripMenuItem.Text = "About Us"
+        Me.HomeToolStripMenuItem.Size = New System.Drawing.Size(62, 20)
+        Me.HomeToolStripMenuItem.Text = "Log Out"
         '
         'HelpToolStripMenuItem
         '
