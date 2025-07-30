@@ -32,7 +32,6 @@ Partial Class Form1
         Me.lblForgotPass = New System.Windows.Forms.Label()
         Me.lblNotMem = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1.SuspendLayout()
@@ -111,7 +110,7 @@ Partial Class Form1
         Me.lblForgotPass.BackColor = System.Drawing.Color.WhiteSmoke
         Me.lblForgotPass.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblForgotPass.ForeColor = System.Drawing.Color.DarkSlateGray
-        Me.lblForgotPass.Location = New System.Drawing.Point(158, 199)
+        Me.lblForgotPass.Location = New System.Drawing.Point(146, 197)
         Me.lblForgotPass.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblForgotPass.Name = "lblForgotPass"
         Me.lblForgotPass.Size = New System.Drawing.Size(102, 14)
@@ -124,7 +123,7 @@ Partial Class Form1
         Me.lblNotMem.BackColor = System.Drawing.Color.WhiteSmoke
         Me.lblNotMem.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblNotMem.ForeColor = System.Drawing.Color.Gray
-        Me.lblNotMem.Location = New System.Drawing.Point(120, 293)
+        Me.lblNotMem.Location = New System.Drawing.Point(112, 293)
         Me.lblNotMem.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblNotMem.Name = "lblNotMem"
         Me.lblNotMem.Size = New System.Drawing.Size(90, 14)
@@ -134,7 +133,6 @@ Partial Class Form1
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Panel1.Controls.Add(Me.CheckBox1)
         Me.Panel1.Controls.Add(Me.lblUsername)
         Me.Panel1.Controls.Add(Me.lblPassword)
         Me.Panel1.Controls.Add(Me.lblForgotPass)
@@ -148,17 +146,6 @@ Partial Class Form1
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(299, 368)
         Me.Panel1.TabIndex = 9
-        '
-        'CheckBox1
-        '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(53, 199)
-        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(2)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(98, 17)
-        Me.CheckBox1.TabIndex = 9
-        Me.CheckBox1.Text = "Remember Me!"
-        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -203,5 +190,4 @@ Partial Class Form1
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents Timer1 As Timer
-    Friend WithEvents CheckBox1 As CheckBox
 End Class

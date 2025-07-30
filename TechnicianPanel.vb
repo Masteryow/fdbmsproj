@@ -10,7 +10,7 @@ Public Class TechnicianPanel
     Private Sub TechnicianPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cbxSubName.Items.Clear()
         ticketMap.Clear()
-        TextBox6.Text = Session.technicianID
+
 
         Using conn As New MySqlConnection(strCon)
             conn.Open()
@@ -225,5 +225,12 @@ Public Class TechnicianPanel
         btnClear.Visible = False
         btnSave.Visible = False
         isAccepted = False
+    End Sub
+
+    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
+        If MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Form1.Show()
+            Me.Close()
+        End If
     End Sub
 End Class

@@ -152,7 +152,7 @@ Partial Class ForgotPassword
         Me.btnResend.BackColor = System.Drawing.Color.Black
         Me.btnResend.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnResend.ForeColor = System.Drawing.Color.Transparent
-        Me.btnResend.Location = New System.Drawing.Point(337, 240)
+        Me.btnResend.Location = New System.Drawing.Point(329, 240)
         Me.btnResend.Margin = New System.Windows.Forms.Padding(2)
         Me.btnResend.Name = "btnResend"
         Me.btnResend.Size = New System.Drawing.Size(125, 33)
@@ -164,7 +164,7 @@ Partial Class ForgotPassword
         '
         Me.lblSubheader.AutoSize = True
         Me.lblSubheader.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSubheader.Location = New System.Drawing.Point(244, 152)
+        Me.lblSubheader.Location = New System.Drawing.Point(255, 152)
         Me.lblSubheader.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblSubheader.Name = "lblSubheader"
         Me.lblSubheader.Size = New System.Drawing.Size(97, 15)
@@ -175,7 +175,7 @@ Partial Class ForgotPassword
         '
         Me.lblHeader.AutoSize = True
         Me.lblHeader.Font = New System.Drawing.Font("Segoe UI Semibold", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblHeader.Location = New System.Drawing.Point(131, 106)
+        Me.lblHeader.Location = New System.Drawing.Point(150, 106)
         Me.lblHeader.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblHeader.Name = "lblHeader"
         Me.lblHeader.Size = New System.Drawing.Size(312, 25)
@@ -187,7 +187,7 @@ Partial Class ForgotPassword
         Me.btnVerify.BackColor = System.Drawing.Color.Black
         Me.btnVerify.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnVerify.ForeColor = System.Drawing.Color.Transparent
-        Me.btnVerify.Location = New System.Drawing.Point(170, 240)
+        Me.btnVerify.Location = New System.Drawing.Point(162, 240)
         Me.btnVerify.Margin = New System.Windows.Forms.Padding(2)
         Me.btnVerify.Name = "btnVerify"
         Me.btnVerify.Size = New System.Drawing.Size(125, 33)
@@ -198,7 +198,7 @@ Partial Class ForgotPassword
         'txtCode
         '
         Me.txtCode.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCode.Location = New System.Drawing.Point(86, 189)
+        Me.txtCode.Location = New System.Drawing.Point(78, 189)
         Me.txtCode.Name = "txtCode"
         Me.txtCode.Size = New System.Drawing.Size(456, 23)
         Me.txtCode.TabIndex = 13
