@@ -26,7 +26,6 @@ Partial Class Form1
         Me.btnLogin = New System.Windows.Forms.Button()
         Me.btnCreate = New System.Windows.Forms.Button()
         Me.txtUsername = New System.Windows.Forms.TextBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.lblUsername = New System.Windows.Forms.Label()
         Me.lblPassword = New System.Windows.Forms.Label()
@@ -42,7 +41,7 @@ Partial Class Form1
         'btnLogin
         '
         Me.btnLogin.Location = New System.Drawing.Point(53, 228)
-        Me.btnLogin.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnLogin.Margin = New System.Windows.Forms.Padding(2)
         Me.btnLogin.Name = "btnLogin"
         Me.btnLogin.Size = New System.Drawing.Size(195, 28)
         Me.btnLogin.TabIndex = 0
@@ -52,7 +51,7 @@ Partial Class Form1
         'btnCreate
         '
         Me.btnCreate.Location = New System.Drawing.Point(98, 310)
-        Me.btnCreate.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnCreate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnCreate.Name = "btnCreate"
         Me.btnCreate.Size = New System.Drawing.Size(118, 28)
         Me.btnCreate.TabIndex = 1
@@ -64,26 +63,17 @@ Partial Class Form1
         Me.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtUsername.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUsername.Location = New System.Drawing.Point(53, 113)
-        Me.txtUsername.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtUsername.Margin = New System.Windows.Forms.Padding(2)
         Me.txtUsername.Name = "txtUsername"
         Me.txtUsername.Size = New System.Drawing.Size(196, 26)
         Me.txtUsername.TabIndex = 2
-        '
-        'TextBox2
-        '
-        Me.TextBox2.ForeColor = System.Drawing.Color.White
-        Me.TextBox2.Location = New System.Drawing.Point(308, 139)
-        Me.TextBox2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(1, 20)
-        Me.TextBox2.TabIndex = 3
         '
         'txtPassword
         '
         Me.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtPassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtPassword.Location = New System.Drawing.Point(53, 169)
-        Me.txtPassword.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtPassword.Margin = New System.Windows.Forms.Padding(2)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPassword.Size = New System.Drawing.Size(196, 26)
@@ -154,7 +144,7 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.btnCreate)
         Me.Panel1.Controls.Add(Me.btnLogin)
         Me.Panel1.Location = New System.Drawing.Point(313, 0)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(299, 368)
         Me.Panel1.TabIndex = 9
@@ -163,7 +153,7 @@ Partial Class Form1
         '
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.Location = New System.Drawing.Point(53, 199)
-        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(98, 17)
         Me.CheckBox1.TabIndex = 9
@@ -191,23 +181,20 @@ Partial Class Form1
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.Panel1)
         Me.DoubleBuffered = True
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Form1"
         Me.Text = "s"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents btnLogin As Button
     Friend WithEvents btnCreate As Button
     Friend WithEvents txtUsername As TextBox
-    Friend WithEvents TextBox2 As TextBox
     Friend WithEvents txtPassword As TextBox
     Friend WithEvents lblUsername As Label
     Friend WithEvents lblPassword As Label
