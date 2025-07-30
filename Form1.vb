@@ -189,7 +189,7 @@ Public Class Form1
                     Case "supervisor"
                         MessageBox.Show("Login Successful", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         ' Add supervisor form here when created
-                        ' SupervisorPanel.Show()
+                        Supervisor_Panel.Show()
                         Me.Close()
 
                     Case Else
