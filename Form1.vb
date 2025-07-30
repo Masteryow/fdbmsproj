@@ -11,7 +11,7 @@ Public Class Form1
     Dim isShowing As Boolean = False
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
     Dim con As New MySqlConnection(strCon)
-
+    Dim counter As Integer = 0
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Timer1.Interval = 500
@@ -259,5 +259,26 @@ Public Class Form1
         Session.UserName = txtUsername.Text
     End Sub
 
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles pbxPassword.Click
 
+        counter += 1
+
+        If counter Mod 2 = 1 Then
+
+            pbxPassword.Image = My.Resources.passEyeOpen
+            txtPassword.PasswordChar = ""
+
+        ElseIf counter Mod 2 = 0 Then
+
+
+            pbxPassword.Image = My.Resources.passEyeClose
+            txtPassword.PasswordChar = "*"
+
+        End If
+
+    End Sub
+
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+
+    End Sub
 End Class

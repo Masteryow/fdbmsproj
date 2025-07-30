@@ -313,6 +313,26 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property passEyeClose() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("passEyeClose", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property passEyeOpen() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("passEyeOpen", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property philippiness8() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("philippiness8", resourceCulture)
@@ -536,6 +556,16 @@ Namespace My.Resources
         Friend ReadOnly Property wifiextender() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("wifiextender", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property yiloBrowse() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("yiloBrowse", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

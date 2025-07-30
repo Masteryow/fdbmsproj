@@ -299,6 +299,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\eye-open-1024.webp" />
     <None Include="Resources\vigan.png" />
   </ItemGroup>
   <ItemGroup>
@@ -463,6 +464,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\performative intro 2.mp4" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2072006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\passEyeOpen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\passEyeClose.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yiloBrowse.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

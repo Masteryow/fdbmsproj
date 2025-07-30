@@ -23,6 +23,7 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.btnLogin = New System.Windows.Forms.Button()
         Me.btnCreate = New System.Windows.Forms.Button()
         Me.txtUsername = New System.Windows.Forms.TextBox()
@@ -34,7 +35,10 @@ Partial Class Form1
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.pbxPassword = New System.Windows.Forms.PictureBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Panel1.SuspendLayout()
+        CType(Me.pbxPassword, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnLogin
@@ -43,7 +47,7 @@ Partial Class Form1
         Me.btnLogin.Margin = New System.Windows.Forms.Padding(2)
         Me.btnLogin.Name = "btnLogin"
         Me.btnLogin.Size = New System.Drawing.Size(195, 28)
-        Me.btnLogin.TabIndex = 0
+        Me.btnLogin.TabIndex = 3
         Me.btnLogin.Text = "Login"
         Me.btnLogin.UseVisualStyleBackColor = True
         '
@@ -53,7 +57,7 @@ Partial Class Form1
         Me.btnCreate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnCreate.Name = "btnCreate"
         Me.btnCreate.Size = New System.Drawing.Size(118, 28)
-        Me.btnCreate.TabIndex = 1
+        Me.btnCreate.TabIndex = 5
         Me.btnCreate.Text = "Create account"
         Me.btnCreate.UseVisualStyleBackColor = True
         '
@@ -65,7 +69,7 @@ Partial Class Form1
         Me.txtUsername.Margin = New System.Windows.Forms.Padding(2)
         Me.txtUsername.Name = "txtUsername"
         Me.txtUsername.Size = New System.Drawing.Size(196, 26)
-        Me.txtUsername.TabIndex = 2
+        Me.txtUsername.TabIndex = 0
         '
         'txtPassword
         '
@@ -75,13 +79,13 @@ Partial Class Form1
         Me.txtPassword.Margin = New System.Windows.Forms.Padding(2)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtPassword.Size = New System.Drawing.Size(196, 26)
-        Me.txtPassword.TabIndex = 4
+        Me.txtPassword.Size = New System.Drawing.Size(163, 26)
+        Me.txtPassword.TabIndex = 1
         '
         'lblUsername
         '
         Me.lblUsername.AutoSize = True
-        Me.lblUsername.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.lblUsername.BackColor = System.Drawing.SystemColors.Window
         Me.lblUsername.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUsername.ForeColor = System.Drawing.Color.DarkSlateGray
         Me.lblUsername.Location = New System.Drawing.Point(50, 91)
@@ -94,7 +98,7 @@ Partial Class Form1
         'lblPassword
         '
         Me.lblPassword.AutoSize = True
-        Me.lblPassword.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.lblPassword.BackColor = System.Drawing.SystemColors.Window
         Me.lblPassword.Font = New System.Drawing.Font("Calibri", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPassword.ForeColor = System.Drawing.Color.DarkSlateGray
         Me.lblPassword.Location = New System.Drawing.Point(54, 147)
@@ -114,7 +118,7 @@ Partial Class Form1
         Me.lblForgotPass.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblForgotPass.Name = "lblForgotPass"
         Me.lblForgotPass.Size = New System.Drawing.Size(102, 14)
-        Me.lblForgotPass.TabIndex = 7
+        Me.lblForgotPass.TabIndex = 4
         Me.lblForgotPass.Text = "Forgot Password?"
         '
         'lblNotMem
@@ -132,7 +136,8 @@ Partial Class Form1
         '
         'Panel1
         '
-        Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Panel1.BackColor = System.Drawing.SystemColors.Window
+        Me.Panel1.Controls.Add(Me.pbxPassword)
         Me.Panel1.Controls.Add(Me.lblUsername)
         Me.Panel1.Controls.Add(Me.lblPassword)
         Me.Panel1.Controls.Add(Me.lblForgotPass)
@@ -141,6 +146,7 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.txtPassword)
         Me.Panel1.Controls.Add(Me.btnCreate)
         Me.Panel1.Controls.Add(Me.btnLogin)
+        Me.Panel1.Controls.Add(Me.TextBox1)
         Me.Panel1.Location = New System.Drawing.Point(313, 0)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
@@ -161,6 +167,26 @@ Partial Class Form1
         'Timer1
         '
         '
+        'pbxPassword
+        '
+        Me.pbxPassword.BackColor = System.Drawing.Color.White
+        Me.pbxPassword.Image = CType(resources.GetObject("pbxPassword.Image"), System.Drawing.Image)
+        Me.pbxPassword.Location = New System.Drawing.Point(216, 170)
+        Me.pbxPassword.Name = "pbxPassword"
+        Me.pbxPassword.Size = New System.Drawing.Size(31, 23)
+        Me.pbxPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pbxPassword.TabIndex = 9
+        Me.pbxPassword.TabStop = False
+        '
+        'TextBox1
+        '
+        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox1.Location = New System.Drawing.Point(215, 169)
+        Me.TextBox1.Multiline = True
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(34, 26)
+        Me.TextBox1.TabIndex = 10
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -175,6 +201,7 @@ Partial Class Form1
         Me.Text = "s"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        CType(Me.pbxPassword, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -190,4 +217,6 @@ Partial Class Form1
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents pbxPassword As PictureBox
+    Friend WithEvents TextBox1 As TextBox
 End Class

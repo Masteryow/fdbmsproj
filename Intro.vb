@@ -8,7 +8,6 @@ Public Class Intro
 
         File.WriteAllBytes(tempVideoPath, My.Resources.intro)
 
-        ' Play it using Windows Media Player
         AxWindowsMediaPlayer1.URL = tempVideoPath
         AxWindowsMediaPlayer1.uiMode = "none"
         AxWindowsMediaPlayer1.Ctlcontrols.play()
@@ -18,7 +17,6 @@ Public Class Intro
 
     Private Sub AxWindowsMediaPlayer1_PlayStateChange(sender As Object, e As AxWMPLib._WMPOCXEvents_PlayStateChangeEvent) Handles AxWindowsMediaPlayer1.PlayStateChange
         If e.newState = WMPLib.WMPPlayState.wmppsMediaEnded Then
-
             Form1.Show()
             Me.Close()
         End If
