@@ -74,7 +74,6 @@ Partial Class Addon
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pbxPlanImage = New System.Windows.Forms.PictureBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         Me.gbxProduct1.SuspendLayout()
         Me.gbxProduct2.SuspendLayout()
@@ -621,13 +620,6 @@ Partial Class Addon
         Me.pbxPlanImage.TabIndex = 26
         Me.pbxPlanImage.TabStop = False
         '
-        'TextBox2
-        '
-        Me.TextBox2.Location = New System.Drawing.Point(171, 66)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox2.TabIndex = 70
-        '
         'Addon
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -636,7 +628,6 @@ Partial Class Addon
         Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(611, 366)
-        Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.btnPrevious)
@@ -740,5 +731,4 @@ Partial Class Addon
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents TicketToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Label2 As Label
-    Friend WithEvents TextBox2 As TextBox
 End Class

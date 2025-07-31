@@ -645,7 +645,7 @@ Public Class Cart
 
             ElseIf Session.subscriberAccess = True Then
                 subscribers.Show()
-            Else
+            ElseIf Session.userRole = "Customer" Then
                 Main.Show()
             End If
             Session.EndTransaction(True)

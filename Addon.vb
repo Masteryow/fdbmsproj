@@ -556,7 +556,7 @@ Public Class Addon
 
         End Using
 
-        TextBox2.Text = index
+
 
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
             HelpToolStripMenuItem.Visible = False
