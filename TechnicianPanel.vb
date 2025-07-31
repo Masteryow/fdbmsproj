@@ -7,7 +7,7 @@ Public Class TechnicianPanel
     Dim currentStatus As String = ""
     Dim isAccepted As Boolean = False
 
-    Private Sub TechnicianPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Sub ticket_loading()
         cbxSubName.Items.Clear()
         ticketMap.Clear()
 
@@ -59,6 +59,9 @@ Public Class TechnicianPanel
         ' Set ComboBox display/value (anonymous type workaround)
         cbxSubName.DisplayMember = "Display"
         cbxSubName.ValueMember = "Value"
+    End Sub
+    Private Sub TechnicianPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ticket_loading()
     End Sub
 
     Private Sub cbxSubName_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxSubName.SelectedIndexChanged
@@ -147,10 +150,45 @@ Public Class TechnicianPanel
                     updateStatus.ExecuteNonQuery()
                 End Using
 
+                transaction.Commit()
                 MsgBox("Successfully Updated!")
 
+                If currentStatus = "Completed" Then
+                    ' DISABLE the event handler temporarily
+                    RemoveHandler cbxSubName.SelectedIndexChanged, AddressOf cbxSubName_SelectedIndexChanged
 
-                transaction.Commit()
+                    ' Clear ComboBox selection and text
+                    cbxSubName.SelectedIndex = -1
+                    cbxSubName.Text = ""
+                    cbxStatus.SelectedIndex = -1
+                    cbxStatus.Text = ""
+
+                    ' Clear ALL ticket detail fields
+                    txtConcern.Clear()
+                    txtDifficulty.Clear()
+                    txtPrice.Clear()
+                    txtNotes.Clear()
+                    txtRemarks.Clear()
+
+                    ' Reset control states
+                    isAccepted = False
+                    btnAccept.Visible = False
+                    btnClear.Visible = False
+                    btnSave.Visible = False
+                    cbxStatus.Enabled = False
+                    txtRemarks.Enabled = False
+
+                    ' Reset ticket ID
+                    ticketId = 0
+                    currentStatus = ""
+
+                    ' Reload tickets
+                    ticket_loading()
+
+                    ' RE-ENABLE the event handler
+                    AddHandler cbxSubName.SelectedIndexChanged, AddressOf cbxSubName_SelectedIndexChanged
+
+                End If
 
 
             Catch rollEx As Exception

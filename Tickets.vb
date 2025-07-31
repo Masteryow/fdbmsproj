@@ -295,4 +295,14 @@ Public Class Tickets
     Private Sub HelpToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
     End Sub
+
+    Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
+        Addon.Show()
+        Me.Close()
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        Cart.Show()
+        Me.Close()
+    End Sub
 End Class

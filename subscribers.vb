@@ -163,10 +163,10 @@ Public Class subscribers
             planDataCap.Add(Session.planDataCap)
             crystalPDF.Add(planDataCap)
 
-            Dim planPrice As New Paragraph()
-            planPrice.Add(New Chunk("Price: ", forStyling))
-            planPrice.Add("Php " & Session.planPrice.ToString("f2"))
-            crystalPDF.Add(planPrice)
+            Dim planPrice1 As New Paragraph()
+            planPrice1.Add(New Chunk("Price: ", forStyling))
+            planPrice1.Add("Php " & Session.planPrice.ToString("f2"))
+            crystalPDF.Add(planPrice1)
             crystalPDF.Add(space)
             crystalPDF.Add(space)
 
@@ -255,6 +255,7 @@ Public Class subscribers
 
             crystalPDF.Close()
             pdfReport(filePath)
+
         Catch ex As Exception
 
             MessageBox.Show("Error generating PDF: " & ex.Message)
@@ -271,6 +272,7 @@ Public Class subscribers
 
         Session.subscriberAccess = True
         Session.preSubscriber = False
+
 
         receivID = Session.SubscriberId
         lblUser.Text = ""         ' Clear label before animation
@@ -320,6 +322,7 @@ Public Class subscribers
         If Session.IsNewSubscription = True Then
             SendPath()
             Session.IsNewSubscription = False
+            Session.planPrice = 0
         End If
     End Sub
 

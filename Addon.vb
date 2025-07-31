@@ -71,6 +71,7 @@ Public Class Addon
 
         Dim baseIndex As Integer = (page - 1) * 5
 
+        gbxProduct5.Font = New Font(gbxProduct5.Font.FontFamily, 8, gbxProduct5.Font.Style)
         If page = 1 Then
             lblSpecific.Text = "Hardware"
             productNames = {productName1, productName2, productName3, productName4, productName5}
@@ -113,7 +114,7 @@ Public Class Addon
             PictureBox4.Image = My.Resources.databoost100gb ' Data Allowance +100GB -> PictureBox4
             PictureBox5.Image = My.Resources.databoost50gb ' Data Allowance +50GB -> PictureBox5
             PictureBox6.Image = My.Resources.prioritysupportupgrade ' Priority Support Upgrade -> PictureBox6
-
+            gbxProduct5.Font = New Font(gbxProduct5.Font.FontFamily, 7, gbxProduct5.Font.Style)
 
         Else
         End If
@@ -374,7 +375,8 @@ Public Class Addon
 
         Dim decDPayment As Decimal = 0
 
-        Dim strDPayment As String = InputBox("Please enter your money:", "Payment", "0.00")
+        Dim strDPayment As String = InputBox($"PleaseL enter your money: To Pay - {addedItemsTotal.ToString("f2")} ", "Payment", "0.00")
+
 
 
         If Decimal.TryParse(strDPayment, decDPayment) Then
@@ -518,7 +520,7 @@ Public Class Addon
 
                     While fetchInfo.Read
 
-                        If index = 15 Then
+                        If index > 15 Then
                             Exit While
                         End If
                         Dim price As Decimal = fetchInfo.GetDecimal("price")
@@ -618,6 +620,7 @@ Public Class Addon
             pbxPlanImage.Visible = False
             btnPrevious.Visible = True
             btnNext.Visible = True
+            TextBox3.Text = "Php " & total.ToString("f2")
             txtTotal.Text = "Php " & total.ToString("F2")
             Dim skylinkProduct As New Label()
             skylinkProduct.Size = New Size(600, 100)
@@ -680,7 +683,7 @@ Public Class Addon
         Dim trans As MySqlTransaction = Nothing
 
         Dim decPayment As Decimal = 0
-        Dim strPayment As String = InputBox("Please enter your money:", "Payment", "0.00")
+        Dim strPayment As String = InputBox($"Please enter your money: To Pay - Php {total.ToString("f2")}", "Payment", "0.00")
 
         If Decimal.TryParse(strPayment, decPayment) Then
             If decPayment > addedItemsTotal Then
@@ -808,11 +811,17 @@ Public Class Addon
                 purchaseSuccess = PurchaseAddonsForExistingSubscriber()
             End If
 
-            If purchaseSuccess AndAlso Session.preSubscriber Then
+            If purchaseSuccess AndAlso Session.preSubscriber = True Then
                 Session.userRole = "Subscriber"
                 subscribers.Show()
-                Me.Close()
+
                 ClearAllQuantities()
+
+
+
+
+                Me.Close()
+
             Else
 
                 ' Stock will be automatically reduced by the database trigger
@@ -828,11 +837,11 @@ Public Class Addon
         Dim con As New MySqlConnection(conStr)
         Dim trans As MySqlTransaction = Nothing
 
-
+        total = planPrice + addedItemsTotal
 
         Dim decPayment As Decimal = 0
 
-        Dim strPayment As String = InputBox("Please enter your money:", "Payment", "0.00")
+        Dim strPayment As String = InputBox($"Please enter your money: To Pay - Php {total.ToString("f2")} ", "Payment", "0.00")
 
         If Decimal.TryParse(strPayment, decPayment) Then
 
@@ -845,7 +854,10 @@ Public Class Addon
             ElseIf decPayment < total Then
                 MsgBox($"Insufficient money, please try again!")
                 success = False
+
                 Return success
+
+
             End If
             Try
                 con.Open()
@@ -953,7 +965,7 @@ Public Class Addon
         Else
 
             MsgBox("Please Enter A Valid Amount")
-
+            addedItemsTotal = 0
             success = False
             Return success
 
@@ -1036,6 +1048,9 @@ Public Class Addon
         Else
             MessageBox.Show("No items selected to add to cart!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+
+        addedItemsTotal = 0
+
     End Sub
 
     Private Function GetProductNameByAddonId(addonId As Integer) As String
@@ -1060,6 +1075,7 @@ Public Class Addon
     End Function
 
     Private Sub CartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles cartbutton.Click
+
         Cart.Show()
         Me.Hide()
     End Sub

@@ -191,7 +191,7 @@ Partial Class Cart
         Me.btnContinueShopping.BackColor = System.Drawing.Color.Indigo
         Me.btnContinueShopping.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnContinueShopping.ForeColor = System.Drawing.Color.White
-        Me.btnContinueShopping.Location = New System.Drawing.Point(398, 302)
+        Me.btnContinueShopping.Location = New System.Drawing.Point(391, 268)
         Me.btnContinueShopping.Name = "btnContinueShopping"
         Me.btnContinueShopping.Size = New System.Drawing.Size(156, 27)
         Me.btnContinueShopping.TabIndex = 32
@@ -203,7 +203,7 @@ Partial Class Cart
         Me.btnCancelOrder.BackColor = System.Drawing.Color.Indigo
         Me.btnCancelOrder.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancelOrder.ForeColor = System.Drawing.Color.White
-        Me.btnCancelOrder.Location = New System.Drawing.Point(398, 267)
+        Me.btnCancelOrder.Location = New System.Drawing.Point(391, 301)
         Me.btnCancelOrder.Name = "btnCancelOrder"
         Me.btnCancelOrder.Size = New System.Drawing.Size(156, 28)
         Me.btnCancelOrder.TabIndex = 33

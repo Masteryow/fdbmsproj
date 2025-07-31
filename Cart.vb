@@ -526,6 +526,17 @@ Public Class Cart
             lblDeletionMode.Visible = False
             btnClearCart.Visible = False
             btnDeletionMode.Enabled = True
+
+            If Session.userRole = "Subscriber" Then
+                For Each form As Form In Application.OpenForms
+                    If form.Name = "Addon" Then
+                        form.Close()
+                        Exit For
+                    End If
+                Next
+            End If
+
+
         End If
     End Sub
 
@@ -645,6 +656,13 @@ Public Class Cart
 
             ElseIf Session.subscriberAccess = True Then
                 subscribers.Show()
+                For Each form As Form In Application.OpenForms
+                    If form.Name = "Addon" Then
+                        form.Close()
+                        Exit For
+                    End If
+                Next
+
             ElseIf Session.userRole = "Customer" Then
                 Main.Show()
             End If
@@ -895,6 +913,13 @@ Public Class Cart
 
         If result = DialogResult.Yes Then
             ClearCart()
+
+            For Each form As Form In Application.OpenForms
+                If form.Name = "Addon" Then
+                    form.Close()
+                    Exit For
+                End If
+            Next
             Session.EndTransaction(False)
             ' Clear the database cart as well
             ReturnToPlanSelection()
@@ -1019,6 +1044,17 @@ Public Class Cart
                                                     "Confirm Removal", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
             RemoveSelectedItems()
+
+            If Session.userRole = "Subscriber" Then
+                For Each form As Form In Application.OpenForms 'added12
+                    If form.Name = "Addon" Then
+                        form.Close()
+                        Exit For
+                    End If
+                Next
+
+            End If
+
         End If
     End Sub
 
@@ -1049,6 +1085,13 @@ Public Class Cart
     End Sub
 
     Private Sub HomeToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem1.Click
+
+        'added12
+        If deletionMode = True Then
+            MsgBox("Please exit from Deletion Mode first.", MsgBoxStyle.Exclamation, "Notice")
+            Exit Sub
+        End If
+
         delete()
 
         If Session.userRole = "Subscriber" Then
@@ -1073,7 +1116,10 @@ Public Class Cart
     End Sub
 
     Private Sub HelpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubscriptionToolStripMenuItem.Click
-
+        If deletionMode = True Then
+            MsgBox("Please exit from Deletion Mode first.", MsgBoxStyle.Exclamation, "Notice")
+            Exit Sub
+        End If
 
 
         If Session.userRole = "Customer" Then
@@ -1100,6 +1146,11 @@ Public Class Cart
     End Sub
 
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
+        If deletionMode = True Then
+            MsgBox("Please exit from Deletion Mode first.", MsgBoxStyle.Exclamation, "Notice")
+            Exit Sub
+        End If
+
         Addon.Show()
         Me.Hide()
     End Sub
@@ -1109,6 +1160,11 @@ Public Class Cart
     End Sub
 
     Private Sub TicketToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketToolStripMenuItem.Click
+        If deletionMode = True Then
+            MsgBox("Please exit from Deletion Mode first.", MsgBoxStyle.Exclamation, "Notice")
+            Exit Sub
+        End If
+
         Tickets.Show()
         Me.Close()
     End Sub
@@ -1125,6 +1181,10 @@ Public Class Cart
     End Sub
 
     Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+
+    Private Sub HelpToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem.Click
 
     End Sub
 End Class

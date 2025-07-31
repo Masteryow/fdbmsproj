@@ -210,7 +210,7 @@ Partial Class Addon
         '
         Me.lblPrice1.AutoSize = True
         Me.lblPrice1.ForeColor = System.Drawing.Color.White
-        Me.lblPrice1.Location = New System.Drawing.Point(6, 16)
+        Me.lblPrice1.Location = New System.Drawing.Point(6, 24)
         Me.lblPrice1.Name = "lblPrice1"
         Me.lblPrice1.Size = New System.Drawing.Size(0, 13)
         Me.lblPrice1.TabIndex = 37
@@ -334,7 +334,7 @@ Partial Class Addon
         '
         Me.lblPrice2.AutoSize = True
         Me.lblPrice2.ForeColor = System.Drawing.Color.White
-        Me.lblPrice2.Location = New System.Drawing.Point(6, 16)
+        Me.lblPrice2.Location = New System.Drawing.Point(6, 24)
         Me.lblPrice2.Name = "lblPrice2"
         Me.lblPrice2.Size = New System.Drawing.Size(0, 13)
         Me.lblPrice2.TabIndex = 37
@@ -390,7 +390,7 @@ Partial Class Addon
         '
         Me.lblPrice3.AutoSize = True
         Me.lblPrice3.ForeColor = System.Drawing.Color.White
-        Me.lblPrice3.Location = New System.Drawing.Point(6, 16)
+        Me.lblPrice3.Location = New System.Drawing.Point(6, 24)
         Me.lblPrice3.Name = "lblPrice3"
         Me.lblPrice3.Size = New System.Drawing.Size(0, 13)
         Me.lblPrice3.TabIndex = 37
@@ -446,7 +446,7 @@ Partial Class Addon
         '
         Me.lblPrice5.AutoSize = True
         Me.lblPrice5.ForeColor = System.Drawing.Color.White
-        Me.lblPrice5.Location = New System.Drawing.Point(6, 16)
+        Me.lblPrice5.Location = New System.Drawing.Point(6, 24)
         Me.lblPrice5.Name = "lblPrice5"
         Me.lblPrice5.Size = New System.Drawing.Size(0, 13)
         Me.lblPrice5.TabIndex = 37
@@ -502,7 +502,7 @@ Partial Class Addon
         '
         Me.lblPrice4.AutoSize = True
         Me.lblPrice4.ForeColor = System.Drawing.Color.White
-        Me.lblPrice4.Location = New System.Drawing.Point(6, 16)
+        Me.lblPrice4.Location = New System.Drawing.Point(6, 24)
         Me.lblPrice4.Name = "lblPrice4"
         Me.lblPrice4.Size = New System.Drawing.Size(7, 13)
         Me.lblPrice4.TabIndex = 37

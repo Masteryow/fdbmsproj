@@ -6,8 +6,8 @@ Public Class Supervisor_Panel
     Dim techDict As New Dictionary(Of String, Integer)
     Dim hasChosen As Boolean = False
     Dim technicianId As Integer = 0
-
-    Private Sub Supervisor_Panel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    '
+    Sub loadingInfo()
         Try
             Using conn As New MySqlConnection(strCon)
                 conn.Open()
@@ -67,6 +67,9 @@ Public Class Supervisor_Panel
         Catch ex As Exception
             MessageBox.Show("Error loading data: " & ex.Message)
         End Try
+    End Sub
+    Private Sub Supervisor_Panel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        loadingInfo()
     End Sub
 
     Private Sub cbxSubName_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxSubName.SelectedIndexChanged
@@ -236,6 +239,7 @@ Public Class Supervisor_Panel
                                 Dim rowsAffected As Integer = updateCmd.ExecuteNonQuery()
                                 If rowsAffected > 0 Then
                                     MsgBox("Ticket assigned and status updated successfully!")
+                                    loadingInfo()
                                 Else
                                     MsgBox("Failed to update the ticket assignment.")
                                 End If
