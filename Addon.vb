@@ -22,6 +22,22 @@ Public Class Addon
     Dim cartItems As New List(Of cartItem)
     Dim addonIds() As Integer
     Dim addedItemsTotal As Decimal = 0
+    Dim addonPrice1 As Decimal = 0
+    Dim addonPrice2 As Decimal = 0
+    Dim addonPrice3 As Decimal = 0
+    Dim addonPrice4 As Decimal = 0
+    Dim addonPrice5 As Decimal = 0
+    Dim addonPrice6 As Decimal = 0
+    Dim addonPrice7 As Decimal = 0
+    Dim addonPrice8 As Decimal = 0
+    Dim addonPrice9 As Decimal = 0
+    Dim addonPrice10 As Decimal = 0
+    Dim addonPrice11 As Decimal = 0
+    Dim addonPrice12 As Decimal = 0
+    Dim addonPrice13 As Decimal = 0
+    Dim addonPrice14 As Decimal = 0
+    Dim addonPrice15 As Decimal = 0
+    Dim index As Integer = 1
 
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
 
@@ -43,7 +59,7 @@ Public Class Addon
         If page = 1 Then
             lblSpecific.Text = "Hardware"
             productNames = {"5G Modem/Router", "WiFi Extender", "Ethernet Cable (10m)", "External Antenna", "Backup Battery Pack"}
-            prices = {7990D, 2500D, 500D, 1200D, 3500D}
+            prices = {addonPrice1, addonPrice2, addonPrice3, addonPrice4, addonPrice5}
             addonIds = {1, 2, 3, 4, 5}
 
             ' Set images for hardware page
@@ -53,11 +69,13 @@ Public Class Addon
             PictureBox5.Image = My.Resources.external_antenna ' External Antenna -> PictureBox5
             PictureBox6.Image = My.Resources.backupbatterypack ' Backup Battery Pack -> PictureBox6
 
+
+
         ElseIf page = 2 Then
             lblSpecific.Text = "Services"
             productNames = {"Installation Service", "Netflix Subscription (Monthly)", "Landline Service (Monthly)",
                     "Home Network Setup", "Premium Tech Support"}
-            prices = {1500D, 549D, 800D, 2000D, 500D}
+            prices = {addonPrice6, addonPrice7, addonPrice8, addonPrice9, addonPrice10}
             addonIds = {6, 7, 8, 9, 10}
 
             ' Set images for services page
@@ -67,11 +85,13 @@ Public Class Addon
             PictureBox5.Image = My.Resources.homenetworksetup ' Home Network Setup -> PictureBox5
             PictureBox6.Image = My.Resources.premiumtechsupport ' Premium Tech Support -> PictureBox6
 
+
+
         ElseIf page = 3 Then
             lblSpecific.Text = "Plan Upgrades"
             productNames = {"Speed Boost 100 Mbps", "Speed Boost 200 Mbps", "Data Allowance +100GB",
                     "Data Allowance +50GB", "Priority Support Upgrade"}
-            prices = {500D, 1000D, 500D, 300D, 400D}
+            prices = {addonPrice11, addonPrice12, addonPrice13, addonPrice14, addonPrice15}
             addonIds = {11, 12, 13, 14, 15}
 
             ' Set images for plan upgrades page
@@ -80,6 +100,7 @@ Public Class Addon
             PictureBox4.Image = My.Resources.databoost100gb ' Data Allowance +100GB -> PictureBox4
             PictureBox5.Image = My.Resources.databoost50gb ' Data Allowance +50GB -> PictureBox5
             PictureBox6.Image = My.Resources.prioritysupportupgrade ' Priority Support Upgrade -> PictureBox6
+
 
         Else
         End If
@@ -269,21 +290,21 @@ Public Class Addon
     Private Function GetPriceForAddon(addonId As Integer) As Decimal
         ' Get price based on addon ID (1-15)
         Select Case addonId
-            Case 1 : Return 7990D  ' 5G Modem/Router
-            Case 2 : Return 2500D  ' WiFi Extender
-            Case 3 : Return 500D   ' Ethernet Cable
-            Case 4 : Return 1200D  ' External Antenna
-            Case 5 : Return 3500D  ' Backup Battery Pack
-            Case 6 : Return 1500D  ' Installation Service
-            Case 7 : Return 549D   ' Netflix Subscription
-            Case 8 : Return 800D   ' Landline Service
-            Case 9 : Return 2000D  ' Home Network Setup
-            Case 10 : Return 500D  ' Premium Tech Support
-            Case 11 : Return 500D  ' Speed Boost 100 Mbps
-            Case 12 : Return 1000D ' Speed Boost 200 Mbps
-            Case 13 : Return 500D  ' Data Allowance +100GB
-            Case 14 : Return 300D  ' Data Allowance +50GB
-            Case 15 : Return 400D  ' Priority Support Upgrade
+            Case 1 : Return addonPrice1  ' 5G Modem/Router
+            Case 2 : Return addonPrice2  ' WiFi Extender
+            Case 3 : Return addonPrice3   ' Ethernet Cable
+            Case 4 : Return addonPrice4  ' External Antenna
+            Case 5 : Return addonPrice5  ' Backup Battery Pack
+            Case 6 : Return addonPrice6  ' Installation Service
+            Case 7 : Return addonPrice7   ' Netflix Subscription
+            Case 8 : Return addonPrice8   ' Landline Service
+            Case 9 : Return addonPrice9  ' Home Network Setup
+            Case 10 : Return addonPrice10  ' Premium Tech Support
+            Case 11 : Return addonPrice11  ' Speed Boost 100 Mbps
+            Case 12 : Return addonPrice12 ' Speed Boost 200 Mbps
+            Case 13 : Return addonPrice13  ' Data Allowance +100GB
+            Case 14 : Return addonPrice14  ' Data Allowance +50GB
+            Case 15 : Return addonPrice15  ' Priority Support Upgrade
             Case Else : Return 0D
         End Select
     End Function
@@ -474,6 +495,55 @@ Public Class Addon
     End Sub
     Private Sub Addon_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
 
+        Using conn As New MySqlConnection(strCon)
+
+            conn.Open()
+
+            Using getPrice As New MySqlCommand("SELECT * FROM addons LIMIT 15", conn)
+
+                Using fetchPrice As MySqlDataReader = getPrice.ExecuteReader
+
+                    While fetchPrice.Read
+
+                        If index = 15 Then
+                            Exit While
+                        End If
+                        Dim price As Decimal = fetchPrice.GetDecimal("price")
+
+                        Select Case index
+                            Case 1 : addonPrice1 = price
+                            Case 2 : addonPrice2 = price
+                            Case 3 : addonPrice3 = price
+                            Case 4 : addonPrice4 = price
+                            Case 5 : addonPrice5 = price
+                            Case 6 : addonPrice6 = price
+                            Case 7 : addonPrice7 = price
+                            Case 8 : addonPrice8 = price
+                            Case 9 : addonPrice9 = price
+                            Case 10 : addonPrice10 = price
+                            Case 11 : addonPrice11 = price
+                            Case 12 : addonPrice12 = price
+                            Case 13 : addonPrice13 = price
+                            Case 14 : addonPrice14 = price
+                            Case 15 : addonPrice15 = price
+
+                        End Select
+
+                        index += 1
+
+
+
+                    End While
+
+
+                End Using
+
+            End Using
+
+
+        End Using
+
+        TextBox2.Text = index
 
         If Session.userRole <> "Subscriber" OrElse Session.subStatus Is DBNull.Value OrElse Session.subStatus.ToString() = "" Then
             HelpToolStripMenuItem.Visible = False

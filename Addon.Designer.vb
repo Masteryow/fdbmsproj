@@ -74,6 +74,7 @@ Partial Class Addon
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pbxPlanImage = New System.Windows.Forms.PictureBox()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         Me.gbxProduct1.SuspendLayout()
         Me.gbxProduct2.SuspendLayout()
@@ -212,9 +213,8 @@ Partial Class Addon
         Me.lblPrice1.ForeColor = System.Drawing.Color.White
         Me.lblPrice1.Location = New System.Drawing.Point(6, 16)
         Me.lblPrice1.Name = "lblPrice1"
-        Me.lblPrice1.Size = New System.Drawing.Size(76, 13)
+        Me.lblPrice1.Size = New System.Drawing.Size(0, 13)
         Me.lblPrice1.TabIndex = 37
-        Me.lblPrice1.Text = "Price: 7990.00" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'lblSpecific
         '
@@ -337,9 +337,8 @@ Partial Class Addon
         Me.lblPrice2.ForeColor = System.Drawing.Color.White
         Me.lblPrice2.Location = New System.Drawing.Point(6, 16)
         Me.lblPrice2.Name = "lblPrice2"
-        Me.lblPrice2.Size = New System.Drawing.Size(76, 13)
+        Me.lblPrice2.Size = New System.Drawing.Size(0, 13)
         Me.lblPrice2.TabIndex = 37
-        Me.lblPrice2.Text = "Price: 2500.00"
         '
         'gbxProduct3
         '
@@ -394,9 +393,8 @@ Partial Class Addon
         Me.lblPrice3.ForeColor = System.Drawing.Color.White
         Me.lblPrice3.Location = New System.Drawing.Point(6, 16)
         Me.lblPrice3.Name = "lblPrice3"
-        Me.lblPrice3.Size = New System.Drawing.Size(70, 13)
+        Me.lblPrice3.Size = New System.Drawing.Size(0, 13)
         Me.lblPrice3.TabIndex = 37
-        Me.lblPrice3.Text = "Price: 500.00"
         '
         'gbxProduct5
         '
@@ -451,9 +449,8 @@ Partial Class Addon
         Me.lblPrice5.ForeColor = System.Drawing.Color.White
         Me.lblPrice5.Location = New System.Drawing.Point(6, 16)
         Me.lblPrice5.Name = "lblPrice5"
-        Me.lblPrice5.Size = New System.Drawing.Size(76, 13)
+        Me.lblPrice5.Size = New System.Drawing.Size(0, 13)
         Me.lblPrice5.TabIndex = 37
-        Me.lblPrice5.Text = "Price: 3500.00"
         '
         'gbxProduct4
         '
@@ -508,9 +505,9 @@ Partial Class Addon
         Me.lblPrice4.ForeColor = System.Drawing.Color.White
         Me.lblPrice4.Location = New System.Drawing.Point(6, 16)
         Me.lblPrice4.Name = "lblPrice4"
-        Me.lblPrice4.Size = New System.Drawing.Size(76, 13)
+        Me.lblPrice4.Size = New System.Drawing.Size(7, 13)
         Me.lblPrice4.TabIndex = 37
-        Me.lblPrice4.Text = "Price: 1200.00" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.lblPrice4.Text = "" & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'txtTotal
         '
@@ -624,6 +621,13 @@ Partial Class Addon
         Me.pbxPlanImage.TabIndex = 26
         Me.pbxPlanImage.TabStop = False
         '
+        'TextBox2
+        '
+        Me.TextBox2.Location = New System.Drawing.Point(171, 66)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox2.TabIndex = 70
+        '
         'Addon
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -632,6 +636,7 @@ Partial Class Addon
         Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(611, 366)
+        Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.btnPrevious)
@@ -735,4 +740,5 @@ Partial Class Addon
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents TicketToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Label2 As Label
+    Friend WithEvents TextBox2 As TextBox
 End Class
