@@ -423,12 +423,12 @@ Public Class Admin
 
         ' Plans DataGridView with enhanced functionality (declare early)
         Dim dgvPlans As New DataGridView With {
-        .Location = New Point(20, 170),
-        .Size = New Size(400, 180),
-        .AllowUserToAddRows = False,
-        .AllowUserToDeleteRows = False,
-        .SelectionMode = DataGridViewSelectionMode.FullRowSelect
-    }
+    .Location = New Point(20, 170),
+    .Size = New Size(400, 180),
+    .AllowUserToAddRows = False,
+    .AllowUserToDeleteRows = False,
+    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+}
 
         Dim btnAddPlan As New Button With {.Text = "Add Plan", .Location = New Point(260, 90), .Size = New Size(80, 23), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnAddPlan.FlatAppearance.BorderSize = 0
@@ -477,7 +477,7 @@ Public Class Admin
 
         LoadPlansDataEnhanced(dgvPlans)
 
-        ' Save Changes Event Handler
+        ' Save Changes Event Handler - Updated to include plan_name and plan_type
         AddHandler btnSaveChanges.Click, Sub()
                                              Try
                                                  If con Is Nothing Then
@@ -494,11 +494,16 @@ Public Class Admin
                                                  For Each row As DataGridViewRow In dgvPlans.Rows
                                                      If Not row.IsNewRow Then
                                                          Dim planID As Integer = Convert.ToInt32(row.Cells("plan_id").Value)
+                                                         Dim planName As String = row.Cells("plan_name").Value.ToString()
+                                                         Dim planType As String = row.Cells("plan_type").Value.ToString()
                                                          Dim price As Decimal = Convert.ToDecimal(row.Cells("price").Value)
                                                          Dim speed As String = row.Cells("speed").Value.ToString()
                                                          Dim dataCap As String = row.Cells("data_cap").Value.ToString()
 
-                                                         Dim cmd As New MySqlCommand("UPDATE internet_plans SET price = @price, speed = @speed, data_cap = @datacap WHERE plan_id = @id", con)
+                                                         ' Updated SQL to include plan_name and plan_type
+                                                         Dim cmd As New MySqlCommand("UPDATE internet_plans SET plan_name = @name, plan_type = @type, price = @price, speed = @speed, data_cap = @datacap WHERE plan_id = @id", con)
+                                                         cmd.Parameters.AddWithValue("@name", planName)
+                                                         cmd.Parameters.AddWithValue("@type", planType)
                                                          cmd.Parameters.AddWithValue("@price", price)
                                                          cmd.Parameters.AddWithValue("@speed", speed)
                                                          cmd.Parameters.AddWithValue("@datacap", dataCap)
@@ -548,19 +553,21 @@ Public Class Admin
                 dgv.Columns("plan_id").Width = 40
             End If
 
+            ' Make plan_name editable now
             If dgv.Columns.Contains("plan_name") Then
-                dgv.Columns("plan_name").ReadOnly = True
+                dgv.Columns("plan_name").ReadOnly = False ' Changed from True to False
                 dgv.Columns("plan_name").HeaderText = "Plan Name"
                 dgv.Columns("plan_name").Width = 120
             End If
 
+            ' Make plan_type editable now
             If dgv.Columns.Contains("plan_type") Then
-                dgv.Columns("plan_type").ReadOnly = True
+                dgv.Columns("plan_type").ReadOnly = False ' Changed from True to False
                 dgv.Columns("plan_type").HeaderText = "Type"
                 dgv.Columns("plan_type").Width = 100
             End If
 
-            ' Make these columns editable
+            ' Make these columns editable (already were)
             If dgv.Columns.Contains("price") Then
                 dgv.Columns("price").ReadOnly = False
                 dgv.Columns("price").HeaderText = "Price"
