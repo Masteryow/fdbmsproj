@@ -599,7 +599,7 @@ Public Class Cart
             Session.userRole = "Subscriber"
 
         Else
-            ' Existing subscriber buying selected addons
+            ' Existing subscriber buying  selected addons
             purchaseSuccess = ProcessSelectedAddonsForExistingSubscriber(selectedItems)
         End If
 
@@ -643,7 +643,8 @@ Public Class Cart
                     End If
                 Next
 
-
+            ElseIf Session.subscriberAccess = True Then
+                subscribers.Show()
             Else
                 Main.Show()
             End If

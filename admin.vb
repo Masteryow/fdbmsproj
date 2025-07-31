@@ -1712,10 +1712,11 @@ Public Class Admin
         ' Addons DataGridView with enhanced functionality (declare early for reference)
         Dim dgvAddons As New DataGridView With {
     .Location = New Point(20, 120),
-    .Size = New Size(400, 180),
+    .Size = New Size(450, 180),
     .AllowUserToAddRows = False,
     .AllowUserToDeleteRows = False,
-    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+    .SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+    .EditMode = DataGridViewEditMode.EditOnEnter
 }
 
         Dim btnAddAddon As New Button With {.Text = "Add Add-on", .Location = New Point(350, 50), .Size = New Size(80, 23), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
@@ -1778,7 +1779,7 @@ Public Class Admin
         btnShowAll.FlatAppearance.BorderSize = 0
 
         ' Manage Addons Section
-        Dim lblManageAddons As New Label With {.Text = "Manage Addons Price", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(5, 70), .AutoSize = True}
+        Dim lblManageAddons As New Label With {.Text = "Manage Addons", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(5, 70), .AutoSize = True}
 
         ' Save Changes Button
         Dim btnSaveChanges As New Button With {.Text = "Save Changes", .Location = New Point(20, 310), .Size = New Size(100, 25), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
@@ -1807,7 +1808,7 @@ Public Class Admin
                                           End If
                                       End Sub
 
-        ' Save Changes Event Handler
+        ' Save Changes Event Handler - Updated to handle name, category, and price changes
         AddHandler btnSaveChanges.Click, Sub()
                                              Try
                                                  If con Is Nothing Then
@@ -1824,17 +1825,56 @@ Public Class Admin
                                                  For Each row As DataGridViewRow In dgvAddons.Rows
                                                      If Not row.IsNewRow Then
                                                          Dim addonID As Integer = Convert.ToInt32(row.Cells("addon_id").Value)
+                                                         Dim newItemName As String = row.Cells("item_name").Value.ToString().Trim()
+                                                         Dim newCategory As String = row.Cells("category").Value.ToString()
                                                          Dim newPrice As Decimal = Convert.ToDecimal(row.Cells("price").Value)
 
-                                                         Dim cmd As New MySqlCommand("UPDATE addons SET price = @price WHERE addon_id = @id", con)
+                                                         ' Validate that required fields are not empty
+                                                         If String.IsNullOrEmpty(newItemName) Then
+                                                             MessageBox.Show($"Item name cannot be empty for ID {addonID}!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                             con.Close()
+                                                             Return
+                                                         End If
+
+                                                         ' Check if category is valid
+                                                         If Not {"Hardware", "Service", "Plan Upgrade"}.Contains(newCategory) Then
+                                                             MessageBox.Show($"Invalid category '{newCategory}' for ID {addonID}! Valid categories are: Hardware, Service, Plan Upgrade", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                             con.Close()
+                                                             Return
+                                                         End If
+
+                                                         ' Get the old category to check if we need to manage stock records
+                                                         Dim oldCategoryCmd As New MySqlCommand("SELECT category FROM addons WHERE addon_id = @id", con)
+                                                         oldCategoryCmd.Parameters.AddWithValue("@id", addonID)
+                                                         Dim oldCategory As String = oldCategoryCmd.ExecuteScalar()?.ToString()
+
+                                                         ' Update the addon
+                                                         Dim cmd As New MySqlCommand("UPDATE addons SET item_name = @itemname, category = @category, price = @price WHERE addon_id = @id", con)
+                                                         cmd.Parameters.AddWithValue("@itemname", newItemName)
+                                                         cmd.Parameters.AddWithValue("@category", newCategory)
                                                          cmd.Parameters.AddWithValue("@price", newPrice)
                                                          cmd.Parameters.AddWithValue("@id", addonID)
                                                          changesCount += cmd.ExecuteNonQuery()
+
+                                                         ' Handle stock record changes when category changes
+                                                         If oldCategory <> newCategory Then
+                                                             If oldCategory = "Hardware" AndAlso newCategory <> "Hardware" Then
+                                                                 ' Remove from stock table if changing from Hardware to non-Hardware
+                                                                 Dim deleteStockCmd As New MySqlCommand("DELETE FROM hardware_stocks WHERE addon_id = @id", con)
+                                                                 deleteStockCmd.Parameters.AddWithValue("@id", addonID)
+                                                                 deleteStockCmd.ExecuteNonQuery()
+                                                             ElseIf oldCategory <> "Hardware" AndAlso newCategory = "Hardware" Then
+                                                                 ' Add to stock table if changing from non-Hardware to Hardware
+                                                                 Dim insertStockCmd As New MySqlCommand("INSERT INTO hardware_stocks (addon_id, quantity_available) VALUES (@id, 0)", con)
+                                                                 insertStockCmd.Parameters.AddWithValue("@id", addonID)
+                                                                 insertStockCmd.ExecuteNonQuery()
+                                                             End If
+                                                         End If
                                                      End If
                                                  Next
                                                  con.Close()
 
-                                                 MessageBox.Show($"Successfully updated {changesCount} add-on(s) price!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                                 MessageBox.Show($"Successfully updated {changesCount} add-on(s)!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                                                  LoadAddonsDataEnhanced(dgvAddons, txtSearch.Text.Trim()) ' Refresh with current search
                                              Catch ex As Exception
                                                  If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
@@ -2079,16 +2119,31 @@ Public Class Admin
                 dgv.Columns("addon_id").Width = 50
             End If
 
+            ' Make item name editable
             If dgv.Columns.Contains("item_name") Then
-                dgv.Columns("item_name").ReadOnly = True
+                dgv.Columns("item_name").ReadOnly = False
                 dgv.Columns("item_name").HeaderText = "Item Name"
                 dgv.Columns("item_name").Width = 150
             End If
 
+            ' Make category editable with dropdown
             If dgv.Columns.Contains("category") Then
-                dgv.Columns("category").ReadOnly = True
+                dgv.Columns("category").ReadOnly = False
                 dgv.Columns("category").HeaderText = "Category"
-                dgv.Columns("category").Width = 100
+                dgv.Columns("category").Width = 120
+
+                ' Create ComboBox column for category
+                Dim categoryComboColumn As New DataGridViewComboBoxColumn()
+                categoryComboColumn.Name = "category"
+                categoryComboColumn.HeaderText = "Category"
+                categoryComboColumn.DataPropertyName = "category"
+                categoryComboColumn.Items.AddRange({"Hardware", "Service", "Plan Upgrade"})
+                categoryComboColumn.Width = 120
+                categoryComboColumn.FlatStyle = FlatStyle.Flat
+
+                ' Remove the original category column and add the ComboBox column
+                dgv.Columns.Remove("category")
+                dgv.Columns.Insert(2, categoryComboColumn)
             End If
 
             ' Make price column editable for modifications
