@@ -37,6 +37,21 @@ Public Class Addon
     Dim addonPrice13 As Decimal = 0
     Dim addonPrice14 As Decimal = 0
     Dim addonPrice15 As Decimal = 0
+    Dim productName1 As String = ""
+    Dim productName2 As String = ""
+    Dim productName3 As String = ""
+    Dim productName4 As String = ""
+    Dim productName5 As String = ""
+    Dim productName6 As String = ""
+    Dim productName7 As String = ""
+    Dim productName8 As String = ""
+    Dim productName9 As String = ""
+    Dim productName10 As String = ""
+    Dim productName11 As String = ""
+    Dim productName12 As String = ""
+    Dim productName13 As String = ""
+    Dim productName14 As String = ""
+    Dim productName15 As String = ""
     Dim index As Integer = 1
 
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
@@ -58,7 +73,7 @@ Public Class Addon
 
         If page = 1 Then
             lblSpecific.Text = "Hardware"
-            productNames = {"5G Modem/Router", "WiFi Extender", "Ethernet Cable (10m)", "External Antenna", "Backup Battery Pack"}
+            productNames = {productName1, productName2, productName3, productName4, productName5}
             prices = {addonPrice1, addonPrice2, addonPrice3, addonPrice4, addonPrice5}
             addonIds = {1, 2, 3, 4, 5}
 
@@ -73,8 +88,7 @@ Public Class Addon
 
         ElseIf page = 2 Then
             lblSpecific.Text = "Services"
-            productNames = {"Installation Service", "Netflix Subscription (Monthly)", "Landline Service (Monthly)",
-                    "Home Network Setup", "Premium Tech Support"}
+            productNames = {productName6, productName7, productName8, productName9, productName10}
             prices = {addonPrice6, addonPrice7, addonPrice8, addonPrice9, addonPrice10}
             addonIds = {6, 7, 8, 9, 10}
 
@@ -89,8 +103,7 @@ Public Class Addon
 
         ElseIf page = 3 Then
             lblSpecific.Text = "Plan Upgrades"
-            productNames = {"Speed Boost 100 Mbps", "Speed Boost 200 Mbps", "Data Allowance +100GB",
-                    "Data Allowance +50GB", "Priority Support Upgrade"}
+            productNames = {productName11, productName12, productName13, productName14, productName15}
             prices = {addonPrice11, addonPrice12, addonPrice13, addonPrice14, addonPrice15}
             addonIds = {11, 12, 13, 14, 15}
 
@@ -499,33 +512,33 @@ Public Class Addon
 
             conn.Open()
 
-            Using getPrice As New MySqlCommand("SELECT * FROM addons LIMIT 15", conn)
+            Using getInfo As New MySqlCommand("SELECT * FROM addons LIMIT 15", conn)
 
-                Using fetchPrice As MySqlDataReader = getPrice.ExecuteReader
+                Using fetchInfo As MySqlDataReader = getInfo.ExecuteReader
 
-                    While fetchPrice.Read
+                    While fetchInfo.Read
 
                         If index = 15 Then
                             Exit While
                         End If
-                        Dim price As Decimal = fetchPrice.GetDecimal("price")
-
+                        Dim price As Decimal = fetchInfo.GetDecimal("price")
+                        Dim productName As String = fetchInfo.GetString("item_name")
                         Select Case index
-                            Case 1 : addonPrice1 = price
-                            Case 2 : addonPrice2 = price
-                            Case 3 : addonPrice3 = price
-                            Case 4 : addonPrice4 = price
-                            Case 5 : addonPrice5 = price
-                            Case 6 : addonPrice6 = price
-                            Case 7 : addonPrice7 = price
-                            Case 8 : addonPrice8 = price
-                            Case 9 : addonPrice9 = price
-                            Case 10 : addonPrice10 = price
-                            Case 11 : addonPrice11 = price
-                            Case 12 : addonPrice12 = price
-                            Case 13 : addonPrice13 = price
-                            Case 14 : addonPrice14 = price
-                            Case 15 : addonPrice15 = price
+                            Case 1 : addonPrice1 = price : productName1 = productName
+                            Case 2 : addonPrice2 = price : productName2 = productName
+                            Case 3 : addonPrice3 = price : productName3 = productName
+                            Case 4 : addonPrice4 = price : productName4 = productName
+                            Case 5 : addonPrice5 = price : productName5 = productName
+                            Case 6 : addonPrice6 = price : productName6 = productName
+                            Case 7 : addonPrice7 = price : productName7 = productName
+                            Case 8 : addonPrice8 = price : productName8 = productName
+                            Case 9 : addonPrice9 = price : productName9 = productName
+                            Case 10 : addonPrice10 = price : productName10 = productName
+                            Case 11 : addonPrice11 = price : productName11 = productName
+                            Case 12 : addonPrice12 = price : productName12 = productName
+                            Case 13 : addonPrice13 = price : productName13 = productName
+                            Case 14 : addonPrice14 = price : productName14 = productName
+                            Case 15 : addonPrice15 = price : productName15 = productName
 
                         End Select
 
@@ -1027,21 +1040,21 @@ Public Class Addon
 
     Private Function GetProductNameByAddonId(addonId As Integer) As String
         Select Case addonId
-            Case 1 : Return "5G Modem/Router"
-            Case 2 : Return "WiFi Extender"
-            Case 3 : Return "Ethernet Cable (10m)"
-            Case 4 : Return "External Antenna"
-            Case 5 : Return "Backup Battery Pack"
-            Case 6 : Return "Installation Service"
-            Case 7 : Return "Netflix Subscription (Monthly)"
-            Case 8 : Return "Landline Service (Monthly)"
-            Case 9 : Return "Home Network Setup"
-            Case 10 : Return "Premium Tech Support"
-            Case 11 : Return "Speed Boost 100 Mbps"
-            Case 12 : Return "Speed Boost 200 Mbps"
-            Case 13 : Return "Data Allowance +100GB"
-            Case 14 : Return "Data Allowance +50GB"
-            Case 15 : Return "Priority Support Upgrade"
+            Case 1 : Return productName1
+            Case 2 : Return productName2
+            Case 3 : Return productName3
+            Case 4 : Return productName4
+            Case 5 : Return productName5
+            Case 6 : Return productName6
+            Case 7 : Return productName7
+            Case 8 : Return productName8
+            Case 9 : Return productName9
+            Case 10 : Return productName10
+            Case 11 : Return productName11
+            Case 12 : Return productName12
+            Case 13 : Return productName13
+            Case 14 : Return productName14
+            Case 15 : Return productName15
             Case Else : Return "Unknown Product"
         End Select
     End Function
