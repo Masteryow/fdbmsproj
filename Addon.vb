@@ -1075,8 +1075,21 @@ Public Class Addon
         If Session.userRole = "Subscriber" Then
 
             subscribers.Show()
-        Else
+        ElseIf Session.userRole = "Customer" Then
+            Session.preSubscriber = False
+            Session.fromProduct = True
+            Session.planName = ""
+            Session.planPrice = 0
+            Session.planType = ""
+
             Main.Show()
+            For Each form As Form In Application.OpenForms
+                If form.Name = "Addon" Then
+                    form.Close()
+                    Exit For
+                End If
+            Next
+
 
         End If
 
