@@ -485,7 +485,7 @@ Public Class Addon
 
     Private Sub form_closing(sender As Object, e As EventArgs) Handles MyBase.FormClosing
 
-        If Session.preSubscriber AndAlso Session.subscriberAccess = False Then
+        If Session.preSubscriber = True AndAlso Session.subscriberAccess = False Then
             Try
                 Using con As New MySqlConnection(strCon)
                     con.Open()
@@ -1075,7 +1075,8 @@ Public Class Addon
         If Session.userRole = "Subscriber" Then
 
             subscribers.Show()
-        ElseIf Session.userRole = "Customer" Then
+        ElseIf Session.userRole = "Customer" AndAlso Session.preSubscriber = True Then
+
             Session.preSubscriber = False
             Session.fromProduct = True
             Session.planName = ""
@@ -1083,14 +1084,10 @@ Public Class Addon
             Session.planType = ""
 
             Main.Show()
-            For Each form As Form In Application.OpenForms
-                If form.Name = "Addon" Then
-                    form.Close()
-                    Exit For
-                End If
-            Next
 
 
+        Else
+            Main.Show()
         End If
 
         Me.Close()
