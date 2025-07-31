@@ -514,6 +514,7 @@ Public Class Addon
             skylinkProduct.Size = New Size(600, 100)
             skylinkProduct.Font = New Font("Tahoma", 25, FontStyle.Bold)
             skylinkProduct.Text = "SkyLink Products"
+            skylinkProduct.BackColor = Color.Transparent
             skylinkProduct.Location = New Point(15, 50)
             skylinkProduct.ForeColor = Color.White
             Me.Controls.Add(skylinkProduct)
@@ -540,6 +541,7 @@ Public Class Addon
             skylinkProduct.Font = New Font("Tahoma", 25, FontStyle.Bold)
             skylinkProduct.Text = "SkyLink Add-ons"
             skylinkProduct.Location = New Point(15, 50)
+            skylinkProduct.BackColor = Color.Transparent
             skylinkProduct.ForeColor = Color.White
             Me.Controls.Add(skylinkProduct)
 

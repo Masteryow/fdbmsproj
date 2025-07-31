@@ -108,7 +108,7 @@ Partial Class Subscription
         Me.btnSubscribe.BackColor = System.Drawing.Color.White
         Me.btnSubscribe.Font = New System.Drawing.Font("Century Gothic", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSubscribe.ForeColor = System.Drawing.Color.Black
-        Me.btnSubscribe.Location = New System.Drawing.Point(91, 262)
+        Me.btnSubscribe.Location = New System.Drawing.Point(91, 254)
         Me.btnSubscribe.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSubscribe.Name = "btnSubscribe"
         Me.btnSubscribe.Size = New System.Drawing.Size(202, 30)
@@ -119,16 +119,17 @@ Partial Class Subscription
         'txtSpecs
         '
         Me.txtSpecs.Font = New System.Drawing.Font("Times New Roman", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSpecs.Location = New System.Drawing.Point(370, 64)
+        Me.txtSpecs.Location = New System.Drawing.Point(368, 105)
         Me.txtSpecs.Margin = New System.Windows.Forms.Padding(2)
         Me.txtSpecs.Multiline = True
         Me.txtSpecs.Name = "txtSpecs"
         Me.txtSpecs.ReadOnly = True
-        Me.txtSpecs.Size = New System.Drawing.Size(221, 170)
+        Me.txtSpecs.Size = New System.Drawing.Size(221, 97)
         Me.txtSpecs.TabIndex = 21
         '
         'PictureBox2
         '
+        Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox2.Image = Global.fdbmsproj.My.Resources.Resources.prev
         Me.PictureBox2.Location = New System.Drawing.Point(20, 117)
         Me.PictureBox2.Margin = New System.Windows.Forms.Padding(2)
@@ -140,6 +141,7 @@ Partial Class Subscription
         '
         'pbxPlan
         '
+        Me.pbxPlan.BackColor = System.Drawing.Color.Transparent
         Me.pbxPlan.Location = New System.Drawing.Point(91, 64)
         Me.pbxPlan.Margin = New System.Windows.Forms.Padding(2)
         Me.pbxPlan.Name = "pbxPlan"
@@ -150,6 +152,7 @@ Partial Class Subscription
         '
         'PictureBox1
         '
+        Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.Image = Global.fdbmsproj.My.Resources.Resources.nextreak
         Me.PictureBox1.Location = New System.Drawing.Point(297, 117)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
@@ -164,6 +167,8 @@ Partial Class Subscription
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
+        Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.txtSpecs)

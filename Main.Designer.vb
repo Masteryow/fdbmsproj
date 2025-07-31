@@ -49,7 +49,7 @@ Partial Class Main
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.BackColor = System.Drawing.SystemColors.Window
+        Me.MenuStrip1.BackColor = System.Drawing.Color.Transparent
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HomeToolStripMenuItem, Me.HelpToolStripMenuItem, Me.ToolStripMenuItem1, Me.ProductsToolStripMenuItem, Me.SubscriptionToolStripMenuItem, Me.HomeToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
@@ -70,6 +70,7 @@ Partial Class Main
         'HelpToolStripMenuItem
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
+        Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
         Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.HelpToolStripMenuItem.Text = "Help"
@@ -77,29 +78,33 @@ Partial Class Main
         'TicketsToolStripMenuItem
         '
         Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.TicketsToolStripMenuItem.Text = "Tickets"
         '
         'ToolStripMenuItem1
         '
+        Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(41, 20)
         Me.ToolStripMenuItem1.Text = "Cart"
         '
         'ProductsToolStripMenuItem
         '
+        Me.ProductsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ProductsToolStripMenuItem.Name = "ProductsToolStripMenuItem"
         Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(66, 20)
         Me.ProductsToolStripMenuItem.Text = "Products"
         '
         'SubscriptionToolStripMenuItem
         '
+        Me.SubscriptionToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem"
         Me.SubscriptionToolStripMenuItem.Size = New System.Drawing.Size(85, 20)
         Me.SubscriptionToolStripMenuItem.Text = "Subscription"
         '
         'HomeToolStripMenuItem1
         '
+        Me.HomeToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HomeToolStripMenuItem1.Name = "HomeToolStripMenuItem1"
         Me.HomeToolStripMenuItem1.Size = New System.Drawing.Size(52, 20)
         Me.HomeToolStripMenuItem1.Text = "Home"
@@ -192,8 +197,8 @@ Partial Class Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.back1
-        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.PictureBox5)

@@ -161,6 +161,7 @@ Partial Class Addon
         'lblName
         '
         Me.lblName.AutoSize = True
+        Me.lblName.BackColor = System.Drawing.Color.Transparent
         Me.lblName.ForeColor = System.Drawing.Color.White
         Me.lblName.Location = New System.Drawing.Point(113, 44)
         Me.lblName.Name = "lblName"
@@ -170,6 +171,7 @@ Partial Class Addon
         'lblType
         '
         Me.lblType.AutoSize = True
+        Me.lblType.BackColor = System.Drawing.Color.Transparent
         Me.lblType.ForeColor = System.Drawing.Color.White
         Me.lblType.Location = New System.Drawing.Point(113, 69)
         Me.lblType.Name = "lblType"
@@ -179,6 +181,7 @@ Partial Class Addon
         'lblPrice
         '
         Me.lblPrice.AutoSize = True
+        Me.lblPrice.BackColor = System.Drawing.Color.Transparent
         Me.lblPrice.ForeColor = System.Drawing.Color.White
         Me.lblPrice.Location = New System.Drawing.Point(113, 94)
         Me.lblPrice.Name = "lblPrice"
@@ -216,6 +219,7 @@ Partial Class Addon
         'lblSpecific
         '
         Me.lblSpecific.AutoSize = True
+        Me.lblSpecific.BackColor = System.Drawing.Color.Transparent
         Me.lblSpecific.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblSpecific.ForeColor = System.Drawing.Color.White
         Me.lblSpecific.Location = New System.Drawing.Point(12, 119)
@@ -267,6 +271,7 @@ Partial Class Addon
         '
         'gbxProduct1
         '
+        Me.gbxProduct1.BackColor = System.Drawing.Color.Transparent
         Me.gbxProduct1.Controls.Add(Me.btnMinus1)
         Me.gbxProduct1.Controls.Add(Me.txtHardware1)
         Me.gbxProduct1.Controls.Add(Me.btnAdd1)
@@ -281,6 +286,7 @@ Partial Class Addon
         '
         'gbxProduct2
         '
+        Me.gbxProduct2.BackColor = System.Drawing.Color.Transparent
         Me.gbxProduct2.Controls.Add(Me.btnMinus2)
         Me.gbxProduct2.Controls.Add(Me.txtHardware2)
         Me.gbxProduct2.Controls.Add(Me.btnAdd2)
@@ -337,6 +343,7 @@ Partial Class Addon
         '
         'gbxProduct3
         '
+        Me.gbxProduct3.BackColor = System.Drawing.Color.Transparent
         Me.gbxProduct3.Controls.Add(Me.btnMinus3)
         Me.gbxProduct3.Controls.Add(Me.txtHardware3)
         Me.gbxProduct3.Controls.Add(Me.btnAdd3)
@@ -393,6 +400,7 @@ Partial Class Addon
         '
         'gbxProduct5
         '
+        Me.gbxProduct5.BackColor = System.Drawing.Color.Transparent
         Me.gbxProduct5.Controls.Add(Me.btnMinus5)
         Me.gbxProduct5.Controls.Add(Me.txtHardware5)
         Me.gbxProduct5.Controls.Add(Me.btnAdd5)
@@ -449,6 +457,7 @@ Partial Class Addon
         '
         'gbxProduct4
         '
+        Me.gbxProduct4.BackColor = System.Drawing.Color.Transparent
         Me.gbxProduct4.Controls.Add(Me.btnMinus4)
         Me.gbxProduct4.Controls.Add(Me.txtHardware4)
         Me.gbxProduct4.Controls.Add(Me.btnAdd4)
@@ -516,6 +525,7 @@ Partial Class Addon
         'Label1
         '
         Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(354, 50)
@@ -545,6 +555,7 @@ Partial Class Addon
         'Label2
         '
         Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(517, 50)
@@ -555,6 +566,7 @@ Partial Class Addon
         '
         'PictureBox6
         '
+        Me.PictureBox6.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox6.Location = New System.Drawing.Point(310, 215)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(100, 65)
@@ -564,6 +576,7 @@ Partial Class Addon
         '
         'PictureBox5
         '
+        Me.PictureBox5.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox5.Location = New System.Drawing.Point(310, 144)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(100, 65)
@@ -573,6 +586,7 @@ Partial Class Addon
         '
         'PictureBox4
         '
+        Me.PictureBox4.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox4.Location = New System.Drawing.Point(12, 215)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(100, 65)
@@ -582,6 +596,7 @@ Partial Class Addon
         '
         'PictureBox3
         '
+        Me.PictureBox3.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox3.Location = New System.Drawing.Point(12, 286)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(100, 65)
@@ -591,6 +606,7 @@ Partial Class Addon
         '
         'PictureBox2
         '
+        Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox2.Location = New System.Drawing.Point(12, 144)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(100, 65)
@@ -600,6 +616,7 @@ Partial Class Addon
         '
         'pbxPlanImage
         '
+        Me.pbxPlanImage.BackColor = System.Drawing.Color.Transparent
         Me.pbxPlanImage.Location = New System.Drawing.Point(12, 44)
         Me.pbxPlanImage.Name = "pbxPlanImage"
         Me.pbxPlanImage.Size = New System.Drawing.Size(94, 63)
@@ -612,6 +629,8 @@ Partial Class Addon
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
+        Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBox3)
@@ -638,6 +657,7 @@ Partial Class Addon
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.gbxProduct1)
+        Me.DoubleBuffered = True
         Me.Name = "Addon"
         Me.Text = "Addon"
         Me.MenuStrip1.ResumeLayout(False)

@@ -37,13 +37,14 @@ Partial Class TechnicianPanel
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.btnLogout = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.btnSave = New System.Windows.Forms.Button()
         Me.txtRemarks = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.cbxStatus = New System.Windows.Forms.ComboBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.btnLogout = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -65,13 +66,14 @@ Partial Class TechnicianPanel
         '
         Me.cbxSubName.FormattingEnabled = True
         Me.cbxSubName.Location = New System.Drawing.Point(128, 35)
-        Me.cbxSubName.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cbxSubName.Margin = New System.Windows.Forms.Padding(2)
         Me.cbxSubName.Name = "cbxSubName"
         Me.cbxSubName.Size = New System.Drawing.Size(214, 25)
         Me.cbxSubName.TabIndex = 4
         '
         'GroupBox1
         '
+        Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox1.Controls.Add(Me.btnClear)
         Me.GroupBox1.Controls.Add(Me.btnAccept)
         Me.GroupBox1.Controls.Add(Me.txtNotes)
@@ -87,9 +89,9 @@ Partial Class TechnicianPanel
         Me.GroupBox1.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.White
         Me.GroupBox1.Location = New System.Drawing.Point(26, 82)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Size = New System.Drawing.Size(355, 274)
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
@@ -97,10 +99,10 @@ Partial Class TechnicianPanel
         '
         'btnClear
         '
-        Me.btnClear.BackColor = System.Drawing.Color.Black
+        Me.btnClear.BackColor = System.Drawing.Color.DarkCyan
         Me.btnClear.ForeColor = System.Drawing.Color.White
         Me.btnClear.Location = New System.Drawing.Point(188, 240)
-        Me.btnClear.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(140, 26)
         Me.btnClear.TabIndex = 15
@@ -110,10 +112,10 @@ Partial Class TechnicianPanel
         '
         'btnAccept
         '
-        Me.btnAccept.BackColor = System.Drawing.Color.Black
+        Me.btnAccept.BackColor = System.Drawing.Color.DarkCyan
         Me.btnAccept.ForeColor = System.Drawing.Color.White
         Me.btnAccept.Location = New System.Drawing.Point(28, 240)
-        Me.btnAccept.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnAccept.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAccept.Name = "btnAccept"
         Me.btnAccept.Size = New System.Drawing.Size(140, 26)
         Me.btnAccept.TabIndex = 14
@@ -124,7 +126,7 @@ Partial Class TechnicianPanel
         'txtNotes
         '
         Me.txtNotes.Location = New System.Drawing.Point(16, 185)
-        Me.txtNotes.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtNotes.Margin = New System.Windows.Forms.Padding(2)
         Me.txtNotes.Multiline = True
         Me.txtNotes.Name = "txtNotes"
         Me.txtNotes.ReadOnly = True
@@ -145,7 +147,7 @@ Partial Class TechnicianPanel
         'txtPrice
         '
         Me.txtPrice.Location = New System.Drawing.Point(232, 125)
-        Me.txtPrice.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtPrice.Margin = New System.Windows.Forms.Padding(2)
         Me.txtPrice.Name = "txtPrice"
         Me.txtPrice.ReadOnly = True
         Me.txtPrice.Size = New System.Drawing.Size(110, 24)
@@ -165,7 +167,7 @@ Partial Class TechnicianPanel
         'txtDifficulty
         '
         Me.txtDifficulty.Location = New System.Drawing.Point(82, 128)
-        Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDifficulty.Name = "txtDifficulty"
         Me.txtDifficulty.ReadOnly = True
         Me.txtDifficulty.Size = New System.Drawing.Size(108, 24)
@@ -185,7 +187,7 @@ Partial Class TechnicianPanel
         'txtConcern
         '
         Me.txtConcern.Location = New System.Drawing.Point(82, 82)
-        Me.txtConcern.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtConcern.Margin = New System.Windows.Forms.Padding(2)
         Me.txtConcern.Name = "txtConcern"
         Me.txtConcern.ReadOnly = True
         Me.txtConcern.Size = New System.Drawing.Size(260, 24)
@@ -216,16 +218,39 @@ Partial Class TechnicianPanel
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.SlateGray
+        Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.btnLogout)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Location = New System.Drawing.Point(0, 24)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(616, 46)
         Me.Panel1.TabIndex = 6
         '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.CadetBlue
+        Me.Panel2.Location = New System.Drawing.Point(0, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(19, 46)
+        Me.Panel2.TabIndex = 6
+        '
+        'btnLogout
+        '
+        Me.btnLogout.BackColor = System.Drawing.Color.CadetBlue
+        Me.btnLogout.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnLogout.ForeColor = System.Drawing.Color.White
+        Me.btnLogout.Location = New System.Drawing.Point(432, 6)
+        Me.btnLogout.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnLogout.Name = "btnLogout"
+        Me.btnLogout.Size = New System.Drawing.Size(143, 33)
+        Me.btnLogout.TabIndex = 5
+        Me.btnLogout.Text = "LOG OUT"
+        Me.btnLogout.UseVisualStyleBackColor = False
+        '
         'GroupBox2
         '
+        Me.GroupBox2.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox2.Controls.Add(Me.btnSave)
         Me.GroupBox2.Controls.Add(Me.txtRemarks)
         Me.GroupBox2.Controls.Add(Me.Label8)
@@ -234,9 +259,9 @@ Partial Class TechnicianPanel
         Me.GroupBox2.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.White
         Me.GroupBox2.Location = New System.Drawing.Point(403, 82)
-        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox2.Size = New System.Drawing.Size(172, 274)
         Me.GroupBox2.TabIndex = 7
         Me.GroupBox2.TabStop = False
@@ -244,10 +269,10 @@ Partial Class TechnicianPanel
         '
         'btnSave
         '
-        Me.btnSave.BackColor = System.Drawing.Color.Black
+        Me.btnSave.BackColor = System.Drawing.Color.DarkCyan
         Me.btnSave.ForeColor = System.Drawing.Color.White
         Me.btnSave.Location = New System.Drawing.Point(43, 240)
-        Me.btnSave.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnSave.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(90, 26)
         Me.btnSave.TabIndex = 16
@@ -258,7 +283,7 @@ Partial Class TechnicianPanel
         'txtRemarks
         '
         Me.txtRemarks.Location = New System.Drawing.Point(14, 115)
-        Me.txtRemarks.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtRemarks.Margin = New System.Windows.Forms.Padding(2)
         Me.txtRemarks.Multiline = True
         Me.txtRemarks.Name = "txtRemarks"
         Me.txtRemarks.Size = New System.Drawing.Size(145, 119)
@@ -281,7 +306,7 @@ Partial Class TechnicianPanel
         Me.cbxStatus.FormattingEnabled = True
         Me.cbxStatus.Items.AddRange(New Object() {"In Progress", "Completed"})
         Me.cbxStatus.Location = New System.Drawing.Point(52, 35)
-        Me.cbxStatus.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cbxStatus.Margin = New System.Windows.Forms.Padding(2)
         Me.cbxStatus.Name = "cbxStatus"
         Me.cbxStatus.Size = New System.Drawing.Size(108, 25)
         Me.cbxStatus.TabIndex = 16
@@ -297,29 +322,19 @@ Partial Class TechnicianPanel
         Me.Label7.TabIndex = 15
         Me.Label7.Text = "Status"
         '
-        'btnLogout
-        '
-        Me.btnLogout.BackColor = System.Drawing.Color.CadetBlue
-        Me.btnLogout.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnLogout.ForeColor = System.Drawing.Color.White
-        Me.btnLogout.Location = New System.Drawing.Point(432, 6)
-        Me.btnLogout.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnLogout.Name = "btnLogout"
-        Me.btnLogout.Size = New System.Drawing.Size(143, 33)
-        Me.btnLogout.TabIndex = 5
-        Me.btnLogout.Text = "LOG OUT"
-        Me.btnLogout.UseVisualStyleBackColor = False
-        '
         'TechnicianPanel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
+        Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.cyanBG
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Panel1)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.DoubleBuffered = True
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "TechnicianPanel"
         Me.Text = "TechnicianPanel"
         Me.GroupBox1.ResumeLayout(False)
@@ -354,4 +369,5 @@ Partial Class TechnicianPanel
     Friend WithEvents txtRemarks As TextBox
     Friend WithEvents Label8 As Label
     Friend WithEvents btnLogout As Button
+    Friend WithEvents Panel2 As Panel
 End Class

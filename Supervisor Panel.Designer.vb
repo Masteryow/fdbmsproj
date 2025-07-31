@@ -24,6 +24,7 @@ Partial Class Supervisor_Panel
     Private Sub InitializeComponent()
         Me.MySqlCommand1 = New MySql.Data.MySqlClient.MySqlCommand()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.btnLogout = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -51,7 +52,6 @@ Partial Class Supervisor_Panel
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.cbxTechName = New System.Windows.Forms.ComboBox()
-        Me.btnLogout = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -71,10 +71,23 @@ Partial Class Supervisor_Panel
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Location = New System.Drawing.Point(-8, 22)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(767, 46)
         Me.Panel1.TabIndex = 7
+        '
+        'btnLogout
+        '
+        Me.btnLogout.BackColor = System.Drawing.Color.DarkBlue
+        Me.btnLogout.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnLogout.ForeColor = System.Drawing.Color.White
+        Me.btnLogout.Location = New System.Drawing.Point(595, 6)
+        Me.btnLogout.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnLogout.Name = "btnLogout"
+        Me.btnLogout.Size = New System.Drawing.Size(143, 33)
+        Me.btnLogout.TabIndex = 4
+        Me.btnLogout.Text = "LOG OUT"
+        Me.btnLogout.UseVisualStyleBackColor = False
         '
         'Button1
         '
@@ -82,7 +95,7 @@ Partial Class Supervisor_Panel
         Me.Button1.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Location = New System.Drawing.Point(443, 6)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(143, 33)
         Me.Button1.TabIndex = 3
@@ -103,6 +116,7 @@ Partial Class Supervisor_Panel
         '
         'GroupBox1
         '
+        Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox1.Controls.Add(Me.btnClear)
         Me.GroupBox1.Controls.Add(Me.btnChoose)
         Me.GroupBox1.Controls.Add(Me.txtNotes)
@@ -118,9 +132,9 @@ Partial Class Supervisor_Panel
         Me.GroupBox1.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.White
         Me.GroupBox1.Location = New System.Drawing.Point(19, 82)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Size = New System.Drawing.Size(355, 274)
         Me.GroupBox1.TabIndex = 8
         Me.GroupBox1.TabStop = False
@@ -128,10 +142,10 @@ Partial Class Supervisor_Panel
         '
         'btnClear
         '
-        Me.btnClear.BackColor = System.Drawing.Color.Black
+        Me.btnClear.BackColor = System.Drawing.Color.MidnightBlue
         Me.btnClear.ForeColor = System.Drawing.Color.White
         Me.btnClear.Location = New System.Drawing.Point(188, 240)
-        Me.btnClear.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(140, 26)
         Me.btnClear.TabIndex = 15
@@ -141,10 +155,10 @@ Partial Class Supervisor_Panel
         '
         'btnChoose
         '
-        Me.btnChoose.BackColor = System.Drawing.Color.Black
+        Me.btnChoose.BackColor = System.Drawing.Color.MidnightBlue
         Me.btnChoose.ForeColor = System.Drawing.Color.White
         Me.btnChoose.Location = New System.Drawing.Point(28, 240)
-        Me.btnChoose.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnChoose.Margin = New System.Windows.Forms.Padding(2)
         Me.btnChoose.Name = "btnChoose"
         Me.btnChoose.Size = New System.Drawing.Size(140, 26)
         Me.btnChoose.TabIndex = 14
@@ -155,7 +169,7 @@ Partial Class Supervisor_Panel
         'txtNotes
         '
         Me.txtNotes.Location = New System.Drawing.Point(16, 185)
-        Me.txtNotes.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtNotes.Margin = New System.Windows.Forms.Padding(2)
         Me.txtNotes.Multiline = True
         Me.txtNotes.Name = "txtNotes"
         Me.txtNotes.ReadOnly = True
@@ -176,7 +190,7 @@ Partial Class Supervisor_Panel
         'txtPrice
         '
         Me.txtPrice.Location = New System.Drawing.Point(232, 125)
-        Me.txtPrice.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtPrice.Margin = New System.Windows.Forms.Padding(2)
         Me.txtPrice.Name = "txtPrice"
         Me.txtPrice.ReadOnly = True
         Me.txtPrice.Size = New System.Drawing.Size(110, 24)
@@ -196,7 +210,7 @@ Partial Class Supervisor_Panel
         'txtDifficulty
         '
         Me.txtDifficulty.Location = New System.Drawing.Point(82, 128)
-        Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDifficulty.Name = "txtDifficulty"
         Me.txtDifficulty.ReadOnly = True
         Me.txtDifficulty.Size = New System.Drawing.Size(108, 24)
@@ -216,7 +230,7 @@ Partial Class Supervisor_Panel
         'txtConcern
         '
         Me.txtConcern.Location = New System.Drawing.Point(82, 82)
-        Me.txtConcern.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtConcern.Margin = New System.Windows.Forms.Padding(2)
         Me.txtConcern.Name = "txtConcern"
         Me.txtConcern.ReadOnly = True
         Me.txtConcern.Size = New System.Drawing.Size(260, 24)
@@ -248,13 +262,14 @@ Partial Class Supervisor_Panel
         '
         Me.cbxSubName.FormattingEnabled = True
         Me.cbxSubName.Location = New System.Drawing.Point(128, 35)
-        Me.cbxSubName.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cbxSubName.Margin = New System.Windows.Forms.Padding(2)
         Me.cbxSubName.Name = "cbxSubName"
         Me.cbxSubName.Size = New System.Drawing.Size(214, 25)
         Me.cbxSubName.TabIndex = 4
         '
         'GroupBox2
         '
+        Me.GroupBox2.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox2.Controls.Add(Me.btnAssign)
         Me.GroupBox2.Controls.Add(Me.cbxCompletedTix)
         Me.GroupBox2.Controls.Add(Me.Label10)
@@ -269,9 +284,9 @@ Partial Class Supervisor_Panel
         Me.GroupBox2.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.White
         Me.GroupBox2.Location = New System.Drawing.Point(390, 82)
-        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox2.Size = New System.Drawing.Size(340, 274)
         Me.GroupBox2.TabIndex = 16
         Me.GroupBox2.TabStop = False
@@ -279,10 +294,11 @@ Partial Class Supervisor_Panel
         '
         'btnAssign
         '
-        Me.btnAssign.BackColor = System.Drawing.Color.Black
+        Me.btnAssign.BackColor = System.Drawing.Color.MidnightBlue
+        Me.btnAssign.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.btnAssign.ForeColor = System.Drawing.Color.White
         Me.btnAssign.Location = New System.Drawing.Point(82, 240)
-        Me.btnAssign.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnAssign.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAssign.Name = "btnAssign"
         Me.btnAssign.Size = New System.Drawing.Size(182, 26)
         Me.btnAssign.TabIndex = 16
@@ -294,7 +310,7 @@ Partial Class Supervisor_Panel
         '
         Me.cbxCompletedTix.FormattingEnabled = True
         Me.cbxCompletedTix.Location = New System.Drawing.Point(229, 207)
-        Me.cbxCompletedTix.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cbxCompletedTix.Margin = New System.Windows.Forms.Padding(2)
         Me.cbxCompletedTix.Name = "cbxCompletedTix"
         Me.cbxCompletedTix.Size = New System.Drawing.Size(95, 25)
         Me.cbxCompletedTix.TabIndex = 21
@@ -314,7 +330,7 @@ Partial Class Supervisor_Panel
         '
         Me.cbxPendingTix.FormattingEnabled = True
         Me.cbxPendingTix.Location = New System.Drawing.Point(105, 207)
-        Me.cbxPendingTix.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cbxPendingTix.Margin = New System.Windows.Forms.Padding(2)
         Me.cbxPendingTix.Name = "cbxPendingTix"
         Me.cbxPendingTix.Size = New System.Drawing.Size(116, 25)
         Me.cbxPendingTix.TabIndex = 19
@@ -333,7 +349,7 @@ Partial Class Supervisor_Panel
         'txtStatus
         '
         Me.txtStatus.Location = New System.Drawing.Point(19, 207)
-        Me.txtStatus.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtStatus.Margin = New System.Windows.Forms.Padding(2)
         Me.txtStatus.Multiline = True
         Me.txtStatus.Name = "txtStatus"
         Me.txtStatus.ReadOnly = True
@@ -354,7 +370,7 @@ Partial Class Supervisor_Panel
         'txtSkills
         '
         Me.txtSkills.Location = New System.Drawing.Point(16, 99)
-        Me.txtSkills.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtSkills.Margin = New System.Windows.Forms.Padding(2)
         Me.txtSkills.Multiline = True
         Me.txtSkills.Name = "txtSkills"
         Me.txtSkills.ReadOnly = True
@@ -387,34 +403,24 @@ Partial Class Supervisor_Panel
         '
         Me.cbxTechName.FormattingEnabled = True
         Me.cbxTechName.Location = New System.Drawing.Point(132, 35)
-        Me.cbxTechName.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cbxTechName.Margin = New System.Windows.Forms.Padding(2)
         Me.cbxTechName.Name = "cbxTechName"
         Me.cbxTechName.Size = New System.Drawing.Size(191, 25)
         Me.cbxTechName.TabIndex = 4
-        '
-        'btnLogout
-        '
-        Me.btnLogout.BackColor = System.Drawing.Color.DarkBlue
-        Me.btnLogout.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnLogout.ForeColor = System.Drawing.Color.White
-        Me.btnLogout.Location = New System.Drawing.Point(595, 6)
-        Me.btnLogout.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnLogout.Name = "btnLogout"
-        Me.btnLogout.Size = New System.Drawing.Size(143, 33)
-        Me.btnLogout.TabIndex = 4
-        Me.btnLogout.Text = "LOG OUT"
-        Me.btnLogout.UseVisualStyleBackColor = False
         '
         'Supervisor_Panel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
+        Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.darkBLUEBG
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(751, 372)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Panel1)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.DoubleBuffered = True
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Supervisor_Panel"
         Me.Text = "Supervisor_Panel"
         Me.Panel1.ResumeLayout(False)

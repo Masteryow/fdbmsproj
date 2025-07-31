@@ -110,29 +110,31 @@ Partial Class Cart
         'Label1
         '
         Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Tahoma", 22.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(25, 38)
+        Me.Label1.Location = New System.Drawing.Point(25, 33)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(78, 36)
+        Me.Label1.Size = New System.Drawing.Size(96, 36)
         Me.Label1.TabIndex = 24
-        Me.Label1.Text = "Cart"
+        Me.Label1.Text = "CART"
         '
         'txtTotal
         '
-        Me.txtTotal.Location = New System.Drawing.Point(427, 51)
+        Me.txtTotal.Location = New System.Drawing.Point(441, 68)
         Me.txtTotal.Margin = New System.Windows.Forms.Padding(2)
         Me.txtTotal.Name = "txtTotal"
-        Me.txtTotal.Size = New System.Drawing.Size(162, 20)
+        Me.txtTotal.Size = New System.Drawing.Size(132, 20)
         Me.txtTotal.TabIndex = 25
         '
         'Label2
         '
         Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.Color.Black
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(380, 51)
+        Me.Label2.Location = New System.Drawing.Point(388, 70)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(43, 17)
@@ -142,71 +144,79 @@ Partial Class Cart
         'CheckedListBox1
         '
         Me.CheckedListBox1.FormattingEnabled = True
-        Me.CheckedListBox1.Location = New System.Drawing.Point(31, 99)
+        Me.CheckedListBox1.Location = New System.Drawing.Point(31, 98)
         Me.CheckedListBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(253, 214)
+        Me.CheckedListBox1.Size = New System.Drawing.Size(542, 154)
         Me.CheckedListBox1.TabIndex = 27
         '
         'btnDeletionMode
         '
-        Me.btnDeletionMode.Font = New System.Drawing.Font("MS Reference Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDeletionMode.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.btnDeletionMode.Location = New System.Drawing.Point(305, 261)
+        Me.btnDeletionMode.BackColor = System.Drawing.Color.DarkRed
+        Me.btnDeletionMode.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDeletionMode.ForeColor = System.Drawing.Color.White
+        Me.btnDeletionMode.Location = New System.Drawing.Point(264, 266)
         Me.btnDeletionMode.Name = "btnDeletionMode"
-        Me.btnDeletionMode.Size = New System.Drawing.Size(91, 23)
+        Me.btnDeletionMode.Size = New System.Drawing.Size(111, 29)
         Me.btnDeletionMode.TabIndex = 28
-        Me.btnDeletionMode.Text = "Deletion Mode"
-        Me.btnDeletionMode.UseVisualStyleBackColor = True
+        Me.btnDeletionMode.Text = "DELETION MODE"
+        Me.btnDeletionMode.UseVisualStyleBackColor = False
         '
         'btnClearCart
         '
-        Me.btnClearCart.Font = New System.Drawing.Font("MS Reference Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnClearCart.Location = New System.Drawing.Point(305, 290)
+        Me.btnClearCart.BackColor = System.Drawing.Color.DarkRed
+        Me.btnClearCart.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClearCart.ForeColor = System.Drawing.Color.White
+        Me.btnClearCart.Location = New System.Drawing.Point(264, 301)
         Me.btnClearCart.Name = "btnClearCart"
-        Me.btnClearCart.Size = New System.Drawing.Size(91, 23)
+        Me.btnClearCart.Size = New System.Drawing.Size(111, 28)
         Me.btnClearCart.TabIndex = 29
-        Me.btnClearCart.Text = "Clear Cart"
-        Me.btnClearCart.UseVisualStyleBackColor = True
+        Me.btnClearCart.Text = "CLEAR CART"
+        Me.btnClearCart.UseVisualStyleBackColor = False
         '
         'btnCheckout
         '
-        Me.btnCheckout.BackColor = System.Drawing.Color.White
-        Me.btnCheckout.Font = New System.Drawing.Font("MS Reference Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCheckout.ForeColor = System.Drawing.Color.Lime
-        Me.btnCheckout.Location = New System.Drawing.Point(305, 319)
+        Me.btnCheckout.BackColor = System.Drawing.Color.DarkGreen
+        Me.btnCheckout.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCheckout.ForeColor = System.Drawing.Color.White
+        Me.btnCheckout.Location = New System.Drawing.Point(46, 266)
         Me.btnCheckout.Name = "btnCheckout"
-        Me.btnCheckout.Size = New System.Drawing.Size(265, 23)
+        Me.btnCheckout.Size = New System.Drawing.Size(200, 63)
         Me.btnCheckout.TabIndex = 31
-        Me.btnCheckout.Text = "Checkout"
+        Me.btnCheckout.Text = "CHECKOUT"
         Me.btnCheckout.UseVisualStyleBackColor = False
         '
         'btnContinueShopping
         '
-        Me.btnContinueShopping.Font = New System.Drawing.Font("MS Reference Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnContinueShopping.Location = New System.Drawing.Point(402, 261)
+        Me.btnContinueShopping.BackColor = System.Drawing.Color.Indigo
+        Me.btnContinueShopping.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnContinueShopping.ForeColor = System.Drawing.Color.White
+        Me.btnContinueShopping.Location = New System.Drawing.Point(398, 302)
         Me.btnContinueShopping.Name = "btnContinueShopping"
-        Me.btnContinueShopping.Size = New System.Drawing.Size(168, 23)
+        Me.btnContinueShopping.Size = New System.Drawing.Size(156, 27)
         Me.btnContinueShopping.TabIndex = 32
-        Me.btnContinueShopping.Text = "Continue Shopping"
-        Me.btnContinueShopping.UseVisualStyleBackColor = True
+        Me.btnContinueShopping.Text = "CONTINUE SHOPPING"
+        Me.btnContinueShopping.UseVisualStyleBackColor = False
         '
         'btnCancelOrder
         '
-        Me.btnCancelOrder.Font = New System.Drawing.Font("MS Reference Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCancelOrder.Location = New System.Drawing.Point(402, 290)
+        Me.btnCancelOrder.BackColor = System.Drawing.Color.Indigo
+        Me.btnCancelOrder.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancelOrder.ForeColor = System.Drawing.Color.White
+        Me.btnCancelOrder.Location = New System.Drawing.Point(398, 267)
         Me.btnCancelOrder.Name = "btnCancelOrder"
-        Me.btnCancelOrder.Size = New System.Drawing.Size(168, 23)
+        Me.btnCancelOrder.Size = New System.Drawing.Size(156, 28)
         Me.btnCancelOrder.TabIndex = 33
-        Me.btnCancelOrder.Text = "Cancel Order"
-        Me.btnCancelOrder.UseVisualStyleBackColor = True
+        Me.btnCancelOrder.Text = "CANCEL ORDER"
+        Me.btnCancelOrder.UseVisualStyleBackColor = False
         '
         'lblDeletionMode
         '
         Me.lblDeletionMode.AutoSize = True
+        Me.lblDeletionMode.BackColor = System.Drawing.Color.Transparent
         Me.lblDeletionMode.Font = New System.Drawing.Font("Microsoft YaHei UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDeletionMode.ForeColor = System.Drawing.Color.Red
-        Me.lblDeletionMode.Location = New System.Drawing.Point(27, 75)
+        Me.lblDeletionMode.Location = New System.Drawing.Point(27, 74)
         Me.lblDeletionMode.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblDeletionMode.Name = "lblDeletionMode"
         Me.lblDeletionMode.Size = New System.Drawing.Size(121, 19)
@@ -216,30 +226,36 @@ Partial Class Cart
         '
         'btnCheck
         '
-        Me.btnCheck.ForeColor = System.Drawing.Color.Red
-        Me.btnCheck.Location = New System.Drawing.Point(152, 75)
+        Me.btnCheck.BackColor = System.Drawing.Color.DarkRed
+        Me.btnCheck.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCheck.ForeColor = System.Drawing.Color.White
+        Me.btnCheck.Location = New System.Drawing.Point(152, 67)
         Me.btnCheck.Margin = New System.Windows.Forms.Padding(2)
         Me.btnCheck.Name = "btnCheck"
-        Me.btnCheck.Size = New System.Drawing.Size(56, 19)
+        Me.btnCheck.Size = New System.Drawing.Size(73, 27)
         Me.btnCheck.TabIndex = 35
-        Me.btnCheck.Text = "Delete"
-        Me.btnCheck.UseVisualStyleBackColor = True
+        Me.btnCheck.Text = "DELETE"
+        Me.btnCheck.UseVisualStyleBackColor = False
         '
         'btnDM
         '
-        Me.btnDM.Location = New System.Drawing.Point(212, 75)
+        Me.btnDM.BackColor = System.Drawing.Color.Indigo
+        Me.btnDM.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDM.ForeColor = System.Drawing.Color.White
+        Me.btnDM.Location = New System.Drawing.Point(229, 68)
         Me.btnDM.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDM.Name = "btnDM"
-        Me.btnDM.Size = New System.Drawing.Size(72, 19)
+        Me.btnDM.Size = New System.Drawing.Size(146, 26)
         Me.btnDM.TabIndex = 36
-        Me.btnDM.Text = "Exit DM"
-        Me.btnDM.UseVisualStyleBackColor = True
+        Me.btnDM.Text = "EXIT DELETION MODE"
+        Me.btnDM.UseVisualStyleBackColor = False
         '
         'Cart
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
+        Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
         Me.ClientSize = New System.Drawing.Size(600, 366)
         Me.Controls.Add(Me.btnDM)
         Me.Controls.Add(Me.btnCheck)

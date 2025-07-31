@@ -477,5 +477,20 @@
   <ItemGroup>
     <None Include="Resources\yiloBrowse.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black_abstract.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copilot_20250731_083155.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copilot_20250731_083737.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copilot_20250731_084119.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copilot_20250731_085005.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

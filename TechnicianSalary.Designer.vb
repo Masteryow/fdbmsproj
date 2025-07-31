@@ -22,18 +22,18 @@ Partial Class TechnicianSalary
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dgvSalary = New System.Windows.Forms.DataGridView()
         Me.txtName = New System.Windows.Forms.TextBox()
         Me.btnIndPay = New System.Windows.Forms.Button()
         Me.btnPayAll = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Panel1.SuspendLayout()
         CType(Me.dgvSalary, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -46,10 +46,31 @@ Partial Class TechnicianSalary
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Location = New System.Drawing.Point(-3, 32)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(616, 46)
         Me.Panel1.TabIndex = 7
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.IndianRed
+        Me.Panel2.Location = New System.Drawing.Point(3, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(19, 47)
+        Me.Panel2.TabIndex = 14
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.Crimson
+        Me.Button1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Location = New System.Drawing.Point(486, 6)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(117, 33)
+        Me.Button1.TabIndex = 13
+        Me.Button1.Text = "BACK"
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'Label1
         '
@@ -67,25 +88,26 @@ Partial Class TechnicianSalary
         '
         Me.dgvSalary.AllowUserToAddRows = False
         Me.dgvSalary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvSalary.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
+        Me.dgvSalary.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvSalary.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.dgvSalary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvSalary.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvSalary.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvSalary.Location = New System.Drawing.Point(23, 123)
-        Me.dgvSalary.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.dgvSalary.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvSalary.MultiSelect = False
         Me.dgvSalary.Name = "dgvSalary"
         Me.dgvSalary.ReadOnly = True
@@ -98,7 +120,7 @@ Partial Class TechnicianSalary
         'txtName
         '
         Me.txtName.Location = New System.Drawing.Point(23, 100)
-        Me.txtName.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtName.Margin = New System.Windows.Forms.Padding(2)
         Me.txtName.Name = "txtName"
         Me.txtName.Size = New System.Drawing.Size(366, 20)
         Me.txtName.TabIndex = 9
@@ -109,7 +131,7 @@ Partial Class TechnicianSalary
         Me.btnIndPay.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnIndPay.ForeColor = System.Drawing.Color.White
         Me.btnIndPay.Location = New System.Drawing.Point(437, 164)
-        Me.btnIndPay.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnIndPay.Margin = New System.Windows.Forms.Padding(2)
         Me.btnIndPay.Name = "btnIndPay"
         Me.btnIndPay.Size = New System.Drawing.Size(151, 36)
         Me.btnIndPay.TabIndex = 11
@@ -122,25 +144,12 @@ Partial Class TechnicianSalary
         Me.btnPayAll.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPayAll.ForeColor = System.Drawing.Color.White
         Me.btnPayAll.Location = New System.Drawing.Point(437, 204)
-        Me.btnPayAll.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnPayAll.Margin = New System.Windows.Forms.Padding(2)
         Me.btnPayAll.Name = "btnPayAll"
         Me.btnPayAll.Size = New System.Drawing.Size(151, 35)
         Me.btnPayAll.TabIndex = 12
         Me.btnPayAll.Text = "PAY ALL"
         Me.btnPayAll.UseVisualStyleBackColor = False
-        '
-        'Button1
-        '
-        Me.Button1.BackColor = System.Drawing.Color.Crimson
-        Me.Button1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(486, 6)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(117, 33)
-        Me.Button1.TabIndex = 13
-        Me.Button1.Text = "BACK"
-        Me.Button1.UseVisualStyleBackColor = False
         '
         'Button2
         '
@@ -157,6 +166,7 @@ Partial Class TechnicianSalary
         '
         'PictureBox1
         '
+        Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.Image = Global.fdbmsproj.My.Resources.Resources.search
         Me.PictureBox1.Location = New System.Drawing.Point(393, 100)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
@@ -166,19 +176,13 @@ Partial Class TechnicianSalary
         Me.PictureBox1.TabIndex = 10
         Me.PictureBox1.TabStop = False
         '
-        'Panel2
-        '
-        Me.Panel2.BackColor = System.Drawing.Color.IndianRed
-        Me.Panel2.Location = New System.Drawing.Point(3, 0)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(19, 47)
-        Me.Panel2.TabIndex = 14
-        '
         'TechnicianSalary
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
+        Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.redBG
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.btnPayAll)
@@ -187,7 +191,8 @@ Partial Class TechnicianSalary
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.dgvSalary)
         Me.Controls.Add(Me.Panel1)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.DoubleBuffered = True
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "TechnicianSalary"
         Me.Text = "TechnicianSalary"
         Me.Panel1.ResumeLayout(False)

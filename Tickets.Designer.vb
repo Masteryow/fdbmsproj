@@ -136,7 +136,7 @@ Partial Class Tickets
         Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDifficulty.Name = "txtDifficulty"
         Me.txtDifficulty.Size = New System.Drawing.Size(281, 24)
-        Me.txtDifficulty.TabIndex = 5
+        Me.txtDifficulty.TabIndex = 55
         '
         'Label4
         '
@@ -157,21 +157,25 @@ Partial Class Tickets
         Me.txtPrice.Margin = New System.Windows.Forms.Padding(2)
         Me.txtPrice.Name = "txtPrice"
         Me.txtPrice.Size = New System.Drawing.Size(281, 24)
-        Me.txtPrice.TabIndex = 7
+        Me.txtPrice.TabIndex = 56
         '
         'btnConfirm
         '
+        Me.btnConfirm.BackColor = System.Drawing.Color.MidnightBlue
         Me.btnConfirm.Enabled = False
+        Me.btnConfirm.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnConfirm.ForeColor = System.Drawing.Color.White
         Me.btnConfirm.Location = New System.Drawing.Point(422, 198)
         Me.btnConfirm.Margin = New System.Windows.Forms.Padding(2)
         Me.btnConfirm.Name = "btnConfirm"
         Me.btnConfirm.Size = New System.Drawing.Size(154, 40)
-        Me.btnConfirm.TabIndex = 8
-        Me.btnConfirm.Text = "Confirm"
-        Me.btnConfirm.UseVisualStyleBackColor = True
+        Me.btnConfirm.TabIndex = 2
+        Me.btnConfirm.Text = "CONFIRM"
+        Me.btnConfirm.UseVisualStyleBackColor = False
         '
         'GroupBox1
         '
+        Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox1.Controls.Add(Me.txtNote)
         Me.GroupBox1.Controls.Add(Me.Label10)
         Me.GroupBox1.Controls.Add(Me.Label8)
@@ -199,7 +203,7 @@ Partial Class Tickets
         Me.txtNote.Multiline = True
         Me.txtNote.Name = "txtNote"
         Me.txtNote.Size = New System.Drawing.Size(338, 76)
-        Me.txtNote.TabIndex = 10
+        Me.txtNote.TabIndex = 1
         '
         'Label10
         '
@@ -227,17 +231,21 @@ Partial Class Tickets
         '
         'btnClear
         '
+        Me.btnClear.BackColor = System.Drawing.Color.MidnightBlue
+        Me.btnClear.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClear.ForeColor = System.Drawing.Color.White
         Me.btnClear.Location = New System.Drawing.Point(422, 255)
         Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(154, 40)
-        Me.btnClear.TabIndex = 12
+        Me.btnClear.TabIndex = 3
         Me.btnClear.Text = "Clear Selection"
-        Me.btnClear.UseVisualStyleBackColor = True
+        Me.btnClear.UseVisualStyleBackColor = False
         '
         'Label6
         '
         Me.Label6.AutoSize = True
+        Me.Label6.BackColor = System.Drawing.Color.Transparent
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.White
         Me.Label6.Location = New System.Drawing.Point(397, 98)
@@ -258,13 +266,16 @@ Partial Class Tickets
         '
         'btnNewTicket
         '
-        Me.btnNewTicket.Location = New System.Drawing.Point(485, 121)
+        Me.btnNewTicket.BackColor = System.Drawing.Color.Navy
+        Me.btnNewTicket.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNewTicket.ForeColor = System.Drawing.Color.White
+        Me.btnNewTicket.Location = New System.Drawing.Point(400, 121)
         Me.btnNewTicket.Margin = New System.Windows.Forms.Padding(2)
         Me.btnNewTicket.Name = "btnNewTicket"
-        Me.btnNewTicket.Size = New System.Drawing.Size(108, 19)
+        Me.btnNewTicket.Size = New System.Drawing.Size(194, 32)
         Me.btnNewTicket.TabIndex = 14
-        Me.btnNewTicket.Text = "Create new ticket"
-        Me.btnNewTicket.UseVisualStyleBackColor = True
+        Me.btnNewTicket.Text = "CREATE NEW TICKET"
+        Me.btnNewTicket.UseVisualStyleBackColor = False
         Me.btnNewTicket.Visible = False
         '
         'Panel1
@@ -294,6 +305,8 @@ Partial Class Tickets
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
+        Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.blueBG
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(611, 366)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnNewTicket)
@@ -303,6 +316,7 @@ Partial Class Tickets
         Me.Controls.Add(Me.btnConfirm)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.GroupBox1)
+        Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Tickets"
         Me.Text = "Tickets"
