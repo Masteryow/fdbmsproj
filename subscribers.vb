@@ -24,17 +24,26 @@ Public Class subscribers
     Public Sub pdfReport(reportPath As String)
 
         Dim sendPdf As New MailMessage
-        sendPdf.From = New MailAddress("yohasakura200519@gmail.com")
+        sendPdf.From = New MailAddress("skylink.solutions2@gmail.com")
         sendPdf.To.Add(Session.email)
         sendPdf.Subject = "User Report"
-        sendPdf.Body = "Thank you for joining the SkyLink!"
+        sendPdf.Body = $"Dear {Session.fullName}," & vbCrLf & vbCrLf &
+"Thank you for choosing SkyLink as your internet service provider. We are delighted to welcome you to a community that values seamless connectivity, modern technology, and customer-first service. Your account has been successfully registered in our system, and we are preparing everything to bring you online as soon as possible." & vbCrLf & vbCrLf &
+"At this time, your internet service status is marked as PENDING ACTIVATION. This status means that some final steps are still underway before your connection becomes fully active. This could involve technical installation, final account verification, address validation, or activation scheduling. Rest assured that our team is closely monitoring your account and working diligently to ensure everything is processed smoothly and efficiently." & vbCrLf & vbCrLf &
+"Attached to this email is your official User Report. It contains helpful reference information related to your account — including plan selection, and SkyLink’s support contact details. We encourage you to keep this document on file for your future reference." & vbCrLf & vbCrLf &
+"Our goal is to deliver not just internet access, but a reliable, long-term digital experience you can depend on for work, entertainment, education, and staying connected to the world. SkyLink customers enjoy continuous infrastructure upgrades, rapid support response times, and growing service coverage in both rural and urban areas." & vbCrLf & vbCrLf &
+"Once your service has been activated, you will receive a follow-up email confirming that you are now connected and ready to go. That message will also include helpful information for getting started with your connection and managing your account online." & vbCrLf & vbCrLf &
+"If you have any questions regarding your activation status, want to confirm a schedule, or simply wish to speak with one of our representatives, our support team is available 24/7 via phone, chat, or email. Your satisfaction and convenience are our top priorities." & vbCrLf & vbCrLf &
+"We truly appreciate your patience as we complete your setup. Thank you for trusting SkyLink to provide the connectivity you need in today’s fast-moving digital world. We’re honored to serve you — and we look forward to getting you connected very soon." & vbCrLf & vbCrLf &
+"Best regards," & vbCrLf &
+"The SkyLink Customer Success Team"
 
 
         If File.Exists(reportPath) Then
             sendPdf.Attachments.Add(New Attachment(reportPath))
         End If
         Dim smtp As New SmtpClient("smtp.gmail.com", 587)
-        smtp.Credentials = New NetworkCredential("yohasakura200519@gmail.com", "rwxe oxyt ocnc dfmx")
+        smtp.Credentials = New NetworkCredential("skylink.solutions2@gmail.com", "hptu svfb rfas uttx")
         smtp.EnableSsl = True
 
         Try
@@ -488,17 +497,24 @@ Public Class subscribers
     Public Sub forBilling(billingReportPath As String)
 
         Dim billingPDF As New MailMessage
-        billingPDF.From = New MailAddress("yohasakura200519@gmail.com")
+        billingPDF.From = New MailAddress("skylink.solutions2@gmail.com")
         billingPDF.To.Add(Session.email)
-        billingPDF.Subject = "User Report"
-        billingPDF.Body = "Thank you for joining the SkyLink!"
+        billingPDF.Subject = "Your Monthly SkyLink Billing Statement"
+        billingPDF.Body = "Dear " & Session.fullName & "," & vbCrLf & vbCrLf &
+"We hope you're enjoying reliable and high-speed internet with SkyLink." & vbCrLf & vbCrLf &
+"Attached is your monthly billing statement for the period of " & billMonth & ". It contains a summary of your service plan, billing amount, payment status, and the due date. Please review the details carefully." & vbCrLf & vbCrLf &
+"If payment is still pending, we kindly encourage you to settle your balance before the due date to avoid any service interruptions." & vbCrLf & vbCrLf &
+"You may pay online, via authorized payment centers, or by visiting our local office. For any questions or concerns regarding your statement, feel free to reach out to our support team." & vbCrLf & vbCrLf &
+"Thank you for choosing SkyLink Internet Services. We value your trust and commitment to staying connected." & vbCrLf & vbCrLf &
+"Best regards," & vbCrLf &
+"SkyLink Billing Department"
 
 
         If File.Exists(billingReportPath) Then
             billingPDF.Attachments.Add(New Attachment(billingReportPath))
         End If
         Dim smtp As New SmtpClient("smtp.gmail.com", 587)
-        smtp.Credentials = New NetworkCredential("yohasakura200519@gmail.com", "rwxe oxyt ocnc dfmx")
+        smtp.Credentials = New NetworkCredential("skylink.solutions2@gmail.com", "hptu svfb rfas uttx")
         smtp.EnableSsl = True
 
         Try
