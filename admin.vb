@@ -589,64 +589,80 @@ Public Class Admin
         pnlContent.Controls.Clear()
 
         Dim lblSubscribers As New Label With {
-        .Text = "Subscriber Management",
-        .Font = New Font("Segoe UI", 12, FontStyle.Bold),
-        .Location = New Point(0, 0),
-        .AutoSize = True
-    }
+    .Text = "Subscriber Management",
+    .Font = New Font("Segoe UI", 12, FontStyle.Bold),
+    .Location = New Point(0, 0),
+    .AutoSize = True
+}
+
+        ' Plan Type Filter Section
+        Dim lblPlanType As New Label With {
+    .Text = "Plan Type:",
+    .Font = New Font("Segoe UI", 10, FontStyle.Bold),
+    .Location = New Point(270, 30),
+    .AutoSize = True
+}
+
+        Dim cboPlanType As New ComboBox With {
+    .Location = New Point(350, 28),
+    .Size = New Size(100, 23),
+    .DropDownStyle = ComboBoxStyle.DropDownList
+}
+        cboPlanType.Items.AddRange({"All", "Prepaid", "Postpaid"})
+        cboPlanType.SelectedIndex = 0
 
         ' Search Section
         Dim lblSearch As New Label With {
-        .Text = "Search:",
-        .Font = New Font("Segoe UI", 10, FontStyle.Bold),
-        .Location = New Point(0, 30),
-        .AutoSize = True
-    }
+    .Text = "Search:",
+    .Font = New Font("Segoe UI", 10, FontStyle.Bold),
+    .Location = New Point(0, 30),
+    .AutoSize = True
+}
 
         Dim txtSearch As New TextBox With {
-        .Location = New Point(60, 28),
-        .Size = New Size(200, 23)
-    }
+    .Location = New Point(60, 30),
+    .Size = New Size(75, 23)
+}
 
         Dim btnSearch As New Button With {
-        .Text = "Search",
-        .Location = New Point(270, 28),
-        .Size = New Size(60, 23),
-        .BackColor = Color.FromArgb(52, 152, 219),
-        .ForeColor = Color.White,
-        .FlatStyle = FlatStyle.Flat
-    }
+    .Text = "Search",
+    .Location = New Point(142, 27),
+    .Size = New Size(60, 23),
+    .BackColor = Color.FromArgb(52, 152, 219),
+    .ForeColor = Color.White,
+    .FlatStyle = FlatStyle.Flat
+}
         btnSearch.FlatAppearance.BorderSize = 0
 
         Dim btnShowAll As New Button With {
-        .Text = "Update",
-        .Location = New Point(340, 28),
-        .Size = New Size(60, 23),
-        .BackColor = Color.FromArgb(46, 204, 113),
-        .ForeColor = Color.White,
-        .FlatStyle = FlatStyle.Flat
-    }
+    .Text = "Update",
+    .Location = New Point(205, 27),
+    .Size = New Size(60, 23),
+    .BackColor = Color.FromArgb(46, 204, 113),
+    .ForeColor = Color.White,
+    .FlatStyle = FlatStyle.Flat
+}
         btnShowAll.FlatAppearance.BorderSize = 0
 
         ' Save changes button
         Dim btnSaveChanges As New Button With {
-        .Text = "Save Changes",
-        .Location = New Point(0, 60),
-        .Size = New Size(100, 30),
-        .BackColor = Color.FromArgb(46, 204, 113),
-        .ForeColor = Color.White,
-        .FlatStyle = FlatStyle.Flat
-    }
+    .Text = "Save Changes",
+    .Location = New Point(0, 60),
+    .Size = New Size(100, 30),
+    .BackColor = Color.FromArgb(46, 204, 113),
+    .ForeColor = Color.White,
+    .FlatStyle = FlatStyle.Flat
+}
         btnSaveChanges.FlatAppearance.BorderSize = 0
 
         ' DataGridView
         Dim dgvSubscribers As New DataGridView With {
-        .Location = New Point(0, 100),
-        .Size = New Size(420, 250),
-        .AllowUserToAddRows = False,
-        .AllowUserToDeleteRows = False,
-        .SelectionMode = DataGridViewSelectionMode.FullRowSelect
-    }
+    .Location = New Point(0, 100),
+    .Size = New Size(420, 250),
+    .AllowUserToAddRows = False,
+    .AllowUserToDeleteRows = False,
+    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+}
 
         ' Load subscribers data
         LoadSubscribersDataEnhanced(dgvSubscribers)
@@ -666,21 +682,27 @@ Public Class Admin
                                                  End If
                                              End Sub
 
+        ' Plan type filter change handler
+        AddHandler cboPlanType.SelectedIndexChanged, Sub()
+                                                         LoadSubscribersDataEnhanced(dgvSubscribers, txtSearch.Text.Trim(), cboPlanType.SelectedItem.ToString())
+                                                     End Sub
+
         ' Search event handler
         AddHandler btnSearch.Click, Sub()
-                                        LoadSubscribersDataEnhanced(dgvSubscribers, txtSearch.Text.Trim())
+                                        LoadSubscribersDataEnhanced(dgvSubscribers, txtSearch.Text.Trim(), cboPlanType.SelectedItem.ToString())
                                     End Sub
 
         ' Show all event handler
         AddHandler btnShowAll.Click, Sub()
                                          txtSearch.Clear()
+                                         cboPlanType.SelectedIndex = 0
                                          LoadSubscribersDataEnhanced(dgvSubscribers)
                                      End Sub
 
         ' Search on Enter key
         AddHandler txtSearch.KeyDown, Sub(sender, e)
                                           If e.KeyCode = Keys.Enter Then
-                                              LoadSubscribersDataEnhanced(dgvSubscribers, txtSearch.Text.Trim())
+                                              LoadSubscribersDataEnhanced(dgvSubscribers, txtSearch.Text.Trim(), cboPlanType.SelectedItem.ToString())
                                           End If
                                       End Sub
 
@@ -721,20 +743,20 @@ Public Class Admin
                                                  con.Close()
 
                                                  MessageBox.Show($"Successfully updated {changesCount} subscriber(s)!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                                                 LoadSubscribersDataEnhanced(dgvSubscribers, txtSearch.Text.Trim()) ' Refresh with current search
+                                                 LoadSubscribersDataEnhanced(dgvSubscribers, txtSearch.Text.Trim(), cboPlanType.SelectedItem.ToString())
                                              Catch ex As Exception
                                                  If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
                                                  MessageBox.Show("Error saving changes: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                              End Try
                                          End Sub
 
-        pnlContent.Controls.AddRange({lblSubscribers, lblSearch, txtSearch, btnSearch, btnShowAll, btnSaveChanges, dgvSubscribers})
+        pnlContent.Controls.AddRange({lblSubscribers, lblPlanType, cboPlanType, lblSearch, txtSearch, btnSearch, btnShowAll, btnSaveChanges, dgvSubscribers})
     End Sub
 
 
 
 
-    Private Sub LoadSubscribersDataEnhanced(dgv As DataGridView, Optional searchTerm As String = "")
+    Private Sub LoadSubscribersDataEnhanced(dgv As DataGridView, Optional searchTerm As String = "", Optional planTypeFilter As String = "")
         Try
             If con Is Nothing Then
                 con = New MySqlConnection(strcon)
@@ -746,18 +768,34 @@ Public Class Admin
 
             con.Open()
 
-            ' Build query with optional search - Added INNER JOIN to ensure only valid plan_ids
-            Dim query As String = "SELECT s.subscriber_id, u.username, s.customer_id, s.plan_id, p.plan_name, s.subscription_date, s.status FROM subscribers s INNER JOIN users u ON s.customer_id = u.user_id INNER JOIN internet_plans p ON s.plan_id = p.plan_id"
+            ' Build query with optional search and plan type filter
+            Dim query As String = "SELECT s.subscriber_id, u.username, s.customer_id, s.plan_id, p.plan_name, p.plan_type, s.subscription_date, s.status " &
+                             "FROM subscribers s " &
+                             "INNER JOIN users u ON s.customer_id = u.user_id " &
+                             "INNER JOIN internet_plans p ON s.plan_id = p.plan_id"
+
+            Dim whereConditions As New List(Of String)
 
             If Not String.IsNullOrEmpty(searchTerm) Then
-                query += " WHERE u.username LIKE @search OR s.subscriber_id LIKE @search"
+                whereConditions.Add("(u.username LIKE @search OR s.subscriber_id LIKE @search)")
             End If
 
-            query += " ORDER BY s.subscriber_id"
+            If Not String.IsNullOrEmpty(planTypeFilter) And planTypeFilter <> "All" Then
+                whereConditions.Add("p.plan_type = @planType")
+            End If
+
+            If whereConditions.Count > 0 Then
+                query += " WHERE " & String.Join(" AND ", whereConditions)
+            End If
+
+            query += " ORDER BY p.plan_type, s.subscriber_id"
 
             Dim cmd As New MySqlCommand(query, con)
             If Not String.IsNullOrEmpty(searchTerm) Then
                 cmd.Parameters.AddWithValue("@search", "%" & searchTerm & "%")
+            End If
+            If Not String.IsNullOrEmpty(planTypeFilter) And planTypeFilter <> "All" Then
+                cmd.Parameters.AddWithValue("@planType", planTypeFilter)
             End If
 
             Dim adapter As New MySqlDataAdapter(cmd)
@@ -765,7 +803,7 @@ Public Class Admin
             adapter.Fill(dt)
 
             ' Get available plans for dropdown
-            Dim plansCmd As New MySqlCommand("SELECT plan_id, plan_name FROM internet_plans ORDER BY plan_name", con)
+            Dim plansCmd As New MySqlCommand("SELECT plan_id, plan_name, plan_type FROM internet_plans ORDER BY plan_type, plan_name", con)
             Dim plansAdapter As New MySqlDataAdapter(plansCmd)
             Dim plansTable As New DataTable()
             plansAdapter.Fill(plansTable)
@@ -775,10 +813,11 @@ Public Class Admin
             ' Check if we have data
             If dt.Rows.Count = 0 Then
                 dgv.DataSource = Nothing
+                Dim filterText As String = If(String.IsNullOrEmpty(planTypeFilter) Or planTypeFilter = "All", "", $" with {planTypeFilter} plans")
                 If String.IsNullOrEmpty(searchTerm) Then
-                    MessageBox.Show("No subscribers found.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show($"No subscribers found{filterText}.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Else
-                    MessageBox.Show($"No subscribers found matching '{searchTerm}'.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show($"No subscribers found matching '{searchTerm}'{filterText}.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
                 Return
             End If
@@ -818,7 +857,27 @@ Public Class Admin
                 dgv.Columns("plan_name").Width = 90
             End If
 
-            ' Create dropdown for Status with only Active/Inactive
+            ' Add plan type column (read-only)
+            If dgv.Columns.Contains("plan_type") Then
+                dgv.Columns("plan_type").ReadOnly = True
+                dgv.Columns("plan_type").HeaderText = "Plan Type"
+                dgv.Columns("plan_type").Width = 70
+                ' Color code the plan types
+                For Each row As DataGridViewRow In dgv.Rows
+                    If Not row.IsNewRow Then
+                        Dim planType As String = row.Cells("plan_type").Value.ToString()
+                        If planType = "Prepaid" Then
+                            row.Cells("plan_type").Style.BackColor = Color.LightBlue
+                            row.Cells("plan_type").Style.ForeColor = Color.DarkBlue
+                        ElseIf planType = "Postpaid" Then
+                            row.Cells("plan_type").Style.BackColor = Color.LightGreen
+                            row.Cells("plan_type").Style.ForeColor = Color.DarkGreen
+                        End If
+                    End If
+                Next
+            End If
+
+            ' Create dropdown for Status
             If dgv.Columns.Contains("status") Then
                 Dim statusIndex As Integer = dgv.Columns("status").Index
                 dgv.Columns.RemoveAt(statusIndex)
@@ -843,17 +902,15 @@ Public Class Admin
                 planColumn.DataSource = plansTable
                 planColumn.DisplayMember = "plan_name"
                 planColumn.ValueMember = "plan_id"
-                planColumn.Width = 100
+                planColumn.Width = 120
 
                 dgv.Columns.Add(planColumn)
 
-                ' FIXED: Set the current plan values in the dropdown with validation
+                ' Set the current plan values in the dropdown
                 For Each row As DataGridViewRow In dgv.Rows
                     If Not row.IsNewRow Then
                         Try
                             Dim currentPlanId As Integer = Convert.ToInt32(row.Cells("plan_id").Value)
-
-                            ' Check if this plan_id exists in the plansTable
                             Dim planExists As Boolean = False
                             For Each planRow As DataRow In plansTable.Rows
                                 If Convert.ToInt32(planRow("plan_id")) = currentPlanId Then
@@ -865,14 +922,12 @@ Public Class Admin
                             If planExists Then
                                 row.Cells("new_plan_id").Value = currentPlanId
                             Else
-                                ' If plan doesn't exist, set to the first available plan or leave empty
                                 If plansTable.Rows.Count > 0 Then
                                     row.Cells("new_plan_id").Value = plansTable.Rows(0)("plan_id")
                                 End If
                             End If
 
                         Catch ex As Exception
-                            ' If there's any conversion error, set to first available plan
                             If plansTable.Rows.Count > 0 Then
                                 row.Cells("new_plan_id").Value = plansTable.Rows(0)("plan_id")
                             End If
