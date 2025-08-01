@@ -74,8 +74,6 @@ Partial Class Addon
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pbxPlanImage = New System.Windows.Forms.PictureBox()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.MenuStrip1.SuspendLayout()
         Me.gbxProduct1.SuspendLayout()
         Me.gbxProduct2.SuspendLayout()
@@ -99,7 +97,7 @@ Partial Class Addon
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(1017, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(641, 24)
         Me.MenuStrip1.TabIndex = 22
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -622,23 +620,6 @@ Partial Class Addon
         Me.pbxPlanImage.TabIndex = 26
         Me.pbxPlanImage.TabStop = False
         '
-        'ComboBox1
-        '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"Hardware", "Services", "Plan Upgrade"})
-        Me.ComboBox1.Location = New System.Drawing.Point(643, 162)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(158, 21)
-        Me.ComboBox1.TabIndex = 70
-        '
-        'ComboBox2
-        '
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(821, 162)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(159, 21)
-        Me.ComboBox2.TabIndex = 71
-        '
         'Addon
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -646,9 +627,7 @@ Partial Class Addon
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(1017, 538)
-        Me.Controls.Add(Me.ComboBox2)
-        Me.Controls.Add(Me.ComboBox1)
+        Me.ClientSize = New System.Drawing.Size(641, 390)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.btnPrevious)
@@ -752,6 +731,4 @@ Partial Class Addon
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents TicketToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Label2 As Label
-    Friend WithEvents ComboBox1 As ComboBox
-    Friend WithEvents ComboBox2 As ComboBox
 End Class

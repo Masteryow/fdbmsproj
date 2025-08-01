@@ -10,7 +10,7 @@ Public Class Main
     Dim locationY As Integer = 15
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
         Session.fromProduct = True
-        Addon.Show()
+        products.Show()
 
         Me.Close()
 

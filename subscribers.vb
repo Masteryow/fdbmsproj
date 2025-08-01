@@ -338,7 +338,7 @@ Public Class subscribers
 
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
         Session.fromProduct = True
-        Addon.Show()
+        products.Show()
         Me.Close()
     End Sub
 

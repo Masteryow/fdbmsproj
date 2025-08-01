@@ -214,24 +214,14 @@ Public Class Subscription
 
                         If addons = DialogResult.Yes Then
                             ' Navigate to addon form - keep transaction active
+
                             Session.fromProduct = False
-                            If addons = DialogResult.Yes Then
-                                Session.fromProduct = False
                                 Session.subscriberAccess = False
                                 navigatingAway = True
                                 delete()
-                                Addon.Show()
+                                products.Show()
 
                                 Me.Close()
-                            Else
-                                Session.fromProduct = False
-                                navigatingAway = True
-                                Session.IsNewSubscription = True
-                                Cart.Show()
-                                Me.Close()
-                            End If
-                            Addon.Show()
-                            Me.Close()
 
                         Else
 

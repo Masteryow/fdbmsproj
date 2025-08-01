@@ -1,6 +1,6 @@
 ﻿Public Class Session
     ' Existing properties
-    Public Shared Property UserId As Integer  'for debug, remove if final
+    Public Shared Property UserId As Integer = 1 'for debug, remove if final
     Public Shared Property UserName As String
     Public Shared Property email As String
     Public Shared Property fullName As String

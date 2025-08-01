@@ -1,0 +1,418 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class products
+    Inherits System.Windows.Forms.Form
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.cbxItems = New System.Windows.Forms.ComboBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.txtPrice = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.txtStocks = New System.Windows.Forms.TextBox()
+        Me.lblStocks = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.cbxFilter = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblQuantity = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.pbxClear = New System.Windows.Forms.PictureBox()
+        Me.pbxAddToCart = New System.Windows.Forms.PictureBox()
+        Me.pbxMinus = New System.Windows.Forms.PictureBox()
+        Me.pbxAdd = New System.Windows.Forms.PictureBox()
+        Me.txtQuantity = New System.Windows.Forms.TextBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.pbxItem = New System.Windows.Forms.PictureBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtTotal = New System.Windows.Forms.TextBox()
+        Me.pbxPlanImage = New System.Windows.Forms.PictureBox()
+        Me.lblPlanName = New System.Windows.Forms.Label()
+        Me.lblPlanType = New System.Windows.Forms.Label()
+        Me.lblPlanPrice = New System.Windows.Forms.Label()
+        Me.lblChangeOfMind = New System.Windows.Forms.Label()
+        Me.pbxBuyNow = New System.Windows.Forms.PictureBox()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.GroupBox1.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        CType(Me.pbxClear, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxAddToCart, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxMinus, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxAdd, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox2.SuspendLayout()
+        CType(Me.pbxItem, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxPlanImage, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxBuyNow, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'cbxItems
+        '
+        Me.cbxItems.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cbxItems.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cbxItems.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxItems.FormattingEnabled = True
+        Me.cbxItems.Location = New System.Drawing.Point(91, 54)
+        Me.cbxItems.Name = "cbxItems"
+        Me.cbxItems.Size = New System.Drawing.Size(247, 24)
+        Me.cbxItems.TabIndex = 1
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.txtPrice)
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.txtStocks)
+        Me.GroupBox1.Controls.Add(Me.pbxAdd)
+        Me.GroupBox1.Controls.Add(Me.pbxMinus)
+        Me.GroupBox1.Controls.Add(Me.lblStocks)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.txtQuantity)
+        Me.GroupBox1.Controls.Add(Me.cbxFilter)
+        Me.GroupBox1.Controls.Add(Me.lblQuantity)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.cbxItems)
+        Me.GroupBox1.Font = New System.Drawing.Font("Times New Roman", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.ForeColor = System.Drawing.Color.White
+        Me.GroupBox1.Location = New System.Drawing.Point(61, 164)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(550, 216)
+        Me.GroupBox1.TabIndex = 6
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Addon Selection"
+        '
+        'txtPrice
+        '
+        Me.txtPrice.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPrice.Location = New System.Drawing.Point(126, 114)
+        Me.txtPrice.Name = "txtPrice"
+        Me.txtPrice.ReadOnly = True
+        Me.txtPrice.Size = New System.Drawing.Size(212, 23)
+        Me.txtPrice.TabIndex = 9
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(24, 116)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(94, 19)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Base Price"
+        '
+        'txtStocks
+        '
+        Me.txtStocks.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtStocks.Location = New System.Drawing.Point(424, 113)
+        Me.txtStocks.Name = "txtStocks"
+        Me.txtStocks.ReadOnly = True
+        Me.txtStocks.Size = New System.Drawing.Size(103, 23)
+        Me.txtStocks.TabIndex = 7
+        '
+        'lblStocks
+        '
+        Me.lblStocks.AutoSize = True
+        Me.lblStocks.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblStocks.Location = New System.Drawing.Point(357, 116)
+        Me.lblStocks.Name = "lblStocks"
+        Me.lblStocks.Size = New System.Drawing.Size(62, 19)
+        Me.lblStocks.TabIndex = 6
+        Me.lblStocks.Text = "Stocks"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(24, 58)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(61, 19)
+        Me.Label2.TabIndex = 0
+        Me.Label2.Text = "Addon"
+        '
+        'cbxFilter
+        '
+        Me.cbxFilter.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxFilter.FormattingEnabled = True
+        Me.cbxFilter.Items.AddRange(New Object() {"All", "Hardware", "Service", "Plan Upgrade"})
+        Me.cbxFilter.Location = New System.Drawing.Point(413, 54)
+        Me.cbxFilter.Name = "cbxFilter"
+        Me.cbxFilter.Size = New System.Drawing.Size(114, 24)
+        Me.cbxFilter.TabIndex = 2
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(355, 58)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(52, 19)
+        Me.Label1.TabIndex = 4
+        Me.Label1.Text = "Filter"
+        '
+        'lblQuantity
+        '
+        Me.lblQuantity.AutoSize = True
+        Me.lblQuantity.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblQuantity.ForeColor = System.Drawing.Color.White
+        Me.lblQuantity.Location = New System.Drawing.Point(24, 178)
+        Me.lblQuantity.Name = "lblQuantity"
+        Me.lblQuantity.Size = New System.Drawing.Size(79, 19)
+        Me.lblQuantity.TabIndex = 10
+        Me.lblQuantity.Text = "Quantity"
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.pbxClear)
+        Me.Panel1.Controls.Add(Me.pbxAddToCart)
+        Me.Panel1.Location = New System.Drawing.Point(61, 386)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(550, 102)
+        Me.Panel1.TabIndex = 11
+        '
+        'pbxClear
+        '
+        Me.pbxClear.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.pbxClear.Location = New System.Drawing.Point(298, 37)
+        Me.pbxClear.Name = "pbxClear"
+        Me.pbxClear.Size = New System.Drawing.Size(135, 35)
+        Me.pbxClear.TabIndex = 15
+        Me.pbxClear.TabStop = False
+        '
+        'pbxAddToCart
+        '
+        Me.pbxAddToCart.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.pbxAddToCart.Location = New System.Drawing.Point(117, 36)
+        Me.pbxAddToCart.Name = "pbxAddToCart"
+        Me.pbxAddToCart.Size = New System.Drawing.Size(159, 36)
+        Me.pbxAddToCart.TabIndex = 13
+        Me.pbxAddToCart.TabStop = False
+        '
+        'pbxMinus
+        '
+        Me.pbxMinus.BackColor = System.Drawing.Color.White
+        Me.pbxMinus.Location = New System.Drawing.Point(247, 177)
+        Me.pbxMinus.Name = "pbxMinus"
+        Me.pbxMinus.Size = New System.Drawing.Size(40, 22)
+        Me.pbxMinus.TabIndex = 12
+        Me.pbxMinus.TabStop = False
+        '
+        'pbxAdd
+        '
+        Me.pbxAdd.BackColor = System.Drawing.Color.White
+        Me.pbxAdd.Location = New System.Drawing.Point(298, 177)
+        Me.pbxAdd.Name = "pbxAdd"
+        Me.pbxAdd.Size = New System.Drawing.Size(40, 22)
+        Me.pbxAdd.TabIndex = 11
+        Me.pbxAdd.TabStop = False
+        '
+        'txtQuantity
+        '
+        Me.txtQuantity.Font = New System.Drawing.Font("Times New Roman", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtQuantity.Location = New System.Drawing.Point(126, 177)
+        Me.txtQuantity.Name = "txtQuantity"
+        Me.txtQuantity.Size = New System.Drawing.Size(111, 22)
+        Me.txtQuantity.TabIndex = 10
+        Me.txtQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.pbxItem)
+        Me.GroupBox2.Controls.Add(Me.Label7)
+        Me.GroupBox2.Font = New System.Drawing.Font("Times New Roman", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.ForeColor = System.Drawing.Color.White
+        Me.GroupBox2.Location = New System.Drawing.Point(617, 164)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(231, 216)
+        Me.GroupBox2.TabIndex = 10
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Item Preview"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(355, 58)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(0, 19)
+        Me.Label7.TabIndex = 4
+        '
+        'pbxItem
+        '
+        Me.pbxItem.Location = New System.Drawing.Point(16, 54)
+        Me.pbxItem.Name = "pbxItem"
+        Me.pbxItem.Size = New System.Drawing.Size(197, 145)
+        Me.pbxItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxItem.TabIndex = 5
+        Me.pbxItem.TabStop = False
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(613, 121)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(52, 19)
+        Me.Label3.TabIndex = 13
+        Me.Label3.Text = "Total"
+        '
+        'txtTotal
+        '
+        Me.txtTotal.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotal.Location = New System.Drawing.Point(669, 117)
+        Me.txtTotal.Name = "txtTotal"
+        Me.txtTotal.ReadOnly = True
+        Me.txtTotal.Size = New System.Drawing.Size(179, 23)
+        Me.txtTotal.TabIndex = 13
+        '
+        'pbxPlanImage
+        '
+        Me.pbxPlanImage.BackColor = System.Drawing.Color.Transparent
+        Me.pbxPlanImage.Location = New System.Drawing.Point(61, 45)
+        Me.pbxPlanImage.Name = "pbxPlanImage"
+        Me.pbxPlanImage.Size = New System.Drawing.Size(118, 95)
+        Me.pbxPlanImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxPlanImage.TabIndex = 27
+        Me.pbxPlanImage.TabStop = False
+        '
+        'lblPlanName
+        '
+        Me.lblPlanName.AutoSize = True
+        Me.lblPlanName.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPlanName.ForeColor = System.Drawing.Color.White
+        Me.lblPlanName.Location = New System.Drawing.Point(185, 45)
+        Me.lblPlanName.Name = "lblPlanName"
+        Me.lblPlanName.Size = New System.Drawing.Size(0, 19)
+        Me.lblPlanName.TabIndex = 28
+        '
+        'lblPlanType
+        '
+        Me.lblPlanType.AutoSize = True
+        Me.lblPlanType.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPlanType.ForeColor = System.Drawing.Color.White
+        Me.lblPlanType.Location = New System.Drawing.Point(185, 85)
+        Me.lblPlanType.Name = "lblPlanType"
+        Me.lblPlanType.Size = New System.Drawing.Size(0, 19)
+        Me.lblPlanType.TabIndex = 29
+        '
+        'lblPlanPrice
+        '
+        Me.lblPlanPrice.AutoSize = True
+        Me.lblPlanPrice.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPlanPrice.ForeColor = System.Drawing.Color.White
+        Me.lblPlanPrice.Location = New System.Drawing.Point(185, 121)
+        Me.lblPlanPrice.Name = "lblPlanPrice"
+        Me.lblPlanPrice.Size = New System.Drawing.Size(0, 19)
+        Me.lblPlanPrice.TabIndex = 30
+        '
+        'lblChangeOfMind
+        '
+        Me.lblChangeOfMind.AutoSize = True
+        Me.lblChangeOfMind.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblChangeOfMind.ForeColor = System.Drawing.Color.White
+        Me.lblChangeOfMind.Location = New System.Drawing.Point(13, 9)
+        Me.lblChangeOfMind.Name = "lblChangeOfMind"
+        Me.lblChangeOfMind.Size = New System.Drawing.Size(209, 16)
+        Me.lblChangeOfMind.TabIndex = 31
+        Me.lblChangeOfMind.Text = "Change of Mind? Buy Plan Only!"
+        Me.lblChangeOfMind.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'pbxBuyNow
+        '
+        Me.pbxBuyNow.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.pbxBuyNow.Location = New System.Drawing.Point(34, 37)
+        Me.pbxBuyNow.Name = "pbxBuyNow"
+        Me.pbxBuyNow.Size = New System.Drawing.Size(159, 35)
+        Me.pbxBuyNow.TabIndex = 32
+        Me.pbxBuyNow.TabStop = False
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.lblChangeOfMind)
+        Me.Panel2.Controls.Add(Me.pbxBuyNow)
+        Me.Panel2.Location = New System.Drawing.Point(617, 386)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(231, 102)
+        Me.Panel2.TabIndex = 16
+        '
+        'products
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.Black
+        Me.ClientSize = New System.Drawing.Size(903, 522)
+        Me.Controls.Add(Me.lblPlanPrice)
+        Me.Controls.Add(Me.lblPlanType)
+        Me.Controls.Add(Me.lblPlanName)
+        Me.Controls.Add(Me.pbxPlanImage)
+        Me.Controls.Add(Me.txtTotal)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.Panel2)
+        Me.Name = "products"
+        Me.Text = "products"
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        CType(Me.pbxClear, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxAddToCart, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxMinus, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxAdd, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        CType(Me.pbxItem, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxPlanImage, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxBuyNow, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents cbxItems As ComboBox
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents cbxFilter As ComboBox
+    Friend WithEvents txtStocks As TextBox
+    Friend WithEvents lblStocks As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents txtPrice As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents lblQuantity As Label
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents pbxAddToCart As PictureBox
+    Friend WithEvents pbxMinus As PictureBox
+    Friend WithEvents pbxAdd As PictureBox
+    Friend WithEvents txtQuantity As TextBox
+    Friend WithEvents pbxClear As PictureBox
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents pbxItem As PictureBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents txtTotal As TextBox
+    Friend WithEvents pbxPlanImage As PictureBox
+    Friend WithEvents lblPlanName As Label
+    Friend WithEvents lblPlanType As Label
+    Friend WithEvents lblPlanPrice As Label
+    Friend WithEvents lblChangeOfMind As Label
+    Friend WithEvents pbxBuyNow As PictureBox
+    Friend WithEvents Panel2 As Panel
+End Class
