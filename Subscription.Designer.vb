@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Subscription
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Subscription
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -35,6 +35,7 @@ Partial Class Subscription
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pbxPlan = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.cbxPlans = New System.Windows.Forms.ComboBox()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxPlan, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -162,6 +163,14 @@ Partial Class Subscription
         Me.PictureBox1.TabIndex = 22
         Me.PictureBox1.TabStop = False
         '
+        'cbxPlans
+        '
+        Me.cbxPlans.FormattingEnabled = True
+        Me.cbxPlans.Location = New System.Drawing.Point(91, 38)
+        Me.cbxPlans.Name = "cbxPlans"
+        Me.cbxPlans.Size = New System.Drawing.Size(202, 21)
+        Me.cbxPlans.TabIndex = 24
+        '
         'Subscription
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -170,6 +179,7 @@ Partial Class Subscription
         Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(611, 366)
+        Me.Controls.Add(Me.cbxPlans)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.txtSpecs)
         Me.Controls.Add(Me.btnSubscribe)
@@ -203,4 +213,5 @@ Partial Class Subscription
     Friend WithEvents TicketToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents cbxPlans As ComboBox
 End Class

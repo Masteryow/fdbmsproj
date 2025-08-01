@@ -8,6 +8,7 @@ Imports System.Security.Cryptography
 Imports System.Net
 Imports System.Net.Mail
 
+
 Public Class subscribers
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
     Dim name1 As String = "Welcome To SkyLink, " & Session.UserName & "!"

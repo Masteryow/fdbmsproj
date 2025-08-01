@@ -54,6 +54,31 @@ Public Class Subscription
 
         Session.subscriberAccess = False
 
+
+
+        Using conn As New MySqlConnection(strCon)
+            conn.Open()
+
+
+            Using cmd As New MySqlCommand("SELECT * FROM internet_plans", conn)
+
+                Using reader As MySqlDataReader = cmd.ExecuteReader
+
+                    While reader.Read
+
+                        cbxPlans.Items.Add(reader.GetString("plan_name"))
+
+                    End While
+
+
+                End Using
+            End Using
+
+
+        End Using
+
+
+
         Interactive_Menu(id)
     End Sub
 
@@ -464,5 +489,13 @@ Public Class Subscription
             Form1.Show()
             Me.Close()
         End If
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPlans.SelectedIndexChanged
+
+        id = cbxPlans.SelectedIndex + 1
+
+        Interactive_Menu(id)
+
     End Sub
 End Class
