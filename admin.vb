@@ -1,5 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
-
+Imports System.IO
 Public Class Admin
     Private con As MySqlConnection
     Private currentActiveButton As Button
@@ -423,45 +423,108 @@ Public Class Admin
 
         ' Plans DataGridView with enhanced functionality (declare early)
         Dim dgvPlans As New DataGridView With {
-    .Location = New Point(20, 170),
-    .Size = New Size(400, 180),
-    .AllowUserToAddRows = False,
-    .AllowUserToDeleteRows = False,
-    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
-}
+        .Location = New Point(20, 170),
+        .Size = New Size(400, 180),
+        .AllowUserToAddRows = False,
+        .AllowUserToDeleteRows = False,
+        .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+    }
 
-        Dim btnAddPlan As New Button With {.Text = "Add Plan", .Location = New Point(260, 90), .Size = New Size(80, 23), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
+        ' Image Preview Section - positioned in available space
+        Dim lblImagePreview As New Label With {.Text = "Image Preview:", .Font = New Font("Segoe UI", 9, FontStyle.Bold), .Location = New Point(260, 70), .AutoSize = True}
+        Dim picPreview As New PictureBox With {
+        .Location = New Point(260, 90),
+        .Size = New Size(120, 80),
+        .BorderStyle = BorderStyle.FixedSingle,
+        .SizeMode = PictureBoxSizeMode.Zoom,
+        .BackColor = Color.LightGray,
+        .Name = "picPreview"
+    }
+        ' Add placeholder text
+        AddHandler picPreview.Paint, Sub(sender, e)
+                                         If picPreview.Image Is Nothing Then
+                                             Dim g As Graphics = e.Graphics
+                                             Dim text As String = "No Image Selected"
+                                             Dim font As New Font("Segoe UI", 8)
+                                             Dim brush As New SolidBrush(Color.Gray)
+                                             Dim rect As Rectangle = picPreview.ClientRectangle
+                                             Dim sf As New StringFormat()
+                                             sf.Alignment = StringAlignment.Center
+                                             sf.LineAlignment = StringAlignment.Center
+                                             g.DrawString(text, font, brush, rect, sf)
+                                         End If
+                                     End Sub
+
+        Dim btnAddPlan As New Button With {.Text = "Add Plan", .Location = New Point(350, 48), .Size = New Size(80, 23), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnAddPlan.FlatAppearance.BorderSize = 0
 
         AddHandler btnAddPlan.Click, Sub()
-                                         If String.IsNullOrEmpty(txtPlanName.Text) Or String.IsNullOrEmpty(txtPrice.Text) Then
+                                         If String.IsNullOrEmpty(txtPlanName.Text) OrElse String.IsNullOrEmpty(txtPrice.Text) Then
                                              MessageBox.Show("Please fill all required fields!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                              Return
                                          End If
 
+                                         Dim blobId As Integer = Nothing
+                                         Dim selectedImagePath As String = ""
+
+                                         ' Step 1: Ask if user wants to attach an image
+                                         If MessageBox.Show("Would you like to add an image to this plan?", "Add Image", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                                             Using ofd As New OpenFileDialog()
+                                                 ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif"
+                                                 If ofd.ShowDialog() = DialogResult.OK Then
+                                                     selectedImagePath = ofd.FileName
+                                                 End If
+                                             End Using
+                                         End If
+
                                          Try
                                              con.Open()
-                                             Dim cmd As New MySqlCommand("INSERT INTO internet_plans (plan_name, plan_type, price, speed, data_cap) VALUES (@name, @type, @price, @speed, @datacap)", con)
-                                             cmd.Parameters.AddWithValue("@name", txtPlanName.Text)
-                                             cmd.Parameters.AddWithValue("@type", txtPlanType.Text)
-                                             cmd.Parameters.AddWithValue("@price", Convert.ToInt32(txtPrice.Text))
-                                             cmd.Parameters.AddWithValue("@speed", txtSpeed.Text)
-                                             cmd.Parameters.AddWithValue("@datacap", txtDataCap.Text)
 
-                                             cmd.ExecuteNonQuery()
+                                             ' Step 2: If user selected an image, insert into blobs
+                                             If Not String.IsNullOrEmpty(selectedImagePath) AndAlso File.Exists(selectedImagePath) Then
+                                                 Dim fileBytes As Byte() = File.ReadAllBytes(selectedImagePath)
+                                                 Dim fileName As String = Path.GetFileName(selectedImagePath)
+                                                 Dim mimeType As String = "image/" & Path.GetExtension(fileName).TrimStart(".").ToLower()
+
+                                                 Using cmdBlob As New MySqlCommand("INSERT INTO blobs (file_name, mime_type, data) VALUES (@fileName, @mimeType, @data); SELECT LAST_INSERT_ID();", con)
+                                                     cmdBlob.Parameters.AddWithValue("@fileName", fileName)
+                                                     cmdBlob.Parameters.AddWithValue("@mimeType", mimeType)
+                                                     cmdBlob.Parameters.AddWithValue("@data", fileBytes)
+                                                     blobId = Convert.ToInt32(cmdBlob.ExecuteScalar())
+                                                 End Using
+                                             End If
+
+                                             ' Step 3: Insert into internet_plans with blob_id and is_active = True by default
+                                             Using cmd As New MySqlCommand("INSERT INTO internet_plans (plan_name, plan_type, price, speed, data_cap, blob_id, is_active) VALUES (@name, @type, @price, @speed, @datacap, @blob_id, @is_active)", con)
+                                                 cmd.Parameters.AddWithValue("@name", txtPlanName.Text)
+                                                 cmd.Parameters.AddWithValue("@type", txtPlanType.Text)
+                                                 cmd.Parameters.AddWithValue("@price", Convert.ToInt32(txtPrice.Text))
+                                                 cmd.Parameters.AddWithValue("@speed", txtSpeed.Text)
+                                                 cmd.Parameters.AddWithValue("@datacap", txtDataCap.Text)
+                                                 cmd.Parameters.AddWithValue("@is_active", True) ' New plans are active by default
+                                                 If blobId <> Nothing Then
+                                                     cmd.Parameters.AddWithValue("@blob_id", blobId)
+                                                 Else
+                                                     cmd.Parameters.AddWithValue("@blob_id", DBNull.Value)
+                                                 End If
+                                                 cmd.ExecuteNonQuery()
+                                             End Using
+
                                              con.Close()
 
                                              MessageBox.Show("Plan added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                                             ' Clear form fields
+                                             ' Clear fields
                                              txtPlanName.Clear()
                                              txtPlanType.Clear()
                                              txtPrice.Clear()
                                              txtSpeed.Clear()
                                              txtDataCap.Clear()
+                                             picPreview.Image = Nothing
 
-                                             ' Refresh the plans list
-                                             LoadPlansDataEnhanced(dgvPlans)
+                                             ' Reload
+                                             LoadPlansDataEnhanced(dgvPlans, picPreview)
+
                                          Catch ex As Exception
                                              If con.State = ConnectionState.Open Then con.Close()
                                              MessageBox.Show("Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -469,15 +532,22 @@ Public Class Admin
                                      End Sub
 
         ' Manage Plans Section
-        Dim lblManagePlans As New Label With {.Text = "Manage Plans", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(20, 115), .AutoSize = True}
+        Dim lblManagePlans As New Label With {.Text = "Manage Plans", .Font = New Font("Segoe UI", 12, FontStyle.Bold), .Location = New Point(5, 115), .AutoSize = True}
 
-        ' Save Changes Button
+        ' Save Changes Button (Delete button removed)
         Dim btnSaveChanges As New Button With {.Text = "Save Changes", .Location = New Point(20, 140), .Size = New Size(100, 25), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnSaveChanges.FlatAppearance.BorderSize = 0
 
-        LoadPlansDataEnhanced(dgvPlans)
+        LoadPlansDataEnhanced(dgvPlans, picPreview)
 
-        ' Save Changes Event Handler - Updated to include plan_name and plan_type
+        ' DataGridView Selection Changed Event - Update preview image
+        AddHandler dgvPlans.SelectionChanged, Sub()
+                                                  If dgvPlans.SelectedRows.Count > 0 Then
+                                                      LoadImagePreview(dgvPlans.SelectedRows(0), picPreview)
+                                                  End If
+                                              End Sub
+
+        ' Save Changes Event Handler - Updated to include is_active
         AddHandler btnSaveChanges.Click, Sub()
                                              Try
                                                  If con Is Nothing Then
@@ -499,14 +569,15 @@ Public Class Admin
                                                          Dim price As Decimal = Convert.ToDecimal(row.Cells("price").Value)
                                                          Dim speed As String = row.Cells("speed").Value.ToString()
                                                          Dim dataCap As String = row.Cells("data_cap").Value.ToString()
+                                                         Dim isActive As Boolean = Convert.ToBoolean(row.Cells("is_active").Value)
 
-                                                         ' Updated SQL to include plan_name and plan_type
-                                                         Dim cmd As New MySqlCommand("UPDATE internet_plans SET plan_name = @name, plan_type = @type, price = @price, speed = @speed, data_cap = @datacap WHERE plan_id = @id", con)
+                                                         Dim cmd As New MySqlCommand("UPDATE internet_plans SET plan_name = @name, plan_type = @type, price = @price, speed = @speed, data_cap = @datacap, is_active = @is_active WHERE plan_id = @id", con)
                                                          cmd.Parameters.AddWithValue("@name", planName)
                                                          cmd.Parameters.AddWithValue("@type", planType)
                                                          cmd.Parameters.AddWithValue("@price", price)
                                                          cmd.Parameters.AddWithValue("@speed", speed)
                                                          cmd.Parameters.AddWithValue("@datacap", dataCap)
+                                                         cmd.Parameters.AddWithValue("@is_active", isActive)
                                                          cmd.Parameters.AddWithValue("@id", planID)
                                                          changesCount += cmd.ExecuteNonQuery()
                                                      End If
@@ -514,17 +585,18 @@ Public Class Admin
                                                  con.Close()
 
                                                  MessageBox.Show($"Successfully updated {changesCount} plan(s)!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                                                 LoadPlansDataEnhanced(dgvPlans) ' Refresh the data
+                                                 LoadPlansDataEnhanced(dgvPlans, picPreview) ' Refresh the data
                                              Catch ex As Exception
                                                  If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
                                                  MessageBox.Show("Error saving changes: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                              End Try
                                          End Sub
 
-        pnlContent.Controls.AddRange({lblAddPlan, lblPlanName, txtPlanName, lblPlanType, txtPlanType, lblPrice, txtPrice, lblSpeed, txtSpeed, lblDataCap, txtDataCap, btnAddPlan, lblManagePlans, btnSaveChanges, dgvPlans})
+        ' Updated controls array - removed btnDeletePlan
+        pnlContent.Controls.AddRange({lblAddPlan, lblPlanName, txtPlanName, lblPlanType, txtPlanType, lblPrice, txtPrice, lblSpeed, txtSpeed, lblDataCap, txtDataCap, btnAddPlan, lblImagePreview, picPreview, lblManagePlans, btnSaveChanges, dgvPlans})
     End Sub
 
-    Private Sub LoadPlansDataEnhanced(dgv As DataGridView)
+    Private Sub LoadPlansDataEnhanced(dgv As DataGridView, picPreview As PictureBox)
         Try
             If con Is Nothing Then
                 con = New MySqlConnection(strcon)
@@ -535,7 +607,8 @@ Public Class Admin
             End If
 
             con.Open()
-            Dim cmd As New MySqlCommand("SELECT plan_id, plan_name, plan_type, price, speed, data_cap FROM internet_plans ORDER BY plan_id", con)
+            ' Updated SQL query to include is_active column
+            Dim cmd As New MySqlCommand("SELECT plan_id, plan_name, plan_type, price, speed, data_cap, is_active, blob_id FROM internet_plans ORDER BY plan_id", con)
             Dim adapter As New MySqlDataAdapter(cmd)
             Dim dt As New DataTable()
             adapter.Fill(dt)
@@ -546,28 +619,30 @@ Public Class Admin
             dgv.Columns.Clear()
             dgv.DataSource = dt
 
+            ' Hide blob_id column
+            If dgv.Columns.Contains("blob_id") Then
+                dgv.Columns("blob_id").Visible = False
+            End If
+
             ' Configure columns
             If dgv.Columns.Contains("plan_id") Then
                 dgv.Columns("plan_id").ReadOnly = True
                 dgv.Columns("plan_id").HeaderText = "ID"
-                dgv.Columns("plan_id").Width = 40
+                dgv.Columns("plan_id").Width = 50
             End If
 
-            ' Make plan_name editable now
             If dgv.Columns.Contains("plan_name") Then
-                dgv.Columns("plan_name").ReadOnly = False ' Changed from True to False
+                dgv.Columns("plan_name").ReadOnly = False
                 dgv.Columns("plan_name").HeaderText = "Plan Name"
                 dgv.Columns("plan_name").Width = 120
             End If
 
-            ' Make plan_type editable now
             If dgv.Columns.Contains("plan_type") Then
-                dgv.Columns("plan_type").ReadOnly = False ' Changed from True to False
+                dgv.Columns("plan_type").ReadOnly = False
                 dgv.Columns("plan_type").HeaderText = "Type"
                 dgv.Columns("plan_type").Width = 100
             End If
 
-            ' Make these columns editable (already were)
             If dgv.Columns.Contains("price") Then
                 dgv.Columns("price").ReadOnly = False
                 dgv.Columns("price").HeaderText = "Price"
@@ -586,9 +661,189 @@ Public Class Admin
                 dgv.Columns("data_cap").Width = 100
             End If
 
+            ' Configure is_active column as checkbox
+            If dgv.Columns.Contains("is_active") Then
+                dgv.Columns("is_active").ReadOnly = False
+                dgv.Columns("is_active").HeaderText = "Active"
+                dgv.Columns("is_active").Width = 60
+                ' Convert to checkbox column
+                Dim checkBoxColumn As New DataGridViewCheckBoxColumn()
+                checkBoxColumn.DataPropertyName = "is_active"
+                checkBoxColumn.HeaderText = "Active"
+                checkBoxColumn.Name = "is_active"
+                checkBoxColumn.Width = 60
+                checkBoxColumn.ReadOnly = False
+
+                ' Remove the original column and add checkbox column
+                Dim columnIndex As Integer = dgv.Columns("is_active").Index
+                dgv.Columns.RemoveAt(columnIndex)
+                dgv.Columns.Insert(columnIndex, checkBoxColumn)
+            End If
+
+            ' Add Browse Image Button Column
+            Dim btnColumn As New DataGridViewButtonColumn()
+            btnColumn.HeaderText = "Browse Image"
+            btnColumn.Text = "Browse"
+            btnColumn.UseColumnTextForButtonValue = True
+            btnColumn.Width = 100
+            btnColumn.Name = "BrowseButton"
+
+            dgv.Columns.Add(btnColumn)
+
+            If dgv.IsHandleCreated Then
+                dgv.BeginInvoke(Sub()
+                                    dgv.Columns("BrowseButton").DisplayIndex = dgv.Columns.Count - 1
+                                End Sub)
+            Else
+                ' Wait until handle is created before trying BeginInvoke
+                AddHandler dgv.HandleCreated, Sub(s, eArgs)
+                                                  dgv.BeginInvoke(Sub()
+                                                                      dgv.Columns("BrowseButton").DisplayIndex = dgv.Columns.Count - 1
+                                                                  End Sub)
+                                              End Sub
+            End If
+
+            ' Add event handler for button clicks
+            RemoveHandler dgv.CellClick, AddressOf HandleBrowseButtonClick
+            AddHandler dgv.CellClick, AddressOf HandleBrowseButtonClick
+
         Catch ex As Exception
             If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
             MessageBox.Show("Error loading plans: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub HandleBrowseButtonClick(sender As Object, e As DataGridViewCellEventArgs)
+        Dim dgv As DataGridView = DirectCast(sender, DataGridView)
+
+        ' Check if it's the browse button column
+        If e.ColumnIndex >= 0 AndAlso dgv.Columns(e.ColumnIndex).Name = "BrowseButton" AndAlso e.RowIndex >= 0 Then
+            Dim planId As Integer = Convert.ToInt32(dgv.Rows(e.RowIndex).Cells("plan_id").Value)
+
+            Using ofd As New OpenFileDialog()
+                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;"
+                ofd.Title = "Select Image for Plan"
+
+                If ofd.ShowDialog() = DialogResult.OK Then
+                    Try
+                        UpdatePlanImage(planId, ofd.FileName)
+                        MessageBox.Show("Image updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        If dgv.SelectedRows.Count > 0 AndAlso dgv.SelectedRows(0).Index = e.RowIndex Then
+                            Dim picPreview As PictureBox = Nothing
+                            For Each ctrl As Control In pnlContent.Controls
+                                If TypeOf ctrl Is PictureBox AndAlso ctrl.Name = "picPreview" Then
+                                    picPreview = DirectCast(ctrl, PictureBox)
+                                    Exit For
+                                End If
+                            Next
+
+                            If picPreview IsNot Nothing Then
+                                LoadImagePreview(dgv.SelectedRows(0), picPreview)
+                            End If
+                        End If
+                    Catch ex As Exception
+                        MessageBox.Show("Error updating image: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End If
+            End Using
+        End If
+    End Sub
+
+    Private Sub UpdatePlanImage(planId As Integer, imagePath As String)
+        Try
+            If con Is Nothing Then
+                con = New MySqlConnection(strcon)
+            End If
+
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+
+            con.Open()
+
+            ' Get current blob_id for this plan
+            Dim currentBlobId As Object = Nothing
+            Using cmd As New MySqlCommand("SELECT blob_id FROM internet_plans WHERE plan_id = @planId", con)
+                cmd.Parameters.AddWithValue("@planId", planId)
+                currentBlobId = cmd.ExecuteScalar()
+            End Using
+
+            ' Read new image file
+            Dim fileBytes As Byte() = File.ReadAllBytes(imagePath)
+            Dim fileName As String = Path.GetFileName(imagePath)
+            Dim mimeType As String = "image/" & Path.GetExtension(fileName).TrimStart(".").ToLower()
+
+            Dim newBlobId As Integer
+
+            If currentBlobId IsNot Nothing AndAlso Not IsDBNull(currentBlobId) Then
+                ' Update existing blob
+                Using cmd As New MySqlCommand("UPDATE blobs SET file_name = @fileName, mime_type = @mimeType, data = @data WHERE blob_id = @blobId", con)
+                    cmd.Parameters.AddWithValue("@fileName", fileName)
+                    cmd.Parameters.AddWithValue("@mimeType", mimeType)
+                    cmd.Parameters.AddWithValue("@data", fileBytes)
+                    cmd.Parameters.AddWithValue("@blobId", currentBlobId)
+                    cmd.ExecuteNonQuery()
+                End Using
+            Else
+                ' Create new blob
+                Using cmd As New MySqlCommand("INSERT INTO blobs (file_name, mime_type, data) VALUES (@fileName, @mimeType, @data); SELECT LAST_INSERT_ID();", con)
+                    cmd.Parameters.AddWithValue("@fileName", fileName)
+                    cmd.Parameters.AddWithValue("@mimeType", mimeType)
+                    cmd.Parameters.AddWithValue("@data", fileBytes)
+                    newBlobId = Convert.ToInt32(cmd.ExecuteScalar())
+                End Using
+
+                ' Update plan with new blob_id
+                Using cmd As New MySqlCommand("UPDATE internet_plans SET blob_id = @blobId WHERE plan_id = @planId", con)
+                    cmd.Parameters.AddWithValue("@blobId", newBlobId)
+                    cmd.Parameters.AddWithValue("@planId", planId)
+                    cmd.ExecuteNonQuery()
+                End Using
+            End If
+
+            con.Close()
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            Throw ex
+        End Try
+    End Sub
+
+    Private Sub LoadImagePreview(row As DataGridViewRow, picPreview As PictureBox)
+        Try
+            Dim blobId As Object = row.Cells("blob_id").Value
+
+            If blobId IsNot Nothing AndAlso Not IsDBNull(blobId) Then
+                If con Is Nothing Then
+                    con = New MySqlConnection(strcon)
+                End If
+
+                If con.State = ConnectionState.Open Then
+                    con.Close()
+                End If
+
+                con.Open()
+                Using cmd As New MySqlCommand("SELECT data FROM blobs WHERE blob_id = @blobId", con)
+                    cmd.Parameters.AddWithValue("@blobId", blobId)
+                    Dim imageData As Byte() = DirectCast(cmd.ExecuteScalar(), Byte())
+
+                    If imageData IsNot Nothing AndAlso imageData.Length > 0 Then
+                        Using ms As New MemoryStream(imageData)
+                            picPreview.Image = Image.FromStream(ms)
+                        End Using
+                    Else
+                        picPreview.Image = Nothing
+                    End If
+                End Using
+                con.Close()
+            Else
+                picPreview.Image = Nothing
+            End If
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            picPreview.Image = Nothing
         End Try
     End Sub
 
@@ -1708,16 +1963,40 @@ Public Class Admin
 
         Dim txtPrice As New TextBox With {.Location = New Point(260, 50), .Size = New Size(80, 23)}
         Dim lblPrice As New Label With {.Text = "Price:", .Location = New Point(260, 30), .AutoSize = True}
-
         ' Addons DataGridView with enhanced functionality (declare early for reference)
         Dim dgvAddons As New DataGridView With {
-    .Location = New Point(20, 120),
-    .Size = New Size(450, 180),
-    .AllowUserToAddRows = False,
-    .AllowUserToDeleteRows = False,
-    .SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-    .EditMode = DataGridViewEditMode.EditOnEnter
-}
+        .Location = New Point(20, 120),
+        .Size = New Size(300, 180),
+        .AllowUserToAddRows = False,
+        .AllowUserToDeleteRows = False,
+        .SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+        .EditMode = DataGridViewEditMode.EditOnEnter
+    }
+
+        ' Image Preview Section - keep original positioning
+        Dim lblImagePreview As New Label With {.Text = "Image Preview:", .Font = New Font("Segoe UI", 9, FontStyle.Bold), .Location = New Point(325, 120), .AutoSize = True}
+        Dim picPreview As New PictureBox With {
+        .Location = New Point(330, 135),
+        .Size = New Size(120, 80),
+        .BorderStyle = BorderStyle.FixedSingle,
+        .SizeMode = PictureBoxSizeMode.Zoom,
+        .BackColor = Color.LightGray,
+        .Name = "picPreview"
+    }
+        ' Add placeholder text
+        AddHandler picPreview.Paint, Sub(sender, e)
+                                         If picPreview.Image Is Nothing Then
+                                             Dim g As Graphics = e.Graphics
+                                             Dim text As String = "No Image Selected"
+                                             Dim font As New Font("Segoe UI", 8)
+                                             Dim brush As New SolidBrush(Color.Gray)
+                                             Dim rect As Rectangle = picPreview.ClientRectangle
+                                             Dim sf As New StringFormat()
+                                             sf.Alignment = StringAlignment.Center
+                                             sf.LineAlignment = StringAlignment.Center
+                                             g.DrawString(text, font, brush, rect, sf)
+                                         End If
+                                     End Sub
 
         Dim btnAddAddon As New Button With {.Text = "Add Add-on", .Location = New Point(350, 50), .Size = New Size(80, 23), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnAddAddon.FlatAppearance.BorderSize = 0
@@ -1735,22 +2014,58 @@ Public Class Admin
                                               Return
                                           End If
 
+                                          Dim blobId As Integer = Nothing
+                                          Dim selectedImagePath As String = ""
+
+                                          ' Step 1: Ask if user wants to attach an image
+                                          If MessageBox.Show("Would you like to add an image to this addon?", "Add Image", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                                              Using ofd As New OpenFileDialog()
+                                                  ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif"
+                                                  If ofd.ShowDialog() = DialogResult.OK Then
+                                                      selectedImagePath = ofd.FileName
+                                                  End If
+                                              End Using
+                                          End If
+
                                           Try
                                               con.Open()
-                                              Dim cmd As New MySqlCommand("INSERT INTO addons (item_name, category, price) VALUES (@itemname, @category, @price)", con)
-                                              cmd.Parameters.AddWithValue("@itemname", txtItemName.Text.Trim())
-                                              cmd.Parameters.AddWithValue("@category", cmbCategory.SelectedItem.ToString())
-                                              cmd.Parameters.AddWithValue("@price", price)
 
-                                              cmd.ExecuteNonQuery()
+                                              ' Step 2: If user selected an image, insert into blobs
+                                              If Not String.IsNullOrEmpty(selectedImagePath) AndAlso File.Exists(selectedImagePath) Then
+                                                  Dim fileBytes As Byte() = File.ReadAllBytes(selectedImagePath)
+                                                  Dim fileName As String = Path.GetFileName(selectedImagePath)
+                                                  Dim mimeType As String = "image/" & Path.GetExtension(fileName).TrimStart(".").ToLower()
 
-                                              ' If it's hardware, add to stock table with 0 initial stock
-                                              If cmbCategory.SelectedItem.ToString() = "Hardware" Then
-                                                  Dim addonId As Integer = cmd.LastInsertedId
-                                                  Dim stockCmd As New MySqlCommand("INSERT INTO hardware_stocks (addon_id, quantity_available) VALUES (@addonid, 0)", con)
-                                                  stockCmd.Parameters.AddWithValue("@addonid", addonId)
-                                                  stockCmd.ExecuteNonQuery()
+                                                  Using cmdBlob As New MySqlCommand("INSERT INTO blobs (file_name, mime_type, data) VALUES (@fileName, @mimeType, @data); SELECT LAST_INSERT_ID();", con)
+                                                      cmdBlob.Parameters.AddWithValue("@fileName", fileName)
+                                                      cmdBlob.Parameters.AddWithValue("@mimeType", mimeType)
+                                                      cmdBlob.Parameters.AddWithValue("@data", fileBytes)
+                                                      blobId = Convert.ToInt32(cmdBlob.ExecuteScalar())
+                                                  End Using
                                               End If
+
+                                              ' Step 3: Insert into addons with blob_id and is_active = True by default
+                                              Using cmd As New MySqlCommand("INSERT INTO addons (item_name, category, price, blob_id, is_active) VALUES (@itemname, @category, @price, @blob_id, @is_active)", con)
+                                                  cmd.Parameters.AddWithValue("@itemname", txtItemName.Text.Trim())
+                                                  cmd.Parameters.AddWithValue("@category", cmbCategory.SelectedItem.ToString())
+                                                  cmd.Parameters.AddWithValue("@price", price)
+                                                  cmd.Parameters.AddWithValue("@is_active", True) ' New addons are active by default
+                                                  If blobId <> Nothing Then
+                                                      cmd.Parameters.AddWithValue("@blob_id", blobId)
+                                                  Else
+                                                      cmd.Parameters.AddWithValue("@blob_id", DBNull.Value)
+                                                  End If
+
+                                                  cmd.ExecuteNonQuery()
+
+                                                  ' If it's hardware, add to stock table with 0 initial stock
+                                                  If cmbCategory.SelectedItem.ToString() = "Hardware" Then
+                                                      Dim addonId As Integer = cmd.LastInsertedId
+                                                      Dim stockCmd As New MySqlCommand("INSERT INTO hardware_stocks (addon_id, quantity_available) VALUES (@addonid, 0)", con)
+                                                      stockCmd.Parameters.AddWithValue("@addonid", addonId)
+                                                      stockCmd.ExecuteNonQuery()
+                                                  End If
+                                              End Using
 
                                               con.Close()
 
@@ -1760,9 +2075,11 @@ Public Class Admin
                                               txtItemName.Clear()
                                               cmbCategory.SelectedIndex = -1
                                               txtPrice.Clear()
+                                              picPreview.Image = Nothing
 
                                               ' Refresh the addons list
-                                              LoadAddonsDataEnhanced(dgvAddons)
+                                              LoadAddonsDataEnhanced(dgvAddons, picPreview)
+
                                           Catch ex As Exception
                                               If con.State = ConnectionState.Open Then con.Close()
                                               MessageBox.Show("Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -1785,30 +2102,36 @@ Public Class Admin
         Dim btnSaveChanges As New Button With {.Text = "Save Changes", .Location = New Point(20, 310), .Size = New Size(100, 25), .BackColor = Color.FromArgb(46, 204, 113), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnSaveChanges.FlatAppearance.BorderSize = 0
 
-        ' NEW: Stock Management Button
         Dim btnStockManagement As New Button With {.Text = "Stock Management", .Location = New Point(130, 310), .Size = New Size(120, 25), .BackColor = Color.FromArgb(155, 89, 182), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
         btnStockManagement.FlatAppearance.BorderSize = 0
 
-        LoadAddonsDataEnhanced(dgvAddons)
+        LoadAddonsDataEnhanced(dgvAddons, picPreview)
+
+        ' DataGridView Selection Changed Event - Update preview image
+        AddHandler dgvAddons.SelectionChanged, Sub()
+                                                   If dgvAddons.SelectedRows.Count > 0 Then
+                                                       LoadAddonImagePreview(dgvAddons.SelectedRows(0), picPreview)
+                                                   End If
+                                               End Sub
 
         ' Search event handlers
         AddHandler btnSearch.Click, Sub()
-                                        LoadAddonsDataEnhanced(dgvAddons, txtSearch.Text.Trim())
+                                        LoadAddonsDataEnhanced(dgvAddons, picPreview, txtSearch.Text.Trim())
                                     End Sub
 
         AddHandler btnShowAll.Click, Sub()
                                          txtSearch.Clear()
-                                         LoadAddonsDataEnhanced(dgvAddons)
+                                         LoadAddonsDataEnhanced(dgvAddons, picPreview)
                                      End Sub
 
         ' Search on Enter key
         AddHandler txtSearch.KeyDown, Sub(sender, e)
                                           If e.KeyCode = Keys.Enter Then
-                                              LoadAddonsDataEnhanced(dgvAddons, txtSearch.Text.Trim())
+                                              LoadAddonsDataEnhanced(dgvAddons, picPreview, txtSearch.Text.Trim())
                                           End If
                                       End Sub
 
-        ' Save Changes Event Handler - Updated to handle name, category, and price changes
+        ' Save Changes Event Handler - Updated to handle name, category, price, and is_active changes
         AddHandler btnSaveChanges.Click, Sub()
                                              Try
                                                  If con Is Nothing Then
@@ -1828,6 +2151,7 @@ Public Class Admin
                                                          Dim newItemName As String = row.Cells("item_name").Value.ToString().Trim()
                                                          Dim newCategory As String = row.Cells("category").Value.ToString()
                                                          Dim newPrice As Decimal = Convert.ToDecimal(row.Cells("price").Value)
+                                                         Dim isActive As Boolean = Convert.ToBoolean(row.Cells("is_active").Value)
 
                                                          ' Validate that required fields are not empty
                                                          If String.IsNullOrEmpty(newItemName) Then
@@ -1848,11 +2172,12 @@ Public Class Admin
                                                          oldCategoryCmd.Parameters.AddWithValue("@id", addonID)
                                                          Dim oldCategory As String = oldCategoryCmd.ExecuteScalar()?.ToString()
 
-                                                         ' Update the addon
-                                                         Dim cmd As New MySqlCommand("UPDATE addons SET item_name = @itemname, category = @category, price = @price WHERE addon_id = @id", con)
+                                                         ' Update the addon - now includes is_active
+                                                         Dim cmd As New MySqlCommand("UPDATE addons SET item_name = @itemname, category = @category, price = @price, is_active = @is_active WHERE addon_id = @id", con)
                                                          cmd.Parameters.AddWithValue("@itemname", newItemName)
                                                          cmd.Parameters.AddWithValue("@category", newCategory)
                                                          cmd.Parameters.AddWithValue("@price", newPrice)
+                                                         cmd.Parameters.AddWithValue("@is_active", isActive)
                                                          cmd.Parameters.AddWithValue("@id", addonID)
                                                          changesCount += cmd.ExecuteNonQuery()
 
@@ -1875,7 +2200,7 @@ Public Class Admin
                                                  con.Close()
 
                                                  MessageBox.Show($"Successfully updated {changesCount} add-on(s)!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                                                 LoadAddonsDataEnhanced(dgvAddons, txtSearch.Text.Trim()) ' Refresh with current search
+                                                 LoadAddonsDataEnhanced(dgvAddons, picPreview, txtSearch.Text.Trim()) ' Refresh with current search
                                              Catch ex As Exception
                                                  If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
                                                  MessageBox.Show("Error saving changes: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -1883,7 +2208,7 @@ Public Class Admin
                                          End Sub
 
         ' Add all Page 1 controls to pnlPage1
-        pnlPage1.Controls.AddRange({lblAddAddon, lblItemName, txtItemName, lblCategory, cmbCategory, lblPrice, txtPrice, btnAddAddon, lblSearch, txtSearch, btnSearch, btnShowAll, lblManageAddons, btnSaveChanges, btnStockManagement, dgvAddons})
+        pnlPage1.Controls.AddRange({lblAddAddon, lblItemName, txtItemName, lblCategory, cmbCategory, lblPrice, txtPrice, btnAddAddon, lblImagePreview, picPreview, lblSearch, txtSearch, btnSearch, btnShowAll, lblManageAddons, btnSaveChanges, btnStockManagement, dgvAddons})
 
         ' ===== PAGE 2 - STOCK MANAGEMENT =====
         ' Stock Management Title
@@ -1909,12 +2234,12 @@ Public Class Admin
 
         ' Stock DataGridView
         Dim dgvStocks As New DataGridView With {
-    .Location = New Point(20, 100),
-    .Size = New Size(400, 200),
-    .AllowUserToAddRows = False,
-    .AllowUserToDeleteRows = False,
-    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
-}
+        .Location = New Point(20, 100),
+        .Size = New Size(400, 200),
+        .AllowUserToAddRows = False,
+        .AllowUserToDeleteRows = False,
+        .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+    }
 
         ' Back Button
         Dim btnBack As New Button With {.Text = "Back to Addons", .Location = New Point(20, 310), .Size = New Size(100, 25), .BackColor = Color.FromArgb(52, 152, 219), .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat}
@@ -2065,7 +2390,7 @@ Public Class Admin
         End Try
     End Sub
 
-    Private Sub LoadAddonsDataEnhanced(dgv As DataGridView, Optional searchTerm As String = "")
+    Private Sub LoadAddonsDataEnhanced(dgv As DataGridView, picPreview As PictureBox, Optional searchTerm As String = "")
         Try
             If con Is Nothing Then
                 con = New MySqlConnection(strcon)
@@ -2077,8 +2402,8 @@ Public Class Admin
 
             con.Open()
 
-            ' Build query with optional search
-            Dim query As String = "SELECT addon_id, item_name, category, price FROM addons"
+            ' Build query with optional search - Updated to include is_active and blob_id
+            Dim query As String = "SELECT addon_id, item_name, category, price, is_active, blob_id FROM addons"
 
             If Not String.IsNullOrEmpty(searchTerm) Then
                 query += " WHERE item_name LIKE @search OR category LIKE @search"
@@ -2112,6 +2437,11 @@ Public Class Admin
             dgv.Columns.Clear()
             dgv.DataSource = dt
 
+            ' Hide blob_id column
+            If dgv.Columns.Contains("blob_id") Then
+                dgv.Columns("blob_id").Visible = False
+            End If
+
             ' Configure columns
             If dgv.Columns.Contains("addon_id") Then
                 dgv.Columns("addon_id").ReadOnly = True
@@ -2123,14 +2453,14 @@ Public Class Admin
             If dgv.Columns.Contains("item_name") Then
                 dgv.Columns("item_name").ReadOnly = False
                 dgv.Columns("item_name").HeaderText = "Item Name"
-                dgv.Columns("item_name").Width = 150
+                dgv.Columns("item_name").Width = 120
             End If
 
             ' Make category editable with dropdown
             If dgv.Columns.Contains("category") Then
                 dgv.Columns("category").ReadOnly = False
                 dgv.Columns("category").HeaderText = "Category"
-                dgv.Columns("category").Width = 120
+                dgv.Columns("category").Width = 100
 
                 ' Create ComboBox column for category
                 Dim categoryComboColumn As New DataGridViewComboBoxColumn()
@@ -2138,7 +2468,7 @@ Public Class Admin
                 categoryComboColumn.HeaderText = "Category"
                 categoryComboColumn.DataPropertyName = "category"
                 categoryComboColumn.Items.AddRange({"Hardware", "Service", "Plan Upgrade"})
-                categoryComboColumn.Width = 120
+                categoryComboColumn.Width = 100
                 categoryComboColumn.FlatStyle = FlatStyle.Flat
 
                 ' Remove the original category column and add the ComboBox column
@@ -2153,9 +2483,194 @@ Public Class Admin
                 dgv.Columns("price").Width = 80
             End If
 
+            ' Configure is_active column as checkbox
+            If dgv.Columns.Contains("is_active") Then
+                dgv.Columns("is_active").ReadOnly = False
+                dgv.Columns("is_active").HeaderText = "Active"
+                dgv.Columns("is_active").Width = 60
+                ' Convert to checkbox column
+                Dim checkBoxColumn As New DataGridViewCheckBoxColumn()
+                checkBoxColumn.DataPropertyName = "is_active"
+                checkBoxColumn.HeaderText = "Active"
+                checkBoxColumn.Name = "is_active"
+                checkBoxColumn.Width = 60
+                checkBoxColumn.ReadOnly = False
+
+                ' Remove the original column and add checkbox column
+                Dim columnIndex As Integer = dgv.Columns("is_active").Index
+                dgv.Columns.RemoveAt(columnIndex)
+                dgv.Columns.Insert(columnIndex, checkBoxColumn)
+            End If
+
+            ' Add Browse Image Button Column
+            Dim btnColumn As New DataGridViewButtonColumn()
+            btnColumn.HeaderText = "Browse Image"
+            btnColumn.Text = "Browse"
+            btnColumn.UseColumnTextForButtonValue = True
+            btnColumn.Width = 100
+            btnColumn.Name = "BrowseButton"
+
+            dgv.Columns.Add(btnColumn)
+
+            If dgv.IsHandleCreated Then
+                dgv.BeginInvoke(Sub()
+                                    dgv.Columns("BrowseButton").DisplayIndex = dgv.Columns.Count - 1
+                                End Sub)
+            Else
+                ' Wait until handle is created before trying BeginInvoke
+                AddHandler dgv.HandleCreated, Sub(s, eArgs)
+                                                  dgv.BeginInvoke(Sub()
+                                                                      dgv.Columns("BrowseButton").DisplayIndex = dgv.Columns.Count - 1
+                                                                  End Sub)
+                                              End Sub
+            End If
+
+            ' Add event handler for button clicks
+            RemoveHandler dgv.CellClick, AddressOf HandleAddonBrowseButtonClick
+            AddHandler dgv.CellClick, AddressOf HandleAddonBrowseButtonClick
+
         Catch ex As Exception
             If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
             MessageBox.Show("Error loading add-ons: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub HandleAddonBrowseButtonClick(sender As Object, e As DataGridViewCellEventArgs)
+        Dim dgv As DataGridView = DirectCast(sender, DataGridView)
+
+        ' Check if it's the browse button column
+        If e.ColumnIndex >= 0 AndAlso dgv.Columns(e.ColumnIndex).Name = "BrowseButton" AndAlso e.RowIndex >= 0 Then
+            Dim addonId As Integer = Convert.ToInt32(dgv.Rows(e.RowIndex).Cells("addon_id").Value)
+
+            Using ofd As New OpenFileDialog()
+                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;"
+                ofd.Title = "Select Image for Addon"
+
+                If ofd.ShowDialog() = DialogResult.OK Then
+                    Try
+                        UpdateAddonImage(addonId, ofd.FileName)
+                        MessageBox.Show("Image updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        If dgv.SelectedRows.Count > 0 AndAlso dgv.SelectedRows(0).Index = e.RowIndex Then
+                            Dim picPreview As PictureBox = Nothing
+                            For Each ctrl As Control In pnlContent.Controls
+                                If TypeOf ctrl Is Panel Then
+                                    For Each subCtrl As Control In DirectCast(ctrl, Panel).Controls
+                                        If TypeOf subCtrl Is PictureBox AndAlso subCtrl.Name = "picPreview" Then
+                                            picPreview = DirectCast(subCtrl, PictureBox)
+                                            Exit For
+                                        End If
+                                    Next
+                                    If picPreview IsNot Nothing Then Exit For
+                                End If
+                            Next
+
+                            If picPreview IsNot Nothing Then
+                                LoadAddonImagePreview(dgv.SelectedRows(0), picPreview)
+                            End If
+                        End If
+                    Catch ex As Exception
+                        MessageBox.Show("Error updating image: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End If
+            End Using
+        End If
+    End Sub
+
+    Private Sub UpdateAddonImage(addonId As Integer, imagePath As String)
+        Try
+            If con Is Nothing Then
+                con = New MySqlConnection(strcon)
+            End If
+
+            If con.State = ConnectionState.Open Then
+                con.Close()
+            End If
+
+            con.Open()
+
+            ' Get current blob_id for this addon
+            Dim currentBlobId As Object = Nothing
+            Using cmd As New MySqlCommand("SELECT blob_id FROM addons WHERE addon_id = @addonId", con)
+                cmd.Parameters.AddWithValue("@addonId", addonId)
+                currentBlobId = cmd.ExecuteScalar()
+            End Using
+
+            ' Read new image file
+            Dim fileBytes As Byte() = File.ReadAllBytes(imagePath)
+            Dim fileName As String = Path.GetFileName(imagePath)
+            Dim mimeType As String = "image/" & Path.GetExtension(fileName).TrimStart(".").ToLower()
+
+            Dim newBlobId As Integer
+
+            If currentBlobId IsNot Nothing AndAlso Not IsDBNull(currentBlobId) Then
+                ' Update existing blob
+                Using cmd As New MySqlCommand("UPDATE blobs SET file_name = @fileName, mime_type = @mimeType, data = @data WHERE blob_id = @blobId", con)
+                    cmd.Parameters.AddWithValue("@fileName", fileName)
+                    cmd.Parameters.AddWithValue("@mimeType", mimeType)
+                    cmd.Parameters.AddWithValue("@data", fileBytes)
+                    cmd.Parameters.AddWithValue("@blobId", currentBlobId)
+                    cmd.ExecuteNonQuery()
+                End Using
+            Else
+                ' Create new blob
+                Using cmd As New MySqlCommand("INSERT INTO blobs (file_name, mime_type, data) VALUES (@fileName, @mimeType, @data); SELECT LAST_INSERT_ID();", con)
+                    cmd.Parameters.AddWithValue("@fileName", fileName)
+                    cmd.Parameters.AddWithValue("@mimeType", mimeType)
+                    cmd.Parameters.AddWithValue("@data", fileBytes)
+                    newBlobId = Convert.ToInt32(cmd.ExecuteScalar())
+                End Using
+
+                ' Update addon with new blob_id
+                Using cmd As New MySqlCommand("UPDATE addons SET blob_id = @blobId WHERE addon_id = @addonId", con)
+                    cmd.Parameters.AddWithValue("@blobId", newBlobId)
+                    cmd.Parameters.AddWithValue("@addonId", addonId)
+                    cmd.ExecuteNonQuery()
+                End Using
+            End If
+
+            con.Close()
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            Throw ex
+        End Try
+    End Sub
+
+    Private Sub LoadAddonImagePreview(row As DataGridViewRow, picPreview As PictureBox)
+        Try
+            Dim blobId As Object = row.Cells("blob_id").Value
+
+            If blobId IsNot Nothing AndAlso Not IsDBNull(blobId) Then
+                If con Is Nothing Then
+                    con = New MySqlConnection(strcon)
+                End If
+
+                If con.State = ConnectionState.Open Then
+                    con.Close()
+                End If
+
+                con.Open()
+                Using cmd As New MySqlCommand("SELECT data FROM blobs WHERE blob_id = @blobId", con)
+                    cmd.Parameters.AddWithValue("@blobId", blobId)
+                    Dim imageData As Byte() = DirectCast(cmd.ExecuteScalar(), Byte())
+
+                    If imageData IsNot Nothing AndAlso imageData.Length > 0 Then
+                        Using ms As New MemoryStream(imageData)
+                            picPreview.Image = Image.FromStream(ms)
+                        End Using
+                    Else
+                        picPreview.Image = Nothing
+                    End If
+                End Using
+                con.Close()
+            Else
+                picPreview.Image = Nothing
+            End If
+
+        Catch ex As Exception
+            If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
+            picPreview.Image = Nothing
         End Try
     End Sub
 
