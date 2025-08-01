@@ -36,6 +36,7 @@ Partial Class Subscription
         Me.pbxPlan = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.cbxPlans = New System.Windows.Forms.ComboBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxPlan, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -109,7 +110,7 @@ Partial Class Subscription
         Me.btnSubscribe.BackColor = System.Drawing.Color.White
         Me.btnSubscribe.Font = New System.Drawing.Font("Century Gothic", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSubscribe.ForeColor = System.Drawing.Color.Black
-        Me.btnSubscribe.Location = New System.Drawing.Point(91, 254)
+        Me.btnSubscribe.Location = New System.Drawing.Point(88, 267)
         Me.btnSubscribe.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSubscribe.Name = "btnSubscribe"
         Me.btnSubscribe.Size = New System.Drawing.Size(202, 30)
@@ -120,7 +121,7 @@ Partial Class Subscription
         'txtSpecs
         '
         Me.txtSpecs.Font = New System.Drawing.Font("Times New Roman", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSpecs.Location = New System.Drawing.Point(368, 105)
+        Me.txtSpecs.Location = New System.Drawing.Point(365, 117)
         Me.txtSpecs.Margin = New System.Windows.Forms.Padding(2)
         Me.txtSpecs.Multiline = True
         Me.txtSpecs.Name = "txtSpecs"
@@ -132,7 +133,7 @@ Partial Class Subscription
         '
         Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox2.Image = Global.fdbmsproj.My.Resources.Resources.prev
-        Me.PictureBox2.Location = New System.Drawing.Point(20, 117)
+        Me.PictureBox2.Location = New System.Drawing.Point(17, 130)
         Me.PictureBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(67, 76)
@@ -143,7 +144,7 @@ Partial Class Subscription
         'pbxPlan
         '
         Me.pbxPlan.BackColor = System.Drawing.Color.Transparent
-        Me.pbxPlan.Location = New System.Drawing.Point(91, 64)
+        Me.pbxPlan.Location = New System.Drawing.Point(88, 77)
         Me.pbxPlan.Margin = New System.Windows.Forms.Padding(2)
         Me.pbxPlan.Name = "pbxPlan"
         Me.pbxPlan.Size = New System.Drawing.Size(202, 170)
@@ -155,7 +156,7 @@ Partial Class Subscription
         '
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.Image = Global.fdbmsproj.My.Resources.Resources.nextreak
-        Me.PictureBox1.Location = New System.Drawing.Point(297, 117)
+        Me.PictureBox1.Location = New System.Drawing.Point(294, 130)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(67, 76)
@@ -166,10 +167,17 @@ Partial Class Subscription
         'cbxPlans
         '
         Me.cbxPlans.FormattingEnabled = True
-        Me.cbxPlans.Location = New System.Drawing.Point(91, 38)
+        Me.cbxPlans.Location = New System.Drawing.Point(88, 51)
         Me.cbxPlans.Name = "cbxPlans"
         Me.cbxPlans.Size = New System.Drawing.Size(202, 21)
         Me.cbxPlans.TabIndex = 24
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(398, 227)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox1.TabIndex = 25
         '
         'Subscription
         '
@@ -179,6 +187,7 @@ Partial Class Subscription
         Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(611, 366)
+        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.cbxPlans)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.txtSpecs)
@@ -214,4 +223,5 @@ Partial Class Subscription
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents cbxPlans As ComboBox
+    Friend WithEvents TextBox1 As TextBox
 End Class

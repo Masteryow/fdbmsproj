@@ -514,7 +514,7 @@ Public Class Addon
 
             conn.Open()
 
-            Using getInfo As New MySqlCommand("SELECT * FROM addons LIMIT 15", conn)
+            Using getInfo As New MySqlCommand("SELECT * FROM addons", conn)
 
                 Using fetchInfo As MySqlDataReader = getInfo.ExecuteReader
 

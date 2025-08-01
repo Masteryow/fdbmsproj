@@ -1,4 +1,6 @@
 ﻿Imports System.Configuration
+Imports System.Diagnostics.Metrics
+Imports System.IO
 Imports System.Numerics
 Imports System.Transactions
 Imports MySql.Data.MySqlClient
@@ -17,6 +19,52 @@ Public Class Subscription
     Dim price As Decimal = 0
     Dim speed As String = ""
     Dim data_cap As String = ""
+    Dim getImage As Byte() = Nothing
+    Function planCount()
+
+        Dim count As Integer = 0
+        Using conn As New MySqlConnection(strCon)
+
+            conn.Open()
+
+            Using counter As New MySqlCommand("SELECT COUNT(*) FROM internet_plans", conn)
+
+                count = Convert.ToInt32(counter.ExecuteScalar())
+
+
+
+            End Using
+        End Using
+
+        Return count
+
+    End Function
+
+
+
+
+
+    Public Sub fetchPlans(planID As Integer)
+        Using conn As New MySqlConnection(strCon)
+            conn.Open()
+            Using cmd As New MySqlCommand("SELECT ip.plan_id, ip.plan_name, ip.plan_type, ip.price, ip.speed, ip.data_cap FROM internet_plans ip JOIN
+                                   blobs b on ip.blob_id = b.blob_id WHERE plan_id = @plan_id")
+
+                cmd.Parameters.AddWithValue("@plan_id", planID)
+                Using reader As MySqlDataReader = cmd.ExecuteReader
+                End Using
+            End Using
+        End Using
+    End Sub
+
+
+
+
+
+
+
+
+
 
 
     Public Sub delete()
@@ -77,60 +125,30 @@ Public Class Subscription
 
         End Using
 
+        TextBox1.Text = id
+        cbxPlans.SelectedIndex = 0
 
+        selection(id, False)
 
-        Interactive_Menu(id)
     End Sub
 
-    Public Sub Interactive_Menu(currentID As Integer)
-        If currentID = 1 Then
-            pbxPlan.Image = My.Resources.SkyLinkHome5gUnli
-            Session.planImage = My.Resources.SkyLinkHome5gUnli
-        ElseIf currentID = 2 Then
-            pbxPlan.Image = My.Resources.SkyLink_Home_5g_200gb
-            Session.planImage = My.Resources.SkyLink_Home_5g_200gb
-        ElseIf currentID = 3 Then
-            pbxPlan.Image = My.Resources.Skylink_Basic_Fiber
-            Session.planImage = My.Resources.Skylink_Basic_Fiber
-        ElseIf currentID = 4 Then
-            pbxPlan.Image = My.Resources.SkyLink_Standard_Fiber
-            Session.planImage = My.Resources.SkyLink_Standard_Fiber
-        ElseIf currentID = 5 Then
-            pbxPlan.Image = My.Resources.Skylink_Premium_Fiber
-            Session.planImage = My.Resources.Skylink_Premium_Fiber
-        ElseIf currentID = 6 Then
-            pbxPlan.Image = My.Resources.SkyLink_Ultra_Fiber
-            Session.planImage = My.Resources.SkyLink_Ultra_Fiber
-        ElseIf currentID = 7 Then
-            pbxPlan.Image = My.Resources.SkyLink_Business_5g
-            Session.planImage = My.Resources.SkyLink_Business_5g
-        ElseIf currentID = 8 Then
-            pbxPlan.Image = My.Resources.SkyLink_Prepaid_Wifi_Basic
-            Session.planImage = My.Resources.SkyLink_Prepaid_Wifi_Basic
-        ElseIf currentID = 9 Then
-            pbxPlan.Image = My.Resources.SkyLink_Prepaid_Wifi_Standard
-            Session.planImage = My.Resources.SkyLink_Prepaid_Wifi_Standard
-        ElseIf currentID = 10 Then
-            pbxPlan.Image = My.Resources.SkyLink_Prepaid_Wifi_Premium
-            Session.planImage = My.Resources.SkyLink_Prepaid_Wifi_Premium
-        End If
 
-        selection(currentID, False)
-    End Sub
 
     Public Sub selection(getID As Integer, popOutReceive As Boolean)
         Using con As New MySqlConnection(strCon)
             con.Open()
 
-            Dim id As Integer = getID
+
             Dim transaction As MySqlTransaction = con.BeginTransaction
+
             Try
                 Dim cmd As New MySqlCommand()
                 cmd.Connection = con
                 cmd.Transaction = transaction
 
-                cmd.CommandText = "SELECT plan_id, plan_name, plan_type, price, speed, data_cap FROM internet_plans WHERE plan_id = @plan_id "
-                cmd.Parameters.AddWithValue("@plan_id", id)
+                cmd.CommandText = "SELECT ip.plan_id, ip.plan_name, ip.plan_type, ip.price, ip.speed, ip.data_cap, b.data FROM internet_plans ip JOIN
+                                   blobs b on ip.blob_id = b.blob_id WHERE plan_id = @plan_id "
+                cmd.Parameters.AddWithValue("@plan_id", getID)
 
                 Using reader As MySqlDataReader = cmd.ExecuteReader
                     If reader.Read() Then
@@ -140,6 +158,10 @@ Public Class Subscription
                         price = reader("price").ToString
                         speed = reader("speed").ToString
                         data_cap = reader("data_cap").ToString
+                        getImage = CType(reader("data"), Byte())
+
+
+
                     End If
                 End Using
 
@@ -322,6 +344,11 @@ Public Class Subscription
                     End If
                 Else
                     txtSpecs.Text = $"Plan:{plan_name}{vbNewLine}Type: {plan_type}{vbNewLine}Speed: {speed}{vbNewLine}Cap: {data_cap}{vbNewLine}Price: {price} "
+                    Using fetchImage As New MemoryStream(getImage)
+                        pbxPlan.Image = Image.FromStream(fetchImage)
+                        Session.planImage = pbxPlan.Image
+                    End Using
+
                 End If
 
 
@@ -403,29 +430,47 @@ Public Class Subscription
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
+
+
+
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles PictureBox2.Click
+
+        Dim limit As Integer = planCount()
         id -= 1
 
-        If id > 10 Then
+        If id > limit Then
             id = 1
         ElseIf id <= 0 Then
-            id = 10
+            id = limit
         End If
-
-        Interactive_Menu(id)
+        TextBox1.Text = id
+        selection(id, False)
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs)
+
+
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+
+        Dim limit As Integer = planCount()
         id += 1
 
-        If id > 10 Then
+        If id > limit Then
             id = 1
         ElseIf id <= 0 Then
-            id = 10
-        End If
 
-        Interactive_Menu(id)
+            id = limit
+        End If
+        TextBox1.Text = id
+        selection(id, False)
     End Sub
+
+
+
+
+
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles btnSubscribe.Click
         selection(id, True)
@@ -460,29 +505,7 @@ Public Class Subscription
         Tickets.Show()
     End Sub
 
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
-        id += 1
 
-        If id > 10 Then
-            id = 1
-        ElseIf id <= 0 Then
-            id = 10
-        End If
-
-        Interactive_Menu(id)
-    End Sub
-
-    Private Sub PictureBox2_Click(sender As Object, e As EventArgs) Handles PictureBox2.Click
-        id -= 1
-
-        If id > 10 Then
-            id = 1
-        ElseIf id <= 0 Then
-            id = 10
-        End If
-
-        Interactive_Menu(id)
-    End Sub
 
     Private Sub HomeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem.Click
         If MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
@@ -494,8 +517,8 @@ Public Class Subscription
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPlans.SelectedIndexChanged
 
         id = cbxPlans.SelectedIndex + 1
-
-        Interactive_Menu(id)
+        TextBox1.Text = id
+        selection(id, False)
 
     End Sub
 End Class
