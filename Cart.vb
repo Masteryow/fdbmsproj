@@ -81,38 +81,38 @@ Public Class Cart
     End Sub
 
     Private Sub LoadCartFromDatabase()
-        cartItems.Clear()
+    cartItems.Clear()
 
-        Try
-            Using con As New MySqlConnection(strCon)
-                con.Open()
+    Try
+        Using con As New MySqlConnection(strCon)
+            con.Open()
 
-                ' Join shopping_cart with addons table to get product details - ONLY HARDWARE ADDONS (ID 1-5)
-                Dim query As String = "SELECT sc.addon_id, sc.quantity, a.item_name, a.price, a.category " &
-                                     "FROM shopping_cart sc " &
-                                     "INNER JOIN addons a ON sc.addon_id = a.addon_id " &
-                                     "WHERE sc.customer_id = @customerId AND sc.addon_id BETWEEN 1 AND 15"
+            ' Join shopping_cart with addons table to get product details - ALL ADDONS
+            Dim query As String = "SELECT sc.addon_id, sc.quantity, a.item_name, a.price, a.category " &
+                                 "FROM shopping_cart sc " &
+                                 "INNER JOIN addons a ON sc.addon_id = a.addon_id " &
+                                 "WHERE sc.customer_id = @customerId"
 
-                Using cmd As New MySqlCommand(query, con)
-                    cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+            Using cmd As New MySqlCommand(query, con)
+                cmd.Parameters.AddWithValue("@customerId", Session.UserId)
 
-                    Using reader As MySqlDataReader = cmd.ExecuteReader()
-                        While reader.Read()
-                            Dim item As New CartItem()
-                            item.AddonId = Convert.ToInt32(reader("addon_id"))
-                            item.Quantity = Convert.ToInt32(reader("quantity"))
-                            item.ProductName = reader("item_name").ToString()
-                            item.Price = Convert.ToDecimal(reader("price"))
-                            item.Category = reader("category").ToString()
-                            cartItems.Add(item)
-                        End While
-                    End Using
+                Using reader As MySqlDataReader = cmd.ExecuteReader()
+                    While reader.Read()
+                        Dim item As New CartItem()
+                        item.AddonId = Convert.ToInt32(reader("addon_id"))
+                        item.Quantity = Convert.ToInt32(reader("quantity"))
+                        item.ProductName = reader("item_name").ToString()
+                        item.Price = Convert.ToDecimal(reader("price"))
+                        item.Category = reader("category").ToString()
+                        cartItems.Add(item)
+                    End While
                 End Using
             End Using
-        Catch ex As Exception
-            MessageBox.Show("Error loading cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
+        End Using
+    Catch ex As Exception
+        MessageBox.Show("Error loading cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    End Try
+End Sub
 
     ' Stock is automatically updated by database trigger when items are inserted into customer_addons
     ' No manual stock update needed
@@ -125,10 +125,10 @@ Public Class Cart
                 con.Open()
 
                 For Each item In cartItems
-                    ' Only check stock for hardware addons (ID 1-5)
-                    If item.AddonId >= 1 AndAlso item.AddonId <= 5 Then
+                    ' ONLY CHECK STOCK FOR HARDWARE ITEMS
+                    If item.Category.ToUpper() = "HARDWARE" Then
                         Dim stockQuery As String = "SELECT hs.quantity_available FROM hardware_stocks hs " &
-                                             "WHERE hs.addon_id = @addonId"
+                                         "WHERE hs.addon_id = @addonId"
 
                         Using cmd As New MySqlCommand(stockQuery, con)
                             cmd.Parameters.AddWithValue("@addonId", item.AddonId)
@@ -146,11 +146,12 @@ Public Class Cart
                                     End If
                                 End If
                             Else
-                                ' No stock record found - assume out of stock
+                                ' No stock record found for hardware - assume out of stock
                                 outOfStockItems.Add($"{item.ProductName} (No stock information)")
                             End If
                         End Using
                     End If
+                    ' For non-hardware items (Service, Plan Upgrade), skip stock checking entirely
                 Next
             End Using
         Catch ex As Exception
@@ -199,9 +200,7 @@ Public Class Cart
         Dim startIndex As Integer = 0
         If Session.preSubscriber = True Then
             startIndex = 1 ' Keep the plan/subscriber info item
-
         ElseIf Session.subscriberAccess = True OrElse Session.fromProduct = True Then
-
             startIndex = 0
         Else
             CheckedListBox1.Items.Clear()
@@ -212,16 +211,17 @@ Public Class Cart
             CheckedListBox1.Items.RemoveAt(i)
         Next
 
-        ' Add cart items with stock status - ONLY HARDWARE ADDONS (ID 1-5)
+        ' Add cart items with stock status - ONLY SHOW STOCK INFO FOR HARDWARE
         Try
             Using con As New MySqlConnection(strCon)
                 con.Open()
 
                 For Each item In cartItems
-                    ' Double check that item is hardware addon (ID 1-5)
-                    If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
+                    Dim stockStatus As String = ""
+
+                    ' ONLY SHOW STOCK INFO FOR HARDWARE ITEMS
+                    If item.Category.ToUpper() = "HARDWARE" Then
                         Dim stockQuery As String = "SELECT hs.quantity_available FROM hardware_stocks hs WHERE hs.addon_id = @addonId"
-                        Dim stockStatus As String = ""
 
                         Using cmd As New MySqlCommand(stockQuery, con)
                             cmd.Parameters.AddWithValue("@addonId", item.AddonId)
@@ -240,19 +240,18 @@ Public Class Cart
                                 stockStatus = " [NO STOCK INFO]"
                             End If
                         End Using
-
-                        Dim displayText As String = $"{item.ProductName} - Qty: {item.Quantity} - Php {(item.Price * item.Quantity):F2} [{item.Category}]{stockStatus}"
-                        CheckedListBox1.Items.Add(displayText)
                     End If
+                    ' For non-hardware items, stockStatus remains empty (no stock info shown)
+
+                    Dim displayText As String = $"{item.ProductName} - Qty: {item.Quantity} - Php {(item.Price * item.Quantity):F2} [{item.Category}]{stockStatus}"
+                    CheckedListBox1.Items.Add(displayText)
                 Next
             End Using
         Catch ex As Exception
             ' Fallback to original display if stock check fails
             For Each item In cartItems
-                If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
-                    Dim displayText As String = $"{item.ProductName} - Qty: {item.Quantity} - Php {(item.Price * item.Quantity):F2} [{item.Category}]"
-                    CheckedListBox1.Items.Add(displayText)
-                End If
+                Dim displayText As String = $"{item.ProductName} - Qty: {item.Quantity} - Php {(item.Price * item.Quantity):F2} [{item.Category}]"
+                CheckedListBox1.Items.Add(displayText)
             Next
             MessageBox.Show("Could not load stock information: " & ex.Message, "Stock Check Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
@@ -267,14 +266,10 @@ Public Class Cart
         End If
         ' For existing subscribers, don't add plan price - they're only buying addons
 
-        ' Add cart items total - ONLY HARDWARE ADDONS (ID 1-5)
+        ' Add cart items total - ALL ITEMS (Hardware, Service, Plan Upgrade)
         For Each item In cartItems
-            If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
-                total += (item.Price * item.Quantity)
-            End If
+            total += (item.Price * item.Quantity)
         Next
-
-
     End Sub
 
     Public Function GetCartTotal() As Decimal
@@ -286,11 +281,9 @@ Public Class Cart
         End If
         ' For existing subscribers, don't add plan price
 
-        ' Add cart items total - ONLY HARDWARE ADDONS (ID 1-5)
+        ' Add cart items total - ALL ITEMS (Hardware, Service, Plan Upgrade)
         For Each item In cartItems
-            If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
-                cartTotal += (item.Price * item.Quantity)
-            End If
+            cartTotal += (item.Price * item.Quantity)
         Next
 
         Return cartTotal
@@ -304,22 +297,17 @@ Public Class Cart
         ' Skip plan/subscriber info item if it exists
         If Session.preSubscriber = True Then
             startIndex = 1
-
         ElseIf Session.subscriberAccess = True Then
-
             startIndex = 0
         End If
 
-        ' Get selected cart items - ONLY HARDWARE ADDONS (ID 1-5)
+        ' Get selected cart items - ALL CATEGORIES (Hardware, Service, Plan Upgrade)
         For i As Integer = startIndex To CheckedListBox1.Items.Count - 1
             If CheckedListBox1.GetItemCheckState(i) = CheckState.Checked Then
                 Dim cartIndex As Integer = i - startIndex
                 If cartIndex >= 0 AndAlso cartIndex < cartItems.Count Then
                     Dim item As CartItem = cartItems(cartIndex)
-                    ' Only include hardware addons (ID 1-5)
-                    If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
-                        selectedItems.Add(item)
-                    End If
+                    selectedItems.Add(item) ' Include all items regardless of category
                 End If
             End If
         Next
@@ -344,16 +332,13 @@ Public Class Cart
             startIndex = 0
         End If
 
-        ' Add only selected cart items - ONLY HARDWARE ADDONS (ID 1-5)
+        ' Add only selected cart items - ALL CATEGORIES (Hardware, Service, Plan Upgrade)
         For i As Integer = startIndex To CheckedListBox1.Items.Count - 1
             If CheckedListBox1.GetItemCheckState(i) = CheckState.Checked Then
                 Dim cartIndex As Integer = i - startIndex
                 If cartIndex >= 0 AndAlso cartIndex < cartItems.Count Then
                     Dim item As CartItem = cartItems(cartIndex)
-                    ' Only include hardware addons (ID 1-5)
-                    If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
-                        selectedTotal += (item.Price * item.Quantity)
-                    End If
+                    selectedTotal += (item.Price * item.Quantity) ' Include all items regardless of category
                 End If
             End If
         Next
@@ -547,17 +532,24 @@ Public Class Cart
             Return
         End If
 
-        ' Get selected items and validate (hardware only)
+        ' Get selected items and validate (all categories)
         Dim selectedItems As List(Of CartItem) = GetSelectedCartItems()
 
         ' Check if we have items to process
         If selectedItems.Count = 0 AndAlso (Session.fromProduct OrElse (Not Session.preSubscriber AndAlso Session.planPrice = 0)) Then
-            MessageBox.Show("Please select hardware items to checkout!", "No Items Selected", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Please select items to checkout!", "No Items Selected", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
 
-        ' **Check stock availability for selected hardware items**
-        Dim outOfStockItems As List(Of String) = CheckStockAvailability(selectedItems)
+        ' **Check stock availability ONLY for selected HARDWARE items**
+        Dim hardwareItems As New List(Of CartItem)
+        For Each item In selectedItems
+            If item.Category.ToUpper() = "HARDWARE" Then
+                hardwareItems.Add(item)
+            End If
+        Next
+
+        Dim outOfStockItems As List(Of String) = CheckStockAvailability(hardwareItems)
 
         If outOfStockItems.Count > 0 Then
             Dim stockMessage As String = "The following hardware items are out of stock or have insufficient quantity:" & vbCrLf & vbCrLf
@@ -570,12 +562,12 @@ Public Class Cart
             Return
         End If
 
-        ' Calculate total for selected items only
+        ' Calculate total for selected items only (all categories)
         Dim checkoutTotal As Decimal = GetSelectedItemsTotal()
 
         ' If no total (no plan and no selected items), show error
         If checkoutTotal = 0 Then
-            MessageBox.Show("Please select hardware items to checkout!", "No Items Selected", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Please select items to checkout!", "No Items Selected", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
 
@@ -599,33 +591,31 @@ Public Class Cart
             Return ' Keep transaction active for retry
         End If
 
-        ' Process payment based on purchase type - using selected items only
+        ' Process payment based on purchase type - using selected items only (all categories)
         Dim purchaseSuccess As Boolean = False
         If Session.fromProduct = True Then
-            ' Direct product purchase - selected items only
+            ' Direct product purchase - selected items only (all categories)
             purchaseSuccess = ProcessSelectedDirectPurchase(selectedItems)
         ElseIf Session.preSubscriber = True Then
-            ' Plan with selected addons purchase
+            ' Plan with selected addons purchase (all categories)
             purchaseSuccess = ProcessPlanWithSelectedAddonsPurchase(selectedItems)
             Session.userRole = "Subscriber"
-
         Else
-            ' Existing subscriber buying  selected addons
+            ' Existing subscriber buying selected addons (all categories)
             purchaseSuccess = ProcessSelectedAddonsForExistingSubscriber(selectedItems)
         End If
 
         If purchaseSuccess Then
             Dim change As Decimal = paymentAmount - checkoutTotal
             Dim resultMessage As String = "Payment successful!" & vbCrLf &
-                                 $"Total: Php {checkoutTotal:F2}" & vbCrLf &
-                                 $"Payment: Php {paymentAmount:F2}" & vbCrLf &
-                                 $"Change: Php {change:F2}" & vbCrLf &
-                                 "Thank you for your purchase!"
+                             $"Total: Php {checkoutTotal:F2}" & vbCrLf &
+                             $"Payment: Php {paymentAmount:F2}" & vbCrLf &
+                             $"Change: Php {change:F2}" & vbCrLf &
+                             "Thank you for your purchase!"
 
             MessageBox.Show(resultMessage, "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             ' Payment successful - complete transaction and remove only purchased items
-
             ' Remove only the items that were actually purchased
             RemovePurchasedItemsFromCart(selectedItems)
 
@@ -633,10 +623,7 @@ Public Class Cart
             RefreshCartDisplay()
             UpdateTotal()
 
-
-
             If Session.preSubscriber = True Then
-
                 Session.planName = planName
                 Session.planType = planType
                 Session.planSpeed = planSpeed
