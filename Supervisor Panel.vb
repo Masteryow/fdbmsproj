@@ -289,4 +289,8 @@ Public Class Supervisor_Panel
             Me.Close()
         End If
     End Sub
+
+    Private Sub txtPrice_TextChanged(sender As Object, e As EventArgs) Handles txtPrice.TextChanged
+
+    End Sub
 End Class

@@ -33,10 +33,10 @@ Partial Class Form1
         Me.lblForgotPass = New System.Windows.Forms.Label()
         Me.lblNotMem = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.pbxPassword = New System.Windows.Forms.PictureBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1.SuspendLayout()
         CType(Me.pbxPassword, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -153,20 +153,6 @@ Partial Class Form1
         Me.Panel1.Size = New System.Drawing.Size(299, 368)
         Me.Panel1.TabIndex = 9
         '
-        'Label1
-        '
-        Me.Label1.Font = New System.Drawing.Font("Perpetua Titling MT", 19.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(46, 159)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(196, 38)
-        Me.Label1.TabIndex = 10
-        Me.Label1.Text = "FAST"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Timer1
-        '
-        '
         'pbxPassword
         '
         Me.pbxPassword.BackColor = System.Drawing.Color.White
@@ -186,6 +172,20 @@ Partial Class Form1
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(34, 26)
         Me.TextBox1.TabIndex = 10
+        '
+        'Label1
+        '
+        Me.Label1.Font = New System.Drawing.Font("Perpetua Titling MT", 19.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(46, 159)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(196, 38)
+        Me.Label1.TabIndex = 10
+        Me.Label1.Text = "FAST"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Timer1
+        '
         '
         'Form1
         '

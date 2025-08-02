@@ -508,4 +508,8 @@ Public Class Subscription
         selection(id, False)
 
     End Sub
+
+    Private Sub txtSpecs_TextChanged(sender As Object, e As EventArgs) Handles txtSpecs.TextChanged
+
+    End Sub
 End Class

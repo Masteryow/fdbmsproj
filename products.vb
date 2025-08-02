@@ -365,6 +365,15 @@ Public Class products
         txtTotal.Text = total
     End Sub
 
+    Private Sub pbxClear_hover(sender As Object, e As EventArgs) Handles pbxClear.MouseHover
+        pbxClear.Image = My.Resources.resetglow
+
+    End Sub
+
+    Private Sub pbxClear_leave(sender As Object, e As EventArgs) Handles pbxClear.MouseLeave
+        pbxClear.Image = My.Resources.reset
+
+    End Sub
     Private Sub pbxClear_Click(sender As Object, e As EventArgs) Handles pbxClear.Click
 
         If Session.fromProduct = True AndAlso Session.subscriberAccess = False Then
@@ -571,6 +580,13 @@ Public Class products
         Return True
     End Function
 
+    Private Sub pbxBuyNow_hover(sender As Object, e As EventArgs) Handles pbxBuyNow.MouseHover
+        pbxBuyNow.Image = My.Resources.buynowglow
+    End Sub
+
+    Private Sub pbxBuyNow_leave(sender As Object, e As EventArgs) Handles pbxBuyNow.MouseLeave
+        pbxBuyNow.Image = My.Resources.buynow
+    End Sub
     Private Sub pbxBuyNow_Click_1(sender As Object, e As EventArgs) Handles pbxBuyNow.Click
 
 
@@ -723,6 +739,16 @@ Public Class products
 
         Return True
     End Function
+
+    Private Sub addToCart_hover(sender As Object, e As EventArgs) Handles pbxAddToCart.MouseHover
+        pbxAddToCart.Image = My.Resources.addtocartglow
+
+    End Sub
+
+    Private Sub addToCart_leave(sender As Object, e As EventArgs) Handles pbxAddToCart.MouseLeave
+        pbxAddToCart.Image = My.Resources.addtocart
+
+    End Sub
     Private Sub pbxAddToCart_Click(sender As Object, e As EventArgs) Handles pbxAddToCart.Click
 
         If Not stockChecker() Then Exit Sub

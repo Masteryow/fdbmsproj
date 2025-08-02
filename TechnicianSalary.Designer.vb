@@ -48,7 +48,7 @@ Partial Class TechnicianSalary
         Me.Panel1.Location = New System.Drawing.Point(-3, 32)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(616, 46)
+        Me.Panel1.Size = New System.Drawing.Size(912, 66)
         Me.Panel1.TabIndex = 7
         '
         'Panel2
@@ -56,7 +56,7 @@ Partial Class TechnicianSalary
         Me.Panel2.BackColor = System.Drawing.Color.IndianRed
         Me.Panel2.Location = New System.Drawing.Point(3, 0)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(19, 47)
+        Me.Panel2.Size = New System.Drawing.Size(19, 66)
         Me.Panel2.TabIndex = 14
         '
         'Button1
@@ -64,7 +64,7 @@ Partial Class TechnicianSalary
         Me.Button1.BackColor = System.Drawing.Color.Crimson
         Me.Button1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(486, 6)
+        Me.Button1.Location = New System.Drawing.Point(762, 14)
         Me.Button1.Margin = New System.Windows.Forms.Padding(2)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(117, 33)
@@ -75,12 +75,12 @@ Partial Class TechnicianSalary
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Tahoma", 19.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Tahoma", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(21, 6)
+        Me.Label1.Location = New System.Drawing.Point(27, 14)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(436, 33)
+        Me.Label1.Size = New System.Drawing.Size(516, 39)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Technician Salary Management"
         '
@@ -106,7 +106,7 @@ Partial Class TechnicianSalary
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.dgvSalary.DefaultCellStyle = DataGridViewCellStyle2
-        Me.dgvSalary.Location = New System.Drawing.Point(23, 123)
+        Me.dgvSalary.Location = New System.Drawing.Point(31, 143)
         Me.dgvSalary.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvSalary.MultiSelect = False
         Me.dgvSalary.Name = "dgvSalary"
@@ -114,15 +114,15 @@ Partial Class TechnicianSalary
         Me.dgvSalary.RowHeadersWidth = 51
         Me.dgvSalary.RowTemplate.Height = 24
         Me.dgvSalary.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvSalary.Size = New System.Drawing.Size(396, 222)
+        Me.dgvSalary.Size = New System.Drawing.Size(553, 358)
         Me.dgvSalary.TabIndex = 8
         '
         'txtName
         '
-        Me.txtName.Location = New System.Drawing.Point(23, 100)
+        Me.txtName.Location = New System.Drawing.Point(31, 120)
         Me.txtName.Margin = New System.Windows.Forms.Padding(2)
         Me.txtName.Name = "txtName"
-        Me.txtName.Size = New System.Drawing.Size(366, 20)
+        Me.txtName.Size = New System.Drawing.Size(523, 20)
         Me.txtName.TabIndex = 9
         '
         'btnIndPay
@@ -130,10 +130,10 @@ Partial Class TechnicianSalary
         Me.btnIndPay.BackColor = System.Drawing.Color.DarkGreen
         Me.btnIndPay.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnIndPay.ForeColor = System.Drawing.Color.White
-        Me.btnIndPay.Location = New System.Drawing.Point(437, 164)
+        Me.btnIndPay.Location = New System.Drawing.Point(643, 192)
         Me.btnIndPay.Margin = New System.Windows.Forms.Padding(2)
         Me.btnIndPay.Name = "btnIndPay"
-        Me.btnIndPay.Size = New System.Drawing.Size(151, 36)
+        Me.btnIndPay.Size = New System.Drawing.Size(197, 66)
         Me.btnIndPay.TabIndex = 11
         Me.btnIndPay.Text = "PAY"
         Me.btnIndPay.UseVisualStyleBackColor = False
@@ -143,10 +143,10 @@ Partial Class TechnicianSalary
         Me.btnPayAll.BackColor = System.Drawing.Color.DarkGreen
         Me.btnPayAll.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPayAll.ForeColor = System.Drawing.Color.White
-        Me.btnPayAll.Location = New System.Drawing.Point(437, 204)
+        Me.btnPayAll.Location = New System.Drawing.Point(643, 276)
         Me.btnPayAll.Margin = New System.Windows.Forms.Padding(2)
         Me.btnPayAll.Name = "btnPayAll"
-        Me.btnPayAll.Size = New System.Drawing.Size(151, 35)
+        Me.btnPayAll.Size = New System.Drawing.Size(197, 59)
         Me.btnPayAll.TabIndex = 12
         Me.btnPayAll.Text = "PAY ALL"
         Me.btnPayAll.UseVisualStyleBackColor = False
@@ -156,10 +156,10 @@ Partial Class TechnicianSalary
         Me.Button2.BackColor = System.Drawing.Color.Maroon
         Me.Button2.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Location = New System.Drawing.Point(437, 243)
+        Me.Button2.Location = New System.Drawing.Point(643, 350)
         Me.Button2.Margin = New System.Windows.Forms.Padding(2)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(151, 35)
+        Me.Button2.Size = New System.Drawing.Size(197, 58)
         Me.Button2.TabIndex = 13
         Me.Button2.Text = "LOG OUT"
         Me.Button2.UseVisualStyleBackColor = False
@@ -168,7 +168,7 @@ Partial Class TechnicianSalary
         '
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.Image = Global.fdbmsproj.My.Resources.Resources.search
-        Me.PictureBox1.Location = New System.Drawing.Point(393, 100)
+        Me.PictureBox1.Location = New System.Drawing.Point(558, 120)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(26, 18)
@@ -183,7 +183,7 @@ Partial Class TechnicianSalary
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.redBG
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(611, 366)
+        Me.ClientSize = New System.Drawing.Size(903, 522)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.btnPayAll)
         Me.Controls.Add(Me.btnIndPay)

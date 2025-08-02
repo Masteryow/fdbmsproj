@@ -56,7 +56,7 @@ Partial Class Main
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(611, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(903, 24)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -78,7 +78,7 @@ Partial Class Main
         'TicketsToolStripMenuItem
         '
         Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
         Me.TicketsToolStripMenuItem.Text = "Tickets"
         '
         'ToolStripMenuItem1
@@ -113,12 +113,12 @@ Partial Class Main
         '
         Me.lblUser.AutoSize = True
         Me.lblUser.BackColor = System.Drawing.Color.Transparent
-        Me.lblUser.Font = New System.Drawing.Font("Palatino Linotype", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUser.Font = New System.Drawing.Font("Palatino Linotype", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUser.ForeColor = System.Drawing.Color.White
-        Me.lblUser.Location = New System.Drawing.Point(55, 61)
+        Me.lblUser.Location = New System.Drawing.Point(50, 65)
         Me.lblUser.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblUser.Name = "lblUser"
-        Me.lblUser.Size = New System.Drawing.Size(0, 26)
+        Me.lblUser.Size = New System.Drawing.Size(0, 37)
         Me.lblUser.TabIndex = 1
         '
         'Timer1
@@ -128,9 +128,9 @@ Partial Class Main
         '
         Me.PictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.PictureBox2.Image = Global.fdbmsproj.My.Resources.Resources.Ad1
-        Me.PictureBox2.Location = New System.Drawing.Point(17, 19)
+        Me.PictureBox2.Location = New System.Drawing.Point(32, 32)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(193, 310)
+        Me.PictureBox2.Size = New System.Drawing.Size(275, 371)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox2.TabIndex = 3
         Me.PictureBox2.TabStop = False
@@ -139,9 +139,9 @@ Partial Class Main
         '
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.PictureBox1.Image = Global.fdbmsproj.My.Resources.Resources.Ad1
-        Me.PictureBox1.Location = New System.Drawing.Point(30, 8)
+        Me.PictureBox1.Location = New System.Drawing.Point(45, 21)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(193, 310)
+        Me.PictureBox1.Size = New System.Drawing.Size(275, 371)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 2
         Me.PictureBox1.TabStop = False
@@ -150,9 +150,9 @@ Partial Class Main
         '
         Me.PictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.PictureBox3.Image = Global.fdbmsproj.My.Resources.Resources.Ad1
-        Me.PictureBox3.Location = New System.Drawing.Point(3, 34)
+        Me.PictureBox3.Location = New System.Drawing.Point(18, 47)
         Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(193, 310)
+        Me.PictureBox3.Size = New System.Drawing.Size(275, 371)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox3.TabIndex = 4
         Me.PictureBox3.TabStop = False
@@ -161,9 +161,9 @@ Partial Class Main
         '
         Me.PictureBox5.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox5.Image = Global.fdbmsproj.My.Resources.Resources.Copilot_20250729_220331
-        Me.PictureBox5.Location = New System.Drawing.Point(50, 257)
+        Me.PictureBox5.Location = New System.Drawing.Point(73, 391)
         Me.PictureBox5.Name = "PictureBox5"
-        Me.PictureBox5.Size = New System.Drawing.Size(158, 63)
+        Me.PictureBox5.Size = New System.Drawing.Size(292, 76)
         Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox5.TabIndex = 6
         Me.PictureBox5.TabStop = False
@@ -172,12 +172,12 @@ Partial Class Main
         '
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Font = New System.Drawing.Font("Palatino Linotype", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Palatino Linotype", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(55, 98)
+        Me.Label1.Location = New System.Drawing.Point(85, 124)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(219, 156)
+        Me.Label1.Size = New System.Drawing.Size(385, 264)
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "SkyLink is a reliable " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "and innovative internet " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "service provider offering " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "hig" &
     "h-speed connectivity" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "through both 5G and " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "fiber technology." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
@@ -188,9 +188,9 @@ Partial Class Main
         Me.Panel1.Controls.Add(Me.PictureBox3)
         Me.Panel1.Controls.Add(Me.PictureBox2)
         Me.Panel1.Controls.Add(Me.PictureBox1)
-        Me.Panel1.Location = New System.Drawing.Point(366, 25)
+        Me.Panel1.Location = New System.Drawing.Point(541, 27)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(241, 363)
+        Me.Panel1.Size = New System.Drawing.Size(325, 440)
         Me.Panel1.TabIndex = 8
         '
         'Main
@@ -199,7 +199,7 @@ Partial Class Main
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(611, 366)
+        Me.ClientSize = New System.Drawing.Size(903, 522)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.PictureBox5)
         Me.Controls.Add(Me.lblUser)

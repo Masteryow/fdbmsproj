@@ -26,7 +26,7 @@ Public Class Main
 
             lblUser.Text &= name1(increment)
             increment += 1
-            locationY += 1
+            locationY += 2
 
             Panel1.Location = New Point(Panel1.Location.X, locationY)
 

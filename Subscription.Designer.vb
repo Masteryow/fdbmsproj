@@ -31,16 +31,19 @@ Partial Class Subscription
         Me.SubscriptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HomeToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnSubscribe = New System.Windows.Forms.Button()
-        Me.txtSpecs = New System.Windows.Forms.TextBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pbxPlan = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.cbxPlans = New System.Windows.Forms.ComboBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtSpecs = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxPlan, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -52,7 +55,7 @@ Partial Class Subscription
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(611, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(903, 24)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -107,36 +110,25 @@ Partial Class Subscription
         '
         'btnSubscribe
         '
-        Me.btnSubscribe.BackColor = System.Drawing.Color.White
-        Me.btnSubscribe.Font = New System.Drawing.Font("Century Gothic", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSubscribe.ForeColor = System.Drawing.Color.Black
-        Me.btnSubscribe.Location = New System.Drawing.Point(88, 267)
+        Me.btnSubscribe.BackColor = System.Drawing.Color.DarkGreen
+        Me.btnSubscribe.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSubscribe.ForeColor = System.Drawing.Color.White
+        Me.btnSubscribe.Location = New System.Drawing.Point(111, 284)
         Me.btnSubscribe.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSubscribe.Name = "btnSubscribe"
-        Me.btnSubscribe.Size = New System.Drawing.Size(202, 30)
+        Me.btnSubscribe.Size = New System.Drawing.Size(232, 36)
         Me.btnSubscribe.TabIndex = 19
-        Me.btnSubscribe.Text = "Subscribe"
+        Me.btnSubscribe.Text = "SUBSCRIBE"
         Me.btnSubscribe.UseVisualStyleBackColor = False
-        '
-        'txtSpecs
-        '
-        Me.txtSpecs.Font = New System.Drawing.Font("Times New Roman", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSpecs.Location = New System.Drawing.Point(365, 117)
-        Me.txtSpecs.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtSpecs.Multiline = True
-        Me.txtSpecs.Name = "txtSpecs"
-        Me.txtSpecs.ReadOnly = True
-        Me.txtSpecs.Size = New System.Drawing.Size(221, 97)
-        Me.txtSpecs.TabIndex = 21
         '
         'PictureBox2
         '
         Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox2.Image = Global.fdbmsproj.My.Resources.Resources.prev
-        Me.PictureBox2.Location = New System.Drawing.Point(17, 130)
+        Me.PictureBox2.Location = New System.Drawing.Point(57, 108)
         Me.PictureBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(67, 76)
+        Me.PictureBox2.Size = New System.Drawing.Size(50, 172)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox2.TabIndex = 23
         Me.PictureBox2.TabStop = False
@@ -144,10 +136,10 @@ Partial Class Subscription
         'pbxPlan
         '
         Me.pbxPlan.BackColor = System.Drawing.Color.Transparent
-        Me.pbxPlan.Location = New System.Drawing.Point(88, 77)
+        Me.pbxPlan.Location = New System.Drawing.Point(111, 108)
         Me.pbxPlan.Margin = New System.Windows.Forms.Padding(2)
         Me.pbxPlan.Name = "pbxPlan"
-        Me.pbxPlan.Size = New System.Drawing.Size(202, 170)
+        Me.pbxPlan.Size = New System.Drawing.Size(231, 172)
         Me.pbxPlan.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.pbxPlan.TabIndex = 18
         Me.pbxPlan.TabStop = False
@@ -156,28 +148,70 @@ Partial Class Subscription
         '
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.Image = Global.fdbmsproj.My.Resources.Resources.nextreak
-        Me.PictureBox1.Location = New System.Drawing.Point(294, 130)
+        Me.PictureBox1.Location = New System.Drawing.Point(346, 108)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(67, 76)
+        Me.PictureBox1.Size = New System.Drawing.Size(50, 172)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 22
         Me.PictureBox1.TabStop = False
         '
         'cbxPlans
         '
+        Me.cbxPlans.Font = New System.Drawing.Font("Times New Roman", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbxPlans.FormattingEnabled = True
-        Me.cbxPlans.Location = New System.Drawing.Point(88, 51)
+        Me.cbxPlans.Location = New System.Drawing.Point(111, 71)
         Me.cbxPlans.Name = "cbxPlans"
-        Me.cbxPlans.Size = New System.Drawing.Size(202, 21)
+        Me.cbxPlans.Size = New System.Drawing.Size(231, 32)
         Me.cbxPlans.TabIndex = 24
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(398, 227)
+        Me.TextBox1.Location = New System.Drawing.Point(407, 56)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
         Me.TextBox1.TabIndex = 25
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
+        Me.GroupBox1.Controls.Add(Me.txtSpecs)
+        Me.GroupBox1.Controls.Add(Me.pbxPlan)
+        Me.GroupBox1.Controls.Add(Me.cbxPlans)
+        Me.GroupBox1.Controls.Add(Me.PictureBox1)
+        Me.GroupBox1.Controls.Add(Me.btnSubscribe)
+        Me.GroupBox1.Controls.Add(Me.PictureBox2)
+        Me.GroupBox1.Font = New System.Drawing.Font("Times New Roman", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.ForeColor = System.Drawing.Color.White
+        Me.GroupBox1.Location = New System.Drawing.Point(70, 136)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(752, 362)
+        Me.GroupBox1.TabIndex = 26
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Plan Selection"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
+        Me.Label1.Font = New System.Drawing.Font("Times New Roman", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.RoyalBlue
+        Me.Label1.Location = New System.Drawing.Point(63, 56)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(283, 40)
+        Me.Label1.TabIndex = 27
+        Me.Label1.Text = "Plan Subscription"
+        '
+        'txtSpecs
+        '
+        Me.txtSpecs.Font = New System.Drawing.Font("Times New Roman", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSpecs.Location = New System.Drawing.Point(442, 92)
+        Me.txtSpecs.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtSpecs.Multiline = True
+        Me.txtSpecs.Name = "txtSpecs"
+        Me.txtSpecs.ReadOnly = True
+        Me.txtSpecs.Size = New System.Drawing.Size(258, 209)
+        Me.txtSpecs.TabIndex = 21
         '
         'Subscription
         '
@@ -186,15 +220,11 @@ Partial Class Subscription
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(611, 366)
+        Me.ClientSize = New System.Drawing.Size(903, 522)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.cbxPlans)
-        Me.Controls.Add(Me.PictureBox2)
-        Me.Controls.Add(Me.txtSpecs)
-        Me.Controls.Add(Me.btnSubscribe)
-        Me.Controls.Add(Me.pbxPlan)
         Me.Controls.Add(Me.MenuStrip1)
-        Me.Controls.Add(Me.PictureBox1)
         Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Subscription"
@@ -204,6 +234,8 @@ Partial Class Subscription
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxPlan, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -217,11 +249,13 @@ Partial Class Subscription
     Friend WithEvents HomeToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents pbxPlan As PictureBox
     Friend WithEvents btnSubscribe As Button
-    Friend WithEvents txtSpecs As TextBox
     Friend WithEvents btnCart As ToolStripMenuItem
     Friend WithEvents TicketToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents cbxPlans As ComboBox
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents txtSpecs As TextBox
 End Class

@@ -501,5 +501,26 @@
   <ItemGroup>
     <None Include="Resources\Copilot_20250731_085005.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addtocart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addtocartglow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resetglow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buynowglow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buynow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backgroundprod.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
