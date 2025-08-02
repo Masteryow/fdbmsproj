@@ -81,38 +81,38 @@ Public Class Cart
     End Sub
 
     Private Sub LoadCartFromDatabase()
-    cartItems.Clear()
+        cartItems.Clear()
 
-    Try
-        Using con As New MySqlConnection(strCon)
-            con.Open()
+        Try
+            Using con As New MySqlConnection(strCon)
+                con.Open()
 
-            ' Join shopping_cart with addons table to get product details - ALL ADDONS
-            Dim query As String = "SELECT sc.addon_id, sc.quantity, a.item_name, a.price, a.category " &
-                                 "FROM shopping_cart sc " &
-                                 "INNER JOIN addons a ON sc.addon_id = a.addon_id " &
-                                 "WHERE sc.customer_id = @customerId"
+                ' Join shopping_cart with addons table to get product details - ALL ADDONS
+                Dim query As String = "SELECT sc.addon_id, sc.quantity, a.item_name, a.price, a.category " &
+                                     "FROM shopping_cart sc " &
+                                     "INNER JOIN addons a ON sc.addon_id = a.addon_id " &
+                                     "WHERE sc.customer_id = @customerId"
 
-            Using cmd As New MySqlCommand(query, con)
-                cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                Using cmd As New MySqlCommand(query, con)
+                    cmd.Parameters.AddWithValue("@customerId", Session.UserId)
 
-                Using reader As MySqlDataReader = cmd.ExecuteReader()
-                    While reader.Read()
-                        Dim item As New CartItem()
-                        item.AddonId = Convert.ToInt32(reader("addon_id"))
-                        item.Quantity = Convert.ToInt32(reader("quantity"))
-                        item.ProductName = reader("item_name").ToString()
-                        item.Price = Convert.ToDecimal(reader("price"))
-                        item.Category = reader("category").ToString()
-                        cartItems.Add(item)
-                    End While
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            Dim item As New CartItem()
+                            item.AddonId = Convert.ToInt32(reader("addon_id"))
+                            item.Quantity = Convert.ToInt32(reader("quantity"))
+                            item.ProductName = reader("item_name").ToString()
+                            item.Price = Convert.ToDecimal(reader("price"))
+                            item.Category = reader("category").ToString()
+                            cartItems.Add(item)
+                        End While
+                    End Using
                 End Using
             End Using
-        End Using
-    Catch ex As Exception
-        MessageBox.Show("Error loading cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-    End Try
-End Sub
+        Catch ex As Exception
+            MessageBox.Show("Error loading cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
 
     ' Stock is automatically updated by database trigger when items are inserted into customer_addons
     ' No manual stock update needed
@@ -363,22 +363,22 @@ End Sub
         ' Skip plan/subscriber info item if it exists
         If Session.preSubscriber = True Then
             startIndex = 1
-
         ElseIf Session.subscriberAccess = True Then
             startIndex = 0
-
         End If
 
-        ' Get selected items (skip plan/subscriber info item) - ONLY HARDWARE ADDONS
+        ' Get selected items (skip plan/subscriber info item) - ALL CART ITEMS
         For i As Integer = startIndex To CheckedListBox1.Items.Count - 1
             If CheckedListBox1.GetItemCheckState(i) = CheckState.Checked Then
+                ' Additional safety check - don't allow plan deletion
+                If Session.preSubscriber = True AndAlso i = 0 Then
+                    MessageBox.Show("Plan cannot be deleted!", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Continue For
+                End If
+
                 Dim cartIndex As Integer = i - startIndex
                 If cartIndex >= 0 AndAlso cartIndex < cartItems.Count Then
-                    Dim item As CartItem = cartItems(cartIndex)
-                    ' Only remove hardware addons (ID 1-5)
-                    If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
-                        itemsToRemove.Add(cartIndex)
-                    End If
+                    itemsToRemove.Add(cartIndex)
                 End If
             End If
         Next
@@ -391,50 +391,37 @@ End Sub
                 For Each index In itemsToRemove.OrderByDescending(Function(x) x)
                     If index >= 0 AndAlso index < cartItems.Count Then
                         Dim item As CartItem = cartItems(index)
-                        ' Only remove hardware addons (ID 1-5)
-                        If item.AddonId >= 1 AndAlso item.AddonId <= 15 Then
-                            ' Remove from database
-                            Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id = @addonId"
-                            Using cmd As New MySqlCommand(deleteQuery, con)
-                                cmd.Parameters.AddWithValue("@customerId", Session.UserId)
-                                cmd.Parameters.AddWithValue("@addonId", item.AddonId)
-                                cmd.ExecuteNonQuery()
-                            End Using
 
-                            ' Remove from local list
-                            cartItems.RemoveAt(index)
-                        End If
+                        ' Remove ANY cart item - no addon_id restrictions
+                        Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id = @addonId"
+                        Using cmd As New MySqlCommand(deleteQuery, con)
+                            cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                            cmd.Parameters.AddWithValue("@addonId", item.AddonId)
+                            cmd.ExecuteNonQuery()
+                        End Using
+
+                        ' Remove from local list
+                        cartItems.RemoveAt(index)
                     End If
                 Next
             End Using
 
             RefreshCartDisplay()
-
-
             UpdateTotal()
-            MessageBox.Show("Selected hardware items removed from cart!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Selected items removed from cart!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Catch ex As Exception
             MessageBox.Show("Error removing items: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    Public Sub ClearCart()
-        ' Check transaction validity only for new subscriptions
-        '     If Session.IsNewSubscription Then
-        ' Session.CheckTransactionTimeout()
-        ' If Not Session.IsTransactionActive Then
-        ' MessageBox.Show("Session expired. Please select a plan again.")
-        '  ReturnToPlanSelection()
-        '  Return
-        '  End If
-        '  End If
 
+    Public Sub ClearCart()
         Try
             Using con As New MySqlConnection(strCon)
                 con.Open()
-                ' Only clear hardware addons (ID 1-5) from cart
-                Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 15"
+                ' Clear ALL cart items - no addon_id restrictions
+                Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"
                 Using cmd As New MySqlCommand(deleteQuery, con)
                     cmd.Parameters.AddWithValue("@customerId", Session.UserId)
                     cmd.ExecuteNonQuery()
@@ -448,7 +435,7 @@ End Sub
             End If
             ' Re-add plan/subscriber info if applicable
             UpdateTotal()
-            MessageBox.Show("Hardware cart items cleared!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("All cart items cleared!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Catch ex As Exception
             MessageBox.Show("Error clearing cart: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -501,8 +488,8 @@ End Sub
     End Sub
 
     Private Sub btnClearCart_Click(sender As Object, e As EventArgs) Handles btnClearCart.Click
-        Dim result As DialogResult = MessageBox.Show("Are you sure you want to clear all hardware items from cart?",
-                                                    "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        Dim result As DialogResult = MessageBox.Show("Are you sure you want to clear all items from cart?",
+                                                "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
             ClearCart()
             deletionMode = False
@@ -520,8 +507,6 @@ End Sub
                     End If
                 Next
             End If
-
-
         End If
     End Sub
 
@@ -923,8 +908,8 @@ End Sub
             Try
                 Using con As New MySqlConnection(strCon)
                     con.Open()
-                    ' Only clear hardware addons (ID 1-5) from cart
-                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId AND addon_id BETWEEN 1 AND 15"
+                    ' Clear ALL cart items - no addon_id restrictions
+                    Dim deleteQuery As String = "DELETE FROM shopping_cart WHERE customer_id = @customerId"
                     Using cmd As New MySqlCommand(deleteQuery, con)
                         cmd.Parameters.AddWithValue("@customerId", Session.UserId)
                         cmd.ExecuteNonQuery()
@@ -1015,6 +1000,7 @@ End Sub
     End Sub
 
     Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
+        ' Additional safety check - don't allow plan deletion
         If Session.preSubscriber = True Then
             If CheckedListBox1.SelectedIndex = 0 Then
                 MsgBox("Plan cannot be deleted")
@@ -1023,28 +1009,26 @@ End Sub
         End If
 
         If CheckedListBox1.CheckedItems.Count = 1 AndAlso Session.preSubscriber = True Then
-            MessageBox.Show("Please select hardware items to remove!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Please select items to remove!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         ElseIf CheckedListBox1.CheckedItems.Count = 0 AndAlso (Session.fromProduct = True OrElse Session.subscriberAccess = True) Then
-            MessageBox.Show("Please select hardware items to remove!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Please select items to remove!", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
 
-        Dim result As DialogResult = MessageBox.Show("Are you sure you want to remove selected hardware items?",
-                                                    "Confirm Removal", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        Dim result As DialogResult = MessageBox.Show("Are you sure you want to remove selected items?",
+                                                "Confirm Removal", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
             RemoveSelectedItems()
 
             If Session.userRole = "Subscriber" Then
-                For Each form As Form In Application.OpenForms 'added12
+                For Each form As Form In Application.OpenForms
                     If form.Name = "Addon" Then
                         form.Close()
                         Exit For
                     End If
                 Next
-
             End If
-
         End If
     End Sub
 
@@ -1176,5 +1160,133 @@ End Sub
 
     Private Sub HelpToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem.Click
 
+    End Sub
+
+    Private Sub btnupdatequantity_Click(sender As Object, e As EventArgs) Handles btnupdatequantity.Click
+        ' Check if in deletion mode
+        If deletionMode = True Then
+            MsgBox("Please exit from Deletion Mode first.", MsgBoxStyle.Exclamation, "Notice")
+            Return
+        End If
+
+        ' Check if any items are selected
+        Dim hasSelectedItems As Boolean = False
+        Dim startIndex As Integer = 0
+
+        ' Skip plan/subscriber info item if it exists
+        If Session.preSubscriber = True Then
+            startIndex = 1
+        End If
+
+        ' Check for selected items
+        For i As Integer = startIndex To CheckedListBox1.Items.Count - 1
+            If CheckedListBox1.GetItemCheckState(i) = CheckState.Checked Then
+                hasSelectedItems = True
+                Exit For
+            End If
+        Next
+
+        If Not hasSelectedItems Then
+            MessageBox.Show("Please select items to update quantity!", "No Items Selected", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
+        Try
+            Using con As New MySqlConnection(strCon)
+                con.Open()
+
+                ' Process each selected item
+                For i As Integer = startIndex To CheckedListBox1.Items.Count - 1
+                    If CheckedListBox1.GetItemCheckState(i) = CheckState.Checked Then
+                        ' Additional safety check - don't allow plan updates
+                        If Session.preSubscriber = True AndAlso i = 0 Then
+                            MessageBox.Show("Plan quantities cannot be updated!", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Continue For
+                        End If
+
+                        Dim cartIndex As Integer = i - startIndex
+
+                        ' Make sure we have a valid cart item
+                        If cartIndex >= 0 AndAlso cartIndex < cartItems.Count Then
+                            Dim currentItem As CartItem = cartItems(cartIndex)
+
+                            ' Get current quantity info
+                            Dim currentQuantity As Integer = currentItem.Quantity
+                            Dim itemName As String = currentItem.ProductName
+
+                            ' Check stock availability for hardware items
+                            Dim maxAllowed As Integer = Integer.MaxValue
+                            If currentItem.Category.ToUpper() = "HARDWARE" Then
+                                Dim stockQuery As String = "SELECT hs.quantity_available FROM hardware_stocks hs WHERE hs.addon_id = @addonId"
+                                Using stockCmd As New MySqlCommand(stockQuery, con)
+                                    stockCmd.Parameters.AddWithValue("@addonId", currentItem.AddonId)
+                                    Dim stockResult = stockCmd.ExecuteScalar()
+                                    If stockResult IsNot Nothing Then
+                                        maxAllowed = Convert.ToInt32(stockResult)
+                                    End If
+                                End Using
+                            End If
+
+                            ' Prompt for new quantity with stock info
+                            Dim promptMessage As String = $"Update quantity for: {itemName}" & vbCrLf &
+                                                    $"Current quantity: {currentQuantity}" & vbCrLf
+
+                            If currentItem.Category.ToUpper() = "HARDWARE" AndAlso maxAllowed <> Integer.MaxValue Then
+                                promptMessage += $"Available stock: {maxAllowed}" & vbCrLf
+                            End If
+
+                            promptMessage += "Enter new quantity:"
+
+                            Dim input As String = InputBox(promptMessage, "Update Quantity", currentQuantity.ToString())
+
+                            ' Check if user cancelled
+                            If String.IsNullOrEmpty(input) Then
+                                Continue For ' Skip this item, continue with others
+                            End If
+
+                            Dim newQuantity As Integer
+                            If Integer.TryParse(input, newQuantity) AndAlso newQuantity > 0 Then
+                                ' Check stock limits for hardware items
+                                If currentItem.Category.ToUpper() = "HARDWARE" AndAlso newQuantity > maxAllowed Then
+                                    MessageBox.Show($"Insufficient stock for {itemName}!" & vbCrLf &
+                                              $"Requested: {newQuantity}, Available: {maxAllowed}",
+                                              "Stock Limit Exceeded", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                    Continue For
+                                End If
+
+                                ' Update the database
+                                Dim updateQuery As String = "UPDATE shopping_cart SET quantity = @quantity WHERE customer_id = @customerId AND addon_id = @addonId"
+                                Using cmd As New MySqlCommand(updateQuery, con)
+                                    cmd.Parameters.AddWithValue("@customerId", Session.UserId)
+                                    cmd.Parameters.AddWithValue("@addonId", currentItem.AddonId)
+                                    cmd.Parameters.AddWithValue("@quantity", newQuantity)
+                                    cmd.ExecuteNonQuery()
+                                End Using
+
+                                MessageBox.Show("Quantities updated successfully!", "Update Complete", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                currentItem.Quantity = newQuantity
+
+                            Else
+                                MessageBox.Show($"Invalid quantity entered for {itemName}!" & vbCrLf &
+                                          "Please enter a positive number greater than 0." & vbCrLf &
+                                          "To remove items, use Deletion Mode instead.",
+                                          "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            End If
+                        End If
+                    End If
+                Next
+
+                ' Refresh the display after all updates
+                LoadCartFromDatabase() ' Reload from database to ensure consistency
+                RefreshCartDisplay()
+                UpdateTotal()
+                RefreshCart()
+
+
+            End Using
+
+        Catch ex As Exception
+            MessageBox.Show("Error updating quantities: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 End Class

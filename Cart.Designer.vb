@@ -42,6 +42,7 @@ Partial Class Cart
         Me.lblDeletionMode = New System.Windows.Forms.Label()
         Me.btnCheck = New System.Windows.Forms.Button()
         Me.btnDM = New System.Windows.Forms.Button()
+        Me.btnupdatequantity = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -54,7 +55,7 @@ Partial Class Cart
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(600, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(705, 24)
         Me.MenuStrip1.TabIndex = 23
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -122,7 +123,7 @@ Partial Class Cart
         '
         'txtTotal
         '
-        Me.txtTotal.Location = New System.Drawing.Point(441, 68)
+        Me.txtTotal.Location = New System.Drawing.Point(533, 75)
         Me.txtTotal.Margin = New System.Windows.Forms.Padding(2)
         Me.txtTotal.Name = "txtTotal"
         Me.txtTotal.Size = New System.Drawing.Size(132, 20)
@@ -134,7 +135,7 @@ Partial Class Cart
         Me.Label2.BackColor = System.Drawing.Color.Black
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(388, 70)
+        Me.Label2.Location = New System.Drawing.Point(480, 76)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(43, 17)
@@ -147,7 +148,7 @@ Partial Class Cart
         Me.CheckedListBox1.Location = New System.Drawing.Point(31, 98)
         Me.CheckedListBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(542, 154)
+        Me.CheckedListBox1.Size = New System.Drawing.Size(634, 169)
         Me.CheckedListBox1.TabIndex = 27
         '
         'btnDeletionMode
@@ -155,9 +156,9 @@ Partial Class Cart
         Me.btnDeletionMode.BackColor = System.Drawing.Color.DarkRed
         Me.btnDeletionMode.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDeletionMode.ForeColor = System.Drawing.Color.White
-        Me.btnDeletionMode.Location = New System.Drawing.Point(264, 266)
+        Me.btnDeletionMode.Location = New System.Drawing.Point(307, 280)
         Me.btnDeletionMode.Name = "btnDeletionMode"
-        Me.btnDeletionMode.Size = New System.Drawing.Size(111, 29)
+        Me.btnDeletionMode.Size = New System.Drawing.Size(147, 50)
         Me.btnDeletionMode.TabIndex = 28
         Me.btnDeletionMode.Text = "DELETION MODE"
         Me.btnDeletionMode.UseVisualStyleBackColor = False
@@ -167,9 +168,9 @@ Partial Class Cart
         Me.btnClearCart.BackColor = System.Drawing.Color.DarkRed
         Me.btnClearCart.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClearCart.ForeColor = System.Drawing.Color.White
-        Me.btnClearCart.Location = New System.Drawing.Point(264, 301)
+        Me.btnClearCart.Location = New System.Drawing.Point(307, 336)
         Me.btnClearCart.Name = "btnClearCart"
-        Me.btnClearCart.Size = New System.Drawing.Size(111, 28)
+        Me.btnClearCart.Size = New System.Drawing.Size(147, 49)
         Me.btnClearCart.TabIndex = 29
         Me.btnClearCart.Text = "CLEAR CART"
         Me.btnClearCart.UseVisualStyleBackColor = False
@@ -179,9 +180,9 @@ Partial Class Cart
         Me.btnCheckout.BackColor = System.Drawing.Color.DarkGreen
         Me.btnCheckout.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCheckout.ForeColor = System.Drawing.Color.White
-        Me.btnCheckout.Location = New System.Drawing.Point(46, 266)
+        Me.btnCheckout.Location = New System.Drawing.Point(31, 282)
         Me.btnCheckout.Name = "btnCheckout"
-        Me.btnCheckout.Size = New System.Drawing.Size(200, 63)
+        Me.btnCheckout.Size = New System.Drawing.Size(254, 48)
         Me.btnCheckout.TabIndex = 31
         Me.btnCheckout.Text = "CHECKOUT"
         Me.btnCheckout.UseVisualStyleBackColor = False
@@ -191,9 +192,9 @@ Partial Class Cart
         Me.btnContinueShopping.BackColor = System.Drawing.Color.Indigo
         Me.btnContinueShopping.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnContinueShopping.ForeColor = System.Drawing.Color.White
-        Me.btnContinueShopping.Location = New System.Drawing.Point(391, 268)
+        Me.btnContinueShopping.Location = New System.Drawing.Point(473, 282)
         Me.btnContinueShopping.Name = "btnContinueShopping"
-        Me.btnContinueShopping.Size = New System.Drawing.Size(156, 27)
+        Me.btnContinueShopping.Size = New System.Drawing.Size(192, 48)
         Me.btnContinueShopping.TabIndex = 32
         Me.btnContinueShopping.Text = "CONTINUE SHOPPING"
         Me.btnContinueShopping.UseVisualStyleBackColor = False
@@ -203,9 +204,9 @@ Partial Class Cart
         Me.btnCancelOrder.BackColor = System.Drawing.Color.Indigo
         Me.btnCancelOrder.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancelOrder.ForeColor = System.Drawing.Color.White
-        Me.btnCancelOrder.Location = New System.Drawing.Point(391, 301)
+        Me.btnCancelOrder.Location = New System.Drawing.Point(473, 336)
         Me.btnCancelOrder.Name = "btnCancelOrder"
-        Me.btnCancelOrder.Size = New System.Drawing.Size(156, 28)
+        Me.btnCancelOrder.Size = New System.Drawing.Size(192, 49)
         Me.btnCancelOrder.TabIndex = 33
         Me.btnCancelOrder.Text = "CANCEL ORDER"
         Me.btnCancelOrder.UseVisualStyleBackColor = False
@@ -250,13 +251,26 @@ Partial Class Cart
         Me.btnDM.Text = "EXIT DELETION MODE"
         Me.btnDM.UseVisualStyleBackColor = False
         '
+        'btnupdatequantity
+        '
+        Me.btnupdatequantity.BackColor = System.Drawing.Color.DarkGreen
+        Me.btnupdatequantity.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnupdatequantity.ForeColor = System.Drawing.Color.White
+        Me.btnupdatequantity.Location = New System.Drawing.Point(31, 336)
+        Me.btnupdatequantity.Name = "btnupdatequantity"
+        Me.btnupdatequantity.Size = New System.Drawing.Size(254, 48)
+        Me.btnupdatequantity.TabIndex = 37
+        Me.btnupdatequantity.Text = "Update Quantity"
+        Me.btnupdatequantity.UseVisualStyleBackColor = False
+        '
         'Cart
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
-        Me.ClientSize = New System.Drawing.Size(600, 366)
+        Me.ClientSize = New System.Drawing.Size(705, 418)
+        Me.Controls.Add(Me.btnupdatequantity)
         Me.Controls.Add(Me.btnDM)
         Me.Controls.Add(Me.btnCheck)
         Me.Controls.Add(Me.lblDeletionMode)
@@ -300,4 +314,5 @@ Partial Class Cart
     Friend WithEvents btnCheck As Button
     Friend WithEvents btnDM As Button
     Friend WithEvents TicketToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents btnupdatequantity As Button
 End Class

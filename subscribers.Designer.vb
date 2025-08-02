@@ -53,7 +53,7 @@ Partial Class subscribers
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.MenuStrip1.Size = New System.Drawing.Size(611, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(688, 24)
         Me.MenuStrip1.TabIndex = 2
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -103,12 +103,12 @@ Partial Class subscribers
         '
         Me.lblUser.AutoSize = True
         Me.lblUser.BackColor = System.Drawing.Color.Transparent
-        Me.lblUser.Font = New System.Drawing.Font("Palatino Linotype", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUser.Font = New System.Drawing.Font("Palatino Linotype", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUser.ForeColor = System.Drawing.Color.White
-        Me.lblUser.Location = New System.Drawing.Point(46, 44)
+        Me.lblUser.Location = New System.Drawing.Point(45, 50)
         Me.lblUser.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblUser.Name = "lblUser"
-        Me.lblUser.Size = New System.Drawing.Size(167, 37)
+        Me.lblUser.Size = New System.Drawing.Size(191, 44)
         Me.lblUser.TabIndex = 3
         Me.lblUser.Text = "placeholder"
         '
@@ -119,12 +119,12 @@ Partial Class subscribers
         '
         Me.lblStatus.AutoSize = True
         Me.lblStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblStatus.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblStatus.Font = New System.Drawing.Font("Palatino Linotype", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblStatus.ForeColor = System.Drawing.Color.White
-        Me.lblStatus.Location = New System.Drawing.Point(49, 86)
+        Me.lblStatus.Location = New System.Drawing.Point(58, 94)
         Me.lblStatus.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(61, 22)
+        Me.lblStatus.Size = New System.Drawing.Size(78, 28)
         Me.lblStatus.TabIndex = 4
         Me.lblStatus.Text = "Status:"
         '
@@ -132,12 +132,12 @@ Partial Class subscribers
         '
         Me.lblPlan.AutoSize = True
         Me.lblPlan.BackColor = System.Drawing.Color.Transparent
-        Me.lblPlan.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPlan.Font = New System.Drawing.Font("Palatino Linotype", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPlan.ForeColor = System.Drawing.Color.White
-        Me.lblPlan.Location = New System.Drawing.Point(49, 108)
+        Me.lblPlan.Location = New System.Drawing.Point(58, 124)
         Me.lblPlan.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblPlan.Name = "lblPlan"
-        Me.lblPlan.Size = New System.Drawing.Size(46, 22)
+        Me.lblPlan.Size = New System.Drawing.Size(61, 28)
         Me.lblPlan.TabIndex = 5
         Me.lblPlan.Text = "Plan:"
         '
@@ -145,12 +145,12 @@ Partial Class subscribers
         '
         Me.lblPrice.AutoSize = True
         Me.lblPrice.BackColor = System.Drawing.Color.Transparent
-        Me.lblPrice.Font = New System.Drawing.Font("Palatino Linotype", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPrice.Font = New System.Drawing.Font("Palatino Linotype", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPrice.ForeColor = System.Drawing.Color.White
-        Me.lblPrice.Location = New System.Drawing.Point(49, 130)
+        Me.lblPrice.Location = New System.Drawing.Point(58, 154)
         Me.lblPrice.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblPrice.Name = "lblPrice"
-        Me.lblPrice.Size = New System.Drawing.Size(51, 22)
+        Me.lblPrice.Size = New System.Drawing.Size(66, 28)
         Me.lblPrice.TabIndex = 6
         Me.lblPrice.Text = "Price:"
         '
@@ -161,16 +161,16 @@ Partial Class subscribers
         Me.panelBilling.Controls.Add(Me.btnPay)
         Me.panelBilling.Controls.Add(Me.lblAmountDue)
         Me.panelBilling.Controls.Add(Me.lblBillMonth)
-        Me.panelBilling.Location = New System.Drawing.Point(53, 155)
+        Me.panelBilling.Location = New System.Drawing.Point(53, 200)
         Me.panelBilling.Name = "panelBilling"
-        Me.panelBilling.Size = New System.Drawing.Size(507, 173)
+        Me.panelBilling.Size = New System.Drawing.Size(595, 212)
         Me.panelBilling.TabIndex = 7
         '
         'btnPay
         '
         Me.btnPay.BackColor = System.Drawing.Color.Transparent
         Me.btnPay.Font = New System.Drawing.Font("Palatino Linotype", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPay.Location = New System.Drawing.Point(116, 122)
+        Me.btnPay.Location = New System.Drawing.Point(172, 133)
         Me.btnPay.Name = "btnPay"
         Me.btnPay.Size = New System.Drawing.Size(248, 46)
         Me.btnPay.TabIndex = 10
@@ -214,7 +214,7 @@ Partial Class subscribers
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = Global.fdbmsproj.My.Resources.Resources.black_abstract
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(611, 366)
+        Me.ClientSize = New System.Drawing.Size(688, 440)
         Me.Controls.Add(Me.panelBilling)
         Me.Controls.Add(Me.lblPrice)
         Me.Controls.Add(Me.lblPlan)
