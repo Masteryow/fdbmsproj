@@ -268,7 +268,7 @@ Public Class subscribers
     End Sub
 
     Private Sub subscribers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Session.fromProduct = True
 
 
         Session.subscriberAccess = True
@@ -337,7 +337,7 @@ Public Class subscribers
     End Sub
 
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
-        Session.fromProduct = True
+
         products.Show()
         Me.Close()
     End Sub

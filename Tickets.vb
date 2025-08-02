@@ -297,7 +297,7 @@ Public Class Tickets
     End Sub
 
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
-        Addon.Show()
+        products.Show()
         Me.Close()
     End Sub
 

@@ -1,5 +1,9 @@
-﻿Imports System.IO
+﻿Imports System.Diagnostics.Eventing.Reader
+Imports System.IO
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports System.Xml
 Imports MySql.Data.MySqlClient
+Imports Org.BouncyCastle.Tls
 
 
 
@@ -20,6 +24,52 @@ Public Class products
     Dim planType As String = Session.planType
     Dim planID As Integer = Session.PlanId
     Dim planImage As Image = Session.planImage
+    Dim cartTotal As Decimal = 0
+
+    Private Function getCartTotal(customerID As Integer)
+
+        Using con As New MySqlConnection(strCon)
+            con.Open()
+            Dim query As String = "
+            SELECT SUM(a.price * sc.quantity) AS total
+            FROM shopping_cart sc
+            JOIN addons a ON sc.addon_id = a.addon_id
+            WHERE sc.customer_id = @customerId;"
+            Using cmd As New MySqlCommand(query, con)
+                cmd.Parameters.AddWithValue("@customerId", customerID)
+                Dim result = cmd.ExecuteScalar()
+                If result IsNot DBNull.Value Then
+                    cartTotal = Convert.ToDecimal(result)
+
+
+                End If
+            End Using
+        End Using
+        Return cartTotal
+    End Function
+
+    Private Sub RecalculateTotal()
+
+        ' Calculate total based on user type and context
+
+
+        Dim cartTotalDB As Decimal = getCartTotal(Session.UserId)
+        If Session.fromProduct = True OrElse Session.userRole = "Subscriber" Then
+            'for ordinary customer and subscriber
+
+            cartTotal = cartTotalDB
+        ElseIf Session.preSubscriber Then
+            ' New subscription - include plan price + addons
+
+            cartTotal = planPrice + cartTotalDB
+
+
+        End If
+
+        txtCartTotal.Text = "₱ " & cartTotal.ToString("F2")
+
+
+    End Sub
 
     Public Sub delete()
 
@@ -56,11 +106,9 @@ Public Class products
                                       FROM addons a 
                                       LEFT JOIN hardware_stocks hs ON a.addon_id = hs.addon_id 
                                       JOIN blobs b ON a.blob_id = b.blob_id"
-
-
                 If selectedCategory <> "All" Then
-                        query &= " WHERE a.category = @category"
-                    End If
+                    query &= " WHERE a.category = @category"
+                End If
 
 
 
@@ -137,7 +185,7 @@ Public Class products
                     Using reader As MySqlDataReader = cmd.ExecuteReader()
                         While reader.Read()
                             price = reader.GetDecimal("price")
-                            txtPrice.Text = price.ToString("f2")
+                            txtPrice.Text = "₱ " & price.ToString("f2")
                             productImage = CType(reader("data"), Byte())
 
                             Using imageConversion As New MemoryStream(productImage)
@@ -168,7 +216,35 @@ Public Class products
         End Try
     End Sub
 
+    Public Sub uiItemsDisplay()
+        Dim currentCategory1 As String
+        If Session.fromProduct = True AndAlso Session.subscriberAccess = False Then
+            cbxFilter.SelectedIndex = 1
+            cbxFilter.Enabled = False
+
+            currentCategory1 = "Hardware"
+        Else
+            currentCategory1 = cbxFilter.SelectedItem.ToString()
+        End If
+
+        itemCategoryBased(currentCategory1)
+    End Sub
+
+
     Private Sub products_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        getCartTotal(Session.UserId)
+
+        If Session.userRole = "Subscriber" Then  'ticket visibility - user role-based
+            HelpToolStripMenuItem.Visible = True
+            SubscriptionToolStripMenuItem.Visible = False
+
+        Else
+            HelpToolStripMenuItem.Visible = False
+            SubscriptionToolStripMenuItem.Visible = True
+        End If
+
+
 
         If Session.preSubscriber = True Then
             pbxPlanImage.Visible = True
@@ -176,7 +252,19 @@ Public Class products
             lblPlanType.Visible = True
             lblPlanPrice.Visible = True
 
+            pbxPlanImage.Image = planImage
+            lblPlanName.Text = planName
+            lblPlanType.Text = planType
+            lblPlanPrice.Text = "₱ " & planPrice.ToString("f2")
+
+            txtTotal.Visible = False
+            lblTotal.Visible = False
+            cartTotal += planPrice
+
+
+
         ElseIf Session.fromProduct = True Then
+
             pbxPlanImage.Visible = False
             lblPlanName.Visible = False
             lblPlanType.Visible = False
@@ -201,35 +289,19 @@ Public Class products
             lblSubHeader.ForeColor = Color.White
 
             Me.Controls.Add(lblSubHeader)
-
-
-
-
+            total = Quantity * price
         End If
-        pbxPlanImage.Image = planImage
-        lblPlanName.Text = planName
-        lblPlanType.Text = planType
-        lblPlanPrice.Text = "₱ " & planPrice.ToString("f2")
+
+        txtCartTotal.Text = "₱ " & cartTotal.ToString("F2")
 
         cbxFilter.SelectedIndex = 0
 
-        Dim currentCategory1 As String
 
-        If Session.fromProduct = True Then
-            cbxFilter.SelectedIndex = 1
-            cbxFilter.Enabled = False
 
-            currentCategory1 = "Hardware"
-        Else
-            currentCategory1 = cbxFilter.SelectedItem.ToString()
-        End If
-
-        itemCategoryBased(currentCategory1)
+        uiItemsDisplay()
 
 
 
-        total = Quantity * price
-        txtTotal.Text = total
 
         If Session.preSubscriber Then
             lblChangeOfMind.Visible = True
@@ -251,7 +323,7 @@ Public Class products
         Quantity = 1
         txtQuantity.Text = Quantity
         total = Quantity * price
-        txtTotal.Text = total
+        txtTotal.Text = "₱ " & total.ToString("F2")
 
 
 
@@ -276,7 +348,7 @@ Public Class products
         txtQuantity.Text = Quantity
 
         total = Quantity * price
-        txtTotal.Text = total
+        txtTotal.Text = "₱ " & total.ToString("F2")
 
     End Sub
 
@@ -416,6 +488,11 @@ Public Class products
 
             delete()
 
+            Session.IsNewSubscription = True
+
+            subscribers.Show()
+            Me.Close()
+
         Catch ex As Exception
             MsgBox("Error: " & ex.Message)
         End Try
@@ -424,7 +501,7 @@ Public Class products
     End Sub
 
 
-    Public Sub ordinaryPurchases()
+    Private Function ordinaryPurchases()
         Try
 
             Dim money As Decimal = 0
@@ -442,14 +519,14 @@ Public Class products
 
                 ElseIf money < total Then
                     MsgBox("Insufficient money, please try again!")
-                    Exit Sub
+                    Return False
                 Else
 
                     MsgBox("Invalid Input")
-                    Exit Sub
+                    Return False
                 End If
             Else
-                Exit Sub
+                Return False
 
             End If
 
@@ -469,24 +546,6 @@ Public Class products
                             cmd.ExecuteNonQuery()
                         End Using
 
-
-                        If accessCategory = "Hardware" Then
-
-                            Using updateStocks As New MySqlCommand("UPDATE hardware_stocks hs JOIN addons a ON hs.addon_id = a.addon_id
-                                                                SET quantity_available = @quant WHERE a.addon_id = @currentID", conn, transaction)
-                                Dim availableItem As Integer = stocksCount - Quantity
-
-                                updateStocks.Parameters.AddWithValue("@quant", availableItem)
-                                updateStocks.Parameters.AddWithValue("@currentID", selectedItem.AddonId)
-
-                                updateStocks.ExecuteNonQuery()
-
-                            End Using
-
-                        End If
-
-
-
                         transaction.Commit()
 
                     Catch ex As Exception
@@ -499,26 +558,24 @@ Public Class products
 
             End Using
 
-            Session.IsNewSubscription = True
+            Quantity = 1
+            total = Quantity * price
 
-            subscribers.Show()
-            Me.Close()
+            txtQuantity.Text = Quantity
+            txtTotal.Text = "₱ " & total.ToString("F2")
 
         Catch ex As Exception
             MsgBox("Please select an item first")
         End Try
 
-    End Sub
-    Private Sub pbxBuyNow_Click(sender As Object, e As EventArgs)
-
-
-
-    End Sub
+        Return True
+    End Function
 
     Private Sub pbxBuyNow_Click_1(sender As Object, e As EventArgs) Handles pbxBuyNow.Click
 
 
-        If Session.preSubscriber Then
+
+        If Session.preSubscriber = True Then
             ' This is a new subscription purchase (plan + addons)
             Dim result As DialogResult = MsgBox($"Are you sure you want to purchase PLAN ONLY?{vbNewLine}" &
                 "Your current cart will be cleared if you proceed", MsgBoxStyle.YesNo)
@@ -533,7 +590,23 @@ Public Class products
 
         ElseIf Session.fromProduct = True Then
             ' Buying addons directly (from Products tab)
-            ordinaryPurchases()
+            If Not stockChecker() Then Exit Sub
+
+
+            If Not ordinaryPurchases() Then
+                Exit Sub
+
+            Else
+                uiItemsDisplay()
+            End If
+
+
+
+
+
+
+
+
 
         End If
 
@@ -541,6 +614,182 @@ Public Class products
 
     Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
 
+    End Sub
+
+    Private Sub HomeToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem1.Click
+
+        If Session.preSubscriber = True Then 'customer who added something on cart with plan
+            Dim result As DialogResult = MsgBox("This action will clear your cart due to incomplete transaction, do you want to continue?", MsgBoxStyle.YesNo)
+
+            If result = DialogResult.Yes Then
+
+                delete()
+                Session.preSubscriber = False
+
+                Main.Show()
+
+            Else
+
+                Exit Sub
+            End If
+
+
+
+        ElseIf Session.fromProduct = True AndAlso Session.subscriberAccess = False Then 'ordinary customer
+
+            Main.Show()
+            Session.fromProduct = False
+
+        ElseIf Session.userRole = "Subscriber" Then 'subscriber
+
+            subscribers.Show()
+
+        End If
+
+
+        Me.Close()
+
+    End Sub
+
+    Private Sub SubscriptionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubscriptionToolStripMenuItem.Click
+
+        If Session.preSubscriber = True Then 'customer who added something on cart with plan
+
+
+            Dim result As DialogResult = MsgBox("This action will clear your cart due to incomplete transaction, do you want to continue?", MsgBoxStyle.YesNo)
+
+            If result = DialogResult.Yes Then
+
+                delete()
+                Session.preSubscriber = False
+
+                Subscription.Show()
+
+            Else
+
+                Exit Sub
+            End If
+
+
+        ElseIf Session.fromProduct = True AndAlso Session.subscriberAccess = False Then 'ordinary customer
+
+            Subscription.Show()
+            Session.fromProduct = False
+
+
+
+        End If
+
+
+        Me.Close()
+    End Sub
+
+    Private Sub cartbutton_Click(sender As Object, e As EventArgs) Handles cartbutton.Click
+        Cart.Show()
+        Me.Close()
+    End Sub
+
+    Private Sub TicketToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketToolStripMenuItem.Click
+        Tickets.Show()
+        Me.Close()
+    End Sub
+
+    Private Sub HomeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HomeToolStripMenuItem.Click
+        If MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Form1.Show()
+            Me.Close()
+        End If
+    End Sub
+
+    Private Function stockChecker() 'for checking of stocks - Hardware only
+
+        If accessCategory = "Hardware" Then
+            If stocksCount = 0 Then
+                MsgBox("There is no stocks available. Transaction can't be done!", MsgBoxStyle.Exclamation)
+                Return False
+
+            Else
+
+                If Quantity > stocksCount Then
+                    MsgBox("Quantity exceeds available stocks, add to cart failed", MsgBoxStyle.Exclamation)
+                    Return False
+                End If
+            End If
+
+        Else
+
+
+        End If
+
+        Return True
+    End Function
+    Private Sub pbxAddToCart_Click(sender As Object, e As EventArgs) Handles pbxAddToCart.Click
+
+        If Not stockChecker() Then Exit Sub
+
+
+        Try
+
+
+            Using conn As New MySqlConnection(strCon)
+                conn.Open()
+
+                Using transaction As MySqlTransaction = conn.BeginTransaction
+
+                    Try
+
+                        Using cmd As New MySqlCommand("INSERT INTO shopping_cart (customer_id, addon_id, quantity) VALUES
+                                                       (@customer_id, @addon_id, @quantity)" &
+                                                        "ON DUPLICATE KEY UPDATE quantity = quantity + @quantity, added_at = CURRENT_TIMESTAMP", conn, transaction)
+
+                            cmd.Parameters.AddWithValue("@customer_id", Session.UserId)
+                            cmd.Parameters.AddWithValue("@addon_id", selectedItem.AddonId)
+                            cmd.Parameters.AddWithValue("@quantity", Quantity)
+
+                            cmd.ExecuteNonQuery()
+
+                        End Using
+
+                        MsgBox($"Added to cart successfully{vbNewLine}Item: {cbxItems.SelectedItem.ToString}{vbNewLine}Quantity: {Quantity}{vbNewLine}" &
+                                $"Total: ₱ {total.ToString("f2")}")
+
+
+                        transaction.Commit()
+                    Catch ex As Exception
+                        transaction.Rollback()
+                        MsgBox("Error: " & ex.Message)
+                    End Try
+                End Using
+            End Using
+        Catch ex As Exception
+            MsgBox("Error: " & ex.Message)
+
+
+        End Try
+        RecalculateTotal()
+
+        txtCartTotal.Text = "₱ " & cartTotal.ToString("f2")
+        Quantity = 1
+        txtQuantity.Text = Quantity
+        total = Quantity * price
+        txtTotal.Text = "₱ " & total.ToString("F2")
+    End Sub
+
+    Private Sub txtQuantity_TextChanged(sender As Object, e As EventArgs) Handles txtQuantity.TextChanged
+
+        If Not String.IsNullOrEmpty(txtQuantity.Text) AndAlso IsNumeric(txtQuantity.Text) Then
+            Quantity = CInt(txtQuantity.Text)
+            total = Quantity * price
+
+            txtTotal.Text = "₱ " & total.ToString("F2")
+
+        ElseIf Not IsNumeric(txtQuantity.Text) AndAlso Not String.IsNullOrEmpty(txtQuantity.Text) Then
+            MsgBox("Invalid Quantity", MsgBoxStyle.Exclamation)
+            Quantity = 1
+            txtQuantity.Text = Quantity
+            total = Quantity * price
+            txtTotal.Text = "₱ " & total.ToString("F2")
+        End If
     End Sub
 End Class
 

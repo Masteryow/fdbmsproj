@@ -887,6 +887,12 @@ Public Class Cart
 
     ' Add navigation methods
     Private Sub btnContinueShopping_Click(sender As Object, e As EventArgs) Handles btnContinueShopping.Click
+
+        If deletionMode = True Then
+            MsgBox("Please exit from Deletion Mode first.", MsgBoxStyle.Exclamation, "Notice")
+            Exit Sub
+        End If
+
         ' Return to addon selection - keep transaction active
         If Session.userRole = "Customer" AndAlso Session.fromProduct = True Then
             Session.preSubscriber = False
@@ -895,12 +901,9 @@ Public Class Cart
             Session.planPrice = 0
             Session.planType = ""
 
-
-
-
         End If
 
-        Addon.Show()
+        products.Show()
         CloseProgrammatically() 'Me.Hide
     End Sub
 
@@ -1151,7 +1154,7 @@ Public Class Cart
             Exit Sub
         End If
 
-        Addon.Show()
+        products.Show()
         Me.Hide()
     End Sub
 

@@ -200,9 +200,6 @@ Public Class Subscription
                         Session.planName = plan_name
                         Session.planType = plan_type
                         Session.planPrice = price
-                        Session.preSubscriber = True
-
-
                         Session.planSpeed = speed
                         Session.planDataCap = data_cap
 
@@ -214,7 +211,7 @@ Public Class Subscription
 
                         If addons = DialogResult.Yes Then
                             ' Navigate to addon form - keep transaction active
-
+                            Session.preSubscriber = True
                             Session.fromProduct = False
                                 Session.subscriberAccess = False
                                 navigatingAway = True
@@ -482,7 +479,7 @@ Public Class Subscription
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
 
         Session.fromProduct = True
-        Addon.Show()
+        products.Show()
         Me.Close()
 
     End Sub
