@@ -1963,6 +1963,7 @@ Public Class Admin
 
         Dim txtPrice As New TextBox With {.Location = New Point(260, 50), .Size = New Size(80, 23)}
         Dim lblPrice As New Label With {.Text = "Price:", .Location = New Point(260, 30), .AutoSize = True}
+
         ' Addons DataGridView with enhanced functionality (declare early for reference)
         Dim dgvAddons As New DataGridView With {
         .Location = New Point(20, 120),
@@ -1983,6 +1984,7 @@ Public Class Admin
         .BackColor = Color.LightGray,
         .Name = "picPreview"
     }
+
         ' Add placeholder text
         AddHandler picPreview.Paint, Sub(sender, e)
                                          If picPreview.Image Is Nothing Then
@@ -2044,12 +2046,16 @@ Public Class Admin
                                                   End Using
                                               End If
 
-                                              ' Step 3: Insert into addons with blob_id and is_active = True by default
-                                              Using cmd As New MySqlCommand("INSERT INTO addons (item_name, category, price, blob_id, is_active) VALUES (@itemname, @category, @price, @blob_id, @is_active)", con)
+                                              ' Step 3: Insert into addons with blob_id, is_active, and is_recurring
+                                              Dim category As String = cmbCategory.SelectedItem.ToString()
+                                              Dim isRecurring As Boolean = False ' Default to false since we don't have UI checkbox
+
+                                              Using cmd As New MySqlCommand("INSERT INTO addons (item_name, category, price, blob_id, is_active, is_recurring) VALUES (@itemname, @category, @price, @blob_id, @is_active, @is_recurring)", con)
                                                   cmd.Parameters.AddWithValue("@itemname", txtItemName.Text.Trim())
-                                                  cmd.Parameters.AddWithValue("@category", cmbCategory.SelectedItem.ToString())
+                                                  cmd.Parameters.AddWithValue("@category", category)
                                                   cmd.Parameters.AddWithValue("@price", price)
                                                   cmd.Parameters.AddWithValue("@is_active", True) ' New addons are active by default
+                                                  cmd.Parameters.AddWithValue("@is_recurring", isRecurring)
                                                   If blobId <> Nothing Then
                                                       cmd.Parameters.AddWithValue("@blob_id", blobId)
                                                   Else
@@ -2059,7 +2065,7 @@ Public Class Admin
                                                   cmd.ExecuteNonQuery()
 
                                                   ' If it's hardware, add to stock table with 0 initial stock
-                                                  If cmbCategory.SelectedItem.ToString() = "Hardware" Then
+                                                  If category = "Hardware" Then
                                                       Dim addonId As Integer = cmd.LastInsertedId
                                                       Dim stockCmd As New MySqlCommand("INSERT INTO hardware_stocks (addon_id, quantity_available) VALUES (@addonid, 0)", con)
                                                       stockCmd.Parameters.AddWithValue("@addonid", addonId)
@@ -2131,7 +2137,7 @@ Public Class Admin
                                           End If
                                       End Sub
 
-        ' Save Changes Event Handler - Updated to handle name, category, price, and is_active changes
+        ' Save Changes Event Handler - Updated to handle is_recurring changes
         AddHandler btnSaveChanges.Click, Sub()
                                              Try
                                                  If con Is Nothing Then
@@ -2152,6 +2158,12 @@ Public Class Admin
                                                          Dim newCategory As String = row.Cells("category").Value.ToString()
                                                          Dim newPrice As Decimal = Convert.ToDecimal(row.Cells("price").Value)
                                                          Dim isActive As Boolean = Convert.ToBoolean(row.Cells("is_active").Value)
+                                                         Dim isRecurring As Boolean = False
+
+                                                         ' Only get is_recurring value for Services and Plan Upgrades
+                                                         If newCategory = "Service" OrElse newCategory = "Plan Upgrade" Then
+                                                             isRecurring = Convert.ToBoolean(row.Cells("is_recurring").Value)
+                                                         End If
 
                                                          ' Validate that required fields are not empty
                                                          If String.IsNullOrEmpty(newItemName) Then
@@ -2172,12 +2184,13 @@ Public Class Admin
                                                          oldCategoryCmd.Parameters.AddWithValue("@id", addonID)
                                                          Dim oldCategory As String = oldCategoryCmd.ExecuteScalar()?.ToString()
 
-                                                         ' Update the addon - now includes is_active
-                                                         Dim cmd As New MySqlCommand("UPDATE addons SET item_name = @itemname, category = @category, price = @price, is_active = @is_active WHERE addon_id = @id", con)
+                                                         ' Update the addon - now includes is_recurring
+                                                         Dim cmd As New MySqlCommand("UPDATE addons SET item_name = @itemname, category = @category, price = @price, is_active = @is_active, is_recurring = @is_recurring WHERE addon_id = @id", con)
                                                          cmd.Parameters.AddWithValue("@itemname", newItemName)
                                                          cmd.Parameters.AddWithValue("@category", newCategory)
                                                          cmd.Parameters.AddWithValue("@price", newPrice)
                                                          cmd.Parameters.AddWithValue("@is_active", isActive)
+                                                         cmd.Parameters.AddWithValue("@is_recurring", isRecurring)
                                                          cmd.Parameters.AddWithValue("@id", addonID)
                                                          changesCount += cmd.ExecuteNonQuery()
 
@@ -2402,8 +2415,8 @@ Public Class Admin
 
             con.Open()
 
-            ' Build query with optional search - Updated to include is_active and blob_id
-            Dim query As String = "SELECT addon_id, item_name, category, price, is_active, blob_id FROM addons"
+            ' Build query with optional search - Updated to include is_recurring
+            Dim query As String = "SELECT addon_id, item_name, category, price, is_active, is_recurring, blob_id FROM addons"
 
             If Not String.IsNullOrEmpty(searchTerm) Then
                 query += " WHERE item_name LIKE @search OR category LIKE @search"
@@ -2502,6 +2515,22 @@ Public Class Admin
                 dgv.Columns.Insert(columnIndex, checkBoxColumn)
             End If
 
+            ' Configure is_recurring column as checkbox (only for Services and Plan Upgrades)
+            If dgv.Columns.Contains("is_recurring") Then
+                ' Convert to checkbox column
+                Dim recurringCheckBoxColumn As New DataGridViewCheckBoxColumn()
+                recurringCheckBoxColumn.DataPropertyName = "is_recurring"
+                recurringCheckBoxColumn.HeaderText = "Recurring"
+                recurringCheckBoxColumn.Name = "is_recurring"
+                recurringCheckBoxColumn.Width = 70
+                recurringCheckBoxColumn.ReadOnly = False
+
+                ' Remove the original column and add checkbox column
+                Dim columnIndex As Integer = dgv.Columns("is_recurring").Index
+                dgv.Columns.RemoveAt(columnIndex)
+                dgv.Columns.Insert(columnIndex, recurringCheckBoxColumn)
+            End If
+
             ' Add Browse Image Button Column
             Dim btnColumn As New DataGridViewButtonColumn()
             btnColumn.HeaderText = "Browse Image"
@@ -2528,6 +2557,50 @@ Public Class Admin
             ' Add event handler for button clicks
             RemoveHandler dgv.CellClick, AddressOf HandleAddonBrowseButtonClick
             AddHandler dgv.CellClick, AddressOf HandleAddonBrowseButtonClick
+
+            ' Add event handler to disable recurring checkbox for Hardware items
+            AddHandler dgv.CellFormatting, Sub(sender, e)
+                                               If e.ColumnIndex >= 0 AndAlso dgv.Columns(e.ColumnIndex).Name = "is_recurring" AndAlso e.RowIndex >= 0 Then
+                                                   Dim categoryCell = dgv.Rows(e.RowIndex).Cells("category")
+                                                   If categoryCell.Value IsNot Nothing Then
+                                                       Dim category As String = categoryCell.Value.ToString()
+                                                       If category = "Hardware" Then
+                                                           ' Make the cell appear disabled for Hardware items
+                                                           e.CellStyle.BackColor = Color.LightGray
+                                                           e.CellStyle.ForeColor = Color.Gray
+                                                       Else
+                                                           ' Normal appearance for Services and Plan Upgrades
+                                                           e.CellStyle.BackColor = Color.White
+                                                           e.CellStyle.ForeColor = Color.Black
+                                                       End If
+                                                   End If
+                                               End If
+                                           End Sub
+
+            ' Add event handler to prevent editing recurring checkbox for Hardware items
+            AddHandler dgv.CellBeginEdit, Sub(sender, e)
+                                              If e.ColumnIndex >= 0 AndAlso dgv.Columns(e.ColumnIndex).Name = "is_recurring" AndAlso e.RowIndex >= 0 Then
+                                                  Dim categoryCell = dgv.Rows(e.RowIndex).Cells("category")
+                                                  If categoryCell.Value IsNot Nothing Then
+                                                      Dim category As String = categoryCell.Value.ToString()
+                                                      If category = "Hardware" Then
+                                                          ' Cancel edit for Hardware items
+                                                          e.Cancel = True
+                                                      End If
+                                                  End If
+                                              End If
+                                          End Sub
+
+            ' Add event handler to reset recurring when category changes to Hardware
+            AddHandler dgv.CellValueChanged, Sub(sender, e)
+                                                 If e.ColumnIndex >= 0 AndAlso dgv.Columns(e.ColumnIndex).Name = "category" AndAlso e.RowIndex >= 0 Then
+                                                     Dim newCategory As String = dgv.Rows(e.RowIndex).Cells("category").Value.ToString()
+                                                     If newCategory = "Hardware" Then
+                                                         ' Set recurring to false for Hardware items
+                                                         dgv.Rows(e.RowIndex).Cells("is_recurring").Value = False
+                                                     End If
+                                                 End If
+                                             End Sub
 
         Catch ex As Exception
             If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then con.Close()
