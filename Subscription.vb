@@ -27,7 +27,7 @@ Public Class Subscription
 
             conn.Open()
 
-            Using counter As New MySqlCommand("SELECT COUNT(*) FROM internet_plans", conn)
+            Using counter As New MySqlCommand("SELECT COUNT(*) FROM internet_plans ip JOIN blobs b ON ip.blob_id = b.blob_id", conn)
 
                 count = Convert.ToInt32(counter.ExecuteScalar())
 
@@ -48,7 +48,7 @@ Public Class Subscription
         Using conn As New MySqlConnection(strCon)
             conn.Open()
             Using cmd As New MySqlCommand("SELECT ip.plan_id, ip.plan_name, ip.plan_type, ip.price, ip.speed, ip.data_cap FROM internet_plans ip JOIN
-                                   blobs b on ip.blob_id = b.blob_id WHERE plan_id = @plan_id")
+                                   blobs b on ip.blob_id = b.blob_id WHERE plan_id = @plan_id", conn)
 
                 cmd.Parameters.AddWithValue("@plan_id", planID)
                 Using reader As MySqlDataReader = cmd.ExecuteReader
@@ -108,7 +108,7 @@ Public Class Subscription
             conn.Open()
 
 
-            Using cmd As New MySqlCommand("SELECT * FROM internet_plans", conn)
+            Using cmd As New MySqlCommand("SELECT ip.* FROM internet_plans ip JOIN blobs b ON ip.blob_id = b.blob_id", conn)
 
                 Using reader As MySqlDataReader = cmd.ExecuteReader
 
@@ -213,12 +213,12 @@ Public Class Subscription
                             ' Navigate to addon form - keep transaction active
                             Session.preSubscriber = True
                             Session.fromProduct = False
-                                Session.subscriberAccess = False
-                                navigatingAway = True
-                                delete()
-                                products.Show()
+                            Session.subscriberAccess = False
+                            navigatingAway = True
+                            delete()
+                            products.Show()
 
-                                Me.Close()
+                            Me.Close()
 
                         Else
 
