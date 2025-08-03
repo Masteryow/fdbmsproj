@@ -1,6 +1,9 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.Diagnostics.Eventing.Reader
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports iTextSharp.text
+Imports iTextSharp.text.pdf
+Imports System.IO
 
 Public Class Cart
     Dim strCon As String = "server=localhost; userid=root; database=fdbmsproject"
@@ -599,7 +602,28 @@ Public Class Cart
                              $"Change: Php {change:F2}" & vbCrLf &
                              "Thank you for your purchase!"
 
+
             MessageBox.Show(resultMessage, "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Dim newMoneyGiven As Decimal = paymentAmount - Session.planPrice
+            Dim newTotal As Decimal = checkoutTotal - Session.planPrice
+            Dim withPlanChange As Decimal = newMoneyGiven - newTotal
+
+
+
+            Try
+
+                If Session.preSubscriber = True Then
+                    GenerateSimplePDFReceipt(selectedItems, newTotal, newMoneyGiven, withPlanChange)
+
+                Else
+                    GenerateSimplePDFReceipt(selectedItems, checkoutTotal, paymentAmount, change)
+                End If
+
+            Catch ex As Exception
+                MessageBox.Show("Receipt generated successfully, but PDF creation failed: " & ex.Message, "PDF Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End Try
+
 
             ' Payment successful - complete transaction and remove only purchased items
             ' Remove only the items that were actually purchased
@@ -634,6 +658,107 @@ Public Class Cart
             MessageBox.Show("Purchase failed. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
+
+    Private Sub GenerateSimplePDFReceipt(selectedItems As List(Of CartItem), totalAmount As Decimal, paymentAmount As Decimal, change As Decimal)
+        Try
+            ' Create PDF folder
+            Dim pdfPath As String = Application.StartupPath
+            Dim pdfFolder As String = Path.Combine(pdfPath, "Receipts")
+
+            If Not Directory.Exists(pdfFolder) Then
+                Directory.CreateDirectory(pdfFolder)
+            End If
+
+            ' Create filename
+            Dim timestamp As String = DateTime.Now.ToString("yyyyMMdd_HHmmss")
+            Dim receiptFileName As String = $"Receipt_{timestamp}.pdf"
+            Dim pdfFilePath As String = Path.Combine(pdfFolder, receiptFileName)
+
+            ' Create PDF
+            Dim receipt As New Document(PageSize.A4)
+            PdfWriter.GetInstance(receipt, New FileStream(pdfFilePath, FileMode.Create))
+            receipt.Open()
+
+            ' Simple fonts
+            Dim titleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16)
+            Dim normalFont = FontFactory.GetFont(FontFactory.HELVETICA, 12)
+            Dim boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12)
+
+            ' Title
+            Dim title As New Paragraph("SkyLink Receipt", titleFont)
+            title.Alignment = Element.ALIGN_CENTER
+            receipt.Add(title)
+            receipt.Add(New Paragraph(" "))
+
+            ' Date and Time
+            receipt.Add(New Paragraph($"Date: {DateTime.Now.ToString("MM/dd/yyyy hh:mm tt")}", normalFont))
+            receipt.Add(New Paragraph(" "))
+
+            ' Plan (if new subscription)
+            If Session.preSubscriber AndAlso Session.planPrice > 0 Then
+                receipt.Add(New Paragraph("PLAN:", boldFont))
+                receipt.Add(New Paragraph($"{Session.planName} - {Session.planType} - Php {Session.planPrice:F2}", normalFont))
+                receipt.Add(New Paragraph(" "))
+            End If
+
+            ' Items purchased
+            If selectedItems.Count > 0 Then
+                receipt.Add(New Paragraph("ITEMS ORDERED:", boldFont))
+                receipt.Add(New Paragraph(" "))
+
+                ' Simple table for items
+                Dim itemsTable As New PdfPTable(4)
+                itemsTable.WidthPercentage = 100
+                itemsTable.SetWidths(New Single() {3, 1, 1, 1})
+
+                ' Headers
+                itemsTable.AddCell(New PdfPCell(New Phrase("Item", boldFont)))
+                itemsTable.AddCell(New PdfPCell(New Phrase("Qty", boldFont)))
+                itemsTable.AddCell(New PdfPCell(New Phrase("Price", boldFont)))
+                itemsTable.AddCell(New PdfPCell(New Phrase("Total", boldFont)))
+
+                ' Add each item
+                For Each item In selectedItems
+                    Dim itemTotal As Decimal = item.Price * item.Quantity
+                    itemsTable.AddCell(New PdfPCell(New Phrase(item.ProductName, normalFont)))
+                    itemsTable.AddCell(New PdfPCell(New Phrase(item.Quantity.ToString(), normalFont)))
+                    itemsTable.AddCell(New PdfPCell(New Phrase($"Php {item.Price:F2}", normalFont)))
+                    itemsTable.AddCell(New PdfPCell(New Phrase($"Php {itemTotal:F2}", normalFont)))
+                Next
+
+                receipt.Add(itemsTable)
+                receipt.Add(New Paragraph(" "))
+            End If
+
+            ' Payment summary
+            receipt.Add(New Paragraph("PAYMENT SUMMARY:", boldFont))
+            receipt.Add(New Paragraph($"Total Amount: Php {totalAmount:F2}", normalFont))
+            receipt.Add(New Paragraph($"Money Given: Php {paymentAmount:F2}", normalFont))
+            receipt.Add(New Paragraph($"Change: Php {change:F2}", normalFont))
+            receipt.Add(New Paragraph(" "))
+
+            If Session.preSubscriber = True Then
+
+                Dim note As New Paragraph
+                note.Add(New Paragraph("Note: Your payment was divided into TWO separate receipt, the receipt for your plan subscription was sent via email. Hence, the amount you gave was also divided. You may see the exact amount of plan price was substracted on the money you gave as it was transferred in another receipt", normalFont))
+                receipt.Add(note)
+                receipt.Add("")
+            End If
+            ' Footer
+            receipt.Add(New Paragraph("Thank you for your purchase!", normalFont))
+
+            receipt.Close()
+
+
+
+        Catch ex As Exception
+            Throw New Exception("Error creating PDF receipt: " & ex.Message)
+        End Try
+    End Sub
+
+
+
+
 
     ' Process selected direct purchases only (hardware items)
     Private Function ProcessSelectedDirectPurchase(selectedItems As List(Of CartItem)) As Boolean
