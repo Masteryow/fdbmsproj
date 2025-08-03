@@ -108,7 +108,7 @@ Partial Class TechnicianSalary
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.dgvSalary.DefaultCellStyle = DataGridViewCellStyle2
-        Me.dgvSalary.Location = New System.Drawing.Point(31, 143)
+        Me.dgvSalary.Location = New System.Drawing.Point(31, 163)
         Me.dgvSalary.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvSalary.MultiSelect = False
         Me.dgvSalary.Name = "dgvSalary"
@@ -116,16 +116,17 @@ Partial Class TechnicianSalary
         Me.dgvSalary.RowHeadersWidth = 51
         Me.dgvSalary.RowTemplate.Height = 24
         Me.dgvSalary.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvSalary.Size = New System.Drawing.Size(553, 358)
+        Me.dgvSalary.Size = New System.Drawing.Size(553, 338)
         Me.dgvSalary.TabIndex = 8
         '
         'txtName
         '
         Me.txtName.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.txtName.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtName.Location = New System.Drawing.Point(31, 120)
         Me.txtName.Margin = New System.Windows.Forms.Padding(2)
         Me.txtName.Name = "txtName"
-        Me.txtName.Size = New System.Drawing.Size(523, 20)
+        Me.txtName.Size = New System.Drawing.Size(523, 27)
         Me.txtName.TabIndex = 9
         '
         'btnIndPay
@@ -178,7 +179,7 @@ Partial Class TechnicianSalary
         Me.PictureBox1.Location = New System.Drawing.Point(558, 120)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(26, 18)
+        Me.PictureBox1.Size = New System.Drawing.Size(26, 27)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox1.TabIndex = 10
         Me.PictureBox1.TabStop = False

@@ -64,13 +64,13 @@ Partial Class TechnicianPanel
         '
         'cbxSubName
         '
-        Me.cbxSubName.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbxSubName.ForeColor = System.Drawing.SystemColors.Window
+        Me.cbxSubName.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxSubName.ForeColor = System.Drawing.Color.Black
         Me.cbxSubName.FormattingEnabled = True
-        Me.cbxSubName.Location = New System.Drawing.Point(160, 72)
+        Me.cbxSubName.Location = New System.Drawing.Point(149, 72)
         Me.cbxSubName.Margin = New System.Windows.Forms.Padding(2)
         Me.cbxSubName.Name = "cbxSubName"
-        Me.cbxSubName.Size = New System.Drawing.Size(282, 27)
+        Me.cbxSubName.Size = New System.Drawing.Size(293, 27)
         Me.cbxSubName.TabIndex = 4
         '
         'GroupBox1
@@ -103,11 +103,12 @@ Partial Class TechnicianPanel
         'btnClear
         '
         Me.btnClear.BackColor = System.Drawing.Color.DarkCyan
+        Me.btnClear.Font = New System.Drawing.Font("Tahoma", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClear.ForeColor = System.Drawing.Color.White
-        Me.btnClear.Location = New System.Drawing.Point(250, 338)
+        Me.btnClear.Location = New System.Drawing.Point(260, 346)
         Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
-        Me.btnClear.Size = New System.Drawing.Size(140, 44)
+        Me.btnClear.Size = New System.Drawing.Size(140, 34)
         Me.btnClear.TabIndex = 15
         Me.btnClear.Text = "Clear"
         Me.btnClear.UseVisualStyleBackColor = False
@@ -116,11 +117,12 @@ Partial Class TechnicianPanel
         'btnAccept
         '
         Me.btnAccept.BackColor = System.Drawing.Color.DarkCyan
+        Me.btnAccept.Font = New System.Drawing.Font("Tahoma", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAccept.ForeColor = System.Drawing.Color.White
-        Me.btnAccept.Location = New System.Drawing.Point(106, 338)
+        Me.btnAccept.Location = New System.Drawing.Point(70, 346)
         Me.btnAccept.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAccept.Name = "btnAccept"
-        Me.btnAccept.Size = New System.Drawing.Size(140, 44)
+        Me.btnAccept.Size = New System.Drawing.Size(140, 34)
         Me.btnAccept.TabIndex = 14
         Me.btnAccept.Text = "Accept"
         Me.btnAccept.UseVisualStyleBackColor = False
@@ -128,7 +130,8 @@ Partial Class TechnicianPanel
         '
         'txtNotes
         '
-        Me.txtNotes.Location = New System.Drawing.Point(20, 252)
+        Me.txtNotes.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtNotes.Location = New System.Drawing.Point(20, 256)
         Me.txtNotes.Margin = New System.Windows.Forms.Padding(2)
         Me.txtNotes.Multiline = True
         Me.txtNotes.Name = "txtNotes"
@@ -140,7 +143,7 @@ Partial Class TechnicianPanel
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(228, 231)
+        Me.Label6.Location = New System.Drawing.Point(207, 231)
         Me.Label6.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(49, 19)
@@ -149,54 +152,54 @@ Partial Class TechnicianPanel
         '
         'txtPrice
         '
-        Me.txtPrice.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPrice.Location = New System.Drawing.Point(272, 190)
+        Me.txtPrice.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPrice.Location = New System.Drawing.Point(304, 190)
         Me.txtPrice.Margin = New System.Windows.Forms.Padding(2)
         Me.txtPrice.Name = "txtPrice"
         Me.txtPrice.ReadOnly = True
-        Me.txtPrice.Size = New System.Drawing.Size(170, 27)
+        Me.txtPrice.Size = New System.Drawing.Size(138, 27)
         Me.txtPrice.TabIndex = 11
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Times New Roman", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(228, 195)
+        Me.Label5.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(256, 193)
         Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(40, 19)
+        Me.Label5.Size = New System.Drawing.Size(43, 19)
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "Price"
         '
         'txtDifficulty
         '
-        Me.txtDifficulty.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDifficulty.Location = New System.Drawing.Point(92, 190)
+        Me.txtDifficulty.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDifficulty.Location = New System.Drawing.Point(99, 190)
         Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDifficulty.Name = "txtDifficulty"
         Me.txtDifficulty.ReadOnly = True
-        Me.txtDifficulty.Size = New System.Drawing.Size(118, 27)
+        Me.txtDifficulty.Size = New System.Drawing.Size(147, 27)
         Me.txtDifficulty.TabIndex = 9
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(16, 195)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(60, 17)
+        Me.Label4.Size = New System.Drawing.Size(71, 19)
         Me.Label4.TabIndex = 8
         Me.Label4.Text = "Difficulty"
         '
         'txtConcern
         '
-        Me.txtConcern.Font = New System.Drawing.Font("Tahoma", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtConcern.Location = New System.Drawing.Point(87, 122)
+        Me.txtConcern.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtConcern.Location = New System.Drawing.Point(99, 134)
         Me.txtConcern.Margin = New System.Windows.Forms.Padding(2)
         Me.txtConcern.Name = "txtConcern"
         Me.txtConcern.ReadOnly = True
-        Me.txtConcern.Size = New System.Drawing.Size(355, 36)
+        Me.txtConcern.Size = New System.Drawing.Size(344, 27)
         Me.txtConcern.TabIndex = 7
         '
         'Label3
@@ -214,7 +217,7 @@ Partial Class TechnicianPanel
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(16, 75)
+        Me.Label2.Location = New System.Drawing.Point(16, 80)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(129, 19)
@@ -278,11 +281,12 @@ Partial Class TechnicianPanel
         'btnSave
         '
         Me.btnSave.BackColor = System.Drawing.Color.DarkCyan
+        Me.btnSave.Font = New System.Drawing.Font("Tahoma", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSave.ForeColor = System.Drawing.Color.White
-        Me.btnSave.Location = New System.Drawing.Point(70, 338)
+        Me.btnSave.Location = New System.Drawing.Point(61, 346)
         Me.btnSave.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New System.Drawing.Size(123, 42)
+        Me.btnSave.Size = New System.Drawing.Size(123, 34)
         Me.btnSave.TabIndex = 16
         Me.btnSave.Text = "Save"
         Me.btnSave.UseVisualStyleBackColor = False
@@ -290,6 +294,7 @@ Partial Class TechnicianPanel
         '
         'txtRemarks
         '
+        Me.txtRemarks.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtRemarks.Location = New System.Drawing.Point(19, 162)
         Me.txtRemarks.Margin = New System.Windows.Forms.Padding(2)
         Me.txtRemarks.Multiline = True
@@ -300,34 +305,36 @@ Partial Class TechnicianPanel
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(77, 130)
+        Me.Label8.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(84, 134)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(93, 23)
+        Me.Label8.Size = New System.Drawing.Size(70, 19)
         Me.Label8.TabIndex = 17
         Me.Label8.Text = "Remarks"
         '
         'cbxStatus
         '
         Me.cbxStatus.Enabled = False
-        Me.cbxStatus.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxStatus.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbxStatus.FormattingEnabled = True
         Me.cbxStatus.Items.AddRange(New Object() {"In Progress", "Completed"})
-        Me.cbxStatus.Location = New System.Drawing.Point(70, 53)
+        Me.cbxStatus.Location = New System.Drawing.Point(19, 72)
         Me.cbxStatus.Margin = New System.Windows.Forms.Padding(2)
         Me.cbxStatus.Name = "cbxStatus"
-        Me.cbxStatus.Size = New System.Drawing.Size(155, 27)
+        Me.cbxStatus.Size = New System.Drawing.Size(206, 27)
         Me.cbxStatus.TabIndex = 16
         '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(5, 66)
+        Me.Label7.BackColor = System.Drawing.Color.Transparent
+        Me.Label7.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.White
+        Me.Label7.Location = New System.Drawing.Point(93, 51)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(61, 19)
+        Me.Label7.Size = New System.Drawing.Size(52, 19)
         Me.Label7.TabIndex = 15
         Me.Label7.Text = "Status"
         '

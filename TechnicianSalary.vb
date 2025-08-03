@@ -43,8 +43,8 @@ Public Class TechnicianSalary
                 conn.Open()
 
                 Using cmd As New MySqlCommand("SELECT tt.technician_id AS `Technician ID`, CONCAT(u.firstName,' ', u.lastName) AS `Technician Name`, 
-                                              st.ticket_id AS `Ticket ID`, st.task_salary AS `Task Salary`, tt.status AS `Ticket Status`, tt.payment_status AS `Payment Status`
-                                              FROM users u 
+                                              st.ticket_id AS `Ticket ID`, st.task_salary AS `Task Salary`, tt.status AS `Ticket Status`, tt.payment_status AS `Payment Status`,
+                                              tt.remarks AS Remarks FROM users u 
                                               JOIN technicians t ON u.user_id = t.user_id 
                                               JOIN ticket_technicians tt ON t.technician_id = tt.technician_id 
                                               JOIN support_tickets st ON tt.ticket_id = st.ticket_id WHERE tt.status = @status AND tt.payment_status = @payment_status", conn)

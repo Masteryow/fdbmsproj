@@ -200,7 +200,7 @@ Partial Class Form1
         Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Form1"
-        Me.Text = "s"
+        Me.Text = "Login"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         CType(Me.pbxPassword, System.ComponentModel.ISupportInitialize).EndInit()

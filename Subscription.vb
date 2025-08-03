@@ -125,7 +125,7 @@ Public Class Subscription
 
         End Using
 
-        TextBox1.Text = id
+
         cbxPlans.SelectedIndex = 0
 
         selection(id, False)
@@ -432,7 +432,7 @@ Public Class Subscription
         ElseIf id <= 0 Then
             id = limit
         End If
-        TextBox1.Text = id
+
         selection(id, False)
     End Sub
 
@@ -450,7 +450,7 @@ Public Class Subscription
 
             id = limit
         End If
-        TextBox1.Text = id
+
         selection(id, False)
     End Sub
 
@@ -504,7 +504,7 @@ Public Class Subscription
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPlans.SelectedIndexChanged
 
         id = cbxPlans.SelectedIndex + 1
-        TextBox1.Text = id
+
         selection(id, False)
 
     End Sub

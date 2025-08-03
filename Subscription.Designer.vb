@@ -35,7 +35,6 @@ Partial Class Subscription
         Me.pbxPlan = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.cbxPlans = New System.Windows.Forms.ComboBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.txtSpecs = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -113,7 +112,7 @@ Partial Class Subscription
         Me.btnSubscribe.BackColor = System.Drawing.Color.DarkGreen
         Me.btnSubscribe.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSubscribe.ForeColor = System.Drawing.Color.White
-        Me.btnSubscribe.Location = New System.Drawing.Point(111, 284)
+        Me.btnSubscribe.Location = New System.Drawing.Point(111, 293)
         Me.btnSubscribe.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSubscribe.Name = "btnSubscribe"
         Me.btnSubscribe.Size = New System.Drawing.Size(232, 36)
@@ -158,20 +157,14 @@ Partial Class Subscription
         '
         'cbxPlans
         '
-        Me.cbxPlans.Font = New System.Drawing.Font("Times New Roman", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxPlans.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cbxPlans.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cbxPlans.Font = New System.Drawing.Font("Times New Roman", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbxPlans.FormattingEnabled = True
         Me.cbxPlans.Location = New System.Drawing.Point(111, 71)
         Me.cbxPlans.Name = "cbxPlans"
-        Me.cbxPlans.Size = New System.Drawing.Size(231, 32)
+        Me.cbxPlans.Size = New System.Drawing.Size(231, 23)
         Me.cbxPlans.TabIndex = 24
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.TextBox1.Location = New System.Drawing.Point(407, 56)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox1.TabIndex = 25
         '
         'GroupBox1
         '
@@ -226,7 +219,6 @@ Partial Class Subscription
         Me.ClientSize = New System.Drawing.Size(903, 522)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(2)
@@ -257,7 +249,6 @@ Partial Class Subscription
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents cbxPlans As ComboBox
-    Friend WithEvents TextBox1 As TextBox
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents Label1 As Label
     Friend WithEvents txtSpecs As TextBox

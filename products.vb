@@ -500,7 +500,7 @@ Public Class products
             delete()
 
             Session.IsNewSubscription = True
-
+            Session.userRole = "Subscriber"
             subscribers.Show()
             Me.Close()
 
@@ -656,7 +656,7 @@ Public Class products
         ElseIf Session.fromProduct = True AndAlso Session.subscriberAccess = False Then 'ordinary customer
 
             Main.Show()
-            Session.fromProduct = False
+            Session.fromProduct = True
 
         ElseIf Session.userRole = "Subscriber" Then 'subscriber
 
@@ -692,9 +692,7 @@ Public Class products
         ElseIf Session.fromProduct = True AndAlso Session.subscriberAccess = False Then 'ordinary customer
 
             Subscription.Show()
-            Session.fromProduct = False
-
-
+            Session.fromProduct = True
 
         End If
 

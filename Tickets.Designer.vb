@@ -45,6 +45,7 @@ Partial Class Tickets
         Me.txtNote = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.txtTStatus = New System.Windows.Forms.TextBox()
+        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.MenuStrip1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -109,6 +110,7 @@ Partial Class Tickets
         '
         Me.Panel1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Panel1.BackColor = System.Drawing.Color.MidnightBlue
+        Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Location = New System.Drawing.Point(-9, 33)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
@@ -121,7 +123,7 @@ Partial Class Tickets
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(31, 9)
+        Me.Label2.Location = New System.Drawing.Point(63, 11)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(307, 42)
@@ -131,42 +133,42 @@ Partial Class Tickets
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(13, 128)
+        Me.Label3.Location = New System.Drawing.Point(13, 140)
         Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(44, 20)
+        Me.Label3.Size = New System.Drawing.Size(43, 19)
         Me.Label3.TabIndex = 4
         Me.Label3.Text = "Price"
         '
         'txtDifficulty
         '
-        Me.txtDifficulty.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDifficulty.Location = New System.Drawing.Point(74, 82)
+        Me.txtDifficulty.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDifficulty.Location = New System.Drawing.Point(88, 88)
         Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDifficulty.Name = "txtDifficulty"
-        Me.txtDifficulty.Size = New System.Drawing.Size(281, 24)
+        Me.txtDifficulty.Size = New System.Drawing.Size(290, 27)
         Me.txtDifficulty.TabIndex = 55
         '
         'txtPrice
         '
-        Me.txtPrice.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPrice.Location = New System.Drawing.Point(74, 121)
+        Me.txtPrice.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPrice.Location = New System.Drawing.Point(88, 132)
         Me.txtPrice.Margin = New System.Windows.Forms.Padding(2)
         Me.txtPrice.Name = "txtPrice"
-        Me.txtPrice.Size = New System.Drawing.Size(281, 24)
+        Me.txtPrice.Size = New System.Drawing.Size(290, 27)
         Me.txtPrice.TabIndex = 56
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.White
-        Me.Label4.Location = New System.Drawing.Point(13, 84)
+        Me.Label4.Location = New System.Drawing.Point(13, 96)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(61, 17)
+        Me.Label4.Size = New System.Drawing.Size(71, 19)
         Me.Label4.TabIndex = 6
         Me.Label4.Text = "Difficulty"
         '
@@ -180,7 +182,7 @@ Partial Class Tickets
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(254, 56)
         Me.btnClear.TabIndex = 3
-        Me.btnClear.Text = "Clear Selection"
+        Me.btnClear.Text = "CLEAR SELECTION"
         Me.btnClear.UseVisualStyleBackColor = False
         '
         'btnConfirm
@@ -189,10 +191,10 @@ Partial Class Tickets
         Me.btnConfirm.Enabled = False
         Me.btnConfirm.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnConfirm.ForeColor = System.Drawing.Color.White
-        Me.btnConfirm.Location = New System.Drawing.Point(457, 160)
+        Me.btnConfirm.Location = New System.Drawing.Point(457, 180)
         Me.btnConfirm.Margin = New System.Windows.Forms.Padding(2)
         Me.btnConfirm.Name = "btnConfirm"
-        Me.btnConfirm.Size = New System.Drawing.Size(254, 63)
+        Me.btnConfirm.Size = New System.Drawing.Size(254, 56)
         Me.btnConfirm.TabIndex = 2
         Me.btnConfirm.Text = "CONFIRM"
         Me.btnConfirm.UseVisualStyleBackColor = False
@@ -201,23 +203,23 @@ Partial Class Tickets
         '
         Me.cbxIssueType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.cbxIssueType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cbxIssueType.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxIssueType.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbxIssueType.FormattingEnabled = True
-        Me.cbxIssueType.Location = New System.Drawing.Point(74, 40)
+        Me.cbxIssueType.Location = New System.Drawing.Point(88, 42)
         Me.cbxIssueType.Margin = New System.Windows.Forms.Padding(2)
         Me.cbxIssueType.Name = "cbxIssueType"
-        Me.cbxIssueType.Size = New System.Drawing.Size(281, 25)
+        Me.cbxIssueType.Size = New System.Drawing.Size(290, 27)
         Me.cbxIssueType.TabIndex = 0
         '
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.White
-        Me.Label8.Location = New System.Drawing.Point(13, 47)
+        Me.Label8.Location = New System.Drawing.Point(13, 50)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(43, 20)
+        Me.Label8.Size = New System.Drawing.Size(44, 19)
         Me.Label8.TabIndex = 8
         Me.Label8.Text = "Type"
         '
@@ -251,10 +253,10 @@ Partial Class Tickets
         Me.btnNewTicket.BackColor = System.Drawing.Color.Navy
         Me.btnNewTicket.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnNewTicket.ForeColor = System.Drawing.Color.White
-        Me.btnNewTicket.Location = New System.Drawing.Point(457, 67)
+        Me.btnNewTicket.Location = New System.Drawing.Point(457, 63)
         Me.btnNewTicket.Margin = New System.Windows.Forms.Padding(2)
         Me.btnNewTicket.Name = "btnNewTicket"
-        Me.btnNewTicket.Size = New System.Drawing.Size(254, 66)
+        Me.btnNewTicket.Size = New System.Drawing.Size(254, 40)
         Me.btnNewTicket.TabIndex = 14
         Me.btnNewTicket.Text = "CREATE NEW TICKET"
         Me.btnNewTicket.UseVisualStyleBackColor = False
@@ -307,6 +309,14 @@ Partial Class Tickets
         Me.txtTStatus.Size = New System.Drawing.Size(148, 29)
         Me.txtTStatus.TabIndex = 13
         '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.RoyalBlue
+        Me.Panel2.Location = New System.Drawing.Point(9, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(19, 66)
+        Me.Panel2.TabIndex = 7
+        '
         'Tickets
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -355,4 +365,5 @@ Partial Class Tickets
     Friend WithEvents txtNote As TextBox
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents txtTStatus As TextBox
+    Friend WithEvents Panel2 As Panel
 End Class

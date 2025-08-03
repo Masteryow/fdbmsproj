@@ -27,6 +27,7 @@ Public Class Cart
 
     Private skipClosingEvent As Boolean = False
     Private Sub Cart_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Me.VisibleChanged
+
         planName = Session.planName
         planType = Session.planType
         planSpeed = Session.planSpeed
@@ -619,21 +620,10 @@ Public Class Cart
                 subscribers.Show()
                 cartItems.Clear()
 
-                For Each form As Form In Application.OpenForms
-                    If form.Name = "Addon" Then
-                        form.Close()
-                        Exit For
-                    End If
-                Next
 
             ElseIf Session.subscriberAccess = True Then
                 subscribers.Show()
-                For Each form As Form In Application.OpenForms
-                    If form.Name = "Addon" Then
-                        form.Close()
-                        Exit For
-                    End If
-                Next
+
 
             ElseIf Session.userRole = "Customer" Then
                 Main.Show()
@@ -1066,7 +1056,31 @@ Public Class Cart
             Exit Sub
         End If
 
-        delete()
+        If Session.preSubscriber = True Then 'customer who added something on cart with plan
+
+
+            Dim result As DialogResult = MsgBox("This action will clear your cart due to incomplete transaction, do you want to continue?", MsgBoxStyle.YesNo)
+
+            If result = DialogResult.Yes Then
+
+                delete()
+                Session.preSubscriber = False
+
+                Main.Show()
+                Me.Close()
+            Else
+
+                Exit Sub
+            End If
+
+        ElseIf Session.fromProduct = True AndAlso Session.subscriberAccess = False Then 'ordinary customer
+
+            Main.Show()
+            Session.fromProduct = False
+
+            Me.Close()
+
+        End If
 
         If Session.userRole = "Subscriber" Then
             subscribers.Show()
@@ -1077,12 +1091,7 @@ Public Class Cart
             Session.planPrice = 0
             Session.planType = ""
 
-            For Each form As Form In Application.OpenForms
-                If form.Name = "Addon" Then
-                    form.Close()
-                    Exit For
-                End If
-            Next
+
             Main.Show()
         End If
 
@@ -1094,6 +1103,35 @@ Public Class Cart
             MsgBox("Please exit from Deletion Mode first.", MsgBoxStyle.Exclamation, "Notice")
             Exit Sub
         End If
+           If Session.preSubscriber = True Then 'customer who added something on cart with plan
+
+
+            Dim result As DialogResult = MsgBox("This action will clear your cart due to incomplete transaction, do you want to continue?", MsgBoxStyle.YesNo)
+
+            If result = DialogResult.Yes Then
+
+                delete()
+                Session.preSubscriber = False
+
+                Subscription.Show()
+                Me.Close()
+            Else
+
+                Exit Sub
+            End If
+
+
+        ElseIf Session.fromProduct = True AndAlso Session.subscriberAccess = False Then 'ordinary customer
+
+            Subscription.Show()
+            Session.fromProduct = False
+
+            Me.Close()
+
+        End If
+
+
+
 
 
         If Session.userRole = "Customer" Then
@@ -1103,12 +1141,6 @@ Public Class Cart
             Session.planPrice = 0
             Session.planType = ""
 
-            For Each form As Form In Application.OpenForms
-                If form.Name = "Addon" Then
-                    form.Close()
-                    Exit For
-                End If
-            Next
 
             Subscription.Show()
             Me.Close()
