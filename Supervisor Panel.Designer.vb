@@ -25,8 +25,8 @@ Partial Class Supervisor_Panel
         Me.MySqlCommand1 = New MySql.Data.MySqlClient.MySqlCommand()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.btnLogout = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btnClear = New System.Windows.Forms.Button()
         Me.btnChoose = New System.Windows.Forms.Button()
@@ -66,6 +66,7 @@ Partial Class Supervisor_Panel
         '
         'Panel1
         '
+        Me.Panel1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Panel1.BackColor = System.Drawing.Color.DarkSlateBlue
         Me.Panel1.Controls.Add(Me.btnLogout)
         Me.Panel1.Controls.Add(Me.Label2)
@@ -89,6 +90,18 @@ Partial Class Supervisor_Panel
         Me.btnLogout.Text = "LOG OUT"
         Me.btnLogout.UseVisualStyleBackColor = False
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Tahoma", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(24, 13)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(287, 39)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "Supervisor Panel"
+        '
         'Button1
         '
         Me.Button1.BackColor = System.Drawing.Color.MidnightBlue
@@ -102,20 +115,9 @@ Partial Class Supervisor_Panel
         Me.Button1.Text = "Salary Assignment"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Tahoma", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(24, 13)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(287, 39)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Supervisor Panel"
-        '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox1.Controls.Add(Me.btnClear)
         Me.GroupBox1.Controls.Add(Me.btnChoose)
@@ -273,6 +275,7 @@ Partial Class Supervisor_Panel
         '
         'GroupBox2
         '
+        Me.GroupBox2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox2.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox2.Controls.Add(Me.btnAssign)
         Me.GroupBox2.Controls.Add(Me.cbxCompletedTix)

@@ -41,6 +41,7 @@ Partial Class TechnicianSalary
         '
         'Panel1
         '
+        Me.Panel1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Panel1.BackColor = System.Drawing.Color.Firebrick
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.Button1)
@@ -87,6 +88,7 @@ Partial Class TechnicianSalary
         'dgvSalary
         '
         Me.dgvSalary.AllowUserToAddRows = False
+        Me.dgvSalary.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.dgvSalary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvSalary.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
@@ -119,6 +121,7 @@ Partial Class TechnicianSalary
         '
         'txtName
         '
+        Me.txtName.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.txtName.Location = New System.Drawing.Point(31, 120)
         Me.txtName.Margin = New System.Windows.Forms.Padding(2)
         Me.txtName.Name = "txtName"
@@ -127,6 +130,7 @@ Partial Class TechnicianSalary
         '
         'btnIndPay
         '
+        Me.btnIndPay.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnIndPay.BackColor = System.Drawing.Color.DarkGreen
         Me.btnIndPay.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnIndPay.ForeColor = System.Drawing.Color.White
@@ -140,6 +144,7 @@ Partial Class TechnicianSalary
         '
         'btnPayAll
         '
+        Me.btnPayAll.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnPayAll.BackColor = System.Drawing.Color.DarkGreen
         Me.btnPayAll.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPayAll.ForeColor = System.Drawing.Color.White
@@ -153,6 +158,7 @@ Partial Class TechnicianSalary
         '
         'Button2
         '
+        Me.Button2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Button2.BackColor = System.Drawing.Color.Maroon
         Me.Button2.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
@@ -166,6 +172,7 @@ Partial Class TechnicianSalary
         '
         'PictureBox1
         '
+        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.Image = Global.fdbmsproj.My.Resources.Resources.search
         Me.PictureBox1.Location = New System.Drawing.Point(558, 120)

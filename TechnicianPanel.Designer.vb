@@ -31,6 +31,7 @@ Partial Class TechnicianPanel
         Me.Label6 = New System.Windows.Forms.Label()
         Me.txtPrice = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.txtDifficulty = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtConcern = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -44,7 +45,6 @@ Partial Class TechnicianPanel
         Me.Label8 = New System.Windows.Forms.Label()
         Me.cbxStatus = New System.Windows.Forms.ComboBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.txtDifficulty = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -75,6 +75,7 @@ Partial Class TechnicianPanel
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox1.Controls.Add(Me.btnClear)
         Me.GroupBox1.Controls.Add(Me.btnAccept)
@@ -167,6 +168,16 @@ Partial Class TechnicianPanel
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "Price"
         '
+        'txtDifficulty
+        '
+        Me.txtDifficulty.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDifficulty.Location = New System.Drawing.Point(92, 190)
+        Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtDifficulty.Name = "txtDifficulty"
+        Me.txtDifficulty.ReadOnly = True
+        Me.txtDifficulty.Size = New System.Drawing.Size(118, 27)
+        Me.txtDifficulty.TabIndex = 9
+        '
         'Label4
         '
         Me.Label4.AutoSize = True
@@ -212,6 +223,7 @@ Partial Class TechnicianPanel
         '
         'Panel1
         '
+        Me.Panel1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Panel1.BackColor = System.Drawing.Color.SlateGray
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.btnLogout)
@@ -245,6 +257,7 @@ Partial Class TechnicianPanel
         '
         'GroupBox2
         '
+        Me.GroupBox2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox2.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox2.Controls.Add(Me.btnSave)
         Me.GroupBox2.Controls.Add(Me.txtRemarks)
@@ -317,16 +330,6 @@ Partial Class TechnicianPanel
         Me.Label7.Size = New System.Drawing.Size(61, 19)
         Me.Label7.TabIndex = 15
         Me.Label7.Text = "Status"
-        '
-        'txtDifficulty
-        '
-        Me.txtDifficulty.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDifficulty.Location = New System.Drawing.Point(92, 190)
-        Me.txtDifficulty.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDifficulty.Name = "txtDifficulty"
-        Me.txtDifficulty.ReadOnly = True
-        Me.txtDifficulty.Size = New System.Drawing.Size(118, 27)
-        Me.txtDifficulty.TabIndex = 9
         '
         'TechnicianPanel
         '

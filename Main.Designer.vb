@@ -111,11 +111,12 @@ Partial Class Main
         '
         'lblUser
         '
+        Me.lblUser.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblUser.AutoSize = True
         Me.lblUser.BackColor = System.Drawing.Color.Transparent
         Me.lblUser.Font = New System.Drawing.Font("Palatino Linotype", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUser.ForeColor = System.Drawing.Color.White
-        Me.lblUser.Location = New System.Drawing.Point(50, 65)
+        Me.lblUser.Location = New System.Drawing.Point(50, 63)
         Me.lblUser.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblUser.Name = "lblUser"
         Me.lblUser.Size = New System.Drawing.Size(0, 37)
@@ -159,6 +160,7 @@ Partial Class Main
         '
         'PictureBox5
         '
+        Me.PictureBox5.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.PictureBox5.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox5.Image = Global.fdbmsproj.My.Resources.Resources.Copilot_20250729_220331
         Me.PictureBox5.Location = New System.Drawing.Point(73, 391)
@@ -170,6 +172,7 @@ Partial Class Main
         '
         'Label1
         '
+        Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Palatino Linotype", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -184,6 +187,7 @@ Partial Class Main
         '
         'Panel1
         '
+        Me.Panel1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Panel1.BackColor = System.Drawing.Color.Transparent
         Me.Panel1.Controls.Add(Me.PictureBox3)
         Me.Panel1.Controls.Add(Me.PictureBox2)

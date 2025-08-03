@@ -276,12 +276,14 @@ Public Class products
             lblHeader.Location = New Point(40, 35)
             lblHeader.Font = New Font("Times New Roman", 35, FontStyle.Bold)
             lblHeader.Text = "SkyLink Products"
+            lblHeader.Anchor = AnchorStyles.None
             lblHeader.ForeColor = Color.SlateBlue
 
             Me.Controls.Add(lblHeader)
 
             Dim lblSubHeader As New Label
 
+            lblSubHeader.Anchor = AnchorStyles.None
             lblSubHeader.Size = New Size(400, 50)
             lblSubHeader.Location = New Point(120, 100)
             lblSubHeader.Font = New Font("Tahoma", 9, FontStyle.Bold)

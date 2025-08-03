@@ -136,6 +136,7 @@ Partial Class Form1
         '
         'Panel1
         '
+        Me.Panel1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Panel1.BackColor = System.Drawing.SystemColors.Window
         Me.Panel1.Controls.Add(Me.pbxPassword)
         Me.Panel1.Controls.Add(Me.lblUsername)
@@ -175,6 +176,7 @@ Partial Class Form1
         '
         'Label1
         '
+        Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label1.Font = New System.Drawing.Font("Perpetua Titling MT", 19.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(46, 159)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)

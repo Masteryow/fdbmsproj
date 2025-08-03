@@ -110,6 +110,7 @@ Partial Class Cart
         '
         'Label1
         '
+        Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Tahoma", 22.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -123,6 +124,7 @@ Partial Class Cart
         '
         'txtTotal
         '
+        Me.txtTotal.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.txtTotal.Location = New System.Drawing.Point(533, 75)
         Me.txtTotal.Margin = New System.Windows.Forms.Padding(2)
         Me.txtTotal.Name = "txtTotal"
@@ -131,6 +133,7 @@ Partial Class Cart
         '
         'Label2
         '
+        Me.Label2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Black
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -144,6 +147,7 @@ Partial Class Cart
         '
         'CheckedListBox1
         '
+        Me.CheckedListBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.CheckedListBox1.FormattingEnabled = True
         Me.CheckedListBox1.Location = New System.Drawing.Point(31, 98)
         Me.CheckedListBox1.Margin = New System.Windows.Forms.Padding(2)
@@ -153,6 +157,7 @@ Partial Class Cart
         '
         'btnDeletionMode
         '
+        Me.btnDeletionMode.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnDeletionMode.BackColor = System.Drawing.Color.DarkRed
         Me.btnDeletionMode.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDeletionMode.ForeColor = System.Drawing.Color.White
@@ -165,6 +170,7 @@ Partial Class Cart
         '
         'btnClearCart
         '
+        Me.btnClearCart.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnClearCart.BackColor = System.Drawing.Color.DarkRed
         Me.btnClearCart.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClearCart.ForeColor = System.Drawing.Color.White
@@ -177,6 +183,7 @@ Partial Class Cart
         '
         'btnCheckout
         '
+        Me.btnCheckout.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnCheckout.BackColor = System.Drawing.Color.DarkGreen
         Me.btnCheckout.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCheckout.ForeColor = System.Drawing.Color.White
@@ -189,6 +196,7 @@ Partial Class Cart
         '
         'btnContinueShopping
         '
+        Me.btnContinueShopping.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnContinueShopping.BackColor = System.Drawing.Color.Indigo
         Me.btnContinueShopping.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnContinueShopping.ForeColor = System.Drawing.Color.White
@@ -201,6 +209,7 @@ Partial Class Cart
         '
         'btnCancelOrder
         '
+        Me.btnCancelOrder.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnCancelOrder.BackColor = System.Drawing.Color.Indigo
         Me.btnCancelOrder.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancelOrder.ForeColor = System.Drawing.Color.White
@@ -213,6 +222,7 @@ Partial Class Cart
         '
         'lblDeletionMode
         '
+        Me.lblDeletionMode.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblDeletionMode.AutoSize = True
         Me.lblDeletionMode.BackColor = System.Drawing.Color.Transparent
         Me.lblDeletionMode.Font = New System.Drawing.Font("Microsoft YaHei UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -227,6 +237,7 @@ Partial Class Cart
         '
         'btnCheck
         '
+        Me.btnCheck.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnCheck.BackColor = System.Drawing.Color.DarkRed
         Me.btnCheck.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCheck.ForeColor = System.Drawing.Color.White
@@ -240,6 +251,7 @@ Partial Class Cart
         '
         'btnDM
         '
+        Me.btnDM.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnDM.BackColor = System.Drawing.Color.Indigo
         Me.btnDM.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDM.ForeColor = System.Drawing.Color.White
@@ -253,6 +265,7 @@ Partial Class Cart
         '
         'btnupdatequantity
         '
+        Me.btnupdatequantity.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnupdatequantity.BackColor = System.Drawing.Color.DarkGreen
         Me.btnupdatequantity.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnupdatequantity.ForeColor = System.Drawing.Color.White

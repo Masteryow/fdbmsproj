@@ -107,6 +107,7 @@ Partial Class Tickets
         '
         'Panel1
         '
+        Me.Panel1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Panel1.BackColor = System.Drawing.Color.MidnightBlue
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Location = New System.Drawing.Point(-9, 33)
@@ -271,6 +272,7 @@ Partial Class Tickets
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox1.Controls.Add(Me.txtNote)
         Me.GroupBox1.Controls.Add(Me.txtTStatus)

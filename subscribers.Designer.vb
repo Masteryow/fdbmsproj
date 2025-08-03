@@ -101,6 +101,7 @@ Partial Class subscribers
         '
         'lblUser
         '
+        Me.lblUser.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblUser.AutoSize = True
         Me.lblUser.BackColor = System.Drawing.Color.Transparent
         Me.lblUser.Font = New System.Drawing.Font("Palatino Linotype", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -117,6 +118,7 @@ Partial Class subscribers
         '
         'lblStatus
         '
+        Me.lblStatus.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblStatus.AutoSize = True
         Me.lblStatus.BackColor = System.Drawing.Color.Transparent
         Me.lblStatus.Font = New System.Drawing.Font("Palatino Linotype", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -130,6 +132,7 @@ Partial Class subscribers
         '
         'lblPlan
         '
+        Me.lblPlan.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblPlan.AutoSize = True
         Me.lblPlan.BackColor = System.Drawing.Color.Transparent
         Me.lblPlan.Font = New System.Drawing.Font("Palatino Linotype", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -143,6 +146,7 @@ Partial Class subscribers
         '
         'lblPrice
         '
+        Me.lblPrice.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblPrice.AutoSize = True
         Me.lblPrice.BackColor = System.Drawing.Color.Transparent
         Me.lblPrice.Font = New System.Drawing.Font("Palatino Linotype", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -156,6 +160,7 @@ Partial Class subscribers
         '
         'panelBilling
         '
+        Me.panelBilling.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.panelBilling.BackColor = System.Drawing.Color.Transparent
         Me.panelBilling.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.panelBilling.Controls.Add(Me.btnPay)

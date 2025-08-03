@@ -27,6 +27,8 @@ Partial Class products
         Me.txtPrice = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtStocks = New System.Windows.Forms.TextBox()
+        Me.pbxAdd = New System.Windows.Forms.PictureBox()
+        Me.pbxMinus = New System.Windows.Forms.PictureBox()
         Me.lblStocks = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtQuantity = New System.Windows.Forms.TextBox()
@@ -34,7 +36,10 @@ Partial Class products
         Me.lblQuantity = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.pbxClear = New System.Windows.Forms.PictureBox()
+        Me.pbxAddToCart = New System.Windows.Forms.PictureBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.pbxItem = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.lblTotal = New System.Windows.Forms.Label()
         Me.txtTotal = New System.Windows.Forms.TextBox()
@@ -43,6 +48,7 @@ Partial Class products
         Me.lblPlanPrice = New System.Windows.Forms.Label()
         Me.lblChangeOfMind = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.pbxBuyNow = New System.Windows.Forms.PictureBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.HomeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -54,24 +60,18 @@ Partial Class products
         Me.txtCartTotal = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.pbxPlanImage = New System.Windows.Forms.PictureBox()
-        Me.pbxItem = New System.Windows.Forms.PictureBox()
-        Me.pbxAdd = New System.Windows.Forms.PictureBox()
-        Me.pbxMinus = New System.Windows.Forms.PictureBox()
-        Me.pbxClear = New System.Windows.Forms.PictureBox()
-        Me.pbxAddToCart = New System.Windows.Forms.PictureBox()
-        Me.pbxBuyNow = New System.Windows.Forms.PictureBox()
         Me.GroupBox1.SuspendLayout()
-        Me.Panel1.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
-        Me.Panel2.SuspendLayout()
-        Me.MenuStrip1.SuspendLayout()
-        CType(Me.pbxPlanImage, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxItem, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxAdd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxMinus, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
         CType(Me.pbxClear, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxAddToCart, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox2.SuspendLayout()
+        CType(Me.pbxItem, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
         CType(Me.pbxBuyNow, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MenuStrip1.SuspendLayout()
+        CType(Me.pbxPlanImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'cbxItems
@@ -87,6 +87,7 @@ Partial Class products
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox1.Controls.Add(Me.txtPrice)
         Me.GroupBox1.Controls.Add(Me.Label4)
@@ -136,6 +137,24 @@ Partial Class products
         Me.txtStocks.ReadOnly = True
         Me.txtStocks.Size = New System.Drawing.Size(103, 23)
         Me.txtStocks.TabIndex = 7
+        '
+        'pbxAdd
+        '
+        Me.pbxAdd.BackColor = System.Drawing.Color.White
+        Me.pbxAdd.Location = New System.Drawing.Point(298, 177)
+        Me.pbxAdd.Name = "pbxAdd"
+        Me.pbxAdd.Size = New System.Drawing.Size(40, 22)
+        Me.pbxAdd.TabIndex = 11
+        Me.pbxAdd.TabStop = False
+        '
+        'pbxMinus
+        '
+        Me.pbxMinus.BackColor = System.Drawing.Color.White
+        Me.pbxMinus.Location = New System.Drawing.Point(247, 177)
+        Me.pbxMinus.Name = "pbxMinus"
+        Me.pbxMinus.Size = New System.Drawing.Size(40, 22)
+        Me.pbxMinus.TabIndex = 12
+        Me.pbxMinus.TabStop = False
         '
         'lblStocks
         '
@@ -199,6 +218,7 @@ Partial Class products
         '
         'Panel1
         '
+        Me.Panel1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Panel1.BackColor = System.Drawing.Color.Transparent
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.pbxClear)
@@ -208,8 +228,32 @@ Partial Class products
         Me.Panel1.Size = New System.Drawing.Size(550, 102)
         Me.Panel1.TabIndex = 11
         '
+        'pbxClear
+        '
+        Me.pbxClear.BackColor = System.Drawing.Color.Transparent
+        Me.pbxClear.Image = Global.fdbmsproj.My.Resources.Resources.reset
+        Me.pbxClear.Location = New System.Drawing.Point(326, 36)
+        Me.pbxClear.Name = "pbxClear"
+        Me.pbxClear.Size = New System.Drawing.Size(135, 35)
+        Me.pbxClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxClear.TabIndex = 15
+        Me.pbxClear.TabStop = False
+        '
+        'pbxAddToCart
+        '
+        Me.pbxAddToCart.BackColor = System.Drawing.Color.Transparent
+        Me.pbxAddToCart.Image = Global.fdbmsproj.My.Resources.Resources.addtocart
+        Me.pbxAddToCart.InitialImage = Nothing
+        Me.pbxAddToCart.Location = New System.Drawing.Point(78, 36)
+        Me.pbxAddToCart.Name = "pbxAddToCart"
+        Me.pbxAddToCart.Size = New System.Drawing.Size(159, 36)
+        Me.pbxAddToCart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxAddToCart.TabIndex = 13
+        Me.pbxAddToCart.TabStop = False
+        '
         'GroupBox2
         '
+        Me.GroupBox2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox2.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox2.Controls.Add(Me.pbxItem)
         Me.GroupBox2.Controls.Add(Me.Label7)
@@ -222,6 +266,16 @@ Partial Class products
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Item Preview"
         '
+        'pbxItem
+        '
+        Me.pbxItem.BackColor = System.Drawing.Color.Transparent
+        Me.pbxItem.Location = New System.Drawing.Point(16, 54)
+        Me.pbxItem.Name = "pbxItem"
+        Me.pbxItem.Size = New System.Drawing.Size(197, 145)
+        Me.pbxItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxItem.TabIndex = 5
+        Me.pbxItem.TabStop = False
+        '
         'Label7
         '
         Me.Label7.AutoSize = True
@@ -233,6 +287,7 @@ Partial Class products
         '
         'lblTotal
         '
+        Me.lblTotal.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblTotal.AutoSize = True
         Me.lblTotal.BackColor = System.Drawing.Color.Transparent
         Me.lblTotal.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -245,6 +300,7 @@ Partial Class products
         '
         'txtTotal
         '
+        Me.txtTotal.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.txtTotal.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotal.Location = New System.Drawing.Point(720, 121)
         Me.txtTotal.Name = "txtTotal"
@@ -254,6 +310,7 @@ Partial Class products
         '
         'lblPlanName
         '
+        Me.lblPlanName.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblPlanName.AutoSize = True
         Me.lblPlanName.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPlanName.ForeColor = System.Drawing.Color.White
@@ -264,6 +321,7 @@ Partial Class products
         '
         'lblPlanType
         '
+        Me.lblPlanType.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblPlanType.AutoSize = True
         Me.lblPlanType.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPlanType.ForeColor = System.Drawing.Color.White
@@ -274,6 +332,7 @@ Partial Class products
         '
         'lblPlanPrice
         '
+        Me.lblPlanPrice.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblPlanPrice.AutoSize = True
         Me.lblPlanPrice.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPlanPrice.ForeColor = System.Drawing.Color.White
@@ -296,6 +355,7 @@ Partial Class products
         '
         'Panel2
         '
+        Me.Panel2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Panel2.BackColor = System.Drawing.Color.Transparent
         Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel2.Controls.Add(Me.lblChangeOfMind)
@@ -304,6 +364,17 @@ Partial Class products
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(231, 102)
         Me.Panel2.TabIndex = 16
+        '
+        'pbxBuyNow
+        '
+        Me.pbxBuyNow.BackColor = System.Drawing.Color.Transparent
+        Me.pbxBuyNow.Image = Global.fdbmsproj.My.Resources.Resources.buynow
+        Me.pbxBuyNow.Location = New System.Drawing.Point(34, 37)
+        Me.pbxBuyNow.Name = "pbxBuyNow"
+        Me.pbxBuyNow.Size = New System.Drawing.Size(159, 35)
+        Me.pbxBuyNow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxBuyNow.TabIndex = 32
+        Me.pbxBuyNow.TabStop = False
         '
         'MenuStrip1
         '
@@ -369,6 +440,7 @@ Partial Class products
         '
         'txtCartTotal
         '
+        Me.txtCartTotal.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.txtCartTotal.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtCartTotal.Location = New System.Drawing.Point(720, 85)
         Me.txtCartTotal.Name = "txtCartTotal"
@@ -378,6 +450,7 @@ Partial Class products
         '
         'Label5
         '
+        Me.Label5.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label5.AutoSize = True
         Me.Label5.BackColor = System.Drawing.Color.Transparent
         Me.Label5.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -390,6 +463,7 @@ Partial Class products
         '
         'pbxPlanImage
         '
+        Me.pbxPlanImage.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.pbxPlanImage.BackColor = System.Drawing.Color.Transparent
         Me.pbxPlanImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.pbxPlanImage.Location = New System.Drawing.Point(61, 45)
@@ -398,68 +472,6 @@ Partial Class products
         Me.pbxPlanImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.pbxPlanImage.TabIndex = 27
         Me.pbxPlanImage.TabStop = False
-        '
-        'pbxItem
-        '
-        Me.pbxItem.BackColor = System.Drawing.Color.Transparent
-        Me.pbxItem.Location = New System.Drawing.Point(16, 54)
-        Me.pbxItem.Name = "pbxItem"
-        Me.pbxItem.Size = New System.Drawing.Size(197, 145)
-        Me.pbxItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxItem.TabIndex = 5
-        Me.pbxItem.TabStop = False
-        '
-        'pbxAdd
-        '
-        Me.pbxAdd.BackColor = System.Drawing.Color.White
-        Me.pbxAdd.Location = New System.Drawing.Point(298, 177)
-        Me.pbxAdd.Name = "pbxAdd"
-        Me.pbxAdd.Size = New System.Drawing.Size(40, 22)
-        Me.pbxAdd.TabIndex = 11
-        Me.pbxAdd.TabStop = False
-        '
-        'pbxMinus
-        '
-        Me.pbxMinus.BackColor = System.Drawing.Color.White
-        Me.pbxMinus.Location = New System.Drawing.Point(247, 177)
-        Me.pbxMinus.Name = "pbxMinus"
-        Me.pbxMinus.Size = New System.Drawing.Size(40, 22)
-        Me.pbxMinus.TabIndex = 12
-        Me.pbxMinus.TabStop = False
-        '
-        'pbxClear
-        '
-        Me.pbxClear.BackColor = System.Drawing.Color.Transparent
-        Me.pbxClear.Image = Global.fdbmsproj.My.Resources.Resources.reset
-        Me.pbxClear.Location = New System.Drawing.Point(326, 36)
-        Me.pbxClear.Name = "pbxClear"
-        Me.pbxClear.Size = New System.Drawing.Size(135, 35)
-        Me.pbxClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxClear.TabIndex = 15
-        Me.pbxClear.TabStop = False
-        '
-        'pbxAddToCart
-        '
-        Me.pbxAddToCart.BackColor = System.Drawing.Color.Transparent
-        Me.pbxAddToCart.Image = Global.fdbmsproj.My.Resources.Resources.addtocart
-        Me.pbxAddToCart.InitialImage = Nothing
-        Me.pbxAddToCart.Location = New System.Drawing.Point(78, 36)
-        Me.pbxAddToCart.Name = "pbxAddToCart"
-        Me.pbxAddToCart.Size = New System.Drawing.Size(159, 36)
-        Me.pbxAddToCart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxAddToCart.TabIndex = 13
-        Me.pbxAddToCart.TabStop = False
-        '
-        'pbxBuyNow
-        '
-        Me.pbxBuyNow.BackColor = System.Drawing.Color.Transparent
-        Me.pbxBuyNow.Image = Global.fdbmsproj.My.Resources.Resources.buynow
-        Me.pbxBuyNow.Location = New System.Drawing.Point(34, 37)
-        Me.pbxBuyNow.Name = "pbxBuyNow"
-        Me.pbxBuyNow.Size = New System.Drawing.Size(159, 35)
-        Me.pbxBuyNow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxBuyNow.TabIndex = 32
-        Me.pbxBuyNow.TabStop = False
         '
         'products
         '
@@ -487,20 +499,20 @@ Partial Class products
         Me.Text = "products"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.pbxAdd, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxMinus, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
+        CType(Me.pbxClear, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxAddToCart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        CType(Me.pbxItem, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        CType(Me.pbxBuyNow, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         CType(Me.pbxPlanImage, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxItem, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxAdd, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxMinus, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxClear, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxAddToCart, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxBuyNow, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

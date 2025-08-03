@@ -152,6 +152,7 @@ Partial Class Addon
         '
         'TextBox1
         '
+        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.TextBox1.Location = New System.Drawing.Point(154, 385)
         Me.TextBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.TextBox1.Name = "TextBox1"
@@ -160,6 +161,7 @@ Partial Class Addon
         '
         'lblName
         '
+        Me.lblName.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblName.AutoSize = True
         Me.lblName.BackColor = System.Drawing.Color.Transparent
         Me.lblName.ForeColor = System.Drawing.Color.White
@@ -170,6 +172,7 @@ Partial Class Addon
         '
         'lblType
         '
+        Me.lblType.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblType.AutoSize = True
         Me.lblType.BackColor = System.Drawing.Color.Transparent
         Me.lblType.ForeColor = System.Drawing.Color.White
@@ -180,6 +183,7 @@ Partial Class Addon
         '
         'lblPrice
         '
+        Me.lblPrice.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblPrice.AutoSize = True
         Me.lblPrice.BackColor = System.Drawing.Color.Transparent
         Me.lblPrice.ForeColor = System.Drawing.Color.White
@@ -190,6 +194,7 @@ Partial Class Addon
         '
         'btnBuyNow
         '
+        Me.btnBuyNow.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnBuyNow.Location = New System.Drawing.Point(454, 299)
         Me.btnBuyNow.Name = "btnBuyNow"
         Me.btnBuyNow.Size = New System.Drawing.Size(138, 23)
@@ -199,6 +204,7 @@ Partial Class Addon
         '
         'btnCart
         '
+        Me.btnCart.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnCart.Location = New System.Drawing.Point(310, 299)
         Me.btnCart.Name = "btnCart"
         Me.btnCart.Size = New System.Drawing.Size(138, 23)
@@ -217,6 +223,7 @@ Partial Class Addon
         '
         'lblSpecific
         '
+        Me.lblSpecific.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblSpecific.AutoSize = True
         Me.lblSpecific.BackColor = System.Drawing.Color.Transparent
         Me.lblSpecific.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -229,6 +236,7 @@ Partial Class Addon
         '
         'btnNext
         '
+        Me.btnNext.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnNext.Location = New System.Drawing.Point(454, 331)
         Me.btnNext.Name = "btnNext"
         Me.btnNext.Size = New System.Drawing.Size(138, 23)
@@ -270,6 +278,7 @@ Partial Class Addon
         '
         'gbxProduct1
         '
+        Me.gbxProduct1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxProduct1.BackColor = System.Drawing.Color.Transparent
         Me.gbxProduct1.Controls.Add(Me.btnMinus1)
         Me.gbxProduct1.Controls.Add(Me.txtHardware1)
@@ -285,6 +294,7 @@ Partial Class Addon
         '
         'gbxProduct2
         '
+        Me.gbxProduct2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxProduct2.BackColor = System.Drawing.Color.Transparent
         Me.gbxProduct2.Controls.Add(Me.btnMinus2)
         Me.gbxProduct2.Controls.Add(Me.txtHardware2)
@@ -341,6 +351,7 @@ Partial Class Addon
         '
         'gbxProduct3
         '
+        Me.gbxProduct3.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxProduct3.BackColor = System.Drawing.Color.Transparent
         Me.gbxProduct3.Controls.Add(Me.btnMinus3)
         Me.gbxProduct3.Controls.Add(Me.txtHardware3)
@@ -397,6 +408,7 @@ Partial Class Addon
         '
         'gbxProduct5
         '
+        Me.gbxProduct5.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxProduct5.BackColor = System.Drawing.Color.Transparent
         Me.gbxProduct5.Controls.Add(Me.btnMinus5)
         Me.gbxProduct5.Controls.Add(Me.txtHardware5)
@@ -453,6 +465,7 @@ Partial Class Addon
         '
         'gbxProduct4
         '
+        Me.gbxProduct4.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxProduct4.BackColor = System.Drawing.Color.Transparent
         Me.gbxProduct4.Controls.Add(Me.btnMinus4)
         Me.gbxProduct4.Controls.Add(Me.txtHardware4)
@@ -510,6 +523,7 @@ Partial Class Addon
         '
         'txtTotal
         '
+        Me.txtTotal.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.txtTotal.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotal.Location = New System.Drawing.Point(332, 68)
         Me.txtTotal.Margin = New System.Windows.Forms.Padding(2)
@@ -520,6 +534,7 @@ Partial Class Addon
         '
         'Label1
         '
+        Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -532,6 +547,7 @@ Partial Class Addon
         '
         'btnPrevious
         '
+        Me.btnPrevious.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnPrevious.Location = New System.Drawing.Point(310, 331)
         Me.btnPrevious.Name = "btnPrevious"
         Me.btnPrevious.Size = New System.Drawing.Size(138, 23)
@@ -541,6 +557,7 @@ Partial Class Addon
         '
         'TextBox3
         '
+        Me.TextBox3.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.TextBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox3.Location = New System.Drawing.Point(470, 69)
         Me.TextBox3.Margin = New System.Windows.Forms.Padding(2)
@@ -550,6 +567,7 @@ Partial Class Addon
         '
         'Label2
         '
+        Me.Label2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -562,6 +580,7 @@ Partial Class Addon
         '
         'PictureBox6
         '
+        Me.PictureBox6.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.PictureBox6.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox6.Location = New System.Drawing.Point(310, 215)
         Me.PictureBox6.Name = "PictureBox6"
@@ -572,6 +591,7 @@ Partial Class Addon
         '
         'PictureBox5
         '
+        Me.PictureBox5.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.PictureBox5.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox5.Location = New System.Drawing.Point(310, 144)
         Me.PictureBox5.Name = "PictureBox5"
@@ -582,6 +602,7 @@ Partial Class Addon
         '
         'PictureBox4
         '
+        Me.PictureBox4.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.PictureBox4.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox4.Location = New System.Drawing.Point(12, 215)
         Me.PictureBox4.Name = "PictureBox4"
@@ -592,6 +613,7 @@ Partial Class Addon
         '
         'PictureBox3
         '
+        Me.PictureBox3.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.PictureBox3.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox3.Location = New System.Drawing.Point(12, 286)
         Me.PictureBox3.Name = "PictureBox3"
@@ -602,6 +624,7 @@ Partial Class Addon
         '
         'PictureBox2
         '
+        Me.PictureBox2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox2.Location = New System.Drawing.Point(12, 144)
         Me.PictureBox2.Name = "PictureBox2"
@@ -612,6 +635,7 @@ Partial Class Addon
         '
         'pbxPlanImage
         '
+        Me.pbxPlanImage.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.pbxPlanImage.BackColor = System.Drawing.Color.Transparent
         Me.pbxPlanImage.Location = New System.Drawing.Point(12, 44)
         Me.pbxPlanImage.Name = "pbxPlanImage"

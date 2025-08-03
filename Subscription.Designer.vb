@@ -37,8 +37,8 @@ Partial Class Subscription
         Me.cbxPlans = New System.Windows.Forms.ComboBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.txtSpecs = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxPlan, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -167,6 +167,7 @@ Partial Class Subscription
         '
         'TextBox1
         '
+        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.TextBox1.Location = New System.Drawing.Point(407, 56)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
@@ -174,6 +175,7 @@ Partial Class Subscription
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox1.Controls.Add(Me.txtSpecs)
         Me.GroupBox1.Controls.Add(Me.pbxPlan)
@@ -190,18 +192,6 @@ Partial Class Subscription
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Plan Selection"
         '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Font = New System.Drawing.Font("Times New Roman", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.RoyalBlue
-        Me.Label1.Location = New System.Drawing.Point(63, 56)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(283, 40)
-        Me.Label1.TabIndex = 27
-        Me.Label1.Text = "Plan Subscription"
-        '
         'txtSpecs
         '
         Me.txtSpecs.Font = New System.Drawing.Font("Times New Roman", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -212,6 +202,19 @@ Partial Class Subscription
         Me.txtSpecs.ReadOnly = True
         Me.txtSpecs.Size = New System.Drawing.Size(258, 209)
         Me.txtSpecs.TabIndex = 21
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
+        Me.Label1.Font = New System.Drawing.Font("Times New Roman", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.RoyalBlue
+        Me.Label1.Location = New System.Drawing.Point(63, 56)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(283, 40)
+        Me.Label1.TabIndex = 27
+        Me.Label1.Text = "Plan Subscription"
         '
         'Subscription
         '

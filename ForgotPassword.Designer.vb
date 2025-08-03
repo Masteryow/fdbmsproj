@@ -149,6 +149,7 @@ Partial Class ForgotPassword
         '
         'btnResend
         '
+        Me.btnResend.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnResend.BackColor = System.Drawing.Color.Black
         Me.btnResend.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnResend.ForeColor = System.Drawing.Color.Transparent
@@ -162,6 +163,7 @@ Partial Class ForgotPassword
         '
         'lblSubheader
         '
+        Me.lblSubheader.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblSubheader.AutoSize = True
         Me.lblSubheader.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblSubheader.Location = New System.Drawing.Point(255, 152)
@@ -173,6 +175,7 @@ Partial Class ForgotPassword
         '
         'lblHeader
         '
+        Me.lblHeader.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblHeader.AutoSize = True
         Me.lblHeader.Font = New System.Drawing.Font("Segoe UI Semibold", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblHeader.Location = New System.Drawing.Point(150, 106)
@@ -184,6 +187,7 @@ Partial Class ForgotPassword
         '
         'btnVerify
         '
+        Me.btnVerify.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.btnVerify.BackColor = System.Drawing.Color.Black
         Me.btnVerify.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnVerify.ForeColor = System.Drawing.Color.Transparent
@@ -197,6 +201,7 @@ Partial Class ForgotPassword
         '
         'txtCode
         '
+        Me.txtCode.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.txtCode.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtCode.Location = New System.Drawing.Point(78, 189)
         Me.txtCode.Name = "txtCode"

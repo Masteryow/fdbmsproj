@@ -189,6 +189,7 @@ Public Class CreateAccount
         txtBox.Size = New Size(233, 33)
         txtBox.Location = New Point(320, 100)
         txtBox.Name = "txtUsername"
+        txtBox.Anchor = AnchorStyles.None
         txtBox.BorderStyle = BorderStyle.FixedSingle
         txtBox.Font = New Font("Microsoft Sans Serif", 12, FontStyle.Regular)
         AddHandler txtBox.TextChanged, AddressOf txtUserAndPassword_TextChanged
@@ -202,6 +203,7 @@ Public Class CreateAccount
         label1.Text = "Username"
         label1.Size = New Size(100, 22)
         label1.Name = "lblUsername"
+        label1.Anchor = AnchorStyles.None
         Me.Controls.Add(label1)
 
 
@@ -211,6 +213,7 @@ Public Class CreateAccount
         label2.Text = "Password"
         label2.Size = New Size(100, 22)
         label2.Name = "lblPassword"
+        label2.Anchor = AnchorStyles.None
         Me.Controls.Add(label2)
 
 
@@ -221,6 +224,8 @@ Public Class CreateAccount
         txtBox1.BorderStyle = BorderStyle.FixedSingle
         txtBox1.Font = New Font("Microsoft Sans Serif", 12, FontStyle.Regular)
         txtBox1.PasswordChar = "*"
+        txtBox1.Anchor = AnchorStyles.None
+        txtBox.Anchor = AnchorStyles.None
         AddHandler txtBox1.TextChanged, AddressOf txtUserAndPassword_TextChanged
         Me.Controls.Add(txtBox1)
 
@@ -230,6 +235,7 @@ Public Class CreateAccount
         label3.Text = "• Must be at least 8 characters"
         label3.Size = New Size(500, 22)
         label3.Name = "lbl3"
+        label3.Anchor = AnchorStyles.None
         Me.Controls.Add(label3)
 
         label4.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
@@ -239,6 +245,7 @@ Public Class CreateAccount
                          letters"
         label4.Size = New Size(500, 15)
         label4.Name = "lbl4"
+        label4.Anchor = AnchorStyles.None
         Me.Controls.Add(label4)
 
         label5.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
@@ -247,6 +254,7 @@ Public Class CreateAccount
         label5.Text = "• Include at least one number"
         label5.Size = New Size(500, 15)
         label5.Name = "lbl5"
+        label5.Anchor = AnchorStyles.None
         Me.Controls.Add(label5)
 
 
@@ -256,6 +264,7 @@ Public Class CreateAccount
         label6.Text = "• Add at least one special character"
         label6.Size = New Size(500, 15)
         label6.Name = "lbl6"
+        label6.Anchor = AnchorStyles.None
         Me.Controls.Add(label6)
 
 
@@ -405,6 +414,7 @@ Public Class CreateAccount
                 label7.Text = "Password Verification"
                 label7.Size = New Size(200, 22)
                 label7.Name = "lbl7"
+                label7.Anchor = AnchorStyles.None
                 Me.Controls.Add(label7)
 
                 txtPassConfirm.Multiline = False
@@ -415,7 +425,7 @@ Public Class CreateAccount
                 txtPassConfirm.Font = New Font("Microsoft Sans Serif", 12, FontStyle.Regular)
                 txtPassConfirm.PasswordChar = "*"
                 txtPassConfirm.Visible = True
-
+                txtPassConfirm.Anchor = AnchorStyles.None
                 Me.Controls.Add(txtPassConfirm)
 
 
@@ -424,6 +434,7 @@ Public Class CreateAccount
                 btnTrigger.Size = New Size(113, 34)
                 btnTrigger.Location = New Point(388, 305)
                 btnTrigger.BackColor = Color.WhiteSmoke
+                btnTrigger.Anchor = AnchorStyles.None
                 btnTrigger.Font = New Font("Microsoft Sans Serif", 8, FontStyle.Regular)
 
                 RemoveHandler btnTrigger.Click, AddressOf btnTrigger_click
